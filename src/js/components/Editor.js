@@ -17,8 +17,8 @@ class Editor extends Component {
                 <button className="tool-bar-button" onClick={() => this.textarea.select()}>全选</button>
                 <a ref={a => this.download = a}
                    className="tool-bar-button"
-                   href={`data:text/plain;charset=utf-8,${this.props.lyricText}`}
-                   download={[new Date().toLocaleString().replace(/\/|,/g, '-'), '.lrc'].join('')}>下载</a>
+                   href={`data:text/plain;charset=utf-8,${this.props.lyricText.replace(/\n/g, '\r\n')}`}
+                   download={true}>下载</a>
             </section>
             <textarea ref={textarea => this.textarea = textarea}
                       className="app-textarea"
@@ -27,6 +27,7 @@ class Editor extends Component {
                           let content = this.textarea.value.replace(/\n/g, '\r\n');
                           this.download.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(content);
                       }}
+                      placeholder="粘贴文本，或拖入文本文件后，点击导入，支持纯文本歌词，带时间轴歌词，甚至编辑到一半的歌词的解析"
             />
         </div>);
     };

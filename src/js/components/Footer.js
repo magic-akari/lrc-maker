@@ -20,14 +20,13 @@ const playOrPause = audio => {
 const playbackRateList = [0.25, 0.5, 0.66, 0.8, 1.0, 1.25, 1.5, 2.0, 4.0];
 
 
-const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp}) => {
-
+const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp, playbackRate = 1, setPlaybackRate}) => {
     const speedup = () => {
         audio.playbackRate = playbackRateList.find(r => r > audio.playbackRate) || playbackRateList[playbackRateList.length - 1];
     };
 
     const speeddown = () => {
-        audio.playbackRate = playbackRateList.reverse().find(r => r < audio.playbackRate) || playbackRateList[0];
+        audio.playbackRate = playbackRateList.filter(r => r < audio.playbackRate).reverse()[0] || playbackRateList[0];
     };
 
     const shortcutsHandler = (action, event) => {
@@ -62,12 +61,13 @@ const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp}) => {
         }
     };
 
+
     return (<footer id="app-footer" className="app-footer">
         <Shortcuts name='MEDIA'
                    targetNodeSelector="body"
                    handler={shortcutsHandler}>
             <div className="foot-bar">
-                <p>播放倍速: {audio ? audio.playbackRate.toFixed(2) : 1.0}</p>
+                <p>播放倍速: {playbackRate}</p>
                 {showTimestamp ? <p>当前时间：{LRC.timeToTag(audio && audio.currentTime)}</p> : null}
                 <p>总时间 {LRC.timeToTag(audio && audio.duration)}</p>
             </div>
@@ -76,6 +76,8 @@ const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp}) => {
             }}
                    src={audioSrc} className="app-audio" controls="controls"
                    onTimeUpdate={() => updateTime()}
+                   onRateChange={(e) => setPlaybackRate(audio.playbackRate)}
+
             />
         </Shortcuts>
     </footer >);
