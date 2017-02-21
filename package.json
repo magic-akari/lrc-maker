@@ -1,0 +1,50 @@
+{
+  "name": "lrc-maker",
+  "version": "1.0.0",
+  "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
+  "scripts": {
+    "start": "npm run render && npm run modernizr && webpack-dev-server --hot --inline --config webpack.config.dev.js --open",
+    "build": "npm run modernizr:prod && npm run webpack:prod && npm run render",
+    "webpack": "webpack --progress --colors",
+    "webpack:watch": "webpack -w --progress --colors",
+    "webpack:prod": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
+    "modernizr": "modernizr -c src/js/modernizr-config.json -d src/js/modernizr.js",
+    "modernizr:prod": "modernizr -u -c src/js/modernizr-config.json -d src/js/modernizr.js",
+    "render": "static-react  src/js/components/Root.js > index.html",
+    "help": "webpack -h"
+  },
+  "keywords": [
+    "lyric maker",
+    "neteasemusic"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hufan-Akari/LRC-MAKER.git"
+  },
+  "author": "阿卡琳",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/hufan-Akari/LRC-MAKER/issues"
+  },
+  "homepage": "https://github.com/hufan-Akari/LRC-MAKER#readme",
+  "dependencies": {
+    "jump.js": "^1.0.2",
+    "modernizr": "^3.3.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-shortcuts": "^1.3.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^2.0.0-rc.3",
+    "normalize.css": "^5.0.0",
+    "static-react": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
+  }
+}

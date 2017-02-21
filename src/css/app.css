@@ -1,0 +1,327 @@
+html, body {
+    height: 100%;
+    background-color: rgba(245, 245, 245, 0.81);
+}
+
+button {
+    outline: none;
+}
+
+shortcuts {
+    outline: none;
+}
+
+.app-body, .react-root, .app-root, .app-main {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+}
+
+.react-root, .app-root, .app-main, .app-main-content {
+    flex: 1 0 auto;
+}
+
+.app-main {
+    padding: 1rem 0;
+}
+
+.app-editor {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-textarea {
+    flex: 1 0 auto;
+    padding: .5rem;
+    resize: none;
+    border-radius: .25rem;
+    outline: none;
+    border: 1px solid deepskyblue;
+    font-size: 1.2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: box-shadow 500ms ease-in-out;
+
+}
+
+.app-textarea:hover, .app-textarea:focus {
+    box-shadow: 0 0px 10px rgba(0, 191, 255, 0.8)
+}
+
+.app-root {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header, .app-footer {
+    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
+    flex: none;
+    width: 100%;
+}
+
+.no-csspositionsticky .app-root {
+    padding-top: 68px;
+    padding-bottom: 100px;
+    min-height: inherit;
+}
+
+.app-header {
+    top: 0;
+    background: rgba(255, 255, 255, .85);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 1rem 0;
+    border-bottom: 1px solid hotpink;
+    transition: box-shadow 500ms ease;
+    z-index: 5;
+}
+
+.app-header:hover {
+    box-shadow: 0 1px 10px rgba(255, 105, 180, 0.5);
+}
+
+.app-footer {
+    bottom: 0;
+}
+
+.wrapper {
+    max-width: 1024px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+@media screen and (max-width: 1024px ) {
+    .app-main.wrapper {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+}
+
+.wrapper:after, .footer-col-wrapper:after {
+    content: "";
+    display: table;
+    clear: both
+}
+
+.app-audio {
+    width: 100%;
+}
+
+.app-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-menu-button {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: border 500ms ease-in-out, box-shadow 500ms ease-in-out;
+}
+
+.app-menu-button:hover {
+    border: 1px solid hotpink;
+    box-shadow: 0 1px 10px rgba(255, 105, 180, 0.5)
+}
+
+.app-title {
+    font-size: 1.6rem;
+    color: hotpink;
+    background-image: -webkit-linear-gradient(45deg, hotpink, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
+@-webkit-keyframes hue {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+
+    to {
+        -webkit-filter: hue-rotate(-360deg);
+    }
+}
+
+.tool-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tool-bar-button {
+    color: dimgray;
+    cursor: default;
+    text-decoration: none;
+    padding: .5rem;
+    flex: 1 1 auto;
+    border: 1px solid deepskyblue;
+    border-radius: .25rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 500ms ease;
+    text-align: center;
+    margin: 1rem;
+}
+
+.tool-bar-button:first-child {
+    margin-left: 0;
+}
+
+.tool-bar-button:last-child {
+    margin-right: 0;
+}
+
+.tool-bar-button:hover, .tool-bar-button:focus {
+    color: hotpink;
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.51);
+}
+
+.app-creator .tool-bar-button {
+    width: 20rem;
+    flex: 1 1 auto;
+}
+
+.lyric-list {
+    text-align: center;
+    padding: 0;
+}
+
+.lyric {
+    display: block;
+    font-size: 1rem;
+    border-bottom: 1px solid transparent;
+    height: 1.5rem;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: black;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    visibility: hidden;
+    z-index: 999998;
+}
+
+.mask.is-visible {
+    opacity: 0.4;
+    visibility: visible;
+}
+
+.highlight {
+    color: hotpink;
+}
+
+.select {
+    border-bottom: 2px solid hotpink;
+}
+
+label {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.label-switch {
+    border-radius: 32px;
+    cursor: pointer;
+    display: inline-block;
+    height: 32px;
+    position: relative;
+    width: 52px;
+}
+
+.label-switch input[type="checkbox"] {
+    display: none;
+}
+
+.label-switch input[type="checkbox"] + .checkbox {
+    background: #e8e8e8;
+    border: 0;
+    border-radius: 32px;
+    cursor: pointer;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    transition: all 0.3s ease;
+    width: 52px;
+    z-index: 0;
+}
+
+.label-switch input[type="checkbox"] + .checkbox::before {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    bottom: 0;
+    left: 2px;
+    background: white;
+    border-radius: 32px;
+    content: "";
+    height: 28px;
+    transform: scale(1);
+    transition: all 0.3s ease;
+    width: 48px;
+    z-index: 1;
+}
+
+.label-switch input[type="checkbox"] + .checkbox::after {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    bottom: 0;
+    left: 2px;
+    height: 28px;
+    width: 28px;
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    content: "";
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.label-switch input[type="checkbox"]:checked + .checkbox {
+    background: hotpink;
+}
+
+.label-switch input[type="checkbox"]:checked + .checkbox::before {
+    transform: scale(0);
+}
+
+.label-switch input[type="checkbox"]:checked + .checkbox::after {
+    left: 22px;
+}
+
+.select::before {
+    color: hotpink;
+    content: attr(data-elapsedtime) '->';
+    position: absolute;
+    transform: translate(-6rem, 0);
+    display: block;
+}
+
+.app-drag-and-drop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-drag-and-drop-tip, .app-drag-and-drop-icon {
+    max-width: 50%;
+}
+
+.foot-bar {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.51);
+    -webkit-backdrop-filter: blur(5px);
+}
