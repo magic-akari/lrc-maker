@@ -17,34 +17,35 @@ const shortcutManager = new ShortcutManager(keymap);
 class App extends Component {
     constructor(props) {
         super(props);
-        let initState = {
-            editing: true,
-            showTimestamp: true,
-            selectedIndex: 0,
-            highlightIndex: -1,
-            elapsedTime: 0,
-            showMask: false,
-            showAside: false,
-            audiosrc: undefined,
-            dragging: false,
-            checkMode: false,
-            showAbout: false,
-            showSyncButton: false
-        };
+        let savedState;
         try {
             if (localStorage) {
-                initState = JSON.parse(localStorage.getItem('app-state')) || initState;
+                savedState = JSON.parse(localStorage.getItem('app-state'));
             }
         } catch (e) {
+
         }
 
+        let initState = savedState || {
+                editing: true,
+                showTimestamp: true,
+                selectedIndex: 0,
+                highlightIndex: -1,
+                elapsedTime: 0,
+                showMask: false,
+                showAside: false,
+                dragging: false,
+                checkMode: false,
+                showAbout: false,
+                showSyncButton: false
+            };
         this.state = initState;
     }
 
     componentDidMount() {
-        let audiosrc = /(^|\?|&)audiosrc=(.*)(&|$)/.exec(location.search);
-        if (audiosrc) {
-            this.setState({audiosrc: audiosrc[2]})
+        let audioSrc = /(^|\?|&)audiosrc=(.*)(&|$)/.exec(location.search);
+        if (audioSrc) {
+            this.setState({audioSrc: audioSrc[2]});
         }
 
         document.addEventListener("visibilitychange", () => {
@@ -302,6 +303,11 @@ class App extends Component {
                         <p>音频支持拖放、上传、输入外源地址的方式导入。</p>
                         <p>导入的歌词支持纯文本，也支持时间轴解析，所以即使导入编辑到一半的歌词也是支持的。</p>
                         <p>因此在打轴过程中，可以随时再切换到编辑(导出)模式编辑。</p>
+                        <h3 style={{color: 'gray', opacity: 0.8}}>关于如何引用云音乐的音频</h3>
+                        <p style={{color: 'gray', opacity: 0.8}}>将这个链接 <a
+                            href={`javascript:void(function(u,s)%7Bs=document.body.appendChild(document.createElement('script'));s.src=u+'?ts='+Date.now();s.charset='UTF-8'%7D('//hufan-akari.github.io/LRC-MAKER/user_tool/gotolrcmaker.js'))`}>跳转至歌词编辑页面</a>
+                            拖动至/保存至收藏夹，并在单曲页面使用。
+                        </p>
                     </section>
                     <section>
                         <h1>关于本工具</h1>

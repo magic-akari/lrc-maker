@@ -15,8 +15,8 @@
             return;
         }
         var mp3url = logList[index].match(/mp3: (.*\.mp3)/)[1];
-        console.log('mp3地址', mp3url);
-        if (confirm('已找到mp3地址，点击确定将跳转至歌词制作页面')) {
+        console.log('mp3', mp3url);
+        if (confirm('已找到mp3缓存，点击确定将跳转至歌词制作页面')) {
             location.href = '//hufan-akari.github.io/LRC-MAKER/?audiosrc=' + mp3url;
         }
     } else {
