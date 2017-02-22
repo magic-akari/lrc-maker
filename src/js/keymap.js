@@ -36,5 +36,8 @@ export default {
             linux: 'ctrl+down',
         },
         SPEEDRESET: 'r'
+    },
+    ASIDE: {
+        SHOWABOUT: 'shift+/'
     }
 }

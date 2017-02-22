@@ -20,7 +20,7 @@ const playOrPause = audio => {
 const playbackRateList = [0.25, 0.5, 0.66, 0.8, 1.0, 1.25, 1.5, 2.0, 4.0];
 
 
-const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp, playbackRate = 1, setPlaybackRate}) => {
+const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp, playbackRate = 1, setPlaybackRate, textareaFocused}) => {
     const speedup = () => {
         audio.playbackRate = playbackRateList.find(r => r > audio.playbackRate) || playbackRateList[playbackRateList.length - 1];
     };
@@ -30,8 +30,7 @@ const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp, playbackR
     };
 
     const shortcutsHandler = (action, event) => {
-        let textarea = document.querySelector('.app-textarea');
-        if (audio === undefined) {
+        if (audio === undefined || textareaFocused === true) {
             return;
         }
         switch (action) {

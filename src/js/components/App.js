@@ -8,7 +8,7 @@ import Editor from "./Editor";
 import Creator from "./Creator";
 import DragingPage from "./DraggingPage";
 import LRC from "../lrc";
-import {ShortcutManager} from "react-shortcuts";
+import {ShortcutManager, Shortcuts} from "react-shortcuts";
 import keymap from "../keymap";
 import jump from "jump.js";
 
@@ -67,7 +67,8 @@ class App extends Component {
             if (index > max) index = max;
             this.setState({selectedIndex: index}, () => {
                 if (this.audio.paused === true || this.state.checkMode == false) {
-                    jump('.select', {duration: 100, offset: -(document.documentElement.clientHeight / 2)});
+                    let select = document.querySelector('.select');
+                    window.scrollBy(0, select.getBoundingClientRect().bottom - document.documentElement.clientHeight / 2);
                 }
             });
 
@@ -90,7 +91,10 @@ class App extends Component {
                 if (highlightItemList.length > 1) {
                     duration = (highlightItemList[0].time - highlightItemList[1].time) * 250;
                 }
-                jump(highlightDOM, {duration: duration, offset: -(document.documentElement.clientHeight / 2)});
+                jump(highlightDOM, {
+                    duration: duration,
+                    offset: highlightDOM.getBoundingClientRect().height * 2 - document.documentElement.clientHeight / 2
+                });
             }
         }
         this.setState({elapsedTime, highlightIndex})
@@ -116,8 +120,7 @@ class App extends Component {
                     return {key: lyricLine.key, text: lyricLine.text, time: undefined}
                 }
                 return lyricLine;
-            }),
-            selectedIndex: this.state.selectedIndex + 1
+            })
         })
     }
 
@@ -210,6 +213,7 @@ class App extends Component {
                     <DragingPage/> :
                     this.state.editing ?
                         <Editor lyricText={this.state.lyricText || ''}
+                                onChangeFocus={v => this.setState({textareaFocused: v})}
                                 onParse={text => this.setState(LRC.parse(text), () => this.setState({editing: false}))}/> :
                         <Creator showTimestamp={this.state.showTimestamp}
                                  showSyncButton={this.state.showSyncButton}
@@ -232,7 +236,8 @@ class App extends Component {
                         />
                 }
             </main>
-            <Footer audioSrc={this.state.audioSrc}
+            <Footer textareaFocused={this.state.textareaFocused}
+                    audioSrc={this.state.audioSrc}
                     setAudio={audio => this.audio = audio}
                     updateTime={() => this.updateTime()}
                     audio={this.audio}
@@ -241,6 +246,12 @@ class App extends Component {
                     setPlaybackRate={rate => this.setState({playbackRate: rate})}
             />
             <aside className={`app-aside${this.state.showAside ? ' is-visible' : ''}`}>
+                <Shortcuts name="ASIDE" targetNodeSelector="body"
+                           handler={ (action, event) => action === 'SHOWABOUT' && this.state.textareaFocused !== true ? this.setState({
+                                   showMask: true,
+                                   showAside: false,
+                                   showAbout: true
+                               }) : false}/>
                 <ul>
                     <li className="app-aside-li">
                         <button className="app-aside-button"
@@ -290,12 +301,14 @@ class App extends Component {
                         <h1>快捷键</h1>
                         <p>播放／暂停：<kbd>command + return / ctrl + enter</kbd></p>
                         <p>打轴：<kbd>space</kbd></p>
-                        <p>前进5秒：<kbd>command + ➡️ ／ ctrl + ➡️️</kbd></p>
-                        <p>后退5秒：<kbd>command + ⬅️ / ctrl + ⬅️</kbd></p>
-                        <p>选择上 & 下行歌词：<kbd>⬆️ & ⬇️</kbd></p>
-                        <p>加速播放：<kbd>command + ⬆️️️ / ctrl + ⬆️️️</kbd></p>
-                        <p>减速播放：<kbd>command + ⬇️ /ctrl + ⬇️</kbd></p>
+                        <p>删除时间轴：<kbd>command + delete / delete</kbd></p>
+                        <p>前进5秒：<kbd> ➡️️ / d</kbd></p>
+                        <p>后退5秒：<kbd> ⬅️️ / a</kbd></p>
+                        <p>选择上 & 下行歌词：<kbd>⬆️ & ⬇️ / w & s / j & k</kbd></p>
+                        <p>加速播放：<kbd>command + ⬆️ / ctrl + ⬆️ </kbd></p>
+                        <p>减速播放：<kbd>command + ⬇️ /ctrl + ⬇️ ️</kbd></p>
                         <p>重置速度：<kbd>r</kbd></p>
+                        <p>显示帮助：<kbd>shift + ?</kbd></p>
                     </section>
                     <section>
                         <h1>使用提示</h1>
