@@ -20,7 +20,7 @@ const playOrPause = audio => {
 const playbackRateList = [0.25, 0.5, 0.66, 0.8, 1.0, 1.25, 1.5, 2.0, 4.0];
 
 
-const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp, playbackRate = 1, setPlaybackRate, textareaFocused}) => {
+const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp, playbackRate = 1, setPlaybackRate, textareaFocused,checkMode=false}) => {
     const speedup = () => {
         audio.playbackRate = playbackRateList.find(r => r > audio.playbackRate) || playbackRateList[playbackRateList.length - 1];
     };
@@ -69,6 +69,7 @@ const Footer = ({audio, audioSrc, updateTime, setAudio, showTimestamp, playbackR
                 <p>播放倍速: {playbackRate}</p>
                 {showTimestamp ? <p>当前时间：{LRC.timeToTag(audio && audio.currentTime)}</p> : null}
                 <p>总时间 {LRC.timeToTag(audio && audio.duration)}</p>
+                <p>页面滚动模式：{checkMode? '校对' : '打轴'}</p>
             </div>
             <audio ref={audio => {
                 setAudio(audio);

@@ -43,6 +43,9 @@ const LRC = {
             }
         }
         let [key, new_key] = [0, lyric.length];
+        if (lyric.every( l => l.time !== undefined )){
+            lyric.sort((a, b) => a.time <= b.time ? -1 : 1);
+        }
         for (; key < new_key; ++key) {
             lyric[key].key = key;
         }
@@ -56,7 +59,7 @@ const LRC = {
         let s = Math.floor(time % 60);
         s = isNaN(s) ? '--' : ( s >= 10 ) ? s : '0' + s;
         let ms = ((time - m * 60 - s) * 1000).toFixed(0);
-        ms = isNaN(ms) ? '--' : ( ms >= 100 ) ? ms : ( ms > 10 ) ? '0' + ms : '00' + ms;
+        ms = isNaN(ms) ? '--' : ( ms >= 100 ) ? ms : ( ms >= 10 ) ? '0' + ms : '00' + ms;
         return `[${m}:${s}.${ms}]`;
     },
     stringify(lrc){
@@ -69,6 +72,9 @@ const LRC = {
         }
         if (lrc.al) {
             textLines.push(`[ar:${lrc.al}]`);
+        }
+        if (lrc.lyric.every( l => l.time !== undefined )){
+            lrc.lyric.sort((a, b) => a.time <= b.time ? -1 : 1);
         }
         for (let item of lrc.lyric) {
             if (item.time === undefined) {

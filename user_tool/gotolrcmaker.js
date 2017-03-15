@@ -2,7 +2,7 @@
  * Created by akari on 22/02/2017.
  */
 (function () {
-    var capture = /song\?id=(\d{4,})/.exec(location.hash);
+    var capture = /song(?:\?id\=|\/)(\d{4,})/.exec(location.hash);
     if (capture) {
         var id = capture[1];
         var logList = JSON.parse(localStorage.getItem('local-log'));

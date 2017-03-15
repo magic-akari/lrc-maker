@@ -16,7 +16,7 @@ class Editor extends Component {
         return (<div id="app-editor" className="app-editor app-main-content">
             <section className="tool-bar">
                 <button className="tool-bar-button"
-                        onClick={() => this.props.onParse(this.textarea.value)}>导入
+                        onClick={() => this.props.onParse(this.textarea.value)}>导入/打轴
                 </button>
                 <button className="tool-bar-button" onClick={() => this.textarea.select()}>全选</button>
                 <a ref={a => this.download = a}

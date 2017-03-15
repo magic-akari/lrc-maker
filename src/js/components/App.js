@@ -79,7 +79,7 @@ class App extends Component {
         let elapsedTime = this.audio.currentTime;
         let lyric = this.state.lyric;
         let highlightItemList =
-            lyric && lyric.filter(l => l.time && l.time < elapsedTime)
+            lyric && lyric.filter(l => l.time !== undefined && l.time < elapsedTime)
                 .sort((a, b) => a.time < b.time ? 1 : -1);
         let highlightItem = highlightItemList[0];
         let highlightIndex = highlightItem ? highlightItem.key : -1;
@@ -120,6 +120,14 @@ class App extends Component {
                     return {key: lyricLine.key, text: lyricLine.text, time: undefined}
                 }
                 return lyricLine;
+            })
+        })
+    }
+
+    clearAllTimestamp() {
+        this.setState({
+            lyric: this.state.lyric.map((lyricLine, index) => {
+                return {key: lyricLine.key, text: lyricLine.text, time: undefined}
             })
         })
     }
@@ -224,6 +232,7 @@ class App extends Component {
                                  onChangeSelectedIndex={index => this.changeSelectedIndex(index)}
                                  onSyncLrcLRC={() => this.syncLRC()}
                                  onDeleteTimestamp={() => this.deleteTimestamp()}
+                                 onClearAlleTimestamp={() => this.clearAllTimestamp()}
                                  onOutput={() => this.setState({
                                      lyricText: LRC.stringify({
                                          lyric: this.state.lyric,
@@ -244,6 +253,7 @@ class App extends Component {
                     showTimestamp={this.state.showTimestamp}
                     playbackRate={this.state.playbackRate}
                     setPlaybackRate={rate => this.setState({playbackRate: rate})}
+                    checkMode={this.state.checkMode}
             />
             <aside className={`app-aside${this.state.showAside ? ' is-visible' : ''}`}>
                 <Shortcuts name="ASIDE" targetNodeSelector="body"
@@ -259,7 +269,7 @@ class App extends Component {
                     </li>
                     <li className="app-aside-li">
                         <button className="app-aside-button"
-                                onClick={() => this.setState({checkMode: !this.state.checkMode})}>{this.state.checkMode ? '切换到编辑模式' : '切换到校对模式'}</button>
+                                onClick={() => this.setState({checkMode: !this.state.checkMode})}>{this.state.checkMode ? '切换到打轴模式' : '切换到校对模式'}</button>
                     </li>
                     <li className="app-aside-li">
                         <button className="app-aside-button"
@@ -321,6 +331,8 @@ class App extends Component {
                             href={`javascript:void(function(u,s)%7Bs=document.body.appendChild(document.createElement('script'));s.src=u+'?ts='+Date.now();s.charset='UTF-8'%7D('//hufan-akari.github.io/LRC-MAKER/user_tool/gotolrcmaker.js'))`}>跳转至歌词编辑页面</a>
                             拖动至/保存至收藏夹，并在单曲页面使用。
                         </p>
+                        <a href="https://cloud.githubusercontent.com/assets/7829098/24322142/9a9607e4-1198-11e7-9610-e633bae10ed0.gif"
+                          target="_blank">点查看使用演示</a>
                     </section>
                     <section>
                         <h1>关于本工具</h1>

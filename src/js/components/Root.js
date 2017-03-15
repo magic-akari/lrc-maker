@@ -23,6 +23,10 @@ const Root = () => (
         <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬"/>
         <meta name="application-name" content="灯里的歌词滚动姬"/>
         <meta name="theme-color" content="#FF69B4"/>
+        <script src="//cdn.bootcss.com/react/15.5.4/react.min.js"></script>
+        <script dangerouslySetInnerHTML={{__html:`window.React||document.write('<script src="dist/React.js"><\\/script>')`}}></script>
+        <script src="//cdn.bootcss.com/react/15.5.4/react-dom.min.js"></script>
+        <script dangerouslySetInnerHTML={{__html:`window.ReactDOM||document.write('<script src="dist/ReactDOM.js"><\\/script>')`}}></script>
     </head>
     <body className="app-body">
     <div id="react-root" className="react-root" dangerouslySetInnerHTML={{__html: renderToString(<App/>)}}></div>

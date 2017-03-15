@@ -63,7 +63,7 @@ shortcuts {
 .no-csspositionsticky .app-root {
     padding-top: 68px;
     padding-bottom: 100px;
-    min-height: inherit;
+    min-height: 70%;
 }
 
 .app-header {
@@ -198,10 +198,15 @@ shortcuts {
 }
 
 .lyric {
+    color: #7d7d7d;
     display: block;
     font-size: 1rem;
     border-bottom: 2px solid transparent;
     height: 2rem;
+}
+
+.timed {
+    color: black;
 }
 
 .highlight {
@@ -210,6 +215,14 @@ shortcuts {
 
 .select {
     border-bottom: 2px solid hotpink;
+}
+
+.error {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.error.highlight {
+    color: white;
 }
 
 label {
@@ -409,4 +422,8 @@ label {
 
 .sync-lyric.is-visible {
     display: inline-block;
+}
+
+.helper-img {
+  max-width: 100%;
 }
