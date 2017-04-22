@@ -27,8 +27,6 @@ const Root = () => (
         <link rel="preload" href="//cdn.bootcss.com/react/15.5.4/react-dom.min.js"/>
         <link rel="prefetch" href="//cdn.bootcss.com/react/15.5.4/react.min.js"/>
         <link rel="prefetch" href="//cdn.bootcss.com/react/15.5.4/react-dom.min.js"/>
-        <link rel="preload" href="dist/React.js"/>
-        <link rel="preload" href="dist/ReactDOM.js"/>
         <link rel="prefetch" href="dist/React.js"/>
         <link rel="prefetch" href="dist/ReactDOM.js"/>
     </head>

@@ -7,7 +7,8 @@
     "build": "npm run webpack:prod && npm run render",
     "webpack": "webpack --progress --colors",
     "webpack:prod": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
-    "render": "static-react src/js/components/Root.js > index.html"
+    "render": "static-react src/js/components/Root.js > index.html",
+    "server": "webpack-dev-server --hot --open"
   },
   "keywords": [
     "lyric maker",
