@@ -5,10 +5,16 @@ import React from "react";
 import { render } from "react-dom";
 import App from "./components/App";
 import "normalize.css";
-import "./modernizr";
 import "../css/app.css";
 
 render(<App />, document.getElementById("react-root"));
+
+// test csspositionsticky
+let aStyle = document.createElement("a").style;
+aStyle.cssText = "position:sticky;position:-webkit-sticky;";
+if (aStyle.position.indexOf("sticky") === -1) {
+  document.documentElement.className = "no-csspositionsticky";
+}
 
 console.log(
   "%c",

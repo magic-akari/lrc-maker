@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
   "scripts": {
-    "start": "npm run render && npm run modernizr && webpack-dev-server --hot --open",
-    "build": "npm run modernizr:prod && npm run webpack:prod && npm run render",
+    "start": "npm run webpack && npm run render && webpack-dev-server --hot --open",
+    "build": "npm run webpack:prod && npm run render",
     "webpack": "webpack --progress --colors",
     "webpack:prod": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
-    "modernizr": "modernizr -c src/js/modernizr-config.json -d src/js/modernizr.js",
-    "modernizr:prod": "modernizr -u -c src/js/modernizr-config.json -d src/js/modernizr.js",
-    "render": "static-react  src/js/components/Root.js > index.html",
-    "help": "webpack -h"
+    "render": "static-react src/js/components/Root.js > index.html"
   },
   "keywords": [
     "lyric maker",
@@ -28,10 +25,9 @@
   "homepage": "https://github.com/hufan-Akari/LRC-MAKER#readme",
   "dependencies": {
     "jump.js": "^1.0.2",
-    "modernizr": "^3.5.0",
+    "mousetrap": "^1.6.1",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-shortcuts": "^1.4.0"
+    "react-dom": "^15.5.4"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
