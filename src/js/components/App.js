@@ -490,6 +490,7 @@ class App extends Component {
               <a
                 href="https://cloud.githubusercontent.com/assets/7829098/24322142/9a9607e4-1198-11e7-9610-e633bae10ed0.gif"
                 target="_blank"
+                rel="noopener"
               >
                 点查看使用演示
               </a>
@@ -502,6 +503,7 @@ class App extends Component {
                 <a
                   href="http://music.163.com/user/home?id=45441555"
                   target="_blank"
+                  rel="noopener"
                 >
                   阿卡林
                 </a>
@@ -511,6 +513,7 @@ class App extends Component {
                 <a
                   href="http://music.163.com/user/home?id=45441555"
                   target="_blank"
+                  rel="noopener"
                 >
                   阿卡林
                 </a>
@@ -521,6 +524,7 @@ class App extends Component {
                 <a
                   href="https://github.com/hufan-Akari/LRC-MAKER/issues/new"
                   target="_blank"
+                  rel="noopener"
                 >
                   这里
                 </a>
@@ -532,6 +536,7 @@ class App extends Component {
                 <a
                   href="https://github.com/hufan-Akari/LRC-MAKER"
                   target="_blank"
+                  rel="noopener"
                 >
                   本项目
                 </a>
