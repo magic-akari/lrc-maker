@@ -33,7 +33,7 @@ const Root = () => (
     </head>
     <body className="app-body">
     <div id="react-root" className="react-root" dangerouslySetInnerHTML={{__html: renderToString(<App/>)}}></div>
-    <script dangerouslySetInnerHTML={{__html: `('Symbol' in window)||document.write('<script src="//cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"><\\/script>')`}}></script>
+    <script dangerouslySetInnerHTML={{__html: `('FileReader' in window)||alert('不支持的浏览器版本');('Symbol' in window)||document.write('<script src="//cdn.bootcss.com/babel-polyfill/6.23.0/polyfill.min.js"><\\/script>')`}}></script>
     <script src="//cdn.bootcss.com/react/15.5.4/react.min.js"></script>
     <script dangerouslySetInnerHTML={{__html:`window.React||document.write('<script src="dist/React.js"><\\/script>')`}}></script>
     <script src="//cdn.bootcss.com/react/15.5.4/react-dom.min.js"></script>

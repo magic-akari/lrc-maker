@@ -211,10 +211,6 @@ class App extends Component {
     });
   }
 
-  // getChildContext() {
-  //     return {shortcuts: shortcutManager}
-  // }
-
   onDragEnter(e) {
     this.setState({ dragging: true });
     e.preventDefault();
@@ -231,35 +227,36 @@ class App extends Component {
   }
 
   loadFiles(files) {
-    const fileReader = new FileReader();
     let [foundAudio, foundLyric] = [false, false];
-    for (let i in files) {
-      if (files.hasOwnProperty(i)) {
-        if (/^audio\//.test(files[i].type)) {
-          fileReader.onload = fileReaderEvent => {
+    for (let i = 0; i < files.length; i++) {
+      if (!foundAudio && /^audio\//.test(files[i].type)) {
+        let fileReader = new FileReader();
+        fileReader.onload = fileReaderEvent => {
+          let audioSrc = fileReaderEvent.target.result;
+          this.setState({
+            audioSrc,
+            dragging: false
+          });
+        };
+        fileReader.readAsDataURL(files[i]);
+        foundAudio = true;
+        continue;
+      } else if (!foundLyric) {
+        let fileReader = new FileReader();
+        fileReader.onload = fileReaderEvent => {
+          let lyricText = fileReaderEvent.target.result;
+          this.setState({ dragging: true }, () =>
             this.setState({
-              audioSrc: fileReaderEvent.target.result,
-              dragging: false
-            });
-          };
-          fileReader.readAsDataURL(files[i]);
-          foundAudio = true;
-          continue;
-        } else {
-          fileReader.onload = fileReaderEvent => {
-            this.setState({
-              lyricText: fileReaderEvent.target.result,
+              lyricText,
               dragging: false,
               editing: true
-            });
-          };
-          fileReader.readAsText(files[i]);
-          foundLyric = true;
-        }
-        if (foundAudio && foundLyric) {
-          break;
-        }
+            }));
+        };
+        fileReader.readAsText(files[i]);
+        foundLyric = true;
+        continue;
       }
+      if (foundAudio && foundLyric) break;
     }
   }
 
@@ -490,7 +487,7 @@ class App extends Component {
               <a
                 href="https://cloud.githubusercontent.com/assets/7829098/24322142/9a9607e4-1198-11e7-9610-e633bae10ed0.gif"
                 target="_blank"
-                rel="noopener"
+                rel="nofollow noopener noreferre"
               >
                 点查看使用演示
               </a>
@@ -503,7 +500,7 @@ class App extends Component {
                 <a
                   href="http://music.163.com/user/home?id=45441555"
                   target="_blank"
-                  rel="noopener"
+                  rel="nofollow noopener noreferrer me"
                 >
                   阿卡林
                 </a>
@@ -513,7 +510,7 @@ class App extends Component {
                 <a
                   href="http://music.163.com/user/home?id=45441555"
                   target="_blank"
-                  rel="noopener"
+                  rel="nofollow noopener noreferrer me"
                 >
                   阿卡林
                 </a>
@@ -524,7 +521,7 @@ class App extends Component {
                 <a
                   href="https://github.com/hufan-Akari/LRC-MAKER/issues/new"
                   target="_blank"
-                  rel="noopener"
+                  rel="nofollow noopener noreferre"
                 >
                   这里
                 </a>
