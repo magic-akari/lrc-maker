@@ -6,7 +6,6 @@ import LRC from "../lrc";
 
 const Footer = (
   {
-    audio,
     audioSrc,
     updateTime,
     setAudio,
@@ -21,21 +20,15 @@ const Footer = (
     <footer id="app-footer" className="app-footer">
       <div className="foot-bar">
         <p>播放倍速: {playbackRate}</p>
-        {showTimestamp
-          ? <p>当前时间：{LRC.timeToTag(audio && audio.currentTime)}</p>
-          : null}
-        <p>总时间 {LRC.timeToTag(audio && audio.duration)}</p>
         <p>页面滚动模式：{checkMode ? "校对" : "打轴"}</p>
       </div>
       <audio
-        ref={audio => {
-          setAudio(audio);
-        }}
+        ref={audio => setAudio(audio)}
         src={audioSrc}
         className="app-audio"
         controls="controls"
-        onTimeUpdate={() => updateTime()}
-        onRateChange={e => setPlaybackRate(audio.playbackRate)}
+        onTimeUpdate={updateTime}
+        onRateChange={e => setPlaybackRate(e.target.playbackRate)}
       />
     </footer>
   );

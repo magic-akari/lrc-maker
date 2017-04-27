@@ -230,15 +230,11 @@ class App extends Component {
     let [foundAudio, foundLyric] = [false, false];
     for (let i = 0; i < files.length; i++) {
       if (!foundAudio && /^audio\//.test(files[i].type)) {
-        let fileReader = new FileReader();
-        fileReader.onload = fileReaderEvent => {
-          let audioSrc = fileReaderEvent.target.result;
-          this.setState({
-            audioSrc,
-            dragging: false
-          });
-        };
-        fileReader.readAsDataURL(files[i]);
+        let audioSrc = URL.createObjectURL(files[i]);
+        this.setState({
+          audioSrc,
+          dragging: false
+        });
         foundAudio = true;
         continue;
       } else if (!foundLyric) {
@@ -350,7 +346,6 @@ class App extends Component {
           audioSrc={this.state.audioSrc}
           setAudio={audio => this.audio = audio}
           updateTime={() => this.updateTime()}
-          audio={this.audio}
           showTimestamp={this.state.showTimestamp}
           playbackRate={this.state.playbackRate}
           setPlaybackRate={rate => this.setState({ playbackRate: rate })}

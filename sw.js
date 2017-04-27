@@ -1,6 +1,6 @@
-const cacheName = "akari-lrc-maker-2017.04.24";
+const cacheName = "akari-lrc-maker-2017.04.28";
 const urlsToCache = [
-  "",
+  "./",
   "dist/app.css",
   "dist/React.js",
   "dist/ReactDOM.js",
@@ -24,13 +24,14 @@ self.addEventListener("activate", e => {
   );
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    fetch(e.request)
-      .then(response => caches.open(cacheName).then(cache => {
-          cache.put(e.request.url, response.clone());
-          return response;
-        }))
-      .catch(() => caches.match(e.request.url))
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      // Cache hit - return response
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
+    })
   );
 });
