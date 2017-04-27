@@ -53,32 +53,27 @@ class App extends Component {
       }));
 
     Mousetrap.bind(["up", "w", "j"], e => {
-      if (!this.state.editing) {
-        this.changeSelectedIndex(this.state.selectedIndex - 1);
-      }
+      this.changeSelectedIndex(this.state.selectedIndex - 1);
       e.preventDefault();
       return false;
     });
 
     Mousetrap.bind(["down", "s", "k"], e => {
-      if (!this.state.editing) {
-        this.changeSelectedIndex(this.state.selectedIndex + 1);
-      }
+      this.changeSelectedIndex(this.state.selectedIndex + 1);
       e.preventDefault();
       return false;
     });
 
     Mousetrap.bind("space", e => {
-      if (!this.state.editing) {
-        this.syncLRC();
-      }
+      this.syncLRC();
       e.preventDefault();
       return false;
     });
-    Mousetrap.bind(
-      ["command+backspace", "delete"],
-      e => !this.state.editing && this.DeleteTimestamp()
-    );
+    Mousetrap.bind(["command+backspace", "delete"], e => {
+      this.deleteTimestamp();
+      e.preventDefault();
+      return false;
+    });
 
     Mousetrap.bind(
       ["command+return", "ctrl+enter"],
