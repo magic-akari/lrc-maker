@@ -225,6 +225,7 @@ class App extends Component {
     let [foundAudio, foundLyric] = [false, false];
     for (let i = 0; i < files.length; i++) {
       if (!foundAudio && /^audio\//.test(files[i].type)) {
+        URL.revokeObjectURL(this.state.audioSrc);
         let audioSrc = URL.createObjectURL(files[i]);
         this.setState({
           audioSrc,
@@ -342,8 +343,7 @@ class App extends Component {
           setAudio={audio => this.audio = audio}
           updateTime={() => this.updateTime()}
           showTimestamp={this.state.showTimestamp}
-          playbackRate={this.state.playbackRate}
-          setPlaybackRate={rate => this.setState({ playbackRate: rate })}
+          playbackRate={this.audio ? this.audio.playbackRate : 1}
           checkMode={this.state.checkMode}
         />
         <aside

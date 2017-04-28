@@ -1,4 +1,4 @@
-const cacheName = "akari-lrc-maker-2017.04.28";
+const cacheName = "akari-lrc-maker-2017.05.01-2";
 const urlsToCache = [
   "./",
   "dist/app.css",

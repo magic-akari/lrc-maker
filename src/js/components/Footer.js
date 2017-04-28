@@ -11,7 +11,6 @@ const Footer = (
     setAudio,
     showTimestamp,
     playbackRate = 1,
-    setPlaybackRate,
     textareaFocused,
     checkMode = false
   }
@@ -28,7 +27,12 @@ const Footer = (
         className="app-audio"
         controls="controls"
         onTimeUpdate={updateTime}
-        onRateChange={e => setPlaybackRate(e.target.playbackRate)}
+        onError={e => {
+          if (confirm("音频地址加载失败，请确认音频url是否可用")) {
+            history.pushState({}, document.title, window.location.href);
+            window.location.href = e.target.src;
+          }
+        }}
       />
     </footer>
   );

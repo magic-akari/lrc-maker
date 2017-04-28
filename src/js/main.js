@@ -35,14 +35,12 @@ console.log(
   "欢迎发送 pull request: https://github.com/hufan-Akari/LRC-MAKER/pull/new/master"
 );
 
-if ("serviceWorker" in navigator) {
+let url = new URL(window.location);
+if ("serviceWorker" in navigator && url.searchParams.get("audiosrc") === null) {
   navigator.serviceWorker.register("./sw.js").then(
     registration => {
       // Registration was successful
-      console.log(
-        "ServiceWorker 成功注册(｡･ω･｡)ﾉ: ",
-        registration.scope
-      );
+      console.log("ServiceWorker 成功注册(｡･ω･｡)ﾉ: ", registration.scope);
     },
     err => {
       // registration failed :(

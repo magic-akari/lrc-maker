@@ -2,13 +2,24 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 
-const appConfig = {
+const PORT = 4000;
+
+module.exports = {
   entry: {
-    app: "./src/js/main.js"
+    app: [
+      `webpack-dev-server/client?http://0.0.0.0:${PORT}`,
+      "webpack/hot/only-dev-server",
+      "./src/js/main.js"
+    ]
   },
   output: {
-    path: path.resolve(__dirname, "gh-pages/dist"),
+    path: path.resolve(__dirname, "gh-pages"),
+    publicPath: "/dist/",
     filename: "[name].js"
+  },
+  devServer: {
+    port: PORT,
+    hot: true
   },
   module: {
     rules: [
@@ -31,25 +42,9 @@ const appConfig = {
     react: "window.React",
     "react-dom": "window.ReactDOM"
   },
-  plugins: [new ExtractTextPlugin("app.css")]
-};
-
-const vendorConfig = {
-  entry: {
-    React: "react",
-    ReactDOM: "react-dom"
-  },
-  output: {
-    path: path.resolve(__dirname, "gh-pages/dist"),
-    filename: "[name].js",
-    library: "[name]"
-  },
+  devtool: "source-map",
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ["ReactDOM", "React"],
-      minChunks: Infinity
-    })
+    new ExtractTextPlugin("app.css"),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
-
-module.exports = [vendorConfig, appConfig];
