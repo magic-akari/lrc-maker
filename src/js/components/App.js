@@ -40,9 +40,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let audioSrc = /(^|\?|&)audiosrc=(.*)(&|$)/.exec(location.search);
-    if (audioSrc) {
-      this.setState({ audioSrc: audioSrc[2] });
+    let url = new URL(window.location);
+    let audioSrc = url.searchParams.get("audiosrc");
+
+    if ("serviceWorker" in navigator && audioSrc === null) {
+      navigator.serviceWorker.register("./sw.js").then(
+        registration => {
+          // Registration was successful
+          console.log("ServiceWorker 成功注册(｡･ω･｡)ﾉ: ", registration.scope);
+        },
+        err => {
+          // registration failed :(
+          console.log("ServiceWorker 注册失败ಥ_ಥ: ", err);
+        }
+      );
+    }
+
+    if (audioSrc !== null) {
+      this.setState({ audioSrc });
     }
 
     Mousetrap.bind("?", e =>
