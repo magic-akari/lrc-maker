@@ -399,23 +399,6 @@ class App extends Component {
             <li className="app-aside-li">
               <button
                 className="app-aside-button"
-                onClick={() => {
-                  let url = prompt("请输入外源音频");
-                  if (url) {
-                    this.setState({
-                      audioSrc: url,
-                      showMask: false,
-                      showAside: false
-                    });
-                  }
-                }}
-              >
-                拉取外源音频
-              </button>
-            </li>
-            <li className="app-aside-li">
-              <button
-                className="app-aside-button"
                 onClick={() =>
                   this.setState({
                     showAbout: true,

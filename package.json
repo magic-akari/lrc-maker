@@ -40,7 +40,7 @@
     "normalize.css": "^5.0.0",
     "static-react": "^3.2.0",
     "style-loader": "^0.13.2",
-    "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.2"
+    "webpack": "^2.5.0",
+    "webpack-dev-server": "^2.4.5"
   }
 }

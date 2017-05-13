@@ -24,9 +24,12 @@ class Editor extends Component {
           </button>
           <button
             className="tool-bar-button"
-            onClick={() => this.textarea.select()}
+            onClick={() => {
+              this.textarea.select();
+              document.execCommand("copy");
+            }}
           >
-            全选
+            全选复制
           </button>
           <a
             ref={a => this.download = a}
