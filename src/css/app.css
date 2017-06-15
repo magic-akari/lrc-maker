@@ -50,20 +50,15 @@ shortcuts {
 .app-root {
     display: flex;
     flex-direction: column;
+    padding-top: 68px;
+    padding-bottom: 100px;
+    min-height: 70%;
 }
 
 .app-header, .app-footer {
     position: fixed;
-    position: -webkit-sticky;
-    position: sticky;
     flex: none;
     width: 100%;
-}
-
-.no-csspositionsticky .app-root {
-    padding-top: 68px;
-    padding-bottom: 100px;
-    min-height: 70%;
 }
 
 .app-header {

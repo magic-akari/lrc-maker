@@ -9,7 +9,7 @@ import Creator from "./Creator";
 import DragingPage from "./DraggingPage";
 import LRC from "../lrc";
 import jump from "jump.js";
-import Mousetrap from "mousetrap";
+const Mousetrap = require("mousetrap");
 
 const playbackRateList = [0.25, 0.5, 0.66, 0.8, 1.0, 1.25, 1.5, 2.0, 4.0];
 
