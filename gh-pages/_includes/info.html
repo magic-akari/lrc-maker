@@ -1,0 +1,5 @@
+<script>
+  window.app_version = '{{ include.app_version }}';
+  window.update_time = '{{ site.time | date_to_long_string }}';
+  window.build_revision = '{{ site.github.build_revision }}';
+</script>

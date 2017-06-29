@@ -1,50 +1,29 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const webpack = require("webpack");
 const path = require("path");
-
-const PORT = 4000;
+const webpack = require("webpack");
+const pathToNodeModules = path.resolve(__dirname, "node_modules");
 
 module.exports = {
   entry: {
-    app: [
-      `webpack-dev-server/client?http://0.0.0.0:${PORT}`,
-      "webpack/hot/only-dev-server",
-      "./src/js/main.js"
-    ]
+    app: ["Mousetrap", "./src/js/index.js"]
   },
+
   output: {
-    path: path.resolve(__dirname, "gh-pages"),
-    publicPath: "/dist/",
+    path: path.resolve(__dirname, "dev/dist"),
     filename: "[name].js"
   },
-  devServer: {
-    port: PORT,
-    hot: true
-  },
+
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ["babel-loader"],
-        exclude: /node_modules/,
-        include: __dirname
-      },
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader?minimize=true"
-        })
+        include: path.resolve(__dirname, "src"),
+        exclude: [pathToNodeModules]
       }
     ]
   },
-  externals: {
-    react: "window.React",
-    "react-dom": "window.ReactDOM"
-  },
-  devtool: "source-map",
-  plugins: [
-    new ExtractTextPlugin("app.css"),
-    new webpack.HotModuleReplacementPlugin()
-  ]
+
+  resolve: {
+    mainFields: ["jsnext:main", "main"]
+  }
 };

@@ -1,0 +1,79 @@
+@import "var";
+
+.loading-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: 10px;
+  width: 100%;
+
+  p {
+    font-size: 2rem;
+  }
+}
+
+.loading {
+  height: 100px;
+  width: 100px;
+  position: relative;
+}
+
+.loading::before, .loading::after {
+  content: " ";
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  background: $theme-color;
+  opacity: 0.5;
+}
+
+.loading::before {
+  animation: loading 2s 0s infinite ease-in-out;
+}
+
+.loading::after {
+  animation: loading 2s -1s infinite ease-in-out;
+}
+
+@keyframes loading {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+.dot {
+  display: inline-block;
+  height: 1em;
+  line-height: 1;
+  text-align: left;
+  vertical-align: -.25em;
+  overflow: hidden;
+}
+
+.dot::before {
+  display: block;
+  content: '...\A..\A.';
+  white-space: pre-wrap;
+  animation: dot 3s infinite step-start both;
+}
+
+@keyframes dot {
+  33% {
+    transform: translateY(-2em);
+  }
+  66% {
+    transform: translateY(-1em);
+  }
+}

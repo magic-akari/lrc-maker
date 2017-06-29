@@ -1,0 +1,60 @@
+@import "var";
+
+.app-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(40, 40, 40, 0.85);
+  border-bottom: 1px solid $theme-color;
+  transition: all 500ms ease;
+  color: white;
+  z-index: 233;
+  -webkit-user-select: none;
+  user-select: none;
+
+  .app-title {
+    font-size: 1.5rem;
+  }
+
+  .app-nav {
+    a {
+      border: solid 2px transparent;
+      border-radius: 2px;
+      color: white;
+      padding: .5rem;
+      display: inline-flex;
+      align-items: center;
+      transition: all 500ms ease;
+
+      svg {
+        transition: all 500ms ease;
+        margin: 0 4px;
+      }
+
+      &.active {
+        border-bottom-color: $second-color;
+      }
+
+    }
+
+    &:hover a {
+      border-bottom-color: transparent;
+
+      &:hover {
+        border-bottom-color: $second-color;
+      }
+    }
+
+  }
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: .5rem auto;
+  }
+}
+
+.app-header:hover {
+  box-shadow: 0 1px 10px $theme-color;
+}

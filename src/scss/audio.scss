@@ -1,0 +1,252 @@
+@import "var";
+
+audio {
+  width: 100%;
+}
+
+.app-audio {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 2px;
+  -webkit-user-select: none;
+  user-select: none;
+  justify-content: space-between;
+
+  button {
+    color: #eee;
+  }
+
+  background: rgba(40, 40, 40, 0.85);
+  color: #eee;
+
+  section {
+    margin: 0 5px;
+  }
+
+  .slider {
+    margin: 0 5px;
+  }
+
+  .time-line-section {
+    flex: 9 0 auto;
+    display: inline-flex;
+    align-items: center;
+
+    .time-line-slider {
+      flex: 1 0 auto;
+      min-width: 40vw;
+    }
+  }
+
+  .audio-extra-section {
+    display: inline-flex;
+    align-items: center;
+    flex: 1 1 auto;
+    width: auto;
+
+    .slider {
+      flex: 1 0 auto;
+    }
+  }
+}
+
+.slider {
+  min-width: 100px;
+  height: 32px;
+}
+
+input[type=range] {
+  height: 32px;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+  padding: 0;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  height: 32px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+input[type=range]::-moz-range-track {
+  height: 32px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+input[type=range]::-ms-track {
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+  top: -6px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  border: 1px solid #eeeeee;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: $theme-color;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: 8px;
+  z-index: 10;
+  transition: box-shadow 500ms ease;
+
+  &:hover {
+    box-shadow: 0 0 4px #eee, 0 0 0 #eee;
+  }
+}
+
+input[type=range]::-moz-range-thumb {
+  border: 1px solid #eeeeee;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: $theme-color;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: 8px;
+  z-index: 10;
+  transition: box-shadow 500ms ease;
+
+  &:hover {
+    box-shadow: 0 0 4px #eee, 0 0 0 #eee;
+  }
+}
+
+input[type=range]::-ms-fill-lower {
+  background: transparent;
+}
+
+input[type=range]::-ms-fill-upper {
+  background: transparent;
+}
+
+input[type=range]::-ms-thumb {
+  margin-top: -1px;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: $theme-color;
+  border: 1px solid #eeeeee;
+}
+
+input[type=range]::-ms-thumb:active {
+  border: 1px solid #eeeeee;
+}
+
+input[type=range]::-ms-tooltip {
+  display: none;
+}
+
+.slider {
+  position: relative;
+}
+
+.slider > progress, .slider > input {
+  position: absolute;
+  width: 100%;
+}
+
+progress {
+  $progress-meter-color: $theme-color;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  border-radius: 2px;
+  margin: 14px 0;
+  height: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  background: #eee;
+  vertical-align: 0;
+  transition: box-shadow 500ms ease;
+  color: $progress-meter-color;
+}
+
+.slider:hover progress {
+  box-shadow: 0 0 4px #eee, 0 0 0 #eee;
+}
+
+progress::-moz-progress-bar {
+  $progress-meter-color: $theme-color;
+  background-color: $progress-meter-color;
+  border-radius: 2px;
+  background-image: linear-gradient(
+                  -45deg,
+                  rgba(#fff, 0) 0,
+                  rgba(#fff, 0) 50%,
+                  rgba(#fff, 0.75) 62.5%,
+                  rgba(#fff, 0) 75%
+  );
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress::-webkit-progress-value {
+  $progress-meter-color: $theme-color;
+
+  border-radius: 2px;
+  background-size: 40px 40px, 100% 100%, 100% 100%;
+
+  background-color: $progress-meter-color;
+  background-image: linear-gradient(
+                  -45deg,
+                  rgba(#fff, 0) 0,
+                  rgba(#fff, 0) 50%,
+                  rgba(#fff, 0.75) 62.5%,
+                  rgba(#fff, 0) 75%
+  );
+  background-repeat: repeat-x;
+
+}
+
+.playing, .slider:active {
+  $progress-animation-duration: 0.75s;
+
+  input[type=range]::-webkit-slider-thumb {
+    animation: slider-thumb 1s linear infinite;
+  }
+
+  progress::-webkit-progress-value {
+    animation: progress $progress-animation-duration linear infinite;
+  }
+
+}
+
+@keyframes progress {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 0;
+  }
+}
+
+@keyframes slider-thumb {
+  0% {
+    box-shadow: 0;
+  }
+  50% {
+    box-shadow: 0 0 4px #eee, 0 0 0 #eee;
+  }
+}

@@ -1,55 +1,55 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const webpack = require("webpack");
 const path = require("path");
+const webpack = require("webpack");
+const BabiliPlugin = require("babili-webpack-plugin");
+const pathToNodeModules = path.resolve(__dirname, "node_modules");
+const pathToPreact = path.resolve(
+  pathToNodeModules,
+  "preact/dist/preact.min.js"
+);
+const pathToMobx = path.resolve(pathToNodeModules, "mobx/lib/mobx.min.js");
+const pathToMousetrap = path.resolve(
+  pathToNodeModules,
+  "mousetrap/mousetrap.min.js"
+);
+const pathToGhPages = path.resolve(__dirname, "gh-pages");
 
-const appConfig = {
+module.exports = {
   entry: {
-    app: "./src/js/main.js"
+    app: [pathToMousetrap, "./src/js/index.js"]
   },
+
   output: {
     path: path.resolve(__dirname, "gh-pages/dist"),
     filename: "[name].js"
   },
+
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ["babel-loader"],
-        exclude: /node_modules/,
-        include: __dirname
-      },
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader?minimize=true"
-        })
+        include: path.resolve(__dirname, "src"),
+        exclude: [pathToNodeModules, pathToGhPages]
       }
     ]
   },
-  externals: {
-    react: "window.React",
-    "react-dom": "window.ReactDOM"
-  },
-  plugins: [new ExtractTextPlugin("app.css")]
-};
 
-const vendorConfig = {
-  entry: {
-    React: "react",
-    ReactDOM: "react-dom"
+  resolve: {
+    alias: {
+      preact: pathToPreact,
+      mobx: pathToMobx,
+      Mousetrap: pathToMousetrap
+    },
+    mainFields: ["jsnext:main", "main"]
   },
-  output: {
-    path: path.resolve(__dirname, "gh-pages/dist"),
-    filename: "[name].js",
-    library: "[name]"
-  },
+
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ["ReactDOM", "React"],
-      minChunks: Infinity
-    })
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new BabiliPlugin()
   ]
 };
-
-module.exports = [vendorConfig, appConfig];

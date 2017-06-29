@@ -1,0 +1,75 @@
+@import "var";
+
+.synchronizer {
+  width: 100%;
+}
+
+.lyric-list {
+  margin: 0;
+  padding: 0;
+  transition: transform 500ms ease, padding 500ms ease;
+}
+
+.lyric-line {
+  position: relative;
+  list-style: none;
+  font-size: 1.2rem;
+  border: solid 1px transparent;
+  padding: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  transition: font-size 500ms ease-in-out, padding 500ms ease;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  .lyric-text::after {
+    content: "";
+    position: relative;
+    display: inline-block;
+  }
+
+  &:nth-child(2n+1) {
+    background-color: rgba(232, 232, 232, 0.5);
+  }
+
+  &.select {
+    border-bottom-color: $second-color;
+  }
+  &.highlight {
+    color: $second-color;
+  }
+}
+
+.lyric {
+  pointer-events: none;
+  margin: .5rem 0;
+  word-break: break-all;
+  padding-left: 8rem;
+  @media screen and (max-width: 768px) {
+    padding-left: 6rem;
+  }
+}
+
+.lyric-time {
+  font-family: Roboto, sans-serif;
+}
+
+.error .lyric-time {
+  color: red;
+}
+
+.current-time-tag {
+  height: 1rem;
+}
+
+.current-time-tag::before {
+  content: attr(data-time);
+  font-family: Roboto, sans-serif;
+  position: absolute;
+  -webkit-user-select: none;
+  user-select: none;
+}

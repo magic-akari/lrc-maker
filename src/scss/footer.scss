@@ -1,0 +1,27 @@
+@import "var";
+
+.app-footer{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+.space_button{
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  background: rgba(40, 40, 40, 0.8);
+  border: dashed 1px white;
+  color: white;
+  -webkit-user-select: none;
+  user-select: none;
+
+  &:hover{
+    color: $theme-color;
+  }
+
+  &:active{
+    background: rgba(40, 40, 40, 0.9);
+    border: solid 1px white;
+  }
+}

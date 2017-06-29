@@ -1,0 +1,26 @@
+.drag_and_drop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  -webkit-user-select: none;
+  user-select: none;
+
+  p {
+    font-size: 2rem;
+    animation: drag_and_drop 2s ease-in-out;
+  }
+}
+
+@keyframes drag_and_drop {
+  0% {
+    transform: translate(0, 1rem);
+  }
+  50% {
+    transform: translate(0, -.5rem);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}

@@ -1,0 +1,141 @@
+@import "normalize.css/normalize";
+@import "var";
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "pkna" 1, "kern" 1;
+  -moz-font-feature-settings: "pkna" 1, "kern" 1;
+  -o-font-feature-settings: "pkna" 1, "kern" 1;
+  font-feature-settings: "pkna" 1, "kern" 1;
+  font-kerning: normal;
+  background-color: hsla(0, 0%, 96%, .81);
+}
+
+html, body, main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: $black;
+}
+
+body, main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.app-content {
+  flex: 1 0 auto;
+  margin: auto;
+  padding-top: 60px;
+  padding-bottom: 80px;
+  display: flex;
+  max-width: 1024px;
+  width: 100%;
+}
+
+button {
+  border: 0;
+  background: 0;
+  cursor: pointer;
+  padding: 0 .5rem;
+  color: currentcolor;
+}
+
+a {
+  text-decoration: none;
+}
+
+:focus {
+  outline: none;
+}
+
+[disabled] {
+  opacity: 0.5;
+}
+
+.wrapper {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  transition: padding 500ms ease;
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
+}
+
+.extra_button_group {
+  position: fixed;
+  right: 1rem;
+  bottom: 88px;
+  z-index: 100;
+}
+
+.iconbutton {
+  color: $white;
+  margin: 5px;
+  overflow: visible;
+  line-height: 3.6rem;
+  border: solid 0 $second-color;
+  transition: all .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+  width: 4rem;
+  height: 4rem;
+  font-size: 2.4rem;
+  border-radius: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+  cursor: pointer;
+
+  svg {
+    display: inline-block;
+  }
+
+  background-color: $second-color;
+  &:hover {
+    box-shadow: 0 3px 10px -1px rgba(0, 0, 0, .5), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+  }
+
+  &.locked {
+    color: $black;
+    background-color: $white;
+    border: solid 1px $second-color;
+  }
+}
+
+// 垃圾 Safari
+button.iconbutton::before,
+button.iconbutton::after {
+  content: '';
+  flex: 1 0 auto;
+}
+
+svg {
+  //display: block;
+  //margin: auto;
+  fill: currentColor;
+}
+
+@media screen and (max-width: 414px) {
+  .option {
+    display: none;
+  }
+}
+
+@import "header";
+@import "footer";
+@import "audio";
+@import "synchronizer";
+@import "editor";
+@import "preferences";
+@import "loading";
+@import "notfound";
+@import "draganddrop";

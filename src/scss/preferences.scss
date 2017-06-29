@@ -1,0 +1,149 @@
+@import "var";
+
+.preferences {
+
+  padding: 2rem;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: padding 500ms ease;
+  @media screen and (max-width: 768px ) {
+    padding: 0;
+  }
+
+  button {
+    padding: 0;
+
+    &:active {
+      padding-left: .5rem;
+    }
+  }
+
+  section {
+    padding: 1rem;
+  }
+
+  section:nth-child(2n+1) {
+    background-color: $alpha-white;
+  }
+
+  .section-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 768px;
+    margin: auto;
+    word-break: break-all;
+  }
+
+  .label-switch {
+    $switch-width: 70px;
+    $switch-padding: 2px;
+    $switch-height: 32px;
+    $switch-radius: $switch-height;
+    $knob-size: $switch-height - ($switch-padding * 2);
+    $knob-radius: $switch-height - ($switch-padding * 2);
+    $knob-width: $knob-size;
+
+    border-radius: $switch-radius;
+    cursor: pointer;
+    display: inline-block;
+    height: $switch-height;
+    position: relative;
+    width: $switch-width;
+    input[type="checkbox"] {
+      display: none;
+      & + .checkbox {
+        background: #e8e8e8;
+        border: 0;
+        border-radius: $switch-radius;
+        cursor: pointer;
+        height: $switch-height;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        transition: all 0.3s ease;
+        width: $switch-width;
+        z-index: 0;
+        &::before {
+          position: absolute;
+          top: 2px;
+          right: 0;
+          bottom: 0;
+          left: 2px;
+          background: white;
+          border-radius: $switch-radius;
+          content: "";
+          height: $knob-radius;
+          transform: scale(1);
+          transition: all 0.3s ease;
+          width: $switch-width - ($switch-padding * 2);
+          z-index: 1;
+        }
+
+        &::after {
+          position: absolute;
+          top: 2px;
+          right: 0;
+          bottom: 0;
+          left: 2px;
+          height: 28px;
+          width: 28px;
+          background: white;
+          border-radius: $knob-radius;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+          content: "";
+          transition: all 0.3s ease;
+          z-index: 2;
+        }
+      }
+
+      &:checked + .checkbox {
+        background: $second-color;
+        &::before {
+          transform: scale(0);
+        }
+
+        &::after {
+          left: $switch-width - $knob-width - ($switch-padding);
+        }
+
+      }
+    }
+  }
+
+  .stepper {
+    display: flex;
+
+    input {
+      width: 20px;
+      text-align: center;
+      border: 1px solid #D7DBDD;
+      padding: 0 10px;
+      border-radius: 0;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 5px 15px;
+      color: #FFFFFF;
+      background-color: $second-color;
+      font-size: 12px;
+      border: 1px solid $theme-color;
+      border-radius: 4px;
+    }
+
+    .addOnLeft {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .addOnRight {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+}
