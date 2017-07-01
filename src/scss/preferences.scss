@@ -4,8 +4,10 @@
 
   padding: 2rem;
   width: 100%;
-  user-select: none;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   transition: padding 500ms ease;
   @media screen and (max-width: 768px ) {
     padding: 0;
@@ -34,6 +36,10 @@
     max-width: 768px;
     margin: auto;
     word-break: break-all;
+
+    a, a:visited {
+      color: $second-color;
+    }
   }
 
   .label-switch {
