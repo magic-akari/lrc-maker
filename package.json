@@ -3,11 +3,11 @@
   "version": "2.0.0",
   "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
   "scripts": {
-    "prebuild": "rm -rf ./gh-pages && mkdir ./gh-pages",
+    "prebuild": "rm -rf ./gh-pages/*",
     "build": "export NODE_ENV=production; npm run render && npm run sass && npm run webpack",
     "postbuild": "cp -rf ./src/static/* ./gh-pages/",
 
-    "predev": "rm -rf ./dev && mkdir ./dev",
+    "predev": "rm -rf ./dev/*",
     "dev": "npm run render:dev && npm run sass:dev & npm run webpack:dev",
     "postdev": "cp -rf ./src/static/* ./dev/",
 

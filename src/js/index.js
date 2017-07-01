@@ -40,30 +40,33 @@ if (!String.prototype.padStart) {
 action(() => (appState.pageState = appState.PageStates.normal))();
 render(App(), document.body, document.body.firstElementChild);
 
-document.addEventListener(
+document.body.addEventListener(
   "dragenter",
-  action(() => {
+  action(e => {
     appState.pageState = appState.PageStates.dragging;
+    return false;
   }),
   false
 );
-document.addEventListener(
+document.body.addEventListener(
   "dragover",
   e => {
     e.stopPropagation();
     e.preventDefault();
     e.dataTransfer.dropEffect = "copy";
+    return false;
   },
   false
 );
-document.addEventListener(
+document.body.addEventListener(
   "dragleave",
-  action(() => {
+  action(e => {
     appState.pageState = appState.PageStates.normal;
+    return false;
   }),
   false
 );
-document.addEventListener(
+document.body.addEventListener(
   "drop",
   action(e => {
     e.stopPropagation();
@@ -82,6 +85,7 @@ document.addEventListener(
       }
       appState.pageState = appState.PageStates.normal;
     }
+    return false;
   }),
   false
 );
