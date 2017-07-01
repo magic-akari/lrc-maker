@@ -20,7 +20,7 @@ class DownLoadButton extends Component {
       this.lrcString = lrcString;
       URL.revokeObjectURL(this.href);
       this.href = URL.createObjectURL(
-        new Blob([lrcString], { type: "text/plain" })
+        new Blob([lrcString], { type: "text/plain;charset=UTF-8" })
       );
     }
   }
