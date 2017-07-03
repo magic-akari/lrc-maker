@@ -10,6 +10,7 @@ const Root = () =>
       <meta charset="utf-8" />
       <title>灯里的歌词滚动姬</title>
       <meta name="description" content="灯里的歌词滚动姬｜迄今为止最易用的歌词制作工具" />
+      <meta name="keywords" content="lrc maker,lrc generate,歌词制作,歌词滚动" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="renderer" content="webkit" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
