@@ -7,6 +7,7 @@ import { observer } from "../lib/observer.js";
 import { preferences } from "../store/preferences.js";
 import { appState } from "../store/appState.js";
 import { Router, router } from "../store/router.js";
+
 @observer
 class ExtraStyle extends Component {
   render() {

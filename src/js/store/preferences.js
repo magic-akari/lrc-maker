@@ -3,7 +3,6 @@
  */
 "use strict";
 import { observable, action, toJS, computed } from "mobx";
-import { appState } from "./appState.js";
 
 class Preferences {
   @observable trim = true;
@@ -24,13 +23,7 @@ class Preferences {
   constructor() {
     try {
       const p = JSON.parse(localStorage.getItem(Preferences.storageName));
-      this.trim = p.trim;
-      this.fixed = p.fixed;
-      this.space_between_tag_text = p.space_between_tag_text;
-      this.use_browser_built_in_audio_player =
-        p.use_browser_built_in_audio_player;
-      this.use_space_button_on_screen = p.use_space_button_on_screen;
-      this.night_mode = p.night_mode;
+      for (let [key, value] of Object.entries(p)) this[key] = value;
     } catch (e) {}
   }
 

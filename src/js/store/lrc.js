@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 18/06/2017.
  */
 "use strict";
-import { observable, computed, action, createTransformer, autorun } from "mobx";
+import { observable, computed } from "mobx";
 import { preferences } from "./preferences.js";
 import { appState } from "./appState.js";
 

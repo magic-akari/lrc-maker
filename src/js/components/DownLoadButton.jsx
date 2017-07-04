@@ -4,7 +4,7 @@
 "use strict";
 import { Component } from "preact";
 import { lrc } from "../store/lrc.js";
-import { observable, action, computed, createTransformer } from "mobx";
+import { observable, action } from "mobx";
 import { observer } from "../lib/observer.js";
 import { DownloadSvg } from "./SVG.jsx";
 

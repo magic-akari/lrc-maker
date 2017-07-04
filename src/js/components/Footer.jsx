@@ -4,7 +4,7 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "../lib/observer.js";
-import { action, observable, computed } from "mobx";
+import { action, computed } from "mobx";
 import { Audio } from "./Audio.jsx";
 import { appState } from "../store/appState.js";
 import { preferences } from "../store/preferences.js";

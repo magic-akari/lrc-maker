@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 16/06/2017.
  */
 "use strict";
-import { Reaction, observable, action, useStrict } from "mobx";
+import { Reaction } from "mobx";
 
 function augment(object, key, func) {
   const origMethod = object[key];

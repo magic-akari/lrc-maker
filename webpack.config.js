@@ -2,11 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const BabiliPlugin = require("babili-webpack-plugin");
 const pathToNodeModules = path.resolve(__dirname, "node_modules");
-const pathToPreact = path.resolve(
-  pathToNodeModules,
-  "preact/dist/preact.min.js"
-);
-const pathToMobx = path.resolve(pathToNodeModules, "mobx/lib/mobx.min.js");
 const pathToMousetrap = path.resolve(
   pathToNodeModules,
   "mousetrap/mousetrap.min.js"
@@ -35,12 +30,7 @@ module.exports = {
   },
 
   resolve: {
-    alias: {
-      preact: pathToPreact,
-      mobx: pathToMobx,
-      Mousetrap: pathToMousetrap
-    },
-    mainFields: ["jsnext:main", "main"]
+    mainFields: ["jsnext:main", "module", "main"]
   },
 
   plugins: [
