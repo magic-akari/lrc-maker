@@ -8,12 +8,10 @@ import { action } from "mobx";
 import { appState } from "./store/appState.js";
 import { lrc } from "./store/lrc.js";
 import { Router } from "./store/router.js";
-// import { initDevTools } from "/Users/akari/Desktop/lrc-maker/node_modules/preact/devtools/devtools.js";
 import { polyfill as smoothscroll } from "smoothscroll-polyfill";
 import App from "./components/App.jsx";
 
 smoothscroll();
-// initDevTools();
 
 window.h = h;
 const router = new Router();

@@ -86,12 +86,14 @@ class Audio extends Component {
 
   @computed
   get currentTime() {
+    if (this._currentTime < 0) return 0;
+    if (this._currentTime > this.duration) return this.duration;
     return this._currentTime;
   }
 
   @computed
   get currentTime_int() {
-    return ~~this._currentTime;
+    return ~~this.currentTime;
   }
 
   /**
