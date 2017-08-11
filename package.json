@@ -1,27 +1,22 @@
 {
   "name": "lrc-maker",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
   "scripts": {
     "prebuild": "rm -rf ./gh-pages/*",
     "build": "export NODE_ENV=production; npm run render && npm run sass && npm run webpack",
     "postbuild": "cp -rf ./src/static/* ./gh-pages/",
-
     "predev": "rm -rf ./dev/*",
     "dev": "npm run render:dev && npm run sass:dev & npm run webpack:dev",
     "postdev": "cp -rf ./src/static/* ./dev/",
-
-    "webpack:dev":"webpack --config webpack.dev.config.js --progress --colors",
+    "webpack:dev": "webpack --config webpack.dev.config.js --progress --colors",
     "sass:dev": "node-sass --include-path=node_modules ./src/scss/app.scss ./dev/dist/app.css",
     "render:dev": "node ./bin/render.js > ./dev/index.html",
-
     "webpack:watch": "webpack -w --config webpack.dev.config.js --progress --colors",
     "sass:watch": "node-sass -w -r --include-path=node_modules ./src/scss/app.scss ./dev/dist/app.css",
-
     "webpack": "webpack && webpack --config webpack.fallback.config.js",
     "sass": "node-sass --include-path=node_modules --output-style=compressed ./src/scss/app.scss gh-pages/dist/app.css",
     "render": "export NODE_ENV=production; echo \"---\n---\n$(node ./bin/render.js)\" > ./gh-pages/index.html",
-
     "prettier": "prettier --write \"src/**/*.js{,x}\" \"bin/*.js\" \"webpack.*.js\""
   },
   "keywords": [
@@ -40,26 +35,26 @@
   "homepage": "https://github.com/hufan-Akari/lrc-maker#readme",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
-    "mobx": "^3.1.15",
+    "mobx": "^3.2.2",
     "mousetrap": "^1.6.1",
     "normalize.css": "^7.0.0",
-    "preact": "^8.1.0",
-    "smoothscroll-polyfill": "^0.3.5"
+    "preact": "^8.2.1",
+    "smoothscroll-polyfill": "^0.3.6"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
-    "babel-loader": "^7.0.0",
+    "babel-loader": "^7.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.5.2",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
     "babili-webpack-plugin": "^0.1.2",
     "node-sass": "^4.5.3",
     "preact-render-to-string": "^3.6.3",
-    "prettier": "^1.4.4",
-    "webpack": "^3.0.0"
+    "prettier": "^1.5.3",
+    "webpack": "^3.5.3"
   }
 }
