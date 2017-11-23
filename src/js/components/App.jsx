@@ -7,13 +7,15 @@ import { Header } from "./Header.jsx";
 import { Content } from "./Content.jsx";
 import { Footer } from "./Footer.jsx";
 import { ExtraStyle } from "./ExtraStyle.jsx";
+import { Loading } from "./Loading.jsx";
 
-const App = () =>
+const App = ({ loading }) => (
   <main className="app">
     <Header />
-    <Content />
+    {loading ? Loading() : <Content />}
     <Footer />
     <ExtraStyle />
-  </main>;
+  </main>
+);
 
 export default App;

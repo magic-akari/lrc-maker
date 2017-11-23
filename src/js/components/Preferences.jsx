@@ -3,33 +3,14 @@
  */
 "use strict";
 import { Component } from "preact";
-import { observer } from "../lib/observer.js";
-import { preferences } from "../store/preferences.js";
+import { observer } from "preact-mobx-observer";
+import { preferences as pref } from "../store/preferences.js";
+import languages from "../../../languages/index.js";
 
 @observer
 class Preferences extends Component {
-  constructor(props) {
-    super(props);
-
-    try {
-      document.addEventListener(
-        "visibilitychange",
-        () => {
-          if (document.hidden) {
-            preferences.save();
-          }
-        },
-        false
-      );
-
-      window.addEventListener("beforeunload", () => {
-        preferences.save();
-      });
-    } catch (e) {}
-  }
-
-  componentWillUnmount() {
-    preferences.save();
+  handleLanguageSelect(e) {
+    pref.language = e.target.value;
   }
 
   render() {
@@ -37,31 +18,43 @@ class Preferences extends Component {
       <div className="preferences">
         <section>
           <div className="section-group">
-            <div>app 版本</div>
-            <div>
-              {window.app_version}
+            <div>{pref.i18n["preferences"]["language"]}</div>
+            <div className="lang-select">
+              <select onChange={this.handleLanguageSelect}>
+                {Object.entries(languages).map(([key, value]) => (
+                  <option
+                    key={key}
+                    value={key}
+                    selected={pref.language === key}
+                  >
+                    {value["language-name"]}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </section>
         <section>
           <div className="section-group">
-            <div>app 更新时间</div>
-            <div>
-              {window.update_time}
-            </div>
+            <div>{pref.i18n["preferences"]["version"]}</div>
+            <div>{window.app_version}</div>
           </div>
         </section>
         <section>
           <div className="section-group">
-            <div>build revision</div>
-            <div>
-              {window.build_revision}
-            </div>
+            <div>{pref.i18n["preferences"]["update-time"]}</div>
+            <div>{window.update_time}</div>
           </div>
         </section>
         <section>
           <div className="section-group">
-            <div>项目开源地址</div>
+            <div>{pref.i18n["preferences"]["build-revision"]}</div>
+            <div>{window.build_revision}</div>
+          </div>
+        </section>
+        <section>
+          <div className="section-group">
+            <div>{pref.i18n["preferences"]["github-repo"]}</div>
             <a href="https://git.io/lrc-maker" target="_blank">
               Github
             </a>
@@ -69,7 +62,7 @@ class Preferences extends Component {
         </section>
         <section>
           <div className="section-group">
-            <div>关于/帮助</div>
+            <div>{pref.i18n["preferences"]["help"]}</div>
             <a
               href="https://github.com/hufan-akari/lrc-maker/wiki"
               target="_blank"
@@ -80,13 +73,13 @@ class Preferences extends Component {
         </section>
         <section>
           <div className="section-group">
-            <div>时间标签小数点位数</div>
+            <div>{pref.i18n["preferences"]["time-tag-decimals"]}</div>
             <div class="stepper">
-              <button class="addOnLeft" onClick={preferences.minus_fixed}>
+              <button class="addOnLeft" onClick={pref.minus_fixed}>
                 -
               </button>
-              <input type="text" value={preferences.fixed} />
-              <button class="addOnRight" onClick={preferences.add_fixed}>
+              <input type="text" value={pref.fixed} />
+              <button class="addOnRight" onClick={pref.add_fixed}>
                 +
               </button>
             </div>
@@ -94,12 +87,12 @@ class Preferences extends Component {
         </section>
         <section>
           <label className="section-group">
-            <div>移除歌词两端空白</div>
+            <div>{pref.i18n["preferences"]["trim-line"]}</div>
             <label class="label-switch">
               <input
                 type="checkbox"
-                checked={preferences.trim}
-                onChange={preferences.toggle_trim}
+                checked={pref.trim}
+                onChange={pref.toggle_trim}
               />
               <div class="checkbox" />
             </label>
@@ -107,12 +100,12 @@ class Preferences extends Component {
         </section>
         <section>
           <label className="section-group">
-            <div>时间标签与歌词之间插入空格</div>
+            <div>{pref.i18n["preferences"]["add-space"]}</div>
             <label class="label-switch">
               <input
                 type="checkbox"
-                checked={preferences.space_between_tag_text}
-                onChange={preferences.toggle_space_between_tag_text}
+                checked={pref.space_between_tag_text}
+                onChange={pref.toggle_space_between_tag_text}
               />
               <div class="checkbox" />
             </label>
@@ -120,12 +113,12 @@ class Preferences extends Component {
         </section>
         <section>
           <label className="section-group">
-            <div>使用浏览器内置音频播放器</div>
+            <div>{pref.i18n["preferences"]["built-in-audio"]}</div>
             <label class="label-switch">
               <input
                 type="checkbox"
-                checked={preferences.use_browser_built_in_audio_player}
-                onChange={preferences.toggle_audio_player}
+                checked={pref.use_browser_built_in_audio_player}
+                onChange={pref.toggle_audio_player}
               />
               <div class="checkbox" />
             </label>
@@ -133,12 +126,12 @@ class Preferences extends Component {
         </section>
         <section>
           <label className="section-group">
-            <div>启用虚拟空格键</div>
+            <div>{pref.i18n["preferences"]["space-button-on-screen"]}</div>
             <label class="label-switch">
               <input
                 type="checkbox"
-                checked={preferences.use_space_button_on_screen}
-                onChange={preferences.toggle_space_button}
+                checked={pref.use_space_button_on_screen}
+                onChange={pref.toggle_space_button}
               />
               <div class="checkbox" />
             </label>
@@ -146,12 +139,12 @@ class Preferences extends Component {
         </section>
         <section>
           <label className="section-group">
-            <div>夜间模式</div>
+            <div>{pref.i18n["preferences"]["night-mode"]}</div>
             <label class="label-switch">
               <input
                 type="checkbox"
-                checked={preferences.night_mode}
-                onChange={preferences.toggle_night_mode}
+                checked={pref.night_mode}
+                onChange={pref.toggle_night_mode}
               />
               <div class="checkbox" />
             </label>
@@ -159,7 +152,9 @@ class Preferences extends Component {
         </section>
         <section>
           <div className="section-group">
-            <button onClick={() => localStorage.clear()}>重置app缓存</button>
+            <button onClick={() => localStorage.clear()}>
+              {pref.i18n["preferences"]["clear-cache"]}
+            </button>
           </div>
         </section>
       </div>

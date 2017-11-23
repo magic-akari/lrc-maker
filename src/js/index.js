@@ -4,17 +4,18 @@
 "use strict";
 
 import { render, h } from "preact";
-import { action } from "mobx";
+import { action, useStrict } from "mobx";
 import { appState } from "./store/appState.js";
 import { lrc } from "./store/lrc.js";
-import { Router } from "./store/router.js";
 import { polyfill as smoothscroll } from "smoothscroll-polyfill";
 import App from "./components/App.jsx";
+import { preferences } from "./store/preferences.js";
+import { autorun } from "mobx";
 
 smoothscroll();
 
 window.h = h;
-const router = new Router();
+autorun(() => (document.title = preferences.i18n["app"]["fullname"]));
 
 /**
  * polyfill for padStart
@@ -35,17 +36,9 @@ if (!String.prototype.padStart) {
   };
 }
 
-action(() => (appState.pageState = appState.PageStates.normal))();
-render(App(), document.body, document.body.firstElementChild);
+useStrict(true);
+render(App({ loading: false }), document.body, document.body.firstElementChild);
 
-document.body.addEventListener(
-  "dragenter",
-  action(e => {
-    appState.pageState = appState.PageStates.dragging;
-    return false;
-  }),
-  false
-);
 document.body.addEventListener(
   "dragover",
   e => {
@@ -56,14 +49,7 @@ document.body.addEventListener(
   },
   false
 );
-document.body.addEventListener(
-  "dragleave",
-  action(e => {
-    appState.pageState = appState.PageStates.normal;
-    return false;
-  }),
-  false
-);
+
 document.body.addEventListener(
   "drop",
   action(e => {
@@ -81,29 +67,22 @@ document.body.addEventListener(
         };
         fileReader.readAsText(file);
       }
-      appState.pageState = appState.PageStates.normal;
     }
     return false;
   }),
   false
 );
-console.log(
-  "%c",
-  "padding:50px;line-height:100px;background:url('https://cloud.githubusercontent.com/assets/7829098/25065994/9d4855ea-224c-11e7-930e-7d82f5597e5e.png') no-repeat;"
-);
-
-console.log("欢迎在云音乐关注阿卡琳 Ki⭐️ra http://music.163.com/user/home?id=45441555");
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").then(
     registration => {
       // Registration was successful
       registration.update();
-      console.log("ServiceWorker 成功注册 (｡･ω･｡)ﾉ: ", registration.scope);
+      console.log("ServiceWorker Registed (｡･ω･｡)ﾉ: ", registration.scope);
     },
     err => {
       // registration failed :(
-      console.log("ServiceWorker 注册失败 ಥ_ಥ: ", err);
+      console.log("ServiceWorker registration failed ಥ_ಥ: ", err);
     }
   );
 }

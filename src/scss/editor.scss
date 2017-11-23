@@ -28,7 +28,6 @@ input[type=file] {
   cursor: default;
   flex: 1 1 auto;
   border: 0;
-  transition: all 500ms ease;
   text-align: center;
   display: flex;
   align-items: center;
@@ -88,7 +87,8 @@ input[type=file] {
     margin-left: .5rem;
     border-radius: .25rem;
     border: 1px solid $theme-color;
-    transition: box-shadow 500ms ease-in-out;
+    transition: box-shadow 250ms ease-in-out;
+
     &:hover, &:focus {
       box-shadow: 0 0 10px $theme-color;
     }
@@ -103,10 +103,9 @@ input[type=file] {
   border: 1px solid $theme-color;
   font-size: 1.2rem;
   background-color: rgba(255, 255, 255, 0.8);
-  transition: box-shadow 500ms ease-in-out;
+  transition: box-shadow 250ms ease-in-out;
 
   &:hover, &:focus {
     box-shadow: 0 0 10px $theme-color;
   }
 }
-

@@ -5,18 +5,18 @@
 import { Component } from "preact";
 import { sync } from "./Synchronizer.jsx";
 import { router, Router } from "../store/router.js";
-import { observer } from "../lib/observer.js";
+import { observer } from "preact-mobx-observer";
 import { preferences } from "../store/preferences.js";
 
 @observer
 class SpaceButton extends Component {
   render() {
     return preferences.use_space_button_on_screen &&
-    router.path === Router.synchronizer.path
-      ? <button onClick={sync} className="space_button">
-          space
-        </button>
-      : null;
+      router.path === Router.synchronizer.path ? (
+      <button onClick={sync} className="space_button">
+        space
+      </button>
+    ) : null;
   }
 }
 

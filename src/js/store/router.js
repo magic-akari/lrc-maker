@@ -3,6 +3,7 @@
  */
 "use strict";
 import { observable, action } from "mobx";
+import { preferences as pref } from "./preferences";
 
 class Router {
   constructor() {
@@ -14,13 +15,25 @@ class Router {
   @observable path = "";
 
   static get editor() {
-    return { title: "编辑", path: "#/" };
+    return {
+      name: pref.i18n["app"]["edit"],
+      path: "#/",
+      title: pref.i18n["app"]["editor-tip"]
+    };
   }
   static get synchronizer() {
-    return { title: "打轴", path: "#/synchronizer/" };
+    return {
+      name: pref.i18n["app"]["synchronize"],
+      path: "#/synchronizer/",
+      title: pref.i18n["app"]["synchronizer-tip"]
+    };
   }
   static get preferences() {
-    return { title: "设置", path: "#/preferences/" };
+    return {
+      name: pref.i18n["app"]["preferences"],
+      path: "#/preferences/",
+      title: pref.i18n["app"]["preferences-tip"]
+    };
   }
 }
 

@@ -1,0 +1,36 @@
+{
+  "language-name": "简体中文",
+  "app": {
+    "name": "歌词滚动姬",
+    "fullname": "灯里的歌词滚动姬",
+    "edit": "编辑",
+    "synchronize": "打轴",
+    "preferences": "设置",
+    "editor-tip": "点击这里编辑歌词文本",
+    "synchronizer-tip": "点击这里打轴",
+    "preferences-tip": "语言及其他设置"
+  },
+  "lrc": {
+    "album": "所属专辑",
+    "title": "歌曲名",
+    "artist": "艺人名",
+    "load-audio": "加载音频",
+    "load-text": "加载文本",
+    "select-all": "全选复制"
+  },
+  "preferences": {
+    "language": "语言",
+    "version": "App 版本",
+    "update-time": "App 更新时间",
+    "build-revision": "Build Revision",
+    "github-repo": "开源地址",
+    "help": "关于 & 帮助",
+    "time-tag-decimals": "时间标签小数点",
+    "trim-line": "移除歌词两端空白",
+    "add-space": "时间标签与歌词之间插入空格",
+    "built-in-audio": "使用浏览器内建音频播放器",
+    "space-button-on-screen": "启用虚拟空格键",
+    "night-mode": "夜间模式",
+    "clear-cache": "重置app缓存"
+  }
+}

@@ -5,7 +5,7 @@
 import { Component } from "preact";
 import { appState } from "../store/appState.js";
 import { observable } from "mobx";
-import { observer } from "../lib/observer.js";
+import { observer } from "preact-mobx-observer";
 import { LockSvg, UnlockSvg } from "./SVG.jsx";
 
 @observer

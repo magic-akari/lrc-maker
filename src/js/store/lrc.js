@@ -87,6 +87,8 @@ class LRC {
         }
       }
     }
+
+    this.selectedIndex += 0;
   }
 
   static timeToTag(time) {

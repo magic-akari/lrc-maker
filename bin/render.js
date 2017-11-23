@@ -4,11 +4,13 @@
  * Created by 阿卡琳 on 14/06/2017.
  */
 "use strict";
+const path = require("path");
 const render = require("preact-render-to-string");
 const { h, Component } = require("preact");
 
 global.h = h;
 global.Component = Component;
+global.__SSR__ = true;
 
 require("babel-register")({
   plugins: [

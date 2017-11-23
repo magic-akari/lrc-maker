@@ -19,7 +19,6 @@
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  transition: font-size 500ms ease-in-out, padding 500ms ease;
 
   @media screen and (max-width: 768px) {
     font-size: 1rem;
@@ -32,7 +31,7 @@
     display: inline-block;
   }
 
-  &:nth-child(2n+1) {
+  &:nth-child(2n + 1) {
     background-color: rgba(232, 232, 232, 0.5);
   }
 
@@ -46,7 +45,7 @@
 
 .lyric {
   pointer-events: none;
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   word-break: break-all;
   padding-left: 8rem;
   @media screen and (max-width: 768px) {

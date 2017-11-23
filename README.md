@@ -1,6 +1,25 @@
-# LRC-MAKER
-[歌词滚动姬](https://git.io/lrc)｜可能是你所能见到的最易用的歌词制作工具
+# Lrc Maker
 
-[歌词滚动姬](https://git.io/lrc)是一个以 web 技术为基础，依托 HTML5 等前沿技术开发的 web app。
+Lrc Maker is an online tool which help you create your cool lyric file.
 
-[WiKi](https://github.com/hufan-akari/lrc-maker/wiki)
+Drag and drop you audio file on the web page.  
+Use arrow key and space key to synchronize the lyric.
+
+Click [here](https://lrc-maker.github.io) to start now!
+
+
+### Hot Key
+|Key|Function|
+|:---:|:---:|
+|space|Synchronize|
+|delete / ⌘+delete|remove time tag of current line|
+|ctrl+enter / ⌘+return|toggle between play and pause|
+|← / a|Step backward 5 second|
+|→ / d|Step forward 5 second|
+|↑ / w / j|Select previous line|
+|↓ / s / k|Select next line|
+|ctrl+↑ / ⌘+↑|speed up|
+|ctrl+↓ / ⌘+↓|speed down|
+|r|reset speed|
+
+More information here: [WiKi](https://github.com/hufan-akari/lrc-maker/wiki)

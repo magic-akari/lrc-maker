@@ -3,6 +3,7 @@
  */
 "use strict";
 import { observable, action, toJS, computed } from "mobx";
+import languages from "../../../languages/index.js";
 
 class Preferences {
   @observable trim = true;
@@ -11,6 +12,13 @@ class Preferences {
   @observable use_browser_built_in_audio_player = false;
   @observable use_space_button_on_screen = false;
   @observable night_mode = false;
+  @observable lang = "en-US";
+
+  @computed
+  get i18n() {
+    return languages[this.lang] || languages["en-US"];
+  }
+
   @computed
   get fixed_decimal() {
     return Math.pow(10, this.fixed);
@@ -22,8 +30,16 @@ class Preferences {
 
   constructor() {
     try {
+      this.lang = (lang => (lang in languages ? lang : "en-US"))(
+        navigator.language
+      );
+
       const p = JSON.parse(localStorage.getItem(Preferences.storageName));
-      for (let [key, value] of Object.entries(p)) this[key] = value;
+      for (let [key, value] of Object.entries(p)) {
+        if (key in this) {
+          this[key] = value;
+        }
+      }
     } catch (e) {}
   }
 
@@ -44,6 +60,7 @@ class Preferences {
     } else {
       this.trim = true;
     }
+    this.save();
   }
 
   @action.bound
@@ -54,28 +71,33 @@ class Preferences {
     } else {
       this.space_between_tag_text = false;
     }
+    this.save();
   }
 
   @action.bound
   toggle_audio_player() {
     this.use_browser_built_in_audio_player = !this
       .use_browser_built_in_audio_player;
+    this.save();
   }
 
   @action.bound
   toggle_space_button() {
     this.use_space_button_on_screen = !this.use_space_button_on_screen;
+    this.save();
   }
 
   @action.bound
   toggle_night_mode() {
     this.night_mode = !this.night_mode;
+    this.save();
   }
 
   @action.bound
   add_fixed() {
     if (this.fixed < 3) {
       this.fixed += 1;
+      this.save();
     }
   }
 
@@ -83,9 +105,21 @@ class Preferences {
   minus_fixed() {
     if (this.fixed > 0) {
       this.fixed -= 1;
+      this.save();
     }
+  }
+
+  set language(value) {
+    this.lang = value;
+    this.save();
+  }
+
+  @computed
+  get language() {
+    return this.lang;
   }
 }
 
 const preferences = new Preferences();
+
 export { preferences };

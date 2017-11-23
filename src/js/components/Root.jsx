@@ -4,13 +4,19 @@
 "use strict";
 import App from "./App.jsx";
 
-const Root = () =>
+const Root = () => (
   <html>
     <head>
       <meta charset="utf-8" />
-      <title>灯里的歌词滚动姬</title>
-      <meta name="description" content="灯里的歌词滚动姬｜迄今为止最易用的歌词制作工具" />
-      <meta name="keywords" content="lrc maker,lrc generate,歌词制作,歌词滚动" />
+      <title>LRC Maker</title>
+      <meta
+        name="description"
+        content="LRC Maker｜The easiest way to create cool LRC files by yourself. 灯里的歌词滚动姬｜迄今为止最易用的歌词制作工具"
+      />
+      <meta
+        name="keywords"
+        content="lrc maker,lrc generate,歌词制作,歌词滚动"
+      />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="renderer" content="webkit" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,16 +54,18 @@ const Root = () =>
       <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬" />
     </head>
     <body>
-      {App()}
+      {App({ loading: true })}
       {process.env.NODE_ENV === "production"
-        ? `{% include info.html app_version='${process.env
-            .npm_package_version}' %}`
+        ? `{% include info.html app_version='${
+            process.env.npm_package_version
+          }' %}`
         : null}
       <script src="./dist/app.js" />
       {process.env.NODE_ENV === "production"
         ? `{% include fallback.html %}{% include google-analytics.html %}`
         : null}
     </body>
-  </html>;
+  </html>
+);
 
 export default Root;

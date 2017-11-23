@@ -4,7 +4,7 @@
 "use strict";
 import { Component } from "preact";
 import { observable, action, computed, autorun } from "mobx";
-import { observer } from "../lib/observer";
+import { observer } from "preact-mobx-observer";
 import { lrc, LRC } from "../store/lrc.js";
 import { appState } from "../store/appState.js";
 import { preferences } from "../store/preferences.js";
@@ -29,6 +29,9 @@ class SynchronizerList extends Component {
 
   @computed
   get scroll_distance() {
+    if (this.lockNode === undefined) {
+      return 0;
+    }
     let distance =
       -document.documentElement.clientHeight / 2 +
       this.lockNode.offsetTop +
@@ -40,7 +43,7 @@ class SynchronizerList extends Component {
   get scroll_style() {
     if (appState.lock && this.lockNode)
       return {
-        transform: `translate3d(0,${-this.scroll_distance}px,0)`
+        transform: `translate3D(0,${-~~this.scroll_distance}px,0)`
       };
     return null;
   }
@@ -179,11 +182,11 @@ class SynchronizerList extends Component {
           const time = lyricLine.time;
 
           const lyricTimeTag =
-            time === undefined
-              ? null
-              : <span className="lyric-time">
-                  {LRC.timeToTag(lyricLine.time)}
-                </span>;
+            time === undefined ? null : (
+              <span className="lyric-time">
+                {LRC.timeToTag(lyricLine.time)}
+              </span>
+            );
 
           return (
             <li
@@ -205,9 +208,7 @@ class SynchronizerList extends Component {
               <p className="lyric">
                 {lyricTimeTag}
                 {preferences.space_between_tag_text ? " " : null}
-                <span class="lyric-text">
-                  {lyricLine.text}
-                </span>
+                <span class="lyric-text">{lyricLine.text}</span>
               </p>
             </li>
           );
@@ -218,18 +219,21 @@ class SynchronizerList extends Component {
 }
 
 const sync = action(() => {
-  let selectedIndex = lrc.selectedIndex;
-  lrc.lyric[selectedIndex].time = appState.currentTime;
-  lrc.selectedIndex += 1;
+  if (lrc.lyric.length > 0) {
+    let selectedIndex = lrc.selectedIndex;
+    lrc.lyric[selectedIndex].time = appState.currentTime;
+    lrc.selectedIndex += 1;
+  }
 });
 
-const Synchronizer = () =>
+const Synchronizer = () => (
   <div className="synchronizer">
     <SynchronizerList />
     <div className="extra_button_group">
       <LockNodeButton />
       <DownLoadButton />
     </div>
-  </div>;
+  </div>
+);
 
 export { Synchronizer, sync };

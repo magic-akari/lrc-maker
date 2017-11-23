@@ -1,0 +1,36 @@
+{
+  "language-name": "English",
+  "app": {
+    "name": "Lrc Maker",
+    "fullname": "Lrc Maker",
+    "edit": "Edit",
+    "synchronize": "Synchronize",
+    "preferences": "Preferences",
+    "editor-tip": "Click here to edit lyric lines",
+    "synchronizer-tip": "Click here to synchronize lyric",
+    "preferences-tip": "language and other preferences"
+  },
+  "lrc": {
+    "album": "Album",
+    "title": "Title",
+    "artist": "artist",
+    "load-audio": "Load Audio",
+    "load-text": "Load Text",
+    "select-all": "Select All & Copy"
+  },
+  "preferences": {
+    "language": "Language",
+    "version": "App Version",
+    "update-time": "App Update Time",
+    "build-revision": "Build Revision",
+    "github-repo": "View me on Github",
+    "help": "Tips & About",
+    "time-tag-decimals": "Decimals of Time tag",
+    "trim-line": "Trim Lyric Line",
+    "add-space": "Add Space after Time Tag",
+    "built-in-audio": "Use Browser built-in Audio Player",
+    "space-button-on-screen": "On-screen Space Key",
+    "night-mode": "Night Mode",
+    "clear-cache": "Clear App Cache"
+  }
+}

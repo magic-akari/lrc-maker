@@ -29,7 +29,7 @@ module.exports = {
                 "env",
                 {
                   targets: {
-                    browsers: ["last 2 versions", "safari >= 7", "ie 11"]
+                    browsers: ["last 2 versions", "ie 11"]
                   }
                 }
               ]
@@ -45,7 +45,8 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: '"production"'
-      }
+      },
+      __SSR__: false
     }),
     new webpack.optimize.UglifyJsPlugin()
   ]

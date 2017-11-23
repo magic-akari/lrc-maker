@@ -3,7 +3,7 @@
  */
 "use strict";
 import { Component } from "preact";
-import { observer } from "../lib/observer.js";
+import { observer } from "preact-mobx-observer";
 import { action, computed } from "mobx";
 import { Audio } from "./Audio.jsx";
 import { appState } from "../store/appState.js";
@@ -13,112 +13,90 @@ import { lrc } from "../store/lrc.js";
 
 @observer
 class Footer extends Component {
-  constructor(props) {
-    super(props);
-    try {
-      document.addEventListener(
-        "visibilitychange",
-        () => {
-          if (document.hidden) {
-            appState.pause();
-            lrc.save();
-          }
-        },
-        false
-      );
-
-      window.addEventListener("beforeunload", () => {
-        lrc.save();
-      });
-    } catch (e) {}
-  }
-
   componentDidMount() {
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (document.hidden) {
+          this.audio.pause();
+          lrc.save();
+        }
+      },
+      false
+    );
+
+    window.addEventListener("beforeunload", () => {
+      lrc.save();
+    });
+
     Mousetrap.bind(["left", "a"], e => {
-      appState.audio.currentTime -= 5;
+      this.audio.currentTime -= 5;
       e.preventDefault();
       return false;
     });
 
     Mousetrap.bind(["right", "d"], e => {
-      appState.audio.currentTime += 5;
+      this.audio.currentTime += 5;
       e.preventDefault();
       return false;
     });
 
     Mousetrap.bind("mod+up", e => {
-      appState.audio.playbackRate_exp += 0.2;
+      const rate = this.audio.playbackRate;
+      const newRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
+      this.audio.playbackRate = newRate;
+
       e.preventDefault();
       return false;
     });
 
     Mousetrap.bind("mod+down", e => {
-      appState.audio.playbackRate_exp -= 0.2;
+      const rate = this.audio.playbackRate;
+      const newRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
+      this.audio.playbackRate = newRate;
+
       e.preventDefault();
       return false;
     });
 
-    Mousetrap.bind("r", e => (appState.audio.playbackRate_exp = 0));
+    Mousetrap.bind("r", e => (this.audio.playbackRate = 1));
 
     Mousetrap.bind(["command+return", "ctrl+enter"], e => {
-      if (appState.audio.src) {
-        appState.audio.paused ? appState.audio.play() : appState.audio.pause();
-      }
+      this.audio.paused ? this.audio.play() : this.audio.pause();
+
       e.preventDefault();
       return false;
     });
   }
 
-  componentWillUnmount() {
-    Mousetrap.unbind([
-      "left",
-      "right",
-      "a",
-      "d",
-      "mod+up",
-      "mod+down",
-      "r",
-      "command+return",
-      "ctrl+enter"
-    ]);
-  }
-
-  @action.bound
-  syncTime(e) {
-    appState.currentTime = ~~(e.target.currentTime * 1000) / 1000;
-  }
-
-  @computed
-  get Audio1() {
-    return (
-      <audio
-        controls={true}
-        onTimeUpdate={this.syncTime}
-        src={appState.src}
-        ref={audio => (appState.audio = audio)}
-      />
-    );
-  }
-
-  @computed
-  get Audio2() {
-    return (
-      <Audio
-        className="app-audio"
-        onTimeUpdate={this.syncTime}
-        src={appState.src}
-        ref={audio => (appState.audio = audio)}
-      />
-    );
-  }
+  // Footer never Unmount
+  // componentWillUnmount() {
+  //   Mousetrap.unbind([
+  //     "left",
+  //     "right",
+  //     "a",
+  //     "d",
+  //     "mod+up",
+  //     "mod+down",
+  //     "r",
+  //     "command+return",
+  //     "ctrl+enter"
+  //   ]);
+  // }
 
   render() {
     return (
       <footer className="app-footer">
         <SpaceButton />
-        {preferences.use_browser_built_in_audio_player
-          ? this.Audio1
-          : this.Audio2}
+        <Audio
+          className="app-audio"
+          controls={preferences.use_browser_built_in_audio_player}
+          ref={audio => (this.audio = audio)}
+          src={appState.src}
+          onTimeUpdate={action(
+            e => (appState.currentTime = e.target.currentTime)
+          )}
+        />
       </footer>
     );
   }

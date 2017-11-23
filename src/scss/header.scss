@@ -6,7 +6,7 @@
   width: 100%;
   background: rgba(40, 40, 40, 0.85);
   border-bottom: 1px solid $theme-color;
-  transition: all 500ms ease;
+
   color: white;
   z-index: 233;
   -webkit-user-select: none;
@@ -23,20 +23,17 @@
       border: solid 2px transparent;
       border-radius: 2px;
       color: white;
-      padding: .5rem;
+      padding: 0.5rem;
       display: inline-flex;
       align-items: center;
-      transition: all 500ms ease;
 
       svg {
-        transition: all 500ms ease;
         margin: 0 4px;
       }
 
       &.active {
         border-bottom-color: $second-color;
       }
-
     }
 
     &:hover a {
@@ -46,17 +43,44 @@
         border-bottom-color: $second-color;
       }
     }
-
   }
 
   .wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: .5rem auto;
+    margin: 0.5rem auto;
   }
 }
 
-.app-header:hover {
-  box-shadow: 0 1px 10px $theme-color;
+.showtip::before {
+  position: absolute;
+  left: 0;
+  content: "";
+  border: solid;
+  border-color: rgba(40, 40, 40, 0.85) transparent;
+  border-width: 0 0.5rem 0.5rem 0.5rem;
+  top: calc(100% - 0.5rem);
+  left: inherit;
+  z-index: 233;
+  transform: translate3d(1rem, 1rem, 0);
+}
+
+.showtip::after {
+  position: absolute;
+  left: 0;
+  content: attr(title);
+  background: rgba(40, 40, 40, 0.85);
+  padding: 0.5rem;
+  top: 100%;
+  left: inherit;
+  z-index: 233;
+  transform: translateY(1rem);
+}
+
+@media all and (-ms-high-contrast: none) {
+  .showtip::before,
+  .showtip::after {
+    display: none;
+  }
 }

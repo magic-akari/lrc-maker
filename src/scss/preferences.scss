@@ -1,15 +1,14 @@
 @import "var";
 
 .preferences {
-
   padding: 2rem;
   width: 100%;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  transition: padding 500ms ease;
-  @media screen and (max-width: 768px ) {
+
+  @media screen and (max-width: 768px) {
     padding: 0;
   }
 
@@ -17,7 +16,7 @@
     padding: 0;
 
     &:active {
-      padding-left: .5rem;
+      padding-left: 0.5rem;
     }
   }
 
@@ -25,7 +24,7 @@
     padding: 1rem;
   }
 
-  section:nth-child(2n+1) {
+  section:nth-child(2n + 1) {
     background-color: $alpha-white;
   }
 
@@ -37,7 +36,8 @@
     margin: auto;
     word-break: break-all;
 
-    a, a:visited {
+    a,
+    a:visited {
       color: $second-color;
     }
   }
@@ -113,7 +113,6 @@
         &::after {
           left: $switch-width - $knob-width - ($switch-padding);
         }
-
       }
     }
   }
@@ -124,7 +123,7 @@
     input {
       width: 20px;
       text-align: center;
-      border: 1px solid #D7DBDD;
+      border: 1px solid #d7dbdd;
       padding: 0 10px;
       border-radius: 0;
       box-shadow: none;
@@ -134,7 +133,7 @@
     button {
       cursor: pointer;
       padding: 5px 15px;
-      color: #FFFFFF;
+      color: #ffffff;
       background-color: $second-color;
       font-size: 12px;
       border: 1px solid $theme-color;
@@ -152,4 +151,27 @@
     }
   }
 
+  select {
+    direction: rtl;
+    padding-right: 1rem;
+    color: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    outline: 0;
+  }
+
+  .lang-select {
+    position: relative;
+  }
+  .lang-select::after {
+    position: absolute;
+    right: 0;
+    color: $second-color;
+    content: "\25BC";
+    z-index: 1;
+    pointer-events: none;
+  }
 }

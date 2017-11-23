@@ -1,12 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
-const BabiliPlugin = require("babili-webpack-plugin");
+const babelMinifyPlugin = require("babel-minify-webpack-plugin");
 const pathToNodeModules = path.resolve(__dirname, "node_modules");
 const pathToMousetrap = path.resolve(
   pathToNodeModules,
   "mousetrap/mousetrap.min.js"
 );
-const pathToGhPages = path.resolve(__dirname, "gh-pages");
 
 module.exports = {
   entry: {
@@ -23,8 +22,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loaders: ["babel-loader"],
-        include: path.resolve(__dirname, "src"),
-        exclude: [pathToNodeModules, pathToGhPages]
+        include: path.resolve(__dirname, "src")
       }
     ]
   },
@@ -38,8 +36,9 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: '"production"'
-      }
+      },
+      __SSR__: false
     }),
-    new BabiliPlugin()
+    new babelMinifyPlugin()
   ]
 };

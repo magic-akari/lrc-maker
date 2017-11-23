@@ -3,7 +3,7 @@
  */
 "use strict";
 import { Component } from "preact";
-import { observer } from "../lib/observer.js";
+import { observer } from "preact-mobx-observer";
 import { preferences } from "../store/preferences.js";
 import { appState } from "../store/appState.js";
 import { Router, router } from "../store/router.js";
@@ -19,11 +19,7 @@ class ExtraStyle extends Component {
       styleList.push(".app{position:fixed}");
     }
 
-    return !!styleList.length
-      ? <style>
-          {styleList.join("")}
-        </style>
-      : null;
+    return !!styleList.length ? <style>{styleList.join("")}</style> : null;
   }
 }
 

@@ -8,7 +8,7 @@ module.exports = {
   },
 
   output: {
-    path: path.resolve(__dirname, "dev/dist"),
+    path: path.resolve(__dirname, "gh-pages/dist"),
     filename: "[name].js"
   },
 
@@ -25,5 +25,10 @@ module.exports = {
 
   resolve: {
     mainFields: ["jsnext:main", "main"]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __SSR__: false
+    })
+  ]
 };
