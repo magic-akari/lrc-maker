@@ -13,6 +13,13 @@ class Preferences extends Component {
     pref.language = e.target.value;
   }
 
+  clearCache = () => {
+    localStorage.clear();
+    if ("serviceWorkerRegistration" in window) {
+      window.serviceWorkerRegistration.unregister();
+    }
+  };
+
   render() {
     return (
       <div className="preferences">
@@ -152,7 +159,7 @@ class Preferences extends Component {
         </section>
         <section>
           <div className="section-group">
-            <button onClick={() => localStorage.clear()}>
+            <button onClick={this.clearCache}>
               {pref.i18n["preferences"]["clear-cache"]}
             </button>
           </div>

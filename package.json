@@ -1,6 +1,6 @@
 {
   "name": "lrc-maker",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
   "scripts": {
     "prebuild": "rm -rf ./gh-pages/*",
