@@ -280,13 +280,17 @@ class Audio extends Component {
     );
   }
 
+  setAudioRef = audio => {
+    this.audio = audio;
+  };
+
   render() {
     return (
       <div className={this.props.className}>
         <audio
           controls={this.props.controls}
           src={this.props.src}
-          ref={audio => (this.audio = audio)}
+          ref={this.setAudioRef}
           onLoadedMetadata={this.onLoadedMetadata}
           onPlay={this.onPlay}
           onPause={this.onPause}

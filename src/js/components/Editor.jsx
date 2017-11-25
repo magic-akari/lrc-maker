@@ -3,7 +3,6 @@
  */
 "use strict";
 import { Component } from "preact";
-import { action } from "mobx";
 import { observer } from "preact-mobx-observer";
 import { lrc } from "../store/lrc.js";
 import { appState } from "../store/appState.js";
@@ -19,28 +18,24 @@ class Editor extends Component {
 
   static displayName = "Editor";
 
-  @action
   componentWillUnmount() {
-    lrc.info.set("tool", "歌词滚动姬 (lrc-maker.github.io)");
+    lrc.info_set("tool", "歌词滚动姬 (lrc-maker.github.io)");
   }
 
-  @action
   updateInfo = e => {
     let value = e.target.value;
     let name = e.target.name;
     if (value.length === 0) {
-      lrc.info.delete(name, value);
+      lrc.info_delete(name, value);
     } else {
-      lrc.info.set(name, value);
+      lrc.info_set(name, value);
     }
   };
 
-  @action
   parseText = e => {
     lrc.value = e.target.value;
   };
 
-  @action
   uploadAudio = e => {
     let file = e.target.files[0];
     if (file) {
@@ -48,7 +43,6 @@ class Editor extends Component {
     }
   };
 
-  @action
   uploadText = e => {
     let file = e.target.files[0];
     if (file) {
@@ -66,6 +60,10 @@ class Editor extends Component {
     document.execCommand("copy");
   };
 
+  setTextarea = textarea => {
+    this.textarea = textarea;
+  };
+
   render() {
     return (
       <div className="editor">
@@ -79,7 +77,6 @@ class Editor extends Component {
             type="file"
             accept="audio/*"
             onChange={this.uploadAudio}
-            ref={input => (this.uploadAudioInput = input)}
           />
           <label for="upload-text" className="editor-button">
             {LoadTextSvg()}
@@ -130,7 +127,7 @@ class Editor extends Component {
           placeholder="text"
           onBlur={this.parseText}
           value={lrc.value}
-          ref={textarea => (this.textarea = textarea)}
+          ref={this.setTextarea}
         />
         <div className="extra_button_group">
           <DownLoadButton />

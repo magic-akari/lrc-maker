@@ -52,6 +52,7 @@ class SynchronizerList extends Component {
   get lockNode() {
     return this._lockNode;
   }
+  
   set lockNode(value) {
     if (value) {
       this._lockNode = value;
@@ -195,12 +196,16 @@ class SynchronizerList extends Component {
               key={lyricLine.key}
               ref={node => {
                 if (appState.lock && lyricLine.key === lrc.highlightIndex) {
-                  action(() => (this.lockNode = node))();
+                  action(() => {
+                    this.lockNode = node;
+                  })();
                 } else if (
                   !appState.lock &&
                   lyricLine.key === lrc.selectedIndex
                 ) {
-                  action(() => (this.lockNode = node))();
+                  action(() => {
+                    this.lockNode = node;
+                  })();
                 }
               }}
             >

@@ -7,17 +7,22 @@ import { preferences } from "./preferences.js";
 
 const appState = new class AppState {
   @observable audioSrc;
-  @observable currentTime = 0;
+  @observable _currentTime = 0;
   @observable lock = false;
 
   set src(value) {
-    setTimeout(
-      action(() => {
-        URL.revokeObjectURL(this.audioSrc);
-        this.audioSrc = URL.createObjectURL(value);
-      }),
-      0
-    );
+    if (typeof value === "string") {
+      URL.revokeObjectURL(this.audioSrc);
+      this.audioSrc = value;
+    } else {
+      setTimeout(
+        action(() => {
+          URL.revokeObjectURL(this.audioSrc);
+          this.audioSrc = URL.createObjectURL(value);
+        }),
+        0
+      );
+    }
   }
 
   @computed
@@ -31,6 +36,15 @@ const appState = new class AppState {
       ~~(this.currentTime * preferences.fixed_decimal) /
       preferences.fixed_decimal
     );
+  }
+
+  set currentTime(value) {
+    this._currentTime = value;
+  }
+
+  @computed
+  get currentTime() {
+    return this._currentTime;
   }
 
   @action.bound

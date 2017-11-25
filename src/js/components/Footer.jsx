@@ -4,7 +4,6 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
-import { action, computed } from "mobx";
 import { Audio } from "./Audio.jsx";
 import { appState } from "../store/appState.js";
 import { preferences } from "../store/preferences.js";
@@ -59,7 +58,9 @@ class Footer extends Component {
       return false;
     });
 
-    Mousetrap.bind("r", e => (this.audio.playbackRate = 1));
+    Mousetrap.bind("r", e => {
+      this.audio.playbackRate = 1;
+    });
 
     Mousetrap.bind(["command+return", "ctrl+enter"], e => {
       this.audio.paused ? this.audio.play() : this.audio.pause();
@@ -67,22 +68,28 @@ class Footer extends Component {
       e.preventDefault();
       return false;
     });
-  }
 
-  // Footer never Unmount
-  // componentWillUnmount() {
-  //   Mousetrap.unbind([
-  //     "left",
-  //     "right",
-  //     "a",
-  //     "d",
-  //     "mod+up",
-  //     "mod+down",
-  //     "r",
-  //     "command+return",
-  //     "ctrl+enter"
-  //   ]);
-  // }
+    Mousetrap.bind("up up down down left right left right b a", e => {
+      let src = prompt("Input the audio source url.");
+      if (src) {
+        appState.src = src;
+      }
+      e.preventDefault();
+      return false;
+    });
+
+    let urlSearchParams = location.search
+      .slice(1)
+      .split("&")
+      .reduce((params, hash) => {
+        let [key, val] = hash.split("=");
+        return Object.assign(params, { [key]: decodeURIComponent(val) });
+      }, {});
+
+    if (urlSearchParams.audioSrc !== undefined) {
+      appState.src = urlSearchParams.audioSrc;
+    }
+  }
 
   render() {
     return (
@@ -91,11 +98,13 @@ class Footer extends Component {
         <Audio
           className="app-audio"
           controls={preferences.use_browser_built_in_audio_player}
-          ref={audio => (this.audio = audio)}
+          ref={audio => {
+            this.audio = audio;
+          }}
           src={appState.src}
-          onTimeUpdate={action(
-            e => (appState.currentTime = e.target.currentTime)
-          )}
+          onTimeUpdate={e => {
+            appState.currentTime = e.target.currentTime;
+          }}
         />
       </footer>
     );

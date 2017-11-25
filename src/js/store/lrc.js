@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 18/06/2017.
  */
 "use strict";
-import { observable, computed } from "mobx";
+import { observable, computed, action } from "mobx";
 import { preferences } from "./preferences.js";
 import { appState } from "./appState.js";
 
@@ -89,6 +89,16 @@ class LRC {
     }
 
     this.selectedIndex += 0;
+  }
+
+  @action.bound
+  info_set(name, value) {
+    this.info.set(name, value);
+  }
+
+  @action.bound
+  info_delete(name) {
+    this.info.delete(name);
   }
 
   static timeToTag(time) {
