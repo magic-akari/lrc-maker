@@ -13,7 +13,7 @@
   "lrc": {
     "album": "Album",
     "title": "Title",
-    "artist": "artist",
+    "artist": "Artist",
     "load-audio": "Load Audio",
     "load-text": "Load Text",
     "select-all": "Select All & Copy"
