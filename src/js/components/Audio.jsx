@@ -21,12 +21,12 @@ const Slider = ({ min, max, step, value, onInput, className }) => {
     <div className={`slider ${className}-slider`}>
       <progress min={0} max={1} value={percent} />
       <input
+        type="range"
         className={className}
         min={min}
         max={max}
         step={step}
         value={value}
-        type="range"
         onInput={onInput}
         onChange={onInput}
       />
