@@ -1,44 +1,87 @@
+const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
-const babelMinifyPlugin = require("babel-minify-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const pathToNodeModules = path.resolve(__dirname, "node_modules");
 const pathToMousetrap = path.resolve(
   pathToNodeModules,
   "mousetrap/mousetrap.min.js"
 );
 
-module.exports = {
-  entry: {
-    app: [pathToMousetrap, "./src/js/index.js"]
-  },
+const VERSION = JSON.stringify(process.env.npm_package_version);
+const BUILD_TIME = JSON.stringify(
+  new Date().toUTCString().replace(/.*,\s*(.*?)\s*GMT/, "$1")
+);
+const BUILD_REVISION = JSON.stringify(
+  require("child_process")
+    .execSync("git rev-parse --short HEAD")
+    .toString()
+    .trim()
+);
 
+const base = {
+  resolve: {
+    mainFields: ["jsnext:main", "module", "main"],
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      "#": path.resolve(__dirname)
+    }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      __SSR__: false,
+      VERSION,
+      BUILD_TIME,
+      BUILD_REVISION
+    })
+  ]
+};
+
+const esnext = Object.assign({}, base, {
+  entry: {
+    app: [pathToMousetrap, "./src/index.js"]
+  },
   output: {
-    path: path.resolve(__dirname, "gh-pages/dist"),
+    path: path.resolve(__dirname, "dist"),
     filename: "[name].js"
   },
-
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loaders: ["babel-loader"],
+        use: ["babel-loader"],
         include: path.resolve(__dirname, "src")
       }
     ]
   },
+  plugins: [...base.plugins, new CopyWebpackPlugin(["resources"])]
+});
 
-  resolve: {
-    mainFields: ["jsnext:main", "module", "main"]
+const es5 = Object.assign({}, base, {
+  entry: {
+    app: [
+      "babel-polyfill",
+      "./src/polyfill.js",
+      pathToMousetrap,
+      "./src/index.js"
+    ]
   },
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].es5.js"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: {
+          loader: "babel-loader",
+          options: JSON.parse(fs.readFileSync("./.es5.babelrc"))
+        },
+        exclude: /node_modules/
+      }
+    ]
+  }
+});
 
-  plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: '"production"'
-      },
-      __SSR__: false
-    }),
-    new babelMinifyPlugin()
-  ]
-};
+module.exports = [esnext, es5];

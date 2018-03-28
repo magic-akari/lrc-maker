@@ -1,7 +1,6 @@
 @import "var";
 
 .preferences {
-  padding: 2rem;
   width: 100%;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -31,6 +30,7 @@
   .section-group {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     flex-wrap: wrap;
     max-width: 768px;
     margin: auto;
@@ -121,10 +121,10 @@
     display: flex;
 
     input {
-      width: 20px;
+      width: 40px;
       text-align: center;
       border: 1px solid #d7dbdd;
-      padding: 0 10px;
+      // padding: 0 10px;
       border-radius: 0;
       box-shadow: none;
       pointer-events: none;
@@ -132,7 +132,8 @@
 
     button {
       cursor: pointer;
-      padding: 5px 15px;
+      width: 40px;
+      // padding: 5px 15px;
       color: #ffffff;
       background-color: $second-color;
       font-size: 12px;

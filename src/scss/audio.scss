@@ -10,19 +10,18 @@ audio {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: 2px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   justify-content: space-between;
 
+  background: rgba(40, 40, 40, 0.85);
+  color: #eee;
+
   button {
     color: #eee;
   }
-
-  background: rgba(40, 40, 40, 0.85);
-  color: #eee;
 
   section {
     margin: 0 5px;

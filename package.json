@@ -1,23 +1,18 @@
 {
   "name": "lrc-maker",
-  "version": "3.1.3",
+  "version": "3.2.0",
   "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
   "scripts": {
-    "prebuild": "rm -rf ./gh-pages/*",
-    "build": "export NODE_ENV=production; npm run render && npm run sass && npm run webpack",
-    "postbuild": "cp -rf ./src/static/* ./gh-pages/",
-    "dev": "npm run render:dev && npm run sass:dev && npm run webpack:dev",
-    "webpack:dev": "webpack --config webpack.dev.config.js --progress --colors",
-    "sass:dev": "node-sass --include-path=node_modules ./src/scss/app.scss gh-pages/dist/app.css",
-    "render:dev": "echo \"$(node ./bin/render.js)\" > ./gh-pages/index.html",
-    "webpack": "webpack && webpack --config webpack.fallback.config.js",
-    "sass": "node-sass --include-path=node_modules --output-style=compressed ./src/scss/app.scss gh-pages/dist/app.css",
-    "render": "export NODE_ENV=production; echo \"---\n---\n$(node ./bin/render.js)\" > ./gh-pages/index.html",
-    "prettier": "prettier --write \"src/**/*.js{,x}\" \"bin/*.js\" \"webpack.*.js\""
+    "prebuild": "rm -rf ./dist/*",
+    "build": "webpack --mode=production && npm run render && npm run sass",
+    "sass": "node-sass --include-path=node_modules --output-style=compressed ./src/scss/app.scss ./dist/app.css",
+    "render": "node ./bin/render.js > ./dist/index.html",
+    "prettier": "prettier --write \"src/**/*.{js,jsx,scss,json}\" \"bin/*.js\" \"webpack.*.js\""
   },
   "keywords": [
-    "lyric maker",
-    "neteasemusic"
+    "lrc",
+    "lyric",
+    "lyric maker"
   ],
   "repository": {
     "type": "git",
@@ -31,26 +26,27 @@
   "homepage": "https://github.com/hufan-Akari/lrc-maker#readme",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "mobx": "^3.3.1",
+    "mobx": "^4.1.0",
     "mousetrap": "^1.6.1",
     "normalize.css": "^7.0.0",
-    "preact": "^8.2.6",
-    "preact-mobx-observer": "^1.0.1",
-    "smoothscroll-polyfill": "^0.3.6"
+    "preact": "^8.2.7",
+    "preact-mobx-observer": "^1.0.4",
+    "seamless-scroll-polyfill": "^0.4.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-minify-webpack-plugin": "^0.2.0",
+    "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-webpack-alias": "^2.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
-    "node-sass": "^4.7.1",
+    "copy-webpack-plugin": "^4.5.1",
+    "node-sass": "^4.7.2",
     "preact-render-to-string": "^3.7.0",
-    "prettier": "^1.8.2",
-    "webpack": "^3.8.1"
+    "prettier": "^1.11.1",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.13"
   }
 }

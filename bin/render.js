@@ -15,6 +15,8 @@ global.__SSR__ = true;
 require("babel-register")({
   plugins: [
     [
+      "babel-plugin-webpack-alias",
+      { config: "../webpack.config.js" },
       "transform-react-jsx",
       {
         pragma: "h"
@@ -26,7 +28,7 @@ require("babel-register")({
   ]
 });
 
-const Root = require("../src/js/components/Root.jsx").default;
+const Root = require("../src/components/Root.jsx").default;
 const html = "<!DOCTYPE html>" + render(Root());
 
 process.stdout.write(html);

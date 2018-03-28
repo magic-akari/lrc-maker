@@ -8,6 +8,7 @@
   min-height: 300px;
   padding: 10px;
   width: 100%;
+  height: 100%;
 
   p {
     font-size: 2rem;
@@ -20,7 +21,8 @@
   position: relative;
 }
 
-.loading::before, .loading::after {
+.loading::before,
+.loading::after {
   content: " ";
   width: 100px;
   height: 100px;
@@ -58,13 +60,13 @@
   height: 1em;
   line-height: 1;
   text-align: left;
-  vertical-align: -.25em;
+  vertical-align: -0.25em;
   overflow: hidden;
 }
 
 .dot::before {
   display: block;
-  content: '...\A..\A.';
+  content: "...\A..\A.";
   white-space: pre-wrap;
   animation: dot 3s infinite step-start both;
 }

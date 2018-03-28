@@ -21,16 +21,16 @@
   "preferences": {
     "language": "Language",
     "version": "App Version",
-    "update-time": "App Update Time",
+    "build-time": "App Build Time",
     "build-revision": "Build Revision",
     "github-repo": "View me on Github",
     "help": "Tips & About",
-    "time-tag-decimals": "Decimals of Time tag",
+    "time-tag-decimals": "Decimals of Time Tag",
     "trim-line": "Trim Lyric Line",
     "add-space": "Add Space after Time Tag",
-    "built-in-audio": "Use Browser built-in Audio Player",
+    "built-in-audio": "Use Browser Built-in Audio Player",
     "space-button-on-screen": "On-screen Space Key",
-    "night-mode": "Night Mode",
+    "dark-mode": "Dark Mode",
     "clear-cache": "Clear App Cache"
   }
 }

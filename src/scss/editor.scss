@@ -5,107 +5,125 @@
   flex-direction: column;
   flex: 1 1 auto;
   width: 100%;
+  margin-bottom: 1rem;
 }
 
-input[type=file] {
+input[type="file"] {
   display: none;
 }
 
-.editor-tool-bar, .lrc-info-section {
-  display: flex;
-  margin-bottom: .5rem;
-  padding: .5rem 0;
-  width: 100%;
-}
-
+.editor-tool-bar,
 .lrc-info-section {
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-  }
+  display: flex;
+  margin: 0.5rem;
 }
 
 .editor-button {
   cursor: default;
-  flex: 1 1 auto;
+  flex: 1 1 33%;
+  justify-content: center;
   border: 0;
-  text-align: center;
   display: flex;
   align-items: center;
-  padding: .5rem 1.2rem;
-  border-radius: .2rem;
-  font-size: 1.4rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.2rem;
+  // font-size: 1.4rem;
 
   svg {
-    margin: 0 1rem;
-    @media screen and (max-width: 414px) {
-      margin: auto;
-    }
+    margin-right: 0.5rem;
+    // @media screen and (max-width: 414px) {
+    //   margin: auto;
+    // }
   }
 
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
-    padding: .25rem .6rem;
-  }
-
+  // @media screen and (max-width: 768px) {
+  //   font-size: 1rem;
+  //   padding: 0.25rem 0.6rem;
+  // }
 }
 
-.editor-button:first-child {
-  margin-left: 0;
-}
-
-.editor-button:last-child {
-  margin-right: 0;
-}
-
-.editor-button:hover, .editor-button:focus {
+.editor-button:hover,
+.editor-button:focus {
   color: $second-color;
-  background-color: $alpha-white;
-  box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.51);
+  // background-color: $alpha-white;
+  // box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.51);
+}
+
+.editor-button:active {
+  transform: translateY(5px);
 }
 
 .lrc-info-input-section {
-  flex: 1 1 auto;
-  text-align: center;
+  flex: 1 1 33%;
   display: flex;
   align-items: center;
-  margin-left: 1rem;
+
+  margin: 0 0.5rem;
+
   &:first-child {
-    margin-left: 0;
+    margin-left: -0.5rem;
+  }
+
+  &:last-child {
+    margin-right: -0.5rem;
   }
 
   @media screen and (max-width: 768px) {
     margin: 5px 0 !important;
-    & > span {
-      width: 5rem;
-    }
+    // & > span {
+    //   width: 5rem;
+    // }
   }
 
   input {
     padding: 4px;
     flex: 1 1 auto;
-    width: 0;
-    margin-left: .5rem;
-    border-radius: .25rem;
+    margin-left: 0.5rem;
+    border-radius: 0.25rem;
     border: 1px solid $theme-color;
     transition: box-shadow 250ms ease-in-out;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       box-shadow: 0 0 10px $theme-color;
     }
   }
 }
 
-.app-textarea {
+@media screen and (max-width: 768px) {
+  .lrc-info-section {
+    display: none;
+  }
+}
+
+.lrc-textarea-section {
   flex: 1 1 auto;
-  padding: .5rem;
-  resize: none;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   border: 1px solid $theme-color;
-  font-size: 1.2rem;
   background-color: rgba(255, 255, 255, 0.8);
   transition: box-shadow 250ms ease-in-out;
+  display: flex;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     box-shadow: 0 0 10px $theme-color;
   }
+}
+
+.app-textarea {
+  font-family: $font-family;
+  padding: 0.5rem;
+  resize: none;
+  background-color: transparent;
+  font-size: 1.2rem;
+  width: 100%;
+  border: 0;
+}
+
+::-moz-selection {
+  background: #ed8e9366;
+}
+
+::selection {
+  background: #ed8e9366;
 }

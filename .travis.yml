@@ -1,0 +1,21 @@
+language: node_js
+node_js: node
+script: npm run 
+before_deploy: touch ./dist/.nojekyll
+deploy:
+- provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  local-dir: dist
+  on:
+    branch: master
+- provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: false
+  local-dir: dist
+  repo: lrc-maker/lrc-maker.github.io
+  target-branch: master
+  on:
+    branch: master

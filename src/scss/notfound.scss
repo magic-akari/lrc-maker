@@ -14,14 +14,14 @@
     color: gray;
   }
 
-  header, p {
+  header,
+  p {
     opacity: 0.5;
     transition: opacity 0.5s ease;
     margin: 1rem 0;
     cursor: default;
     animation: not_found 10s ease-in-out infinite;
   }
-
 }
 
 @keyframes not_found {

@@ -36,4 +36,7 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-dev/
+dist
+.DS_Store
+.vscode
+jsconfig.json

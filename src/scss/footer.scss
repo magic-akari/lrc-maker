@@ -1,14 +1,14 @@
 @import "var";
 
-.app-footer{
+.app-footer {
   position: fixed;
   width: 100%;
   bottom: 0;
 }
 
-.space_button{
+.space_button {
   width: 100%;
-  padding: 1rem;
+  height: 48px;
   text-align: center;
   background: rgba(40, 40, 40, 0.8);
   border: dashed 1px white;
@@ -18,11 +18,11 @@
   -ms-user-select: none;
   user-select: none;
 
-  &:hover{
+  &:hover {
     color: $theme-color;
   }
 
-  &:active{
+  &:active {
     background: rgba(40, 40, 40, 0.9);
     border: solid 1px white;
   }

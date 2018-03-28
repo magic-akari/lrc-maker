@@ -21,7 +21,7 @@
   "preferences": {
     "language": "语言",
     "version": "App 版本",
-    "update-time": "App 更新时间",
+    "build-time": "App 编译时间",
     "build-revision": "Build Revision",
     "github-repo": "开源地址",
     "help": "关于 & 帮助",
@@ -30,7 +30,7 @@
     "add-space": "时间标签与歌词之间插入空格",
     "built-in-audio": "使用浏览器内建音频播放器",
     "space-button-on-screen": "启用虚拟空格键",
-    "night-mode": "夜间模式",
+    "dark-mode": "夜间模式",
     "clear-cache": "重置app缓存"
   }
 }

@@ -2,6 +2,8 @@
 
 .synchronizer {
   width: 100%;
+  font-family: $font-family;
+  margin-bottom: 48px;
 }
 
 .lyric-list {
@@ -53,10 +55,6 @@
   }
 }
 
-.lyric-time {
-  font-family: Roboto, sans-serif;
-}
-
 .error .lyric-time {
   color: red;
 }
@@ -67,7 +65,6 @@
 
 .current-time-tag::before {
   content: attr(data-time);
-  font-family: Roboto, sans-serif;
   position: absolute;
   -webkit-user-select: none;
   -moz-user-select: none;
