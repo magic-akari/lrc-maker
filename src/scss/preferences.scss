@@ -119,6 +119,7 @@
 
   .stepper {
     display: flex;
+    height: 24px;
 
     input {
       width: 40px;
@@ -153,7 +154,7 @@
   }
 
   select {
-    direction: rtl;
+    // direction: rtl;
     padding-right: 1rem;
     color: inherit;
     -webkit-appearance: none;

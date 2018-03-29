@@ -100,7 +100,7 @@ input[type="file"] {
   flex: 1 1 auto;
   border-radius: 0.25rem;
   border: 1px solid $theme-color;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: white;
   transition: box-shadow 250ms ease-in-out;
   display: flex;
 
@@ -112,9 +112,9 @@ input[type="file"] {
 
 .app-textarea {
   font-family: $font-family;
+  margin: 1px;
   padding: 0.5rem;
   resize: none;
-  background-color: transparent;
   font-size: 1.2rem;
   width: 100%;
   border: 0;
