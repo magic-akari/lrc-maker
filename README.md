@@ -1,6 +1,4 @@
-# Lrc Maker
-
-[![Build Status](https://travis-ci.org/hufan-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/hufan-akari/lrc-maker)
+# [Lrc Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/hufan-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/hufan-akari/lrc-maker)
 
 Lrc Maker is an online tool which help you create your cool lyric file.
 

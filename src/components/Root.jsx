@@ -38,16 +38,17 @@ const Root = () => (
         href="./favicons/favicon-16x16.png"
         sizes="16x16"
       />
-      <link rel="manifest" href="./manifest.json" />
+      <link rel="manifest" href="./site.webmanifest" />
       <link
         rel="mask-icon"
         href="./favicons/safari-pinned-tab.svg"
-        color="#282828"
+        color="#ff4081"
       />
       <link rel="shortcut icon" href="./favicons/favicon.ico" />
       <link rel="prefetch" href="./app.js" as="script" />
       <meta name="application-name" content="灯里的歌词滚动姬" />
-      <meta name="theme-color" content="#282828" />
+      <meta name="msapplication-TileColor" content="#ffffff" />
+      <meta name="theme-color" content="#ffffff" />
       <meta
         name="msapplication-config"
         content="./favicons/browserconfig.xml"
