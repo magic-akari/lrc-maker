@@ -24,7 +24,7 @@ const base = {
     mainFields: ["jsnext:main", "module", "main"],
     alias: {
       "@": path.resolve(__dirname, "src"),
-      "#": path.resolve(__dirname)
+      languages: path.resolve(__dirname, "languages")
     }
   },
   plugins: [

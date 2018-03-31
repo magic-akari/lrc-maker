@@ -4,7 +4,7 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
-import { router, Router } from "@/store/router.js";
+import { router, Router } from "@/router.js";
 import { SettingsSvg, EditorSvg, SynchronizerSvg } from "./SVG.jsx";
 import { lrc } from "@/store/lrc.js";
 import { preferences } from "@/store/preferences.js";

@@ -3,7 +3,7 @@
  */
 "use strict";
 import { observable, action, toJS, computed } from "mobx";
-import languages from "#/languages/index.js";
+import languages from "languages/index.js";
 
 class Preferences {
   @observable trim = true;

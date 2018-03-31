@@ -7,6 +7,7 @@ import { render, h } from "preact";
 import { action, autorun, configure } from "mobx";
 import { polyfill as smoothscroll } from "seamless-scroll-polyfill";
 import { appState } from "./store/appState.js";
+import { Router } from "./router.js";
 import { lrc } from "./store/lrc.js";
 import { preferences } from "./store/preferences.js";
 import App from "./components/App.jsx";
@@ -66,7 +67,10 @@ document.body.addEventListener(
     if (file) {
       if (/^audio\//.test(file.type)) {
         appState.src = file;
-      } else if (/^text\//.test(file.type)) {
+      } else if (
+        /^text\//.test(file.type) ||
+        /(?:\.lrc|\.txt)$/i.test(file.name)
+      ) {
         let fileReader = new FileReader();
         fileReader.onload = fileReaderEvent => {
           lrc.value = fileReaderEvent.target.result;
@@ -79,6 +83,13 @@ document.body.addEventListener(
   }),
   false
 );
+
+window.addEventListener("message", event => {
+  const src = event.data.audioSrc;
+  if (src && typeof src === "string") {
+    appState.src = src;
+  }
+});
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").then(

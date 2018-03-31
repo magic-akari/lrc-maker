@@ -5,7 +5,7 @@
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { preferences as pref } from "../store/preferences.js";
-import languages from "#/languages/index.js";
+import languages from "languages/index.js";
 
 @observer
 class Preferences extends Component {

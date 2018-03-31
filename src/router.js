@@ -3,7 +3,7 @@
  */
 "use strict";
 import { observable, action } from "mobx";
-import { preferences as pref } from "./preferences";
+import { preferences as pref } from "./store/preferences";
 
 class Router {
   constructor() {
