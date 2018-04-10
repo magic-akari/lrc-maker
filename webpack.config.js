@@ -34,7 +34,8 @@ const base = {
       BUILD_TIME,
       BUILD_REVISION
     })
-  ]
+  ],
+  devtool: "source-map"
 };
 
 const esnext = Object.assign({}, base, {

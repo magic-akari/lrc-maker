@@ -1,5 +1,7 @@
 # [Lrc Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/hufan-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/hufan-akari/lrc-maker)
 
+![icon](./resources/favicons/apple-touch-icon.png)
+
 Lrc Maker is an online tool which help you create your cool lyric file.
 
 Drag and drop you audio file on the web page.\

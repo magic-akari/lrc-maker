@@ -1,11 +1,11 @@
 {
   "name": "lrc-maker",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
   "scripts": {
     "prebuild": "rm -rf ./dist/*",
     "build": "webpack --mode=production && npm run render && npm run sass",
-    "sass": "node-sass --include-path=node_modules --output-style=compressed ./src/scss/app.scss ./dist/app.css",
+    "sass": "node-sass --include-path=node_modules --output-style=compressed --source-map=true --source-map-contents=true ./src/scss/app.scss ./dist/app.css",
     "render": "node ./bin/render.js > ./dist/index.html",
     "prettier": "prettier --write \"src/**/*.{js,jsx,scss,json}\" \"bin/*.js\" \"webpack.*.js\""
   },

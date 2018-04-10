@@ -59,7 +59,7 @@ const Root = () => (
       {App({ loading: true })}
       <script
         dangerouslySetInnerHTML={{
-          __html: `!(function(d,a){a = d.createElement("script");a.src=typeof Symbol=="function"?"./app.js":"./app.es5.js";d.body.appendChild(a)})(document)`
+          __html: `!(function(d,a){a = d.createElement("script");a.charset="utf-8";a.src=typeof Symbol=="function"?"./app.js":"./app.es5.js";d.body.appendChild(a)})(document)`
         }}
       />
     </body>
