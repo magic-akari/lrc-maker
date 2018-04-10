@@ -84,12 +84,19 @@ document.body.addEventListener(
   false
 );
 
-window.addEventListener("message", event => {
-  const src = event.data.audioSrc;
-  if (src && typeof src === "string") {
-    appState.src = src;
-  }
-});
+if (window.opener) {
+  window.addEventListener(
+    "message",
+    event => {
+      const src = event.data.audioSrc;
+      if (src && typeof src === "string") {
+        appState.src = src;
+      }
+    },
+    { once: true }
+  );
+  window.opener.postMessage(true, "*");
+}
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").then(

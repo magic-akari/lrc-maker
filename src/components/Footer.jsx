@@ -70,7 +70,7 @@ class Footer extends Component {
     });
 
     Mousetrap.bind("meta+shift+p", e => {
-      let src = prompt("Input the audio source url.");
+      let src = prompt("Input the audio source url.", appState.src);
       if (src) {
         appState.src = src;
       }
