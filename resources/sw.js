@@ -9,6 +9,9 @@ self.addEventListener("activate", e => {
 });
 
 self.addEventListener("fetch", event => {
+  if (!/(?:\.js|\.css|\/)$/.test(event.request.url)) {
+    return;
+  }
   event.respondWith(
     caches.open(APP_NAME).then(cache => {
       return fetch(event.request)
