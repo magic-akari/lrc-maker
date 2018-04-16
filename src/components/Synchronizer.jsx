@@ -5,9 +5,9 @@
 import { Component } from "preact";
 import { observable, action, computed, autorun } from "mobx";
 import { observer } from "preact-mobx-observer";
-import { lrc, LRC } from "@/store/lrc.js";
-import { appState } from "@/store/appState.js";
-import { preferences } from "@/store/preferences.js";
+import { lrc, LRC } from "../store/lrc.js";
+import { appState } from "../store/appState.js";
+import { preferences } from "../store/preferences.js";
 import { DownLoadButton } from "./DownLoadButton.jsx";
 import { LockNodeButton } from "./LockNodeButton.jsx";
 
@@ -15,10 +15,9 @@ import { LockNodeButton } from "./LockNodeButton.jsx";
 class CurrentTimeTag extends Component {
   render() {
     return (
-      <span
-        className="current-time-tag"
-        data-time={LRC.timeToTag(appState.currentTime_fixed) + "\u27A4"}
-      />
+      <span className="current-time-tag">
+        {LRC.timeToTag(appState.currentTime_fixed) + "\u27A4"}
+      </span>
     );
   }
 }
@@ -30,17 +29,10 @@ const preventDefault = e => {
 
 @observer
 class SynchronizerList extends Component {
-  @observable.ref _lockNode;
-
   @computed
-  get lockNode() {
-    return this._lockNode;
-  }
-
-  set lockNode(value) {
-    if (value) {
-      this._lockNode = value;
-    }
+  get trackNode() {
+    const index = appState.lock ? lrc.highlightIndex : lrc.selectedIndex;
+    return this.base.children[index];
   }
 
   constructor(props) {
@@ -50,8 +42,8 @@ class SynchronizerList extends Component {
   componentDidMount() {
     this.disposers = [
       autorun(() => {
-        if (this.lockNode) {
-          this.lockNode.scrollIntoView({
+        if (this.trackNode) {
+          this.trackNode.scrollIntoView({
             behavior: "smooth",
             block: "center",
             inline: "nearest"
@@ -189,16 +181,6 @@ class SynchronizerList extends Component {
               className={className.join(" ")}
               data-key={lyricLine.key}
               key={lyricLine.key}
-              ref={node => {
-                if (
-                  lyricLine.key ===
-                  (appState.lock ? lrc.highlightIndex : lrc.selectedIndex)
-                ) {
-                  action(() => {
-                    this.lockNode = node;
-                  })();
-                }
-              }}
             >
               {lyricLine.key == lrc.selectedIndex ? <CurrentTimeTag /> : null}
               <p className="lyric">

@@ -3,8 +3,8 @@
  */
 "use strict";
 import { Component } from "preact";
-import { lrc } from "@/store/lrc.js";
 import { observable, action } from "mobx";
+import { lrc } from "../store/lrc.js";
 import { observer } from "preact-mobx-observer";
 import { DownloadSvg } from "./SVG.jsx";
 

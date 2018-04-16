@@ -4,10 +4,10 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
-import { router, Router } from "@/router.js";
+import { router, Router } from "../router.js";
+import { lrc } from "../store/lrc.js";
+import { preferences } from "../store/preferences.js";
 import { SettingsSvg, EditorSvg, SynchronizerSvg } from "./SVG.jsx";
-import { lrc } from "@/store/lrc.js";
-import { preferences } from "@/store/preferences.js";
 
 @observer
 class Header extends Component {

@@ -60,14 +60,20 @@
 }
 
 .current-time-tag {
-  height: 1rem;
-}
-
-.current-time-tag::before {
-  content: attr(data-time);
+  margin: 0.5rem 0;
   position: absolute;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  pointer-events: none;
 }
+
+// .current-time-tag::before {
+//   content: attr(data-time);
+//   position: absolute;
+//   -webkit-user-select: none;
+//   -moz-user-select: none;
+//   -ms-user-select: none;
+//   user-select: none;
+// }

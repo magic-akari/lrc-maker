@@ -3,10 +3,10 @@
  */
 "use strict";
 import { Component } from "preact";
-import { sync } from "./Synchronizer.jsx";
-import { router, Router } from "@/router.js";
 import { observer } from "preact-mobx-observer";
-import { preferences } from "@/store/preferences.js";
+import { sync } from "./Synchronizer.jsx";
+import { router, Router } from "../router.js";
+import { preferences } from "../store/preferences.js";
 
 @observer
 class SpaceButton extends Component {

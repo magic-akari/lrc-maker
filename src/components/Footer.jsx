@@ -4,11 +4,11 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
-import { Audio } from "./Audio.jsx";
-import { appState } from "@/store/appState.js";
-import { preferences } from "@/store/preferences.js";
+import { appState } from "../store/appState.js";
+import { preferences } from "../store/preferences.js";
 import { SpaceButton } from "./SpaceButton.jsx";
-import { lrc } from "@/store/lrc.js";
+import { lrc } from "../store/lrc.js";
+import { Audio } from "./Audio.jsx";
 
 @observer
 class Footer extends Component {

@@ -4,8 +4,8 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
-import { router, Router } from "@/router.js";
-import { preferences } from "@/store/preferences.js";
+import { router, Router } from "../router.js";
+import { preferences } from "../store/preferences.js";
 import { NotFound } from "./NotFound.jsx";
 import { Editor } from "./Editor.jsx";
 import { Synchronizer } from "./Synchronizer.jsx";

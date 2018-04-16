@@ -23,7 +23,6 @@ const base = {
   resolve: {
     mainFields: ["jsnext:main", "module", "main"],
     alias: {
-      "@": path.resolve(__dirname, "src"),
       languages: path.resolve(__dirname, "languages")
     }
   },

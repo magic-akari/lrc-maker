@@ -3,9 +3,9 @@
  */
 "use strict";
 import { Component } from "preact";
-import { appState } from "@/store/appState.js";
 import { observable } from "mobx";
 import { observer } from "preact-mobx-observer";
+import { appState } from "../store/appState.js";
 import { LockSvg, UnlockSvg } from "./SVG.jsx";
 
 @observer
