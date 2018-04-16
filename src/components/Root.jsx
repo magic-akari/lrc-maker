@@ -20,7 +20,10 @@ const Root = () => (
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="renderer" content="webkit" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="stylesheet" href="./app.css" />
+      <link
+        rel="stylesheet"
+        href={`./app.css?v=${process.env.npm_package_version}`}
+      />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -59,7 +62,9 @@ const Root = () => (
       {App({ loading: true })}
       <script
         dangerouslySetInnerHTML={{
-          __html: `!(function(d,a){a = d.createElement("script");a.charset="utf-8";a.src=typeof Symbol=="function"?"./app.js":"./app.es5.js";d.body.appendChild(a)})(document)`
+          __html: `(function(d,a){a=d.createElement("script");a.charset="utf-8";a.src="./app"+(typeof Symbol=="function"?"":".es5")+".js?v=${
+            process.env.npm_package_version
+          }";d.head.appendChild(a)})(document)`
         }}
       />
     </body>
