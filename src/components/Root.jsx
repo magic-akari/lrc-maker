@@ -48,7 +48,11 @@ const Root = () => (
         color="#ff4081"
       />
       <link rel="shortcut icon" href="./favicons/favicon.ico" />
-      <link rel="prefetch" href="./app.js" as="script" />
+      <link
+        rel="prefetch"
+        href={`./app.js?v=${process.env.npm_package_version}`}
+        as="script"
+      />
       <meta name="application-name" content="灯里的歌词滚动姬" />
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="theme-color" content="#ffffff" />

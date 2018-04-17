@@ -17,7 +17,6 @@
   list-style: none;
   font-size: 1.2rem;
   border: solid 1px transparent;
-  padding: 2px;
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -49,6 +48,7 @@
   pointer-events: none;
   margin: 0.5rem 0;
   word-break: break-all;
+  padding: 2px;
   padding-left: 8rem;
   @media screen and (max-width: 768px) {
     padding-left: 6rem;
@@ -63,6 +63,7 @@
   margin: 0.5rem 0;
   position: absolute;
   top: 0;
+  padding: 2px;
   align-self: baseline;
   -webkit-user-select: none;
   -moz-user-select: none;
