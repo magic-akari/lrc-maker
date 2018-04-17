@@ -88,7 +88,7 @@ const esnext = Object.assign({}, base, {
       importWorkboxFrom: "cdn",
       skipWaiting: true,
       clientsClaim: true,
-      exclude: [/legacy/, /\.map/],
+      exclude: [/legacy/, /\.map$/, "site.webmanifest"],
       runtimeCaching: [
         {
           urlPattern: /\/.*/,

@@ -62,6 +62,8 @@
 .current-time-tag {
   margin: 0.5rem 0;
   position: absolute;
+  top: 0;
+  align-self: baseline;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
