@@ -153,7 +153,7 @@
     }
   }
 
-  select {
+  .lang-select > select {
     // direction: rtl;
     padding-right: 1rem;
     color: inherit;
@@ -163,6 +163,10 @@
     border: none;
     background-color: transparent;
     outline: 0;
+
+    &::-ms-expand {
+      display: none;
+    }
   }
 
   .lang-select {
