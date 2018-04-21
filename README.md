@@ -4,7 +4,7 @@
 
 Lrc Maker is an online tool which help you create your cool lyric file.
 
-Drag and drop you audio file on the web page.\
+Drag and drop your audio file on the web page.\
 Use arrow key and space key to synchronize the lyric.
 
 Click [here](https://lrc-maker.github.io) to start now!
