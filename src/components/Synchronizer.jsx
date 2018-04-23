@@ -62,6 +62,7 @@ class SynchronizerList extends Component {
 
     Mousetrap.bind("space", e => {
       e.preventDefault();
+      document.activeElement.blur();
       sync();
       return false;
     });
