@@ -5,9 +5,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { GenerateSW } = require("workbox-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const pathToNodeModules = path.resolve(__dirname, "node_modules");
-const pathToMousetrap = path.resolve(
+const pathToNormalizeCss = path.resolve(
   pathToNodeModules,
-  "mousetrap/mousetrap.min.js"
+  "normalize.css/normalize.css"
 );
 
 const VERSION = JSON.stringify(process.env.npm_package_version);
@@ -41,7 +41,7 @@ const base = {
 
 const esnext = Object.assign({}, base, {
   entry: {
-    app: [pathToMousetrap, "./src/index.js", "./src/scss/app.scss"]
+    app: ["./src/index.js", pathToNormalizeCss, "./src/scss/app.scss"]
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -55,7 +55,7 @@ const esnext = Object.assign({}, base, {
         include: path.resolve(__dirname, "src")
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         use: ExtractTextPlugin.extract({
           use: [
             {
@@ -70,8 +70,7 @@ const esnext = Object.assign({}, base, {
               loader: "sass-loader",
               options: {
                 sourceMap: true,
-                sourceMapContents: true,
-                includePaths: [pathToNodeModules]
+                sourceMapContents: true
               }
             }
           ]
@@ -104,12 +103,7 @@ const esnext = Object.assign({}, base, {
 
 const es5 = Object.assign({}, base, {
   entry: {
-    app: [
-      "babel-polyfill",
-      "./src/polyfill.js",
-      pathToMousetrap,
-      "./src/index.js"
-    ]
+    app: ["babel-polyfill", "./src/polyfill.js", "./src/index.js"]
   },
   output: {
     path: path.resolve(__dirname, "dist"),

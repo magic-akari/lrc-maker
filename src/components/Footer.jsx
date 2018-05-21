@@ -28,55 +28,73 @@ class Footer extends Component {
       lrc.save();
     });
 
-    Mousetrap.bind(["left", "a"], e => {
-      this.audio.currentTime -= 5;
-      e.preventDefault();
-      return false;
-    });
+    document.addEventListener(
+      "keydown",
+      e => {
+        if (["text", "textarea"].includes(e.target.type)) {
+          return;
+        }
 
-    Mousetrap.bind(["right", "d"], e => {
-      this.audio.currentTime += 5;
-      e.preventDefault();
-      return false;
-    });
+        if (e.metaKey === true || e.ctrlKey === true) {
+          if (
+            ["ArrowUp", "KeyJ"].includes(e.code) ||
+            ["ArrowUp", "Up", "J", "j"].includes(e.key)
+          ) {
+            e.preventDefault();
 
-    Mousetrap.bind("mod+up", e => {
-      const rate = this.audio.playbackRate;
-      const newRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
-      this.audio.playbackRate = newRate;
+            const rate = this.audio.playbackRate;
+            const newRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
 
-      e.preventDefault();
-      return false;
-    });
+            this.audio.playbackRate = newRate;
+          } else if (
+            ["ArrowDown", "KeyK"].includes(e.code) ||
+            ["ArrowDown", "Down", "K", "k"].includes(e.key)
+          ) {
+            e.preventDefault();
 
-    Mousetrap.bind("mod+down", e => {
-      const rate = this.audio.playbackRate;
-      const newRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
-      this.audio.playbackRate = newRate;
+            const rate = this.audio.playbackRate;
+            const newRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
 
-      e.preventDefault();
-      return false;
-    });
+            this.audio.playbackRate = newRate;
+          } else if (e.code === "Enter" || e.key === "Enter") {
+            e.preventDefault();
 
-    Mousetrap.bind("r", e => {
-      this.audio.playbackRate = 1;
-    });
+            this.audio.paused ? this.audio.play() : this.audio.pause();
+          } else if (
+            e.shiftKey === true &&
+            (e.code === "KeyP" || e.key === "P" || e.key === "p")
+          ) {
+            e.preventDefault();
 
-    Mousetrap.bind(["command+return", "ctrl+enter"], e => {
-      this.audio.paused ? this.audio.play() : this.audio.pause();
+            let src = prompt("Input the audio source url.", appState.src);
+            if (src) {
+              appState.src = src;
+            }
+          }
+        } else {
+          if (
+            ["ArrowLeft", "KeyA"].includes(e.code) ||
+            ["ArrowLeft", "Left", "A", "a"].includes(e.key)
+          ) {
+            e.preventDefault();
 
-      e.preventDefault();
-      return false;
-    });
+            this.audio.currentTime -= 5;
+          } else if (
+            ["ArrowRight", "KeyD"].includes(e.code) ||
+            ["ArrowRight", "Right", "D", "d"].includes(e.key)
+          ) {
+            e.preventDefault();
 
-    Mousetrap.bind("meta+shift+p", e => {
-      let src = prompt("Input the audio source url.", appState.src);
-      if (src) {
-        appState.src = src;
-      }
-      e.preventDefault();
-      return false;
-    });
+            this.audio.currentTime += 5;
+          } else if (e.code === "KeyR" || e.key === "R" || e.key === "r") {
+            e.preventDefault();
+
+            this.audio.playbackRate = 1;
+          }
+        }
+      },
+      { capture: true }
+    );
 
     let urlSearchParams = location.search
       .slice(1)

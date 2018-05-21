@@ -22,9 +22,9 @@ class CurrentTimeTag extends Component {
   }
 }
 
-const preventDefault = e => {
-  e.preventDefault();
-  return false;
+const autoDispose = (type, listener, options) => {
+  document.addEventListener(type, listener, options);
+  return () => document.removeEventListener(type, listener, options);
 };
 
 @observer
@@ -57,75 +57,63 @@ class SynchronizerList extends Component {
           document.body.classList.remove("freeze");
         }
       }),
-      () => document.body.classList.remove("freeze")
+      () => document.body.classList.remove("freeze"),
+      autoDispose(
+        "keydown",
+        e => {
+          if (
+            ["Backspace", "Delete"].includes(e.code) ||
+            ["Backspace", "Delete", "Del"].includes(e.key)
+          ) {
+            e.preventDefault();
+            this.deleteTimestamp();
+            return;
+          }
+          if (e.metaKey === true || e.ctrlKey === true) {
+            return;
+          }
+          if (e.code === "Space" || e.key === " " || e.key === "Spacebar") {
+            e.preventDefault();
+
+            sync();
+          } else if (
+            ["ArrowUp", "KeyW", "KeyJ"].includes(e.code) ||
+            ["ArrowUp", "Up", "W", "w", "J", "j"].includes(e.key)
+          ) {
+            e.preventDefault();
+
+            this.changeSelect(-1);
+          } else if (
+            ["ArrowDown", "KeyS", "KeyK"].includes(e.code) ||
+            ["ArrowDown", "Down", "S", "s", "K", "k"].includes(e.key)
+          ) {
+            e.preventDefault();
+
+            this.changeSelect(1);
+          } else if (e.code === "Home" || e.key === "Home") {
+            e.preventDefault();
+
+            this.changeSelect(-1e3);
+          } else if (e.code === "End" || e.key === "End") {
+            e.preventDefault();
+
+            this.changeSelect(1e3);
+          } else if (e.code === "PageUp" || e.key === "PageUp") {
+            e.preventDefault();
+
+            this.changeSelect(-10);
+          } else if (e.code === "PageDown" || e.key === "PageDown") {
+            e.preventDefault();
+
+            this.changeSelect(10);
+          }
+        },
+        { capture: true }
+      )
     ];
-
-    Mousetrap.bind("space", e => {
-      e.preventDefault();
-      document.activeElement.blur();
-      sync();
-      return false;
-    });
-
-    Mousetrap.bind(["up", "w", "j"], e => {
-      e.preventDefault();
-      this.changeSelect(-1);
-      return false;
-    });
-
-    Mousetrap.bind(["down", "s", "k"], e => {
-      e.preventDefault();
-      this.changeSelect(1);
-      return false;
-    });
-
-    Mousetrap.bind("home", e => {
-      e.preventDefault();
-      this.changeSelect(-1e3);
-      return false;
-    });
-
-    Mousetrap.bind("end", e => {
-      e.preventDefault();
-      this.changeSelect(1e3);
-      return false;
-    });
-
-    Mousetrap.bind("pageup", e => {
-      e.preventDefault();
-      this.changeSelect(-10);
-      return false;
-    });
-
-    Mousetrap.bind("pagedown", e => {
-      e.preventDefault();
-      this.changeSelect(10);
-      return false;
-    });
-
-    Mousetrap.bind(["command+backspace", "del"], e => {
-      e.preventDefault();
-      this.deleteTimestamp();
-      return false;
-    });
   }
 
   componentWillUnmount() {
-    Mousetrap.unbind([
-      "space",
-      "up",
-      "w",
-      "j",
-      "down",
-      "s",
-      "k",
-      "home",
-      "end",
-      "pageup",
-      "pagedown",
-      "command+backspace",
-      "del"
-    ]);
     this.disposers.forEach(d => d());
   }
 
