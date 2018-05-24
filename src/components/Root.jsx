@@ -66,7 +66,7 @@ const Root = () => (
       {App({ loading: true })}
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(d,a){a=d.createElement("script");a.charset="utf-8";a.src="./app"+(typeof Symbol=="function"?"":".es5")+".js?v=${
+          __html: `(function(d,a){a=d.createElement("script");a.charset="utf-8";a.src="./app"+(typeof Proxy=="function"?"":".es5")+".js?v=${
             process.env.npm_package_version
           }";d.head.appendChild(a)})(document)`
         }}
