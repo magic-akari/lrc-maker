@@ -25,7 +25,7 @@
   "homepage": "https://github.com/hufan-Akari/lrc-maker#readme",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "mobx": "^4.1.0",
+    "mobx": "^5.0.3",
     "normalize.css": "^8.0.0",
     "preact": "^8.2.7",
     "preact-mobx-observer": "^1.0.4",
