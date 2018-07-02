@@ -29,7 +29,7 @@
     "normalize.css": "^8.0.0",
     "preact": "^8.2.7",
     "preact-mobx-observer": "^1.0.4",
-    "seamless-scroll-polyfill": "^0.4.2"
+    "seamless-scroll-polyfill": "^0.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
