@@ -41,7 +41,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "copy-webpack-plugin": "^4.5.1",
-    "css-loader": "^0.28.11",
+    "css-loader": "^1.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "node-sass": "^4.7.2",
     "preact-render-to-string": "^3.7.0",
