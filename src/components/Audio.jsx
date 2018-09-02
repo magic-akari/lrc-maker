@@ -290,6 +290,7 @@ class Audio extends Component {
     return (
       <div className={this.props.className}>
         <audio
+          hidden={!this.props.controls}
           controls={this.props.controls}
           src={this.props.src}
           ref={this.setAudioRef}
