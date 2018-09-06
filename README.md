@@ -1,4 +1,4 @@
-# [Lrc Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/hufan-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/hufan-akari/lrc-maker)
+# [Lrc Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/magic-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/magic-akari/lrc-maker)
 
 ![icon](./resources/favicons/apple-touch-icon.png)
 
@@ -24,4 +24,4 @@ Click [here](https://lrc-maker.github.io) to start now!
 |     <kbd>ctrl</kbd>+<kbd>↓</kbd> / <kbd>⌘</kbd>+<kbd>↓</kbd>      |           speed down            |
 |                           <kbd>r</kbd>                            |           reset speed           |
 
-More information here: [WiKi](https://github.com/hufan-akari/lrc-maker/wiki)
+More information here: [WiKi](https://github.com/magic-akari/lrc-maker/wiki)

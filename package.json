@@ -15,14 +15,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hufan-Akari/lrc-maker.git"
+    "url": "git+https://github.com/magic-akari/lrc-maker.git"
   },
   "author": "阿卡琳",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/hufan-Akari/lrc-maker/issues"
+    "url": "https://github.com/magic-akari/lrc-maker/issues"
   },
-  "homepage": "https://github.com/hufan-Akari/lrc-maker#readme",
+  "homepage": "https://github.com/magic-akari/lrc-maker#readme",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "mobx": "^4.1.0",

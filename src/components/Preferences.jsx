@@ -62,7 +62,7 @@ class Preferences extends Component {
         <section>
           <div className="section-group">
             <div>{pref.i18n["preferences"]["github-repo"]}</div>
-            <a href="https://github.com/hufan-akari/lrc-maker" target="_blank">
+            <a href="https://github.com/magic-akari/lrc-maker" target="_blank">
               Github
             </a>
           </div>
@@ -71,7 +71,7 @@ class Preferences extends Component {
           <div className="section-group">
             <div>{pref.i18n["preferences"]["help"]}</div>
             <a
-              href="https://github.com/hufan-akari/lrc-maker/wiki"
+              href="https://github.com/magic-akari/lrc-maker/wiki"
               target="_blank"
             >
               Github Wiki
