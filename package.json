@@ -1,0 +1,16 @@
+{
+  "name": "lrc-maker",
+  "version": "5.0.0-alpha",
+  "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
+  "repository": "https://github.com/magic-akari/lrc-maker.git",
+  "author": "阿卡琳 <hufan.akarin@Gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "lrc",
+    "lrc maker",
+    "lyric",
+    "lyric maker"
+  ],
+  "bugs": "https://github.com/magic-akari/lrc-maker/issues",
+  "homepage": "https://github.com/magic-akari/lrc-maker#readme"
+}
