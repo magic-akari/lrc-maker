@@ -1,0 +1,9 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": ".",
+        "lib": ["webworker", "es2018"]
+    },
+    "include": ["."]
+}

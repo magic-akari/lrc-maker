@@ -1,0 +1,15 @@
+{
+    "arrowParens": "always",
+    "endOfLine": "lf",
+    "jsxBracketSameLine": true,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "overrides": [
+        {
+            "files": "*.js",
+            "options": {
+                "trailingComma": "es5"
+            }
+        }
+    ]
+}

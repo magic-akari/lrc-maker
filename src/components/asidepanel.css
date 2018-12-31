@@ -1,0 +1,52 @@
+.aside-panel {
+    position: fixed;
+    right: 0;
+    bottom: 64px;
+    background: var(--semi-black-color);
+    border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.on-screen-button + .aside-panel {
+    bottom: 100px;
+}
+
+.aside-panel svg {
+    height: 30px;
+    width: 30px;
+    margin: auto;
+    fill: currentColor;
+}
+
+.aside-panel :hover > svg {
+    filter: drop-shadow(0 0 4px var(--theme-color));
+}
+
+.aside-button {
+    display: block;
+    height: 50px;
+    width: 50px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.syncmode-button {
+    border-top-left-radius: 0.5rem;
+    border-bottom: 1px solid var(--white);
+}
+
+.syncmode-button.highlight {
+    color: var(--black);
+    background: var(--theme-color);
+}
+.syncmode-button.highlight .lock-open {
+    visibility: hidden;
+}
+.syncmode-button.select .lock-close {
+    visibility: hidden;
+}

@@ -1,16 +1,52 @@
 {
-  "name": "lrc-maker",
-  "version": "5.0.0-alpha",
-  "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
-  "repository": "https://github.com/magic-akari/lrc-maker.git",
-  "author": "阿卡琳 <hufan.akarin@Gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "lrc",
-    "lrc maker",
-    "lyric",
-    "lyric maker"
-  ],
-  "bugs": "https://github.com/magic-akari/lrc-maker/issues",
-  "homepage": "https://github.com/magic-akari/lrc-maker#readme"
+    "name": "lrc-maker",
+    "version": "5.0.0-alpha.20181231",
+    "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
+    "repository": "https://github.com/magic-akari/lrc-maker.git",
+    "author": "阿卡琳 <hufan.akarin@Gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "lrc",
+        "lrc maker",
+        "lyric",
+        "lyric maker"
+    ],
+    "bugs": "https://github.com/magic-akari/lrc-maker/issues",
+    "homepage": "https://github.com/magic-akari/lrc-maker#readme",
+    "files": [
+        "build"
+    ],
+    "scripts": {
+        "start": "npm run html:dev && npm run tsc:dev",
+        "prestart": "mkdir -p build",
+        "build": "npm run css && npm run tsc && npm run html",
+        "prebuild": "mkdir -p build",
+        "tsc": "tsc -b",
+        "tsc:dev": "tsc -b --watch",
+        "css": "postcss src/index.css -m -d build",
+        "html": "NODE_ENV=production ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
+        "html:dev": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
+        "prettier": "prettier --write \"./{src,worker,scripts}/**/*.{ts,tsx,js,css,json}\" \"./*.{js,json,md}\" "
+    },
+    "dependencies": {
+        "dialog-polyfill": "^0.4.10",
+        "normalize.css": "^8.0.1",
+        "react": "^16.7.0-alpha.2",
+        "react-dom": "^16.7.0-alpha.2"
+    },
+    "devDependencies": {
+        "@types/node": "^10.12.18",
+        "@types/react": "^16.7.17",
+        "@types/react-dom": "^16.0.11",
+        "autoprefixer": "^9.4.2",
+        "cssnano": "^4.1.7",
+        "postcss": "^7.0.6",
+        "postcss-cli": "^6.0.1",
+        "postcss-custom-properties": "^8.0.9",
+        "postcss-import": "^12.0.1",
+        "prettier": "^1.15.3",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.11.0",
+        "typescript": "^3.3.0-dev.20181229"
+    }
 }

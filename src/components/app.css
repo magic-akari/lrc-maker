@@ -1,0 +1,101 @@
+html {
+    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB",
+        "Heiti SC", "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei",
+        "WenQuanYi Micro Hei", sans-serif;
+
+    text-size-adjust: 100%;
+    font-feature-settings: "kern" 1;
+    font-kerning: normal;
+    color: var(--black);
+    caret-color: var(--theme-color);
+    background-color: var(--background-color);
+    box-sizing: border-box;
+    line-height: 1.4;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+svg {
+    fill: currentColor;
+}
+
+::selection {
+    background-color: var(--theme-color);
+}
+
+:focus {
+    outline: none;
+}
+
+button {
+    border: 0;
+    background: 0;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+time {
+    letter-spacing: 0.5px;
+}
+
+@media screen and (max-width: 768px) {
+    time {
+        letter-spacing: 0;
+    }
+}
+
+:hover > svg {
+    filter: var(--drop-shadow);
+}
+
+html,
+body,
+.app-container {
+    height: 100%;
+}
+
+.ripple {
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+}
+.ripple:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 1s;
+}
+.ripple:active:after {
+    transform: scale(0, 0);
+    opacity: 0.2;
+    transition: 0s;
+}
+
+.select-all {
+    user-select: all;
+}
