@@ -1,0 +1,14 @@
+@charset "utf-8";
+@import "../node_modules/normalize.css/normalize.css";
+@import "../node_modules/dialog-polyfill/dialog-polyfill.css";
+@import "./variables.css";
+@import "./components/app.css";
+@import "./components/header.css";
+@import "./components/footer.css";
+@import "./components/content.css";
+@import "./components/editor.css";
+@import "./components/synchronizer.css";
+@import "./components/asidepanel.css";
+@import "./components/audio.css";
+@import "./components/loadaudio.css";
+@import "./components/preferences.css";

@@ -1,0 +1,104 @@
+dialog {
+    display: none;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+dialog[open] {
+    display: block;
+}
+
+dialog::backdrop {
+    background: #00000080;
+}
+
+dialog + .backdrop {
+    background: #00000080;
+}
+
+.app-loadaudio-dialog[open] {
+    width: 500px;
+    height: 10rem;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 10px;
+
+    display: flex;
+    justify-content: space-around;
+
+    border: 1px solid var(--theme-color);
+    box-shadow: 0 0 1rem var(--theme-color);
+    background: #ffffffcc;
+}
+
+.tab {
+    display: inline-block;
+}
+
+.dialog-tab {
+    width: 100%;
+    text-align: center;
+}
+
+.dialog-tab > [type="radio"] {
+    display: none;
+}
+
+.dialog-tab > .content {
+    position: absolute;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    visibility: hidden;
+}
+
+.dialog-tab > label {
+    width: 100%;
+    padding: 0.5rem 0;
+    display: inline-block;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border: 1px solid transparent;
+    border-bottom: 1px solid var(--theme-color);
+    user-select: none;
+}
+
+.dialog-tab :checked ~ label {
+    border: 1px solid var(--theme-color);
+    border-bottom-color: transparent;
+    background: #ffffffdd;
+}
+
+.dialog-tab :checked ~ label ~ .content {
+    visibility: visible;
+}
+
+.audio-input-tip,
+.audio-input-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    transition: transform 200ms ease-in-out;
+}
+
+.audio-input-tip:hover {
+    transform: scale(1.2);
+}
+
+.loadaudio-dialog-close {
+    position: absolute;
+    padding: 0;
+    left: -24px;
+    top: -24px;
+    height: 48px;
+    width: 48px;
+    color: var(--theme-color);
+}
+
+.loadaudio-dialog-close > svg {
+    height: 36px;
+    width: 36px;
+}

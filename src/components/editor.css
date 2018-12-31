@@ -1,0 +1,59 @@
+.app-editor {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 0.25rem;
+    border: 1px solid var(--theme-color);
+    background-color: white;
+    transition: box-shadow 250ms ease-in-out;
+
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+}
+.app-editor:hover {
+    box-shadow: 0 0 10px var(--theme-color);
+}
+.app-editor:focus-within {
+    box-shadow: 0 0 10px var(--theme-color);
+}
+@media screen and (max-width: 768px) {
+    .app-editor {
+        margin: 0;
+    }
+}
+
+.app-editor-infobox {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    color: gray;
+}
+
+.app-editor-infobox > input {
+    color: gray;
+}
+
+.app-textarea {
+    flex: 1 0 auto;
+    border: none;
+}
+
+.app-editor input,
+.app-editor textarea {
+    border: none;
+    padding: 0;
+    resize: none;
+}
+
+.app-editor > details {
+    padding-bottom: 4px;
+}
+
+.app-editor summary {
+    color: var(--theme-color);
+    text-shadow: var(--text-shadow);
+    user-select: none;
+}

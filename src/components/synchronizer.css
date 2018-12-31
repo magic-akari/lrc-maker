@@ -1,0 +1,95 @@
+.lyric-list {
+    width: 100%;
+    position: relative;
+    user-select: none;
+}
+
+.lyric-list.on-screen-button {
+    margin-bottom: 40px;
+}
+
+.space_button {
+    position: fixed;
+    left: 0;
+    bottom: 32px;
+    height: 40px;
+    width: 100%;
+    color: var(--white);
+    background-color: var(--semi-black-color);
+    border-bottom: 1px dashed var(--theme-color);
+}
+
+.space_button:active {
+    border-bottom-style: solid;
+}
+
+.line {
+    font-size: 1.2rem;
+    align-items: baseline;
+    white-space: pre-wrap;
+    border-top: solid 2px transparent;
+    border-bottom: solid 2px transparent;
+    padding: 8px 0 8px 8rem;
+}
+
+.line::after {
+    content: "";
+    display: inline-block;
+}
+
+.line:nth-child(even) {
+    background-color: #00000022;
+}
+.line:nth-child(odd) {
+    background-color: #ffffff22;
+}
+
+.line > .line-time,
+.line > .line-text {
+    pointer-events: none;
+}
+
+.select {
+    border-color: var(--theme-color);
+}
+
+.curser {
+    position: absolute;
+    left: 0;
+}
+
+.curser::after {
+    content: "\27A4";
+}
+
+.line.highlight {
+    background-color: var(--theme-color);
+}
+
+.error::before {
+    content: "\26A0\FE0F";
+    position: absolute;
+    left: -2rem;
+}
+
+@media screen and (max-width: 1080px) {
+    .error::before {
+        left: 6rem;
+    }
+
+    .select.error::before {
+        visibility: hidden;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .line {
+        font-size: 1rem;
+        padding-left: 6rem;
+        border-width: 1px;
+    }
+
+    .error::before {
+        left: 4rem;
+    }
+}

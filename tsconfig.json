@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es2018",
+        "module": "esnext",
+        "lib": ["dom", "es2018"],
+        "jsx": "react",
+        "outDir": "./build",
+        "rootDir": "./src",
+        "removeComments": true,
+        "downlevelIteration": true,
+        "strict": true,
+        "moduleResolution": "node"
+    },
+    "include": ["src"],
+    "references": [{ "path": "./worker" }]
+}
