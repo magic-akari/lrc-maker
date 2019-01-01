@@ -36,6 +36,11 @@ svg {
     outline: none;
 }
 
+a,
+:visited {
+    color: currentColor;
+}
+
 button {
     border: 0;
     background: 0;

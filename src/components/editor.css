@@ -11,6 +11,8 @@
     margin: 1rem;
     padding: 0.5rem;
     font-size: 1.2rem;
+
+    position: relative;
 }
 .app-editor:hover {
     box-shadow: 0 0 10px var(--theme-color);
@@ -56,4 +58,32 @@
     color: var(--theme-color);
     text-shadow: var(--text-shadow);
     user-select: none;
+}
+
+.editor-tools {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.5rem;
+    display: flex;
+}
+
+.editor-tools-item {
+    cursor: pointer;
+    padding: 0.5rem;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.editor-tools-item:active {
+    color: currentColor;
+}
+
+.editor-tools-item > svg {
+    filter: none;
+    height: 1.5rem;
+    width: 1.5rem;
 }
