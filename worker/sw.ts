@@ -2,11 +2,11 @@ declare const self: ServiceWorkerGlobalScope;
 export {};
 
 const APP_NAME = "akari-lrc-maker";
-const VERSION = "5.0.0";
+const VERSION = "5.0.0-alpha.20190101";
 
 const supportDynamicImport = (() => {
     try {
-        // tslint:disable-next-line:no-unused-expression
+        // tslint:disable-next-line
         new Function(`import('')`);
         return true;
     } catch (error) {
@@ -55,33 +55,36 @@ self.addEventListener("fetch", (event) => {
     console.log("sw.fetch", url);
 
     event.respondWith(
-        caches.open(`${APP_NAME}-${VERSION}`).then((cache) =>
-            fetch(event.request)
-                .then((response) => {
-                    if (
-                        supportDynamicImport ||
-                        !/useLang\.js$/.test(event.request.url)
-                    ) {
-                        cache.put(event.request, response.clone());
-                        return response;
-                    }
+        caches.match(event.request).then(
+            (match) =>
+                match ||
+                caches.open(`${APP_NAME}-${VERSION}`).then((cache) =>
+                    fetch(event.request).then((response) => {
+                        if (response.status !== 200) {
+                            return response;
+                        }
+                        if (
+                            supportDynamicImport ||
+                            !/useLang\.js$/.test(event.request.url)
+                        ) {
+                            cache.put(event.request, response.clone());
+                            return response;
+                        }
 
-                    return response.text().then((text) => {
-                        const newText = text.replace("import(", "Import(");
+                        return response.text().then((text) => {
+                            const newText = text.replace("import(", "Import(");
 
-                        const newResponse = new Response(newText, {
-                            status: response.status,
-                            statusText: response.statusText,
-                            headers: response.headers,
+                            const newResponse = new Response(newText, {
+                                status: response.status,
+                                statusText: response.statusText,
+                                headers: response.headers,
+                            });
+                            cache.put(event.request, newResponse.clone());
+
+                            return newResponse;
                         });
-                        cache.put(event.request, newResponse.clone());
-
-                        return newResponse;
-                    });
-                })
-                .catch(() => {
-                    return cache.match(event.request) as Promise<Response>;
-                }),
+                    }),
+                ),
         ),
     );
 });
