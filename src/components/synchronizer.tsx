@@ -83,7 +83,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
     );
 
     const [highLight, setHighLight] = useState(0);
-    const [needSync, setNeedSync] = useState(Symbol());
+    const [needReCalc, setNeedReCalc] = useState(Symbol());
 
     useEffect(
         () => {
@@ -142,7 +142,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
                 },
             );
         },
-        [lyric, needSync],
+        [lyric, needReCalc],
     );
 
     useEffect(
@@ -178,7 +178,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
             if (time > currentTime && time < nextTime) {
                 return;
             } else {
-                setNeedSync(Symbol());
+                setNeedReCalc(Symbol());
             }
         });
 
