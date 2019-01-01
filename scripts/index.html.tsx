@@ -6,6 +6,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { sri } from "./sri";
 
 const isProduction = process.env.NODE_ENV === "production";
+const useCDN = process.env.USE_CDN === "USE_CDN";
+
+const jsdelivr = "https://cdn.jsdelivr.net";
+const nodeModules = "../node_modules/";
 
 const libUrl = (
     name: string,
@@ -16,9 +20,7 @@ const libUrl = (
     integrity?: string;
     crossOrigin?: "anonymous";
 } => {
-    const jsdelivr = "https://cdn.jsdelivr.net/npm/";
-    const nodeModules = "../node_modules/";
-    if (isProduction) {
+    if (useCDN) {
         const version = (() => {
             const v = process.env[
                 "npm_package_dependencies_" + name.replace(/[\-\.]/g, "_")
@@ -27,13 +29,34 @@ const libUrl = (
             return v[0] === "~" || v[0] === "^" ? v.slice(1) : v;
         })();
 
-        const src = `${jsdelivr}${name}@${version}${prodPath}`;
+        const src = `${jsdelivr}/npm/${name}@${version}${prodPath}`;
         const integrity = sri(
             resolve(__dirname, `../node_modules/${name}${prodPath}`),
         );
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
         return { src: `${nodeModules}${name}${devPath || prodPath}` };
+    }
+};
+
+const appUrl = (
+    path: string,
+): {
+    src: string;
+    integrity?: string;
+    crossOrigin?: "anonymous";
+} => {
+    const name = process.env.npm_package_name!;
+    if (useCDN) {
+        const version = process.env.npm_package_version!;
+        const src = new URL(
+            resolve("/npm", `${name}@${version}`, "build", path),
+            `${jsdelivr}`,
+        ).href;
+        const integrity = sri(resolve(__dirname, "../build", path));
+        return { src, integrity, crossOrigin: "anonymous" };
+    } else {
+        return { src: path };
     }
 };
 
@@ -96,7 +119,16 @@ const Html = () => (
             />
             <link
                 rel="stylesheet"
-                href={isProduction ? "./index.css" : "../src/index.css"}
+                {...(() => {
+                    if (isProduction) {
+                        const { src: href, integrity, crossOrigin } = appUrl(
+                            "./index.css",
+                        );
+                        return { href, integrity, crossOrigin };
+                    }
+
+                    return { href: "../src/index.css" };
+                })()}
             />
             <script
                 {...libUrl(
@@ -112,8 +144,8 @@ const Html = () => (
                     "/umd/react-dom.development.js",
                 )}
             />
-            <script src="./polyfill.js" type="module" async />
-            <script src="./components/app.js" type="module" />
+            <script {...appUrl("./polyfill.js")} type="module" async />
+            <script {...appUrl("./components/app.js")} type="module" />
         </head>
         <body>
             <div className="app-container" />
