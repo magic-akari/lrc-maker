@@ -5,8 +5,9 @@ import {
     stringify,
 } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
+import { CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
 
-const { useRef, useEffect, useCallback } = React;
+const { useState, useRef, useEffect, useCallback, useMemo } = React;
 
 const disableCheck = {
     autoCapitalize: "off",
@@ -15,8 +16,11 @@ const disableCheck = {
     spellCheck: false,
 };
 
-const useDefaultValue = (defaultValue: string) => {
-    const ref = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
+const useDefaultValue = (
+    defaultValue: string,
+    ref = useRef<HTMLInputElement & HTMLTextAreaElement>(null),
+) => {
+    // warning: make sure we always use outter ref or create new one.
 
     const currentValue = ref.current ? ref.current.value : defaultValue;
 
@@ -57,11 +61,8 @@ export const Eidtor: React.SFC<{
 
     useEffect(() => {
         const dc = details.current!;
-        const toggle = () => () => {
-            sessionStorage.setItem(
-                "app-editor-details-open",
-                dc.open.toString(),
-            );
+        const toggle = () => {
+            sessionStorage.setItem("editor-details-open", dc.open.toString());
         };
         dc.addEventListener("toggle", toggle);
 
@@ -70,8 +71,64 @@ export const Eidtor: React.SFC<{
         };
     }, []);
 
-    const detailsOpened =
-        sessionStorage.getItem("app-editor-details-open") !== "false";
+    const detailsOpened = useMemo(() => {
+        return sessionStorage.getItem("editor-details-open") !== "false";
+    }, []);
+
+    const textarea = useRef<any>(null);
+    const [href, setHref] = useState<string | undefined>(undefined);
+
+    const onDownloadClick = useCallback(() => {
+        if (href) {
+            URL.revokeObjectURL(href);
+        }
+        const url = URL.createObjectURL(
+            new Blob([textarea.current!.value], {
+                type: "text/plain;charset=UTF-8",
+            }),
+        );
+        setHref(url);
+    }, []);
+
+    const onUploadTextFile = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            const fileReader = new FileReader();
+            fileReader.addEventListener("load", () => {
+                lrcDispatch({
+                    type: LrcActionType.parse,
+                    payload: fileReader.result as string,
+                });
+            });
+            fileReader.readAsText(ev.target.files![0], "UTF-8");
+        },
+        [],
+    );
+
+    const onCopyClick = useCallback(() => {
+        textarea.current.select();
+        document.execCommand("copy");
+    }, []);
+
+    const downloadName = useMemo(
+        () => {
+            const list = [];
+            const lrcInfo = lrcState.info;
+            if (lrcInfo.has("ti")) {
+                list.push(lrcInfo.get("ti"));
+            }
+            if (lrcInfo.has("ar")) {
+                list.push(lrcInfo.get("ar"));
+            }
+            if (list.length === 0) {
+                if (lrcInfo.has("al")) {
+                    list.push(lrcInfo.get("al"));
+                }
+                list.push(new Date().toLocaleString());
+            }
+            return list.join(" - ") + ".lrc";
+        },
+        [lrcState.info],
+    );
 
     return (
         <div className="app-editor">
@@ -111,11 +168,35 @@ export const Eidtor: React.SFC<{
                 </section>
             </details>
 
+            <section className="editor-tools">
+                <label className="editor-tools-item ripple">
+                    <input
+                        hidden
+                        type="file"
+                        accept="text/*, .txt, .lrc"
+                        onChange={onUploadTextFile}
+                    />
+                    <OpenFileSVG />
+                </label>
+                <button
+                    className="editor-tools-item ripple"
+                    onClick={onCopyClick}>
+                    <CopySVG />
+                </button>
+                <a
+                    className="editor-tools-item ripple"
+                    href={href}
+                    onClick={onDownloadClick}
+                    download={downloadName}>
+                    <DownloadSVG />
+                </a>
+            </section>
+
             <textarea
                 className="app-textarea"
                 onBlur={parse}
                 {...disableCheck}
-                {...useDefaultValue(text)}
+                {...useDefaultValue(text, textarea)}
             />
         </div>
     );
