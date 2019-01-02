@@ -29,6 +29,13 @@ declare global {
         preferences = "lrc-maker-preferences",
     }
 
+    // sessionStorage key
+    const enum SSK {
+        audioSrc = "audio-src",
+        editorDetailsOpen = "editor-details-open",
+        syncMode = "sync-mode",
+    }
+
     const enum JsdelivrDialog {
         src = "https://cdn.jsdelivr.net/npm/dialog-polyfill@0.4.10/dialog-polyfill.js",
         integrity = "sha256-MzKeKXV3W7bf3Uu0xLNN/SiVj3OBfBUzD3VmMb/yyCQ=",

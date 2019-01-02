@@ -28,8 +28,8 @@ export const enum SyncMode {
     highlight,
 }
 
-const cachedSelect = {
-    current: 0,
+const cachedState = {
+    selectedLine: 0,
 };
 
 interface ISynchronizerProps {
@@ -74,10 +74,12 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         [lyric.length],
     );
 
-    const [selectedLine, setSelectLine] = useState(guard(cachedSelect.current));
+    const [selectedLine, setSelectLine] = useState(
+        guard(cachedState.selectedLine),
+    );
 
     const [syncMode, setSyncMode] = useState(
-        sessionStorage.getItem("sync-mode") === SyncMode.highlight.toString()
+        sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString()
             ? SyncMode.highlight
             : SyncMode.select,
     );
@@ -87,7 +89,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
 
     useEffect(
         () => {
-            sessionStorage.setItem("sync-mode", syncMode.toString());
+            sessionStorage.setItem(SSK.syncMode, syncMode.toString());
         },
         [syncMode],
     );
@@ -104,10 +106,6 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
                 block: "center",
                 inline: "center",
             });
-
-            return () => {
-                cachedSelect.current = selectedLine;
-            };
         },
         [needScrollLine],
     );
@@ -284,9 +282,11 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
 
             return () => {
                 document.removeEventListener("keydown", listener);
+
+                cachedState.selectedLine = selectedLine;
             };
         },
-        [selectedLine, sync],
+        [selectedLine],
     );
 
     const onLineClick = useCallback(

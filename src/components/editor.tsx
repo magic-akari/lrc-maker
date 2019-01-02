@@ -62,7 +62,7 @@ export const Eidtor: React.SFC<{
     useEffect(() => {
         const dc = details.current!;
         const toggle = () => {
-            sessionStorage.setItem("editor-details-open", dc.open.toString());
+            sessionStorage.setItem(SSK.editorDetailsOpen, dc.open.toString());
         };
         dc.addEventListener("toggle", toggle);
 
@@ -72,7 +72,7 @@ export const Eidtor: React.SFC<{
     }, []);
 
     const detailsOpened = useMemo(() => {
-        return sessionStorage.getItem("editor-details-open") !== "false";
+        return sessionStorage.getItem(SSK.editorDetailsOpen) !== "false";
     }, []);
 
     const textarea = useRef<any>(null);
@@ -92,6 +92,10 @@ export const Eidtor: React.SFC<{
 
     const onUploadTextFile = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
+            if (ev.target.files === null || ev.target.files.length === 0) {
+                return;
+            }
+
             const fileReader = new FileReader();
             fileReader.addEventListener("load", () => {
                 lrcDispatch({
