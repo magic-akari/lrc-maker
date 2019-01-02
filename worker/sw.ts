@@ -2,7 +2,7 @@ declare const self: ServiceWorkerGlobalScope;
 export {};
 
 const APP_NAME = "akari-lrc-maker";
-const VERSION = "5.0.0-alpha.20190101";
+const VERSION = "5.0.0-alpha.20190102";
 
 const supportDynamicImport = (() => {
     try {
@@ -45,10 +45,7 @@ self.addEventListener("fetch", (event) => {
 
     const url = new URL(event.request.url);
 
-    if (
-        !/(?:\.css|\.js|\/)$/.test(url.pathname) ||
-        url.protocol === "chrome-extension:"
-    ) {
+    if (!/(?:\.css|\.js|\/)$/.test(url.pathname)) {
         return;
     }
 
