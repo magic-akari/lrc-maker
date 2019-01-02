@@ -7,6 +7,8 @@ const { useEffect, useCallback } = React;
 type TsetAudioSrc = (src: string) => void;
 
 const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
+    sessionStorage.removeItem(SSK.audioSrc);
+
     if (file) {
         if (file.type.startsWith("audio/")) {
             setAudioSrc(URL.createObjectURL(file));

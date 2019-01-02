@@ -48,7 +48,10 @@ export const App: React.FC = () => {
         [prefState.lang],
     );
 
-    const [audioSrc, setAudioSrc] = useState<string | undefined>(undefined);
+    const [audioSrc, setAudioSrc] = useState<string | undefined>(
+        sessionStorage.getItem(SSK.audioSrc) || undefined,
+    );
+
     const rafId = useRef(0);
 
     useEffect(() => {

@@ -52,8 +52,6 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
         });
         return () => {
             audioStatePubSub.unsub(self.current);
-
-            console.error("LoadAudio should never unmount");
         };
     }, []);
 
@@ -68,19 +66,17 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
 
         const urlInput = form.elements.namedItem("url")! as HTMLInputElement;
 
-        const url = urlInput.value;
+        let url = urlInput.value;
 
         if (url.includes("music.163.com")) {
             const result = url.match(/\d{4,}/);
             if (result !== null) {
                 const id = result[0];
-                setAudioSrc(
-                    `https://music.163.com/song/media/outer/url?id=${id}.mp3`,
-                );
-                return;
+                url = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
             }
         }
 
+        sessionStorage.setItem(SSK.audioSrc, url);
         setAudioSrc(url);
     }, []);
 
