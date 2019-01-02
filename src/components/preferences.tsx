@@ -2,7 +2,10 @@ import {
     Action as PrefAction,
     ActionType as PrefActionType,
     State as PrefState,
+    themeColor,
 } from "../hooks/usePref.js";
+
+const { useCallback } = React;
 
 interface IPreferencesProps {
     prefState: PrefState;
@@ -17,6 +20,13 @@ export const Preferences: React.FC<IPreferencesProps> = ({
     prefState,
     prefDispatch,
 }) => {
+    const onColorPick = useCallback((ev) => {
+        prefDispatch({
+            type: PrefActionType.themeColor,
+            payload: ev.target.value,
+        });
+    }, []);
+
     return (
         <div className="preferences">
             <ul>
@@ -41,13 +51,17 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 <li>
                     <section className="list-item">
                         <span>项目地址</span>
-                        <a href={Repo.url}>Github</a>
+                        <a href={Repo.url} target="_blank">
+                            Github
+                        </a>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>关于 &amp; 帮助</span>
-                        <a href={Repo.wiki}>Github Wiki</a>
+                        <a href={Repo.wiki} target="_blank">
+                            Github Wiki
+                        </a>
                     </section>
                 </li>
                 <li>
@@ -95,6 +109,39 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                             <div className="checkbox" />
                         </label>
                     </label>
+                </li>
+                <li>
+                    <section className="list-item">
+                        <span>主题颜色</span>
+                    </section>
+                </li>
+                <li>
+                    <section className="list-item">
+                        <form>
+                            {Object.values(themeColor).map((color) => {
+                                const checked = color === prefState.themeColor;
+                                const classNames = ["color-picker", "ripple"];
+                                if (checked) {
+                                    classNames.push("checked");
+                                }
+                                return (
+                                    <label
+                                        className={classNames.join(" ")}
+                                        key={color}
+                                        style={{ backgroundColor: color }}>
+                                        <input
+                                            hidden
+                                            type="radio"
+                                            name="theme-color"
+                                            value={color}
+                                            checked={checked}
+                                            onChange={onColorPick}
+                                        />
+                                    </label>
+                                );
+                            })}
+                        </form>
+                    </section>
                 </li>
             </ul>
         </div>

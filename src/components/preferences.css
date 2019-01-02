@@ -22,7 +22,8 @@
     justify-content: space-between;
     max-width: 768px;
     margin: auto;
-    padding: 1rem 0;
+    min-height: 3.5rem;
+    align-items: center;
 }
 
 .label-switch {
@@ -85,4 +86,22 @@
 .label-switch input[type="checkbox"]:checked + .checkbox::after {
     background: var(--theme-color);
     left: 36px;
+}
+
+.color-picker {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    margin: 0 2px;
+    border-radius: 4px;
+    line-height: normal;
+}
+
+.color-picker.checked::before {
+    content: "\2714\FE0F";
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 8px;
 }

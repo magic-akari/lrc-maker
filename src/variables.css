@@ -1,19 +1,8 @@
 :root {
-    --orange: #ff691f;
-    --yellow: #fab81e;
-    --lime: #7fdbb6;
-    --green: #19cf86;
-    --blue: #91d2fa;
-    --navy: #1b95e0;
-    --grey: #abb8c2;
-    --red: #e81c4f;
-    --pink: #f58ea8;
-    --purple: #981ceb;
-
     --white: #eee;
     --black: #111;
 
-    --theme-color: var(--pink);
+    --theme-color: #f58ea8;
     --background-color: #f1f3f4;
 
     --semi-black-color: rgba(40, 40, 40, 0.85);
