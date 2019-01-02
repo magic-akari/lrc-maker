@@ -41,6 +41,12 @@ declare global {
         integrity = "sha256-MzKeKXV3W7bf3Uu0xLNN/SiVj3OBfBUzD3VmMb/yyCQ=",
     }
 
+    const enum Repo {
+        url = "https://github.com/magic-akari/lrc-maker",
+        wiki = "https://github.com/magic-akari/lrc-maker/wiki",
+        issues = "https://github.com/magic-akari/lrc-maker/issues",
+    }
+
     interface String {
         trimStart(): string;
         trimEnd(): string;

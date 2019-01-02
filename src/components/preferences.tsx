@@ -9,6 +9,10 @@ interface IPreferencesProps {
     prefDispatch: React.Dispatch<PrefAction>;
 }
 
+const info: Record<"version" | "hash" | "updateTime", string> = JSON.parse(
+    document.getElementById("app-info")!.textContent!,
+);
+
 export const Preferences: React.FC<IPreferencesProps> = ({
     prefState,
     prefDispatch,
@@ -19,31 +23,31 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 <li>
                     <section className="list-item">
                         <span>版本</span>
-                        <span className="select-all">5.0.0-beta</span>
+                        <span className="select-all">{info.version}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>Commit hash</span>
-                        <span className="select-all">1a2b3c4</span>
+                        <span className="select-all">{info.hash}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>最近更新</span>
-                        <span>{new Date().toLocaleDateString()}</span>
+                        <span>{info.updateTime}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>项目地址</span>
-                        <a href="">Github</a>
+                        <a href={Repo.url}>Github</a>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>关于 &amp; 帮助</span>
-                        <a href="">Github Wiki</a>
+                        <a href={Repo.wiki}>Github Wiki</a>
                     </section>
                 </li>
                 <li>
@@ -66,9 +70,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                 onChange={() =>
                                     prefDispatch({
                                         type: PrefActionType.builtInAudio,
-                                        payload: !prefState[
-                                            PrefActionType.builtInAudio
-                                        ],
+                                        payload: !prefState.builtInAudio,
                                     })
                                 }
                             />
@@ -86,9 +88,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                 onChange={() => {
                                     prefDispatch({
                                         type: PrefActionType.screenButton,
-                                        payload: !prefState[
-                                            PrefActionType.screenButton
-                                        ],
+                                        payload: !prefState.screenButton,
                                     });
                                 }}
                             />
