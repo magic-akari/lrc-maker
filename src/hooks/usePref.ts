@@ -1,5 +1,18 @@
 type Fixed = 0 | 1 | 2 | 3;
 
+export const themeColor = {
+    orange: "#ff691f",
+    yellow: "#fab81e",
+    lime: "#7fdbb6",
+    green: "#19cf86",
+    blue: "#91d2fa",
+    navy: "#1b95e0",
+    grey: "#abb8c2",
+    red: "#e81c4f",
+    pink: "#f58ea8",
+    purple: "#981ceb",
+};
+
 export const enum ActionType {
     lang = "lang",
     spaceStart = "spaceStart",
@@ -7,6 +20,7 @@ export const enum ActionType {
     fixed = "fixed",
     builtInAudio = "builtInAudio",
     screenButton = "screenButton",
+    themeColor = "themeColor",
 }
 
 const initState = {
@@ -16,6 +30,7 @@ const initState = {
     [ActionType.fixed]: 3 as Fixed,
     [ActionType.builtInAudio]: false,
     [ActionType.screenButton]: false,
+    [ActionType.themeColor]: themeColor.pink,
 };
 
 export type State = Readonly<typeof initState>;

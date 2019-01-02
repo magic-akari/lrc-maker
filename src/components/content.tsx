@@ -26,6 +26,16 @@ export const Content: React.FC<IContentProps> = ({
     console.info("Content.render");
     const self = useRef(Symbol(Content.name));
 
+    useEffect(
+        () => {
+            document.documentElement.style.setProperty(
+                "--theme-color",
+                prefState.themeColor,
+            );
+        },
+        [prefState.themeColor],
+    );
+
     const [path, setPath] = useState(location.hash);
     useEffect(() => {
         addEventListener("hashchange", () => {

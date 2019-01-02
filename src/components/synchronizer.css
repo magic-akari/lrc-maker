@@ -2,6 +2,7 @@
     width: 100%;
     position: relative;
     user-select: none;
+    line-height: 1.4;
 }
 
 .lyric-list.on-screen-button {

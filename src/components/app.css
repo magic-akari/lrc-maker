@@ -10,7 +10,6 @@ html {
     caret-color: var(--theme-color);
     background-color: var(--background-color);
     box-sizing: border-box;
-    line-height: 1.4;
 }
 
 *,
@@ -39,6 +38,7 @@ svg {
 a,
 :visited {
     color: currentColor;
+    text-decoration: none;
 }
 
 button {
