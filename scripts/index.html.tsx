@@ -69,6 +69,16 @@ const Html = () => {
         .toString()
         .trim();
 
+    const swRegister = () =>
+        readFileSync(__dirname + "/sw.register.js", {
+            encoding: "utf8",
+        }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " ");
+
+    const swUnregister = () =>
+        readFileSync(__dirname + "/sw.unregister.js", {
+            encoding: "utf8",
+        });
+
     return (
         <html>
             <head>
@@ -169,9 +179,7 @@ const Html = () => {
                 <div className="app-container" />
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: readFileSync(__dirname + "/sw.register.js", {
-                            encoding: "utf8",
-                        }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " "),
+                        __html: isProduction ? swRegister() : swUnregister(),
                     }}
                 />
             </body>
