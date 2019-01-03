@@ -5,7 +5,7 @@ const { useState, useEffect, useRef } = React;
 
 interface ICurserProps {
     converter: (time?: number) => string;
-    fixed: 0 | 1 | 2 | 3;
+    fixed: Fixed;
 }
 
 export const Curser: React.FC<ICurserProps> = ({ converter, fixed }) => {
