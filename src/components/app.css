@@ -31,6 +31,10 @@ svg {
     background-color: var(--theme-color);
 }
 
+.text-white ::selection {
+    color: var(--white);
+}
+
 :focus {
     outline: none;
 }

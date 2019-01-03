@@ -5,7 +5,7 @@ import {
     themeColor,
 } from "../hooks/usePref.js";
 
-const { useCallback } = React;
+const { useCallback, useRef, useEffect } = React;
 
 interface IPreferencesProps {
     prefState: PrefState;
@@ -20,12 +20,65 @@ export const Preferences: React.FC<IPreferencesProps> = ({
     prefState,
     prefDispatch,
 }) => {
-    const onColorPick = useCallback((ev) => {
-        prefDispatch({
-            type: PrefActionType.themeColor,
-            payload: ev.target.value,
-        });
+    const onColorPick = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            prefDispatch({
+                type: PrefActionType.themeColor,
+                payload: ev.target.value,
+            });
+        },
+        [],
+    );
+
+    const userColorInput = useRef<HTMLInputElement>(null);
+
+    const handleUserInput = useCallback(
+        (input: EventTarget & HTMLInputElement) => {
+            let value = input.value;
+
+            if (!input.validity.valid) {
+                input.value = input.defaultValue;
+                return;
+            }
+
+            if (value.length === 3) {
+                value = [].map.call(value, (v: string) => v + v).join("");
+            }
+            if (value.length < 6) {
+                value = value.padEnd(6, "0");
+            }
+
+            prefDispatch({
+                type: PrefActionType.themeColor,
+                payload: "#" + value,
+            });
+        },
+        [],
+    );
+
+    const onUserColorInputBlur = useCallback(
+        (ev: React.FocusEvent<HTMLInputElement>) => handleUserInput(ev.target),
+        [],
+    );
+
+    const onSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
+
+        const form = ev.target as HTMLFormElement;
+
+        const input = form.elements.namedItem(
+            "user-color-input",
+        )! as HTMLInputElement;
+
+        return handleUserInput(input);
     }, []);
+
+    useEffect(
+        () => {
+            userColorInput.current!.value = prefState.themeColor.slice(1);
+        },
+        [prefState.themeColor],
+    );
 
     return (
         <div className="preferences">
@@ -117,7 +170,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <section className="list-item">
-                        <form>
+                        <form onSubmit={onSubmit}>
                             {Object.values(themeColor).map((color) => {
                                 const checked = color === prefState.themeColor;
                                 const classNames = ["color-picker", "ripple"];
@@ -140,6 +193,29 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                     </label>
                                 );
                             })}
+                            <label
+                                className="color-picker ripple user-color-label"
+                                htmlFor="user-color-input"
+                                style={{
+                                    backgroundColor: prefState.themeColor,
+                                }}>
+                                #
+                            </label>
+                            <input
+                                ref={userColorInput}
+                                id="user-color-input"
+                                name="user-color-input"
+                                className="user-color-input"
+                                type="text"
+                                pattern="[\da-f]{3,6}"
+                                required
+                                autoCapitalize="off"
+                                autoComplete="off"
+                                autoCorrect="off"
+                                spellCheck={false}
+                                defaultValue={prefState.themeColor.slice(1)}
+                                onBlur={onUserColorInputBlur}
+                            />
                         </form>
                     </section>
                 </li>

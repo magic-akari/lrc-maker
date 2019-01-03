@@ -67,6 +67,10 @@
     background-color: var(--theme-color);
 }
 
+.text-white .line.highlight {
+    color: var(--white);
+}
+
 .error::before {
     content: "\26A0\FE0F";
     position: absolute;
