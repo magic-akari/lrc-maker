@@ -19,11 +19,17 @@
 
 .list-item {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     max-width: 768px;
     margin: auto;
     min-height: 3.5rem;
     align-items: center;
+}
+
+.list-item > span,
+.list-item > form {
+    margin: 0.5rem 0;
 }
 
 .label-switch {
@@ -91,7 +97,7 @@
 .color-picker {
     height: 30px;
     min-width: 30px;
-    margin: 0 2px;
+    margin: 2px;
     border-radius: 4px;
     line-height: normal;
     display: inline-flex;
@@ -113,7 +119,7 @@
 .user-color-input {
     height: 30px;
     width: 4rem;
-    margin: 0 2px;
+    margin: 2px;
     vertical-align: middle;
 }
 
@@ -135,4 +141,52 @@
     .user-color-input {
         display: inline-flex;
     }
+}
+
+.format-example-time,
+.format-example-text {
+    vertical-align: middle;
+}
+
+.format-example-text {
+    display: inline;
+    background: var(--theme-color);
+}
+
+.text-white .format-example-text {
+    color: var(--white);
+}
+
+.stepper {
+    display: flex;
+    height: 30px;
+}
+
+.stepper input {
+    width: 2rem;
+    text-align: center;
+    border: 1px solid #d7dbdd;
+
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.stepper button {
+    cursor: pointer;
+    width: 30px;
+    color: #ffffff;
+    background-color: var(--theme-color);
+    font-size: 12px;
+    border: 1px solid var(--theme-color);
+    border-radius: 4px;
+}
+
+.stepper .addOnLeft {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.stepper .addOnRight {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }

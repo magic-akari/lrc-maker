@@ -1,5 +1,3 @@
-type Fixed = 0 | 1 | 2 | 3;
-
 export const themeColor = {
     orange: "#ff691f",
     yellow: "#fab81e",
@@ -10,7 +8,7 @@ export const themeColor = {
     grey: "#abb8c2",
     red: "#e81c4f",
     pink: "#f58ea8",
-    purple: "#981ceb",
+    purple: "#c877fe",
 };
 
 export const enum ActionType {

@@ -84,11 +84,9 @@ const parser = (lrcString: string): State => {
     return { info, lyric };
 };
 
-type Fixed = 0 | 1 | 2 | 3;
-
 interface IFormatOptions {
-    spaceStart: number | null;
-    spaceEnd: number | null;
+    spaceStart: number;
+    spaceEnd: number;
     fixed: Fixed;
 }
 
@@ -127,14 +125,14 @@ export const convertTimeToTag = (
 
 export const formatText = (
     text: string,
-    spaceStart: number | null,
-    spaceEnd: number | null,
+    spaceStart: number,
+    spaceEnd: number,
 ) => {
     let newText = text;
-    if (spaceStart !== null && spaceStart >= 0) {
+    if (spaceStart >= 0) {
         newText = Const.space.repeat(spaceStart) + newText.trimStart();
     }
-    if (spaceEnd !== null && spaceEnd >= 0) {
+    if (spaceEnd >= 0) {
         newText = newText.trimEnd() + Const.space.repeat(spaceEnd);
     }
     return newText;

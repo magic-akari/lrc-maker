@@ -12,6 +12,8 @@ declare global {
 
     type Language = typeof language;
 
+    type Fixed = 0 | 1 | 2 | 3;
+
     const enum Path {
         home = "#/",
         homeID = "/",
