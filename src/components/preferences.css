@@ -90,18 +90,49 @@
 
 .color-picker {
     height: 30px;
-    width: 30px;
-    display: inline-block;
+    min-width: 30px;
     margin: 0 2px;
     border-radius: 4px;
     line-height: normal;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
 }
 
 .color-picker.checked::before {
     content: "\2714\FE0F";
-    width: 100%;
     position: absolute;
-    text-align: center;
+    color: var(--black);
+}
+
+.text-white .color-picker.checked::before {
+    color: var(--white);
+}
+
+.user-color-input {
+    height: 30px;
+    width: 4rem;
+    margin: 0 2px;
     vertical-align: middle;
-    padding-top: 8px;
+}
+
+.text-white .user-color-label {
+    color: var(--white);
+}
+
+.theme-color-span {
+    display: none;
+}
+
+.user-color-label,
+.user-color-input {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .user-color-label,
+    .user-color-input {
+        display: inline-flex;
+    }
 }
