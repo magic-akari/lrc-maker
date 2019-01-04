@@ -2,7 +2,7 @@ declare const self: ServiceWorkerGlobalScope;
 export {};
 
 const APP_NAME = "akari-lrc-maker";
-const VERSION = "5.0.0-alpha.20190103";
+const VERSION = "5.0.0-alpha.20190104";
 
 const supportDynamicImport = (() => {
     try {
