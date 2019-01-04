@@ -17,6 +17,44 @@ const info: Record<"version" | "hash" | "updateTime", string> = JSON.parse(
     document.getElementById("app-info")!.textContent!,
 );
 
+interface INumberInput {
+    min?: number;
+    max?: number;
+    defaultValue: number;
+    callback: (value: number, ref: React.RefObject<HTMLInputElement>) => void;
+}
+
+const useNumberInput = (
+    { defaultValue, callback }: INumberInput,
+    ref = useRef<HTMLInputElement>(null),
+) => {
+    useEffect(
+        () => {
+            ref.current!.value = defaultValue.toString();
+        },
+        [defaultValue],
+    );
+
+    const onChange = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            if (ev.target.validity.valid) {
+                callback(Number.parseInt(ev.target.value, 10), ref);
+            }
+        },
+        [callback],
+    );
+
+    const onBlur = useCallback(
+        (ev: React.FocusEvent<HTMLInputElement>) => {
+            if (!ev.target.validity.valid) {
+                ref.current!.value = defaultValue.toString();
+            }
+        },
+        [callback, defaultValue],
+    );
+    return { type: "number", step: 1, ref, onChange, onBlur };
+};
+
 export const Preferences: React.FC<IPreferencesProps> = ({
     prefState,
     prefDispatch,
@@ -62,17 +100,20 @@ export const Preferences: React.FC<IPreferencesProps> = ({
         [],
     );
 
-    const onSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
-        ev.preventDefault();
+    const onColorSubmit = useCallback(
+        (ev: React.FormEvent<HTMLFormElement>) => {
+            ev.preventDefault();
 
-        const form = ev.target as HTMLFormElement;
+            const form = ev.target as HTMLFormElement;
 
-        const input = form.elements.namedItem(
-            "user-color-input",
-        )! as HTMLInputElement;
+            const input = form.elements.namedItem(
+                "user-color-input",
+            )! as HTMLInputElement;
 
-        return handleUserInput(input);
-    }, []);
+            return handleUserInput(input);
+        },
+        [],
+    );
 
     useEffect(
         () => {
@@ -81,29 +122,28 @@ export const Preferences: React.FC<IPreferencesProps> = ({
         [prefState.themeColor],
     );
 
-    const onChangeSpace = useCallback(
-        (ev: React.FocusEvent<HTMLInputElement>) => {
-            const input = ev.target;
-            const name = input.name as PrefActionType.spaceStart &
-                PrefActionType.spaceEnd;
-
+    const spaceChangeCallback = useCallback(
+        (value: number, ref: React.RefObject<HTMLInputElement>) => {
             prefDispatch({
-                type: name,
-                payload: Number.parseInt(input.value, 10),
+                type: ref.current!.name as PrefActionType.spaceStart &
+                    PrefActionType.spaceEnd,
+                payload: value,
             });
         },
         [],
     );
 
-    const onChangeFixed = useCallback(
-        (ev: React.ChangeEvent<HTMLSelectElement>) => {
-            prefDispatch({
-                type: PrefActionType.fixed,
-                payload: Number.parseInt(ev.target.value, 10) as Fixed,
+    const clearCache = useCallback(() => {
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.getRegistration().then((registration) => {
+                if (registration) {
+                    registration.unregister().then(() => {
+                        location.reload(true);
+                    });
+                }
             });
-        },
-        [],
-    );
+        }
+    }, []);
 
     return (
         <div className="preferences">
@@ -145,11 +185,13 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 <li>
                     <section className="list-item">
                         <span>语言</span>
-                        <select defaultValue={"en-US"}>
-                            <option key={"en-US"} value={"en-US"}>
-                                English
-                            </option>
-                        </select>
+                        <div className="option-select">
+                            <select defaultValue={"en-US"}>
+                                <option key={"en-US"} value={"en-US"}>
+                                    English
+                                </option>
+                            </select>
+                        </div>
                     </section>
                 </li>
                 <li>
@@ -192,7 +234,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 <li>
                     <section className="list-item">
                         <span>主题颜色</span>
-                        <form onSubmit={onSubmit}>
+                        <form onSubmit={onColorSubmit}>
                             {Object.values(themeColor).map((color) => {
                                 const checked = color === prefState.themeColor;
                                 const classNames = ["color-picker", "ripple"];
@@ -201,7 +243,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                 }
                                 return (
                                     <label
-                                        className={classNames.join(" ")}
+                                        className={classNames.join(Const.space)}
                                         key={color}
                                         style={{ backgroundColor: color }}>
                                         <input
@@ -251,66 +293,72 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                     getFormatter(prefState.fixed),
                                 )}
                             </time>
-                            <pre className="format-example-text">
+                            <span className="format-example-text">
                                 {formatText(
-                                    "hello 世界～  ",
+                                    "   hello   世界～   ",
                                     prefState.spaceStart,
                                     prefState.spaceEnd,
                                 )}
-                            </pre>
+                            </span>
                         </span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>小数点</span>
-                        <select
-                            name=""
-                            id=""
-                            value={prefState.fixed}
-                            onChange={onChangeFixed}>
-                            <option value={0}>0</option>
-                            <option value={1}>1</option>
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
-                        </select>
-                    </section>
-                </li>
-                <li>
-                    <section className="list-item">
-                        <span>左侧空格</span>
-
-                        <div className="stepper">
-                            <button className="addOnLeft ripple">-</button>
-                            <input
-                                type="number"
-                                min="-1"
-                                step="1"
-                                name="spaceStart"
-                                value={prefState.spaceStart}
-                                onChange={onChangeSpace}
-                            />
-                            <button className="addOnRight ripple">+</button>
+                        <div className="option-select">
+                            <select
+                                name="fixed"
+                                value={prefState.fixed}
+                                onChange={(ev) => {
+                                    prefDispatch({
+                                        type: PrefActionType.fixed,
+                                        payload: Number.parseInt(
+                                            ev.target.value,
+                                            10,
+                                        ) as Fixed,
+                                    });
+                                }}>
+                                <option value={0}>0</option>
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                            </select>
                         </div>
                     </section>
                 </li>
                 <li>
-                    <section className="list-item">
-                        <span>右侧空格</span>
-
-                        <div className="stepper">
-                            <button className="addOnLeft ripple">-</button>
-                            <input
-                                type="number"
-                                min="-1"
-                                step="1"
-                                name="spaceEnd"
-                                value={prefState.spaceEnd}
-                                onChange={onChangeSpace}
-                            />
-                            <button className="addOnRight ripple">+</button>
-                        </div>
-                    </section>
+                    <label className="list-item">
+                        <label htmlFor="space-start">左侧空格</label>
+                        <input
+                            name="spaceStart"
+                            id="space-start"
+                            required
+                            min={-1}
+                            {...useNumberInput({
+                                defaultValue: prefState.spaceStart,
+                                callback: spaceChangeCallback,
+                            })}
+                        />
+                    </label>
+                </li>
+                <li>
+                    <label className="list-item">
+                        <label htmlFor="space-end">右侧空格</label>
+                        <input
+                            name="spaceEnd"
+                            id="space-end"
+                            required
+                            min={-1}
+                            {...useNumberInput({
+                                defaultValue: prefState.spaceEnd,
+                                callback: spaceChangeCallback,
+                            })}
+                        />
+                    </label>
+                </li>
+                <li className="ripple" onClick={clearCache}>
+                    <section className="list-item">清除缓存</section>
                 </li>
             </ul>
         </div>

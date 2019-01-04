@@ -151,42 +151,45 @@
 .format-example-text {
     display: inline;
     background: var(--theme-color);
+    white-space: pre-wrap;
 }
 
 .text-white .format-example-text {
     color: var(--white);
 }
 
-.stepper {
-    display: flex;
+.option-select > select {
+    padding-right: 1rem;
+
+    -webkit-appearance: none;
+
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    outline: 0;
+}
+
+::-ms-expand {
+    display: none;
+}
+
+.option-select {
+    position: relative;
+}
+.option-select::after {
+    position: absolute;
+    right: 0;
+    color: var(--theme-color);
+    content: "\25BC";
+    z-index: 1;
+    pointer-events: none;
+}
+
+input[type="number"] {
+    width: 4rem;
     height: 30px;
-}
-
-.stepper input {
-    width: 2rem;
-    text-align: center;
-    border: 1px solid #d7dbdd;
-
-    border-radius: 0;
-    box-shadow: none;
-}
-
-.stepper button {
-    cursor: pointer;
-    width: 30px;
-    color: #ffffff;
-    background-color: var(--theme-color);
-    font-size: 12px;
-    border: 1px solid var(--theme-color);
-    border-radius: 4px;
-}
-
-.stepper .addOnLeft {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.stepper .addOnRight {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    text-align: right;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid var(--theme-color);
 }
