@@ -1,4 +1,4 @@
-import { EditorSVG, PreferencesSVG, SynchronizerSVG } from "./svg.js";
+import { CloudSVG, EditorSVG, PreferencesSVG, SynchronizerSVG } from "./svg.js";
 
 export const Header: React.FC<{ lang: Language }> = ({ lang }) => {
     console.info("Header.render");
@@ -14,6 +14,9 @@ export const Header: React.FC<{ lang: Language }> = ({ lang }) => {
                 </a>
                 <a href={Path.synchronizer} id={Path.synchronizerID}>
                     <SynchronizerSVG />
+                </a>
+                <a href={Path.gist} id={Path.gistID}>
+                    <CloudSVG />
                 </a>
                 <a href={Path.preferences} id={Path.preferencesID}>
                     <PreferencesSVG />
