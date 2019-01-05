@@ -27,7 +27,8 @@
 
     if (!StrProto.padStart) {
         StrProto.padStart = function(maxLength, fillString) {
-            //floor if number or convert non-number to 0;
+            // floor if number or convert non-number to 0;
+            // tslint:disable-next-line:no-bitwise
             maxLength = maxLength >> 0;
 
             if (this.length > maxLength) {
@@ -39,7 +40,7 @@
 
                 const padLength = maxLength - this.length;
                 if (padLength > fillString.length) {
-                    //append to original to ensure we are longer than needed
+                    // append to original to ensure we are longer than needed
                     fillString += fillString.repeat(
                         padLength / fillString.length,
                     );
@@ -79,12 +80,12 @@ if ((window as any).HTMLDialogElement === undefined) {
         return 0.5 * (1 - Math.cos(Math.PI * k));
     };
 
-    type Context = {
-        method: Function;
+    interface IContext {
+        method: (x: number, y: number) => void;
         startTime: number;
         startY: number;
-        y: number;
-    };
+        stopY: number;
+    }
 
     const rafID = {
         current: 0,
@@ -110,12 +111,12 @@ if ((window as any).HTMLDialogElement === undefined) {
         window.removeEventListener("touchmove", cancelScroll);
     };
 
-    const step = (context: Context) => {
+    const step = (context: IContext) => {
         const time = now();
         const elapsed = (time - context.startTime) / duration;
 
         if (elapsed >= 1) {
-            context.method(0, context.y);
+            context.method(0, context.stopY);
             cleanEventListener();
             return;
         }
@@ -123,11 +124,12 @@ if ((window as any).HTMLDialogElement === undefined) {
         // apply easing to elapsed time
         const value = ease(elapsed);
 
-        const currentY = context.startY + (context.y - context.startY) * value;
+        const currentY =
+            context.startY + (context.stopY - context.startY) * value;
 
         context.method(0, currentY);
 
-        if (currentY !== context.y) {
+        if (currentY !== context.stopY) {
             rafID.current = requestAnimationFrame(() => step(context));
         }
     };
@@ -146,7 +148,7 @@ if ((window as any).HTMLDialogElement === undefined) {
         const se = document.scrollingElement!;
 
         const startY = se.scrollTop;
-        const y = startY + center - window.innerHeight / 2;
+        const stopY = startY + center - window.innerHeight / 2;
 
         atachEventListener();
 
@@ -154,7 +156,7 @@ if ((window as any).HTMLDialogElement === undefined) {
             method: (x: number, y: number) => se.scrollTo(x, y),
             startTime: now(),
             startY,
-            y,
+            stopY,
         });
     };
 })();
