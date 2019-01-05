@@ -8,6 +8,7 @@ import {
 import { Action as PrefAction, State as PrefState } from "../hooks/usePref.js";
 import { AudioActionType, audioStatePubSub } from "./app.js";
 import { Eidtor } from "./editor.js";
+import { Gist } from "./gist.js";
 import { Home } from "./home.js";
 import { Preferences } from "./preferences.js";
 import { Synchronizer } from "./synchronizer.js";
@@ -208,6 +209,10 @@ export const Content: React.FC<IContentProps> = ({
                                 prefState={prefState}
                             />
                         );
+                    }
+
+                    case Path.gist: {
+                        return <Gist />;
                     }
 
                     case Path.preferences: {

@@ -21,6 +21,8 @@ declare global {
         editorID = "/editor/",
         synchronizer = "#/synchronizer/",
         synchronizerID = "/synchronizer/",
+        gist = "#/gist/",
+        gistID = "/gist/",
         preferences = "#/preferences/",
         preferencesID = "/preferences/",
     }
@@ -29,6 +31,10 @@ declare global {
     const enum LSK {
         lyric = "lrc-maker-lyric",
         preferences = "lrc-maker-preferences",
+        token = "lrc-maker-oauth-token",
+        gistId = "lrc-maker-gist-id",
+        gistEtag = "lrc-maker-gist-etag",
+        gistFile = "lrc-maker-gist-file",
     }
 
     // sessionStorage key
@@ -54,15 +60,6 @@ declare global {
         trimEnd(): string;
         trimLeft(): string;
         trimRight(): string;
-    }
-
-    const enum ChangeBits {
-        currentTime = 1 << 0,
-        curser = 1 << 1,
-        hightlight = 1 << 2,
-        lrc = 1 << 3,
-        preferences = 1 << 4,
-        language = 1 << 5,
     }
 
     const enum Const {
