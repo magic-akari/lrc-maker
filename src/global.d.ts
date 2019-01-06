@@ -42,6 +42,7 @@ declare global {
         audioSrc = "audio-src",
         editorDetailsOpen = "editor-details-open",
         syncMode = "sync-mode",
+        ratelimit = "x-ratelimit",
     }
 
     const enum JsdelivrDialog {
