@@ -46,8 +46,3 @@ export const audioRef: IAudioRef = {
         }
     },
 };
-
-// side effect
-document.addEventListener("visibilitychange", () => {
-    !audioRef.paused && audioRef.toggle();
-});

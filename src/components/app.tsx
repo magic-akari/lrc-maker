@@ -247,6 +247,13 @@ export const App: React.FC = () => {
     );
 };
 
+// side effect
+document.addEventListener("visibilitychange", () => {
+    if (!audioRef.paused) {
+        audioRef.toggle();
+    }
+});
+
 ReactDOM.render(
     React.createElement(App),
     document.querySelector(".app-container"),
