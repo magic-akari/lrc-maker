@@ -19,8 +19,34 @@
 
     if (!StrProto.startsWith) {
         StrProto.startsWith = function(searchString, position) {
-            const start = position || 0;
+            let start = position || 0;
+            if (start < 0) {
+                start = 0;
+            }
+            if (start > this.length) {
+                start = this.length;
+            }
             const end = start + searchString.length;
+            if (end > this.length) {
+                return false;
+            }
+            return this.slice(start, end) === searchString;
+        };
+    }
+
+    if (!StrProto.endsWith) {
+        StrProto.endsWith = function(searchString, endPosition) {
+            let end = endPosition || this.length;
+            if (end < 0) {
+                end = 0;
+            }
+            if (end > this.length) {
+                end = this.length;
+            }
+            const start = end - searchString.length;
+            if (start < 0) {
+                return false;
+            }
             return this.slice(start, end) === searchString;
         };
     }
