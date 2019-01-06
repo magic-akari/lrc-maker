@@ -118,7 +118,15 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
                 </label>
                 <div className="content">
                     <form className="audio-input-form" onSubmit={onSubmit}>
-                        <input type="url" name="url" />
+                        <input
+                            type="url"
+                            name="url"
+                            required
+                            autoCapitalize="off"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
+                        />
                         <input type="submit" />
                     </form>
                 </div>
