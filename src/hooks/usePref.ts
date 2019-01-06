@@ -11,24 +11,14 @@ export const themeColor = {
     purple: "#c877fe",
 };
 
-export const enum ActionType {
-    lang = "lang",
-    spaceStart = "spaceStart",
-    spaceEnd = "spaceEnd",
-    fixed = "fixed",
-    builtInAudio = "builtInAudio",
-    screenButton = "screenButton",
-    themeColor = "themeColor",
-}
-
 const initState = {
-    [ActionType.lang]: "en-US",
-    [ActionType.spaceStart]: 1,
-    [ActionType.spaceEnd]: 0,
-    [ActionType.fixed]: 3 as Fixed,
-    [ActionType.builtInAudio]: false,
-    [ActionType.screenButton]: false,
-    [ActionType.themeColor]: themeColor.pink,
+    lang: "en-US",
+    spaceStart: 1,
+    spaceEnd: 0,
+    fixed: 3 as Fixed,
+    builtInAudio: false,
+    screenButton: false,
+    themeColor: themeColor.pink,
 };
 
 export type State = Readonly<typeof initState>;

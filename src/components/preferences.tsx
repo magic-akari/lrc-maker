@@ -1,7 +1,6 @@
 import { convertTimeToTag, formatText, getFormatter } from "../hooks/useLrc.js";
 import {
     Action as PrefAction,
-    ActionType as PrefActionType,
     State as PrefState,
     themeColor,
 } from "../hooks/usePref.js";
@@ -62,7 +61,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
     const onColorPick = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
             prefDispatch({
-                type: PrefActionType.themeColor,
+                type: "themeColor",
                 payload: ev.target.value,
             });
         },
@@ -88,7 +87,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
             }
 
             prefDispatch({
-                type: PrefActionType.themeColor,
+                type: "themeColor",
                 payload: "#" + value,
             });
         },
@@ -125,8 +124,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
     const spaceChangeCallback = useCallback(
         (value: number, ref: React.RefObject<HTMLInputElement>) => {
             prefDispatch({
-                type: ref.current!.name as PrefActionType.spaceStart &
-                    PrefActionType.spaceEnd,
+                type: ref.current!.name as "spaceStart" & "spaceEnd",
                 payload: value,
             });
         },
@@ -203,7 +201,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                 checked={prefState.builtInAudio}
                                 onChange={() =>
                                     prefDispatch({
-                                        type: PrefActionType.builtInAudio,
+                                        type: "builtInAudio",
                                         payload: !prefState.builtInAudio,
                                     })
                                 }
@@ -221,7 +219,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                 checked={prefState.screenButton}
                                 onChange={() => {
                                     prefDispatch({
-                                        type: PrefActionType.screenButton,
+                                        type: "screenButton",
                                         payload: !prefState.screenButton,
                                     });
                                 }}
@@ -312,7 +310,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                 value={prefState.fixed}
                                 onChange={(ev) => {
                                     prefDispatch({
-                                        type: PrefActionType.fixed,
+                                        type: "fixed",
                                         payload: Number.parseInt(
                                             ev.target.value,
                                             10,
