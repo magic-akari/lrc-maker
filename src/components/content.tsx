@@ -1,11 +1,11 @@
 import {
     ActionType as LrcActionType,
     convertTimeToTag,
-    getFormatter,
     stringify,
     useLrc,
 } from "../hooks/useLrc.js";
 import { Action as PrefAction, State as PrefState } from "../hooks/usePref.js";
+import { audioRef } from "../utils/audioref.js";
 import { AudioActionType, audioStatePubSub } from "./app.js";
 import { Eidtor } from "./editor.js";
 import { Gist } from "./gist.js";
@@ -56,15 +56,15 @@ export const Content: React.FC<IContentProps> = ({
     useEffect(() => {
         audioStatePubSub.sub(self.current, (data) => {
             if (data.type === AudioActionType.getDuration) {
-                const formatter = getFormatter(
-                    stateRef.current.prefState.fixed,
-                );
-
                 lrcDispatch({
                     type: LrcActionType.set_info,
                     payload: {
                         name: "length",
-                        value: convertTimeToTag(data.payload, formatter, false),
+                        value: convertTimeToTag(
+                            data.payload,
+                            stateRef.current.prefState.fixed,
+                            false,
+                        ),
                     },
                 });
             }
@@ -115,18 +115,29 @@ export const Content: React.FC<IContentProps> = ({
                 ) {
                     const fileReader = new FileReader();
 
-                    fileReader.addEventListener(
-                        "load",
-                        () => {
+                    const onload = () => {
+                        lrcDispatch({
+                            type: LrcActionType.parse,
+                            payload: fileReader.result as string,
+                        });
+                        if (audioRef.duration) {
                             lrcDispatch({
-                                type: LrcActionType.parse,
-                                payload: fileReader.result as string,
+                                type: LrcActionType.set_info,
+                                payload: {
+                                    name: "length",
+                                    value: convertTimeToTag(
+                                        audioRef.duration,
+                                        stateRef.current.prefState.fixed,
+                                        false,
+                                    ),
+                                },
                             });
-                        },
-                        {
-                            once: true,
-                        },
-                    );
+                        }
+                    };
+
+                    fileReader.addEventListener("load", onload, {
+                        once: true,
+                    });
 
                     fileReader.readAsText(file, "utf-8");
                 }

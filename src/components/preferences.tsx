@@ -1,4 +1,4 @@
-import { convertTimeToTag, formatText, getFormatter } from "../hooks/useLrc.js";
+import { convertTimeToTag, formatText } from "../hooks/useLrc.js";
 import {
     Action as PrefAction,
     State as PrefState,
@@ -286,10 +286,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                         <span>歌词输出格式控制</span>
                         <span>
                             <time className="format-example-time">
-                                {convertTimeToTag(
-                                    83.456,
-                                    getFormatter(prefState.fixed),
-                                )}
+                                {convertTimeToTag(83.456, prefState.fixed)}
                             </time>
                             <span className="format-example-text">
                                 {formatText(
