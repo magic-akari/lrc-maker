@@ -7,7 +7,7 @@ import {
     postGist,
     Ratelimit,
 } from "../utils/gistapi.js";
-import { GithubSVG } from "./svg.js";
+import { CloudDownloadSVG, GithubSVG } from "./svg.js";
 
 const { useState, useCallback, useEffect, useMemo } = React;
 
@@ -77,6 +77,10 @@ export const Gist: React.FC = () => {
                 return;
             }
 
+            if (!("HTMLDataListElement" in window)) {
+                return;
+            }
+
             getAllGists().then((result) => {
                 setGistIdList(
                     result
@@ -128,37 +132,64 @@ export const Gist: React.FC = () => {
                 if (token === null) {
                     return (
                         <section className="new-token">
-                            <a className="new-token-tip" href={newTokenUrl}>
+                            <a
+                                className="new-token-tip"
+                                target="_blank"
+                                href={newTokenUrl}>
                                 <GithubSVG />
-                                <span>
+                                <span className="new-token-tip-text">
                                     Click here to generate a new Gihub Token
                                     with gist scope and paste it in the
                                     following input field.
                                 </span>
                             </a>
-                            <form onSubmit={onSubmitToken}>
+                            <form
+                                className="new-token-form"
+                                onSubmit={onSubmitToken}>
                                 <input
+                                    className="new-token-input"
                                     type="text"
                                     name="token"
                                     minLength={40}
                                     maxLength={40}
                                     required
                                 />
-                                <input type="submit" />
+                                <input
+                                    className="new-token-submit button"
+                                    type="submit"
+                                />
                             </form>
                         </section>
                     );
                 }
                 if (gistId === null) {
                     return (
-                        <>
-                            <form onSubmit={onSubmitGistId}>
+                        <section className="get-gist-id">
+                            <GithubSVG />
+                            <button
+                                className="create-new-gist button"
+                                onClick={onCreateNewGist}>
+                                Create a new Gist Repo
+                            </button>
+                            <form
+                                className="gist-id-form"
+                                onSubmit={onSubmitGistId}>
+                                <label htmlFor="gist-id">Gist id:</label>
                                 <input
+                                    className="gist-id-input"
+                                    id="gist-id"
                                     name="gist-id"
                                     type="text"
                                     list="gist-list"
+                                    placeholder="Or assign an exist one"
+                                    required
+                                    autoCapitalize="off"
+                                    autoComplete="off"
+                                    autoCorrect="off"
+                                    spellCheck={false}
                                 />
-                                <input type="submit" />
+
+                                <input className="button" type="submit" />
                                 <datalist id="gist-list">
                                     {gistIdList &&
                                         gistIdList.map((id) => {
@@ -168,24 +199,34 @@ export const Gist: React.FC = () => {
                                         })}
                                 </datalist>
                             </form>
-                            <button onClick={onCreateNewGist}>
-                                Create new one
-                            </button>
-                        </>
+                        </section>
                     );
                 }
                 if (fileList !== null) {
-                    if (fileList.length === 0) {
-                        return "empty";
-                    }
-                    return fileList.map((file) => {
-                        return (
-                            <article key={file.raw_url} data-url={file.raw_url}>
-                                <section>{file.content}</section>
-                                <h3>{file.filename}</h3>
-                            </article>
-                        );
-                    });
+                    return (
+                        <section className="file-list">
+                            {fileList.map((file) => {
+                                return (
+                                    <article
+                                        className="file-item"
+                                        key={file.raw_url}>
+                                        <section className="file-content">
+                                            {file.content}
+                                        </section>
+                                        <hr />
+                                        <section className="file-info">
+                                            <span className="file-title">
+                                                {file.filename}
+                                            </span>
+                                            <button className="file-load">
+                                                <CloudDownloadSVG />
+                                            </button>
+                                        </section>
+                                    </article>
+                                );
+                            })}
+                        </section>
+                    );
                 }
 
                 return "loading";

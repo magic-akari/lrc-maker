@@ -1,6 +1,15 @@
 .gist {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.new-token {
+
+.new-token,
+.get-gist-id {
+    max-width: 768px;
+    width: 100%;
     margin: 0 auto;
 
     display: flex;
@@ -16,8 +25,106 @@
     align-items: center;
 }
 
-.new-token-tip > svg {
+.new-token-tip-text {
+    font-size: 1.2rem;
+    margin: 1rem;
+    text-align: center;
+    max-width: 500px;
+}
+
+:hover > .new-token-tip-text {
+    text-decoration: underline;
+}
+
+.github-svg {
     height: 100px;
     width: 100px;
     filter: none;
+    margin: 1rem;
+}
+
+:hover > .github-svg {
+    filter: none;
+}
+
+.new-token-form {
+    margin: 2rem;
+    display: flex;
+    max-width: 500px;
+    width: 100%;
+}
+
+.new-token-input,
+.gist-id-input {
+    background: 0;
+    border: 0;
+    flex: 1 0 auto;
+    border-bottom: 1px solid var(--theme-color);
+}
+
+.gist input[type="submit"] {
+    appearance: none;
+    border: 0;
+}
+
+.create-new-gist {
+    flex: 1 0 auto;
+    padding: 1rem;
+    margin: 1rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.gist-id-form {
+    flex: 1 0 auto;
+    padding: 1rem 0;
+    margin: 1rem 0;
+    max-width: 500px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gist-id-input {
+    margin: 0 0.5rem;
+}
+
+.file-list {
+    height: 100%;
+    width: 100%;
+    flex: 1 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-gap: 1rem;
+    padding: 1rem;
+}
+
+.file-item {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.file-item:hover {
+    box-shadow: 0 0 1rem var(--theme-color);
+}
+
+.file-content {
+    height: 15rem;
+    white-space: pre;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+.file-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-load {
+    color: var(--theme-color);
 }
