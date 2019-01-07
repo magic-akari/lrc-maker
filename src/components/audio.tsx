@@ -1,4 +1,4 @@
-import { convertTimeToTag, getFormatter } from "../hooks/useLrc.js";
+import { convertTimeToTag } from "../hooks/useLrc.js";
 import { audioRef } from "../utils/audioref.js";
 import {
     AudioActionType,
@@ -114,15 +114,20 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({
         });
     }, []);
 
-    const formatTimeTag = useCallback((time?: number) => {
-        return convertTimeToTag(time, getFormatter(0), false);
-    }, []);
+    const durationTimeTag = useMemo(
+        () => {
+            return duration
+                ? " / " + convertTimeToTag(duration, 0, false)
+                : false;
+        },
+        [duration],
+    );
 
     return (
         <>
             <time>
-                {formatTimeTag(currentTime)}
-                {duration ? " / " + formatTimeTag(duration) : false}
+                {convertTimeToTag(currentTime, 0, false)}
+                {durationTimeTag}
             </time>
 
             <Slider

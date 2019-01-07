@@ -3,7 +3,6 @@ import {
     ActionType as LrcActionType,
     convertTimeToTag,
     formatText,
-    getFormatter,
     State as LrcState,
     stringify,
 } from "../hooks/useLrc.js";
@@ -331,8 +330,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
 
     const formatTimeTag = useCallback(
         (time?: number) => {
-            const formatter = getFormatter(prefState.fixed);
-            return convertTimeToTag(time, formatter);
+            return convertTimeToTag(time, prefState.fixed);
         },
         [prefState.fixed],
     );

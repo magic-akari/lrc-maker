@@ -92,7 +92,7 @@ interface IFormatOptions {
 
 const storedFormaTter = new Map<Fixed, Intl.NumberFormat>();
 
-export const getFormatter = (fixed: Fixed) => {
+const getFormatter = (fixed: Fixed) => {
     if (storedFormaTter.has(fixed)) {
         return storedFormaTter.get(fixed)!;
     } else {
@@ -108,12 +108,14 @@ export const getFormatter = (fixed: Fixed) => {
 
 export const convertTimeToTag = (
     time: number | undefined,
-    formatter: Intl.NumberFormat,
+    fixed: Fixed,
     withBrackets = true,
 ) => {
     if (time === undefined) {
         return Const.emptyString;
     }
+
+    const formatter = getFormatter(fixed);
 
     const mm = Math.floor(time / 60)
         .toString()
@@ -145,15 +147,13 @@ export const stringify = (state: State, option: IFormatOptions): string => {
         return `[${name}: ${value}]`;
     });
 
-    const formatter = getFormatter(fixed);
-
     const lines = state.lyric.map((line) => {
         if (line.time === undefined) {
             return line.text;
         }
         const text = formatText(line.text, spaceStart, spaceEnd);
 
-        return `${convertTimeToTag(line.time, formatter)}${text}`;
+        return `${convertTimeToTag(line.time, fixed)}${text}`;
     });
     return infos.concat(lines).join("\r\n");
 };
