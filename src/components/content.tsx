@@ -185,10 +185,10 @@ export const Content: React.FC<IContentProps> = ({
                 hex = hex.slice(1);
                 const value = Number.parseInt(hex, 16);
                 // tslint:disable:no-bitwise
-                const red = (value >> 16) & 0xff;
-                const green = (value >> 8) & 0xff;
-                const blue = (value >> 0) & 0xff;
-                return [red, green, blue];
+                const r = (value >> 0x10) & 0xff;
+                const g = (value >> 0x08) & 0xff;
+                const b = (value >> 0x00) & 0xff;
+                return [r, g, b];
             };
 
             const lum = luminanace(...hex2rgb(prefState.themeColor));

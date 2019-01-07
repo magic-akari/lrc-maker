@@ -127,7 +127,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
                             autoCorrect="off"
                             spellCheck={false}
                         />
-                        <input type="submit" />
+                        <input className="button" type="submit" />
                     </form>
                 </div>
             </div>
