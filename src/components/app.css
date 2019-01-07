@@ -52,6 +52,18 @@ button {
     padding: 0 0.5rem;
 }
 
+.button {
+    cursor: pointer;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    opacity: 0.8;
+}
+
+.button:hover {
+    opacity: 1;
+}
+
 ul {
     list-style: none;
     margin: 0;
