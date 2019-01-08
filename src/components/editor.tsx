@@ -5,7 +5,8 @@ import {
     stringify,
 } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
-import { CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
+import { patchGist } from "../utils/gistapi.js";
+import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
 
 const { useState, useRef, useEffect, useCallback, useMemo } = React;
 
@@ -115,23 +116,46 @@ export const Eidtor: React.SFC<{
 
     const downloadName = useMemo(
         () => {
-            const list = [];
+            const list: string[] = [];
             const lrcInfo = lrcState.info;
             if (lrcInfo.has("ti")) {
-                list.push(lrcInfo.get("ti"));
+                list.push(lrcInfo.get("ti")!);
             }
             if (lrcInfo.has("ar")) {
-                list.push(lrcInfo.get("ar"));
+                list.push(lrcInfo.get("ar")!);
             }
             if (list.length === 0) {
                 if (lrcInfo.has("al")) {
-                    list.push(lrcInfo.get("al"));
+                    list.push(lrcInfo.get("al")!);
                 }
-                list.push(new Date().toLocaleString());
             }
+            list.push(Date.now().toString());
+
             return list.join(" - ") + ".lrc";
         },
         [lrcState.info],
+    );
+
+    const canSaveToGist = useMemo(() => {
+        return (
+            localStorage.getItem(LSK.token) !== null &&
+            localStorage.getItem(LSK.gistId) !== null
+        );
+    }, []);
+
+    const saveToGist = useCallback(
+        () => {
+            if (!canSaveToGist) {
+                return;
+            }
+            setTimeout(() => {
+                const name = prompt("filename", downloadName);
+                if (name) {
+                    patchGist(name, textarea.current!.value);
+                }
+            }, 100);
+        },
+        [downloadName],
     );
 
     return (
@@ -193,6 +217,13 @@ export const Eidtor: React.SFC<{
                     onClick={onDownloadClick}
                     download={downloadName}>
                     <DownloadSVG />
+                </a>
+
+                <a
+                    href={canSaveToGist ? "javascript:;" : Path.gist}
+                    className="editor-tools-item ripple"
+                    onClick={saveToGist}>
+                    <CloudUploadSVG />
                 </a>
             </section>
 

@@ -31,6 +31,31 @@ export const getAllGists = async (): Promise<IGistRepo[]> => {
     return res.json();
 };
 
+export const enum GistInfo {
+    description = "https://lrc-maker.github.io",
+    fileName = ".lrc-maker",
+    fileContent = "This file is used to be tracked and identified by https://lrc-maker.github.io",
+}
+
+export const postGist = async (): Promise<IGistRepo> => {
+    const token = localStorage.getItem(LSK.token);
+
+    const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            Authorization: `token ${token}`,
+        },
+        body: JSON.stringify({
+            description: GistInfo.description,
+            public: true,
+            files: {
+                [GistInfo.fileName]: { content: GistInfo.fileContent },
+            },
+        }),
+    });
+    return res.json();
+};
+
 export const getGist = async (): Promise<{
     code: number;
 
@@ -63,25 +88,21 @@ export const getGist = async (): Promise<{
     };
 };
 
-export const enum GistInfo {
-    description = "https://lrc-maker.github.io",
-    fileName = ".lrc-maker",
-    fileContent = "This file is used to be tracked and identified by https://lrc-maker.github.io",
-}
-
-export const postGist = async (): Promise<IGistRepo> => {
+export const patchGist = async (
+    fileName: string,
+    content: string,
+): Promise<IGistRepo> => {
     const token = localStorage.getItem(LSK.token);
+    const id = localStorage.getItem(LSK.gistId);
 
-    const res = await fetch(apiUrl, {
-        method: "POST",
+    const res = await fetch(`${apiUrl}/${id}`, {
+        method: "PATCH",
         headers: {
             Authorization: `token ${token}`,
         },
         body: JSON.stringify({
-            description: GistInfo.description,
-            public: true,
             files: {
-                [GistInfo.fileName]: { content: GistInfo.fileContent },
+                [fileName]: { content },
             },
         }),
     });
