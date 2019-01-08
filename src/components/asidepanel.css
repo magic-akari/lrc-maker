@@ -6,7 +6,7 @@
     border-radius: 0.5rem 0 0 0.5rem;
 
     transform: translateX(100%);
-    animation: slideInRight 0.4s ease 1s forwards;
+    animation: slideInRight 250ms ease 1s forwards;
 }
 
 .on-screen-button + .aside-panel {

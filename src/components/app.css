@@ -98,7 +98,7 @@ time {
 }
 
 .glow {
-    transition: text-shadow 200ms ease-in-out;
+    transition: text-shadow 250ms ease;
 }
 
 .glow:hover {
@@ -106,7 +106,7 @@ time {
 }
 
 .glow > svg {
-    transition: filter 200ms ease-in-out;
+    transition: filter 250ms ease;
 }
 .glow:hover > svg {
     filter: var(--drop-shadow);

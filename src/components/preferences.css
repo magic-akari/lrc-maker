@@ -50,7 +50,7 @@
     margin: 0;
     padding: 0;
     position: relative;
-    transition: all 0.3s ease;
+    transition: all 250ms ease-in-out;
     width: 58px;
     z-index: 0;
 }
@@ -62,7 +62,7 @@
     content: "";
     height: 16px;
     transform: scale(1);
-    transition: all 0.3s ease;
+    transition: all 250ms ease-in-out;
     width: 54px;
     z-index: 1;
 }
@@ -76,7 +76,7 @@
     border-radius: 50%;
     box-shadow: 0 0 6px var(--black);
     content: "";
-    transition: all 0.3s ease;
+    transition: all 250ms ease-in-out;
     z-index: 2;
 
     filter: brightness(120%);
