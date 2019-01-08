@@ -1,4 +1,8 @@
 import {
+    Action as LrcAction,
+    ActionType as LrcActionType,
+} from "../hooks/useLrc.js";
+import {
     getAllGists,
     getGist,
     GistInfo,
@@ -7,14 +11,18 @@ import {
     postGist,
     Ratelimit,
 } from "../utils/gistapi.js";
-import { CloudDownloadSVG, GithubSVG } from "./svg.js";
+import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
 
 const { useState, useCallback, useEffect, useMemo } = React;
 
 const newTokenUrl =
     "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
 
-export const Gist: React.FC = () => {
+interface IGistProps {
+    lrcDispatch: React.Dispatch<LrcAction>;
+}
+
+export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
     const [token, setToken] = useState(localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(localStorage.getItem(LSK.gistId));
     const [gistIdList, setGistIdList] = useState<string[] | undefined>(
@@ -126,6 +134,35 @@ export const Gist: React.FC = () => {
         [gistId],
     );
 
+    const onLoadFile = useCallback(
+        (ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
+            const target = ev.target as HTMLElement;
+
+            if (!("key" in target.dataset)) {
+                return;
+            }
+
+            const key = Number.parseInt(target.dataset.key!, 10);
+            const file = fileList![key];
+            if (file.truncated) {
+                fetch(file.raw_url)
+                    .then((res) => res.text())
+                    .then((text) => {
+                        lrcDispatch({
+                            type: LrcActionType.parse,
+                            payload: text,
+                        });
+                    });
+            } else {
+                lrcDispatch({
+                    type: LrcActionType.parse,
+                    payload: file.content,
+                });
+            }
+        },
+        [],
+    );
+
     return (
         <div className="gist">
             {(() => {
@@ -207,8 +244,8 @@ export const Gist: React.FC = () => {
                 }
                 if (fileList !== null) {
                     return (
-                        <section className="file-list">
-                            {fileList.map((file) => {
+                        <section className="file-list" onClick={onLoadFile}>
+                            {fileList.map((file, index) => {
                                 return (
                                     <article
                                         className="file-item"
@@ -217,13 +254,24 @@ export const Gist: React.FC = () => {
                                             {file.content}
                                         </section>
                                         <hr />
-                                        <section className="file-info">
+                                        <section className="file-bar">
                                             <span className="file-title">
                                                 {file.filename}
                                             </span>
-                                            <button className="file-load">
-                                                <CloudDownloadSVG />
-                                            </button>
+                                            <span className="file-action">
+                                                <a
+                                                    className="file-load"
+                                                    href={Path.editor}
+                                                    data-key={index}>
+                                                    <EditorSVG />
+                                                </a>
+                                                <a
+                                                    className="file-load"
+                                                    href={Path.synchronizer}
+                                                    data-key={index}>
+                                                    <SynchronizerSVG />
+                                                </a>
+                                            </span>
                                         </section>
                                     </article>
                                 );

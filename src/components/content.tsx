@@ -133,6 +133,7 @@ export const Content: React.FC<IContentProps> = ({
                                 },
                             });
                         }
+                        location.hash = Path.editor;
                     };
 
                     fileReader.addEventListener("load", onload, {
@@ -223,7 +224,7 @@ export const Content: React.FC<IContentProps> = ({
                     }
 
                     case Path.gist: {
-                        return <Gist />;
+                        return <Gist lrcDispatch={lrcDispatch} />;
                     }
 
                     case Path.preferences: {

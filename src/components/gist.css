@@ -75,6 +75,7 @@
 }
 
 .file-item {
+    color: var(--black);
     background: rgba(255, 255, 255, 0.9);
     padding: 0.5rem;
     border-radius: var(--border-radius);
@@ -93,14 +94,32 @@
     line-height: 1.6;
 }
 
-.file-info {
+.file-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+}
+
+.file-title {
+    padding: 0.5rem;
+}
+
+.file-action {
+    flex: 0 0 auto;
 }
 
 .file-load {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 32px;
+    height: 32px;
     transition: color 250ms ease-in-out;
+}
+
+.file-load > svg {
+    pointer-events: none;
 }
 
 .file-load:hover {
