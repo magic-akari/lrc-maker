@@ -45,18 +45,35 @@ a,
     text-decoration: none;
 }
 
-button {
+a,
+button,
+[type="submit"] {
     border: 0;
     background: 0;
-    cursor: pointer;
     padding: 0 0.5rem;
+    appearance: none;
+    cursor: default;
+}
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration-color: var(--theme-color);
+}
+
+.link:hover::after {
+    content: "\1F517";
+    position: absolute;
+    margin-left: 4px;
 }
 
 .button {
-    cursor: pointer;
     background: white;
     padding: 0.5rem;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     opacity: 0.8;
 }
 
@@ -80,7 +97,18 @@ time {
     }
 }
 
-:hover > svg {
+.glow {
+    transition: text-shadow 200ms ease-in-out;
+}
+
+.glow:hover {
+    text-shadow: 0 0 4px currentColor;
+}
+
+.glow > svg {
+    transition: filter 200ms ease-in-out;
+}
+.glow:hover > svg {
     filter: var(--drop-shadow);
 }
 

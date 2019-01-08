@@ -89,7 +89,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
     return ReactDOM.createPortal(
         <dialog ref={loadAudioDialogRef} className="fixed app-loadaudio-dialog">
             <button
-                className="loadaudio-dialog-close"
+                className="glow loadaudio-dialog-close"
                 onClick={onClose}
                 tabIndex={-1}>
                 <CloseSVG />

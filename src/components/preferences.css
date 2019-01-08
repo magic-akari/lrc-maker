@@ -1,7 +1,6 @@
 .preferences {
     width: 100%;
     user-select: none;
-    cursor: default;
 }
 
 .preferences > ul {
@@ -35,7 +34,6 @@
 
 .label-switch {
     border-radius: 20px;
-    cursor: pointer;
     display: inline-block;
     height: 20px;
     position: relative;
@@ -48,7 +46,6 @@
     background: var(--white);
     border: 1px solid var(--theme-color);
     border-radius: 20px;
-    cursor: pointer;
     height: 20px;
     margin: 0;
     padding: 0;
@@ -99,7 +96,7 @@
     height: 30px;
     min-width: 30px;
     margin: 2px;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     line-height: normal;
     display: inline-flex;
     justify-content: center;

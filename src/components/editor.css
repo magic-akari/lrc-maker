@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
 
-    border-radius: 0.25rem;
+    border-radius: var(--border-radius);
     border: 1px solid var(--theme-color);
     background-color: white;
     transition: box-shadow 250ms ease-in-out;
@@ -55,8 +55,7 @@
 }
 
 .app-editor summary {
-    color: var(--theme-color);
-    text-shadow: var(--text-shadow);
+    color: gray;
     user-select: none;
 }
 
@@ -69,7 +68,6 @@
 }
 
 .editor-tools-item {
-    cursor: pointer;
     padding: 0.5rem;
     display: inline-flex;
     flex-direction: column;
@@ -83,7 +81,10 @@
 }
 
 .editor-tools-item > svg {
-    filter: none;
     height: 1.5rem;
     width: 1.5rem;
+}
+
+.editor-tools-item:hover > svg {
+    filter: drop-shadow(0 0 2px var(--theme-color));
 }

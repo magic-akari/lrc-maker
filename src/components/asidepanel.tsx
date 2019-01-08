@@ -54,7 +54,7 @@ export const AsidePanel: React.FC<{
         <aside className="aside-panel">
             <button
                 className={
-                    "aside-button syncmode-button ripple " +
+                    "aside-button syncmode-button ripple glow " +
                     (syncMode === SyncMode.select ? "select" : "highlight")
                 }
                 onClick={toggleSyncMode}>
@@ -63,7 +63,7 @@ export const AsidePanel: React.FC<{
             <a
                 href={href}
                 download={downloadName}
-                className="aside-button ripple"
+                className="aside-button ripple glow"
                 onClick={onDownloadClick}>
                 <DownloadSVG />
             </a>
