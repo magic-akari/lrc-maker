@@ -79,7 +79,7 @@
     padding: 0.5rem;
     border-radius: var(--border-radius);
     user-select: none;
-    transition: box-shadow 200ms ease-in-out;
+    transition: box-shadow 250ms ease-in-out;
 }
 
 .file-item:hover {
@@ -100,5 +100,9 @@
 }
 
 .file-load {
+    transition: color 250ms ease-in-out;
+}
+
+.file-load:hover {
     color: var(--theme-color);
 }

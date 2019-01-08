@@ -3,7 +3,7 @@
     bottom: 0;
     width: 100%;
 
-    animation: slideInUp 0.4s ease forwards;
+    animation: slideInUp 250ms ease forwards;
 }
 
 @keyframes slideInUp {

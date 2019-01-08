@@ -12,4 +12,6 @@
     --text-shadow: 0 0 2px var(--black);
 
     --drop-shadow: drop-shadow(0 0 4px currentcolor);
+
+    --animation-out-back: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
