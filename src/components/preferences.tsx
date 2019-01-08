@@ -167,7 +167,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 <li>
                     <section className="list-item">
                         <span>项目地址</span>
-                        <a href={Repo.url} target="_blank">
+                        <a className="link" href={Repo.url} target="_blank">
                             Github
                         </a>
                     </section>
@@ -175,7 +175,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 <li>
                     <section className="list-item">
                         <span>关于 &amp; 帮助</span>
-                        <a href={Repo.wiki} target="_blank">
+                        <a className="link" href={Repo.wiki} target="_blank">
                             Github Wiki
                         </a>
                     </section>

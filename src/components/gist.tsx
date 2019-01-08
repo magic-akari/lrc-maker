@@ -132,22 +132,24 @@ export const Gist: React.FC = () => {
                 if (token === null) {
                     return (
                         <section className="new-token">
+                            <GithubSVG />
+                            <p className="new-token-tip-text">
+                                lrc-maker need Github Token to get and post
+                                lyric to Github Gist.
+                            </p>
                             <a
-                                className="new-token-tip"
+                                className="new-token-tip button"
                                 target="_blank"
                                 href={newTokenUrl}>
-                                <GithubSVG />
-                                <span className="new-token-tip-text">
-                                    Click here to generate a new Gihub Token
-                                    with gist scope and paste it in the
-                                    following input field.
-                                </span>
+                                Generate a new Github Token
                             </a>
                             <form
                                 className="new-token-form"
                                 onSubmit={onSubmitToken}>
+                                <label htmlFor="github-token">Token:</label>
                                 <input
                                     className="new-token-input"
+                                    id="github-token"
                                     type="text"
                                     name="token"
                                     minLength={40}
@@ -190,14 +192,15 @@ export const Gist: React.FC = () => {
                                 />
 
                                 <input className="button" type="submit" />
-                                <datalist id="gist-list">
-                                    {gistIdList &&
-                                        gistIdList.map((id) => {
+                                {gistIdList && (
+                                    <datalist id="gist-list">
+                                        {gistIdList.map((id) => {
                                             return (
                                                 <option key={id} value={id} />
                                             );
                                         })}
-                                </datalist>
+                                    </datalist>
+                                )}
                             </form>
                         </section>
                     );

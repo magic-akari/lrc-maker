@@ -1,12 +1,13 @@
 dialog {
     display: none;
     border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 6px;
+    border-radius: var(--border-radius);
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 }
 
 dialog[open] {
     display: block;
+    animation: dialogSlideIn 0.4s ease;
 }
 
 dialog::backdrop {
@@ -121,6 +122,13 @@ dialog + .backdrop {
     border: 0;
 }
 
-.audio-input-form > input[type="submit"]:hover {
-    box-shadow: 0 0 1rem var(--theme-color);
+@keyframes dialogSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(0, 0);
+    }
+
+    50% {
+        opacity: 1;
+    }
 }

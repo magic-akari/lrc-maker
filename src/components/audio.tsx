@@ -186,7 +186,10 @@ const RateSlider = () => {
 
     return (
         <>
-            <button className="ripple" tabIndex={-1} onClick={restPlaybackRate}>
+            <button
+                className="ripple glow"
+                tabIndex={-1}
+                onClick={restPlaybackRate}>
                 {"X "}
                 {playbackRate.toFixed(2)}
             </button>
@@ -252,27 +255,27 @@ export const LrcAudio: React.FC = () => {
         <section className={"lrc-audio" + (paused ? "" : " playing")}>
             <button
                 tabIndex={-1}
-                className="ripple loadaudio-button"
+                className="ripple glow loadaudio-button"
                 onClick={loadAudioButtonClick}>
                 <LoadAudioSVG />
             </button>
             <button
                 tabIndex={-1}
-                className="ripple"
+                className="ripple glow"
                 onClick={replay5s}
                 disabled={!duration}>
                 <Replay5sSVG />
             </button>
             <button
                 tabIndex={-1}
-                className="ripple"
+                className="ripple glow"
                 disabled={!duration}
                 onClick={togglePlayPause}>
                 {paused ? <PlaySVG /> : <PauseSVG />}
             </button>
             <button
                 tabIndex={-1}
-                className="ripple"
+                className="ripple glow"
                 onClick={forward5s}
                 disabled={!duration}>
                 <Forward5sSVG />

@@ -7,6 +7,8 @@
 
     --semi-black-color: rgba(40, 40, 40, 0.85);
 
+    --border-radius: 0.4rem;
+
     --text-shadow: 0 0 2px var(--black);
 
     --drop-shadow: drop-shadow(0 0 4px currentcolor);

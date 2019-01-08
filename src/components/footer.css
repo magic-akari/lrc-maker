@@ -2,4 +2,17 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+
+    animation: slideInUp 0.4s ease forwards;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translate3d(0, 100%, 0);
+        visibility: visible;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
 }

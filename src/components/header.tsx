@@ -9,16 +9,22 @@ export const Header: React.FC<{ lang: Language }> = ({ lang }) => {
                 {lang.app.name}
             </a>
             <nav className="app-nav">
-                <a href={Path.editor} id={Path.editorID}>
+                <a className="app-tab" href={Path.editor} id={Path.editorID}>
                     <EditorSVG />
                 </a>
-                <a href={Path.synchronizer} id={Path.synchronizerID}>
+                <a
+                    className="app-tab"
+                    href={Path.synchronizer}
+                    id={Path.synchronizerID}>
                     <SynchronizerSVG />
                 </a>
-                <a href={Path.gist} id={Path.gistID}>
+                <a className="app-tab" href={Path.gist} id={Path.gistID}>
                     <CloudSVG />
                 </a>
-                <a href={Path.preferences} id={Path.preferencesID}>
+                <a
+                    className="app-tab"
+                    href={Path.preferences}
+                    id={Path.preferencesID}>
                     <PreferencesSVG />
                 </a>
             </nav>

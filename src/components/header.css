@@ -11,6 +11,9 @@
     color: var(--theme-color);
     z-index: 233;
     user-select: none;
+    box-shadow: 0 1px 1px var(--theme-color);
+    transform: translateY(-100%);
+    animation: slideInDown 0.4s ease forwards;
 }
 
 @media screen and (max-width: 768px) {
@@ -27,26 +30,81 @@
     color: white;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     user-select: none;
     min-height: 60px;
     min-width: 60px;
+    transition: color 200ms ease-in-out;
+    padding: 0;
 }
 
 .app-nav > a:target {
     color: currentColor;
-    background: var(--black);
 }
 
-.app-nav:hover a {
+.app-nav:hover .app-tab {
     color: white;
 }
 
-.app-nav a:hover {
+.app-nav .app-tab:hover {
     color: currentColor;
 }
 
-.app-nav svg {
-    margin: auto;
+.app-tab {
+    position: relative;
+}
+
+.app-tab::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    background: var(--black);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: transform 200ms ease-in-out;
+}
+
+.app-tab::before,
+:hover > .app-tab:target::before {
+    transform: translateY(-100%);
+}
+
+.app-tab:target::before,
+.app-tab:hover::before,
+.app-tab:hover:target::before {
+    transform: translateY(0);
+}
+
+.app-tab > svg {
+    margin: 0;
     height: 30px;
     width: 30px;
+}
+
+.app-nav > a {
+    transform: translateY(-100%);
+}
+
+.app-nav > a:nth-child(1) {
+    animation: slideInDown 0.4s ease-in-out 100ms forwards;
+}
+
+.app-nav > a:nth-child(2) {
+    animation: slideInDown 0.4s ease-in-out 200ms forwards;
+}
+
+.app-nav > a:nth-child(3) {
+    animation: slideInDown 0.4s ease-in-out 300ms forwards;
+}
+
+.app-nav > a:nth-child(4) {
+    animation: slideInDown 0.4s ease-in-out 400ms forwards;
+}
+
+@keyframes slideInDown {
+    to {
+        transform: translate3d(0, 0, 0);
+    }
 }

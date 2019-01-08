@@ -4,6 +4,9 @@
     bottom: 64px;
     background: var(--semi-black-color);
     border-radius: 0.5rem 0 0 0.5rem;
+
+    transform: translateX(100%);
+    animation: slideInRight 0.4s ease 1s forwards;
 }
 
 .on-screen-button + .aside-panel {
@@ -53,4 +56,15 @@
 }
 .syncmode-button.select .lock-close {
     visibility: hidden;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
 }

@@ -18,11 +18,14 @@
     align-items: center;
 }
 
-.new-token-tip {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.new-token-tip,
+.create-new-gist {
+    flex: 1 0 auto;
+    padding: 1rem;
+    margin: 1rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
 }
 
 .new-token-tip-text {
@@ -32,49 +35,23 @@
     max-width: 500px;
 }
 
-:hover > .new-token-tip-text {
-    text-decoration: underline;
-}
-
 .github-svg {
     height: 100px;
     width: 100px;
-    filter: none;
     margin: 1rem;
-}
-
-:hover > .github-svg {
-    filter: none;
-}
-
-.new-token-form {
-    margin: 2rem;
-    display: flex;
-    max-width: 500px;
-    width: 100%;
 }
 
 .new-token-input,
 .gist-id-input {
+    flex: 1 0 auto;
+
     background: 0;
     border: 0;
-    flex: 1 0 auto;
+    margin: 0 0.5rem;
     border-bottom: 1px solid var(--theme-color);
 }
 
-.gist input[type="submit"] {
-    appearance: none;
-    border: 0;
-}
-
-.create-new-gist {
-    flex: 1 0 auto;
-    padding: 1rem;
-    margin: 1rem;
-    max-width: 500px;
-    width: 100%;
-}
-
+.new-token-form,
 .gist-id-form {
     flex: 1 0 auto;
     padding: 1rem 0;
@@ -85,10 +62,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.gist-id-input {
-    margin: 0 0.5rem;
 }
 
 .file-list {
@@ -104,8 +77,9 @@
 .file-item {
     background: rgba(255, 255, 255, 0.9);
     padding: 0.5rem;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     user-select: none;
+    transition: box-shadow 200ms ease-in-out;
 }
 
 .file-item:hover {
