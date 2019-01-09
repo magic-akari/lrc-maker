@@ -83,7 +83,6 @@ input[type="range"] {
 
     height: var(--slider-height);
     background-color: transparent;
-    -webkit-appearance: none;
     appearance: none;
     margin: 0;
     padding: 0;
