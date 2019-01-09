@@ -55,6 +55,22 @@ button,
     cursor: default;
 }
 
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+time {
+    letter-spacing: 0.5px;
+}
+
+@media screen and (max-width: 768px) {
+    time {
+        letter-spacing: 0;
+    }
+}
+
 .link {
     text-decoration: underline;
     cursor: pointer;
@@ -81,22 +97,6 @@ button,
     opacity: 1;
 }
 
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-time {
-    letter-spacing: 0.5px;
-}
-
-@media screen and (max-width: 768px) {
-    time {
-        letter-spacing: 0;
-    }
-}
-
 .glow {
     transition: text-shadow 250ms ease;
 }
@@ -110,12 +110,6 @@ time {
 }
 .glow:hover > svg {
     filter: var(--drop-shadow);
-}
-
-html,
-body,
-.app-container {
-    height: 100%;
 }
 
 .ripple {
@@ -147,4 +141,10 @@ body,
 
 .select-all {
     user-select: all;
+}
+
+html,
+body,
+.app-container {
+    height: 100%;
 }

@@ -13,17 +13,6 @@
     bottom: 100px;
 }
 
-.aside-panel svg {
-    height: 30px;
-    width: 30px;
-    margin: auto;
-    fill: currentColor;
-}
-
-.aside-panel :hover > svg {
-    filter: drop-shadow(0 0 4px var(--theme-color));
-}
-
 .aside-button {
     display: block;
     height: 50px;
@@ -36,6 +25,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.aside-button > svg {
+    height: 30px;
+    width: 30px;
+    margin: auto;
+    fill: currentColor;
+}
+
+.aside-button:hover > svg {
+    filter: drop-shadow(0 0 4px var(--theme-color));
 }
 
 .syncmode-button {

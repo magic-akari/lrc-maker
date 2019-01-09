@@ -158,9 +158,6 @@
 
 .option-select > select {
     padding-right: 1rem;
-
-    -webkit-appearance: none;
-
     appearance: none;
     border: none;
     background-color: transparent;
