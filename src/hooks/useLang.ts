@@ -1,3 +1,4 @@
+import { toastPubSub } from "../components/toast.js";
 import { language as en_US } from "../languages/en-US.js";
 
 const cache = new Map<string, Language>();
@@ -20,7 +21,12 @@ export const useLang = (): [Language, (lang: string) => void] => {
                 cache.set(langName, language);
                 setValue(language);
             });
-        } catch (error) {}
+        } catch (error) {
+            toastPubSub.pub({
+                type: "warning",
+                text: error.message,
+            });
+        }
     };
 
     return [value, React.useCallback((lang: string) => setLang(lang), [])];
