@@ -5,6 +5,7 @@ import { createPubSub } from "../utils/pubsub.js";
 import { Content } from "./content.js";
 import { Footer } from "./footer.js";
 import { Header } from "./header.js";
+import { Toast } from "./toast.js";
 
 const { useState, useEffect, useRef, useCallback } = React;
 
@@ -243,6 +244,7 @@ export const App: React.FC = () => {
                     hidden={!prefState.builtInAudio}
                 />
             </Footer>
+            <Toast />
         </>
     );
 };

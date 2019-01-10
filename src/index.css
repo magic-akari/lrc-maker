@@ -13,3 +13,5 @@
 @import "./components/loadaudio.css";
 @import "./components/preferences.css";
 @import "./components/gist.css";
+@import "./components/toast.css";
+@import "./animation.css";

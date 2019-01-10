@@ -103,9 +103,3 @@
 .app-tab:nth-child(4) {
     animation: slideInDown 500ms ease-out 400ms forwards;
 }
-
-@keyframes slideInDown {
-    to {
-        transform: translate3d(0, 0, 0);
-    }
-}

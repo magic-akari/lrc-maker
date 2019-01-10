@@ -1,0 +1,60 @@
+.toast-queue {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    max-width: 320px;
+    width: 100%;
+}
+
+.toast {
+    margin: 1rem;
+    background-color: #ffffffdd;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--theme-color);
+    box-shadow: 0 0 1rem var(--theme-color);
+    animation: heightChange 250ms ease forwards,
+        slideInRight 250ms ease-in forwards,
+        slideOutRight 250ms ease-out 5s forwards;
+
+    display: flex;
+
+    max-height: 320px;
+}
+
+.toast-badge {
+    height: 32px;
+    width: 32px;
+    margin: 0.5rem;
+
+    flex: 0 0 auto;
+}
+
+.toast-info {
+    color: #1b95e0;
+}
+
+.toast-success {
+    color: #19cf86;
+}
+
+.toast-warning {
+    color: #fab81e;
+}
+
+.toast-badge > svg {
+    height: 100%;
+    width: 100%;
+}
+
+.toast-text {
+    margin: 1rem 0.5rem;
+}
+
+@keyframes heightChange {
+    from {
+        max-height: 0;
+    }
+    to {
+        max-height: 320px;
+    }
+}
