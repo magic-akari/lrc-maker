@@ -45,7 +45,9 @@ export const usePref = (storedPerf: string) => {
                 state[key] = storedState[key];
             }
         }
-    } catch (error) {}
+    } catch (error) {
+        //
+    }
 
     return React.useReducer(reducer, state);
 };

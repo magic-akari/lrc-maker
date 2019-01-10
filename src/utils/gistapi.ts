@@ -56,11 +56,7 @@ export const postGist = async (): Promise<IGistRepo> => {
     return res.json();
 };
 
-export const getGist = async (): Promise<{
-    code: number;
-
-    result: IGistRepo | null;
-}> => {
+export const getGist = async (): Promise<IGistRepo | null> => {
     const token = localStorage.getItem(LSK.token);
     const id = localStorage.getItem(LSK.gistId);
     const etag = localStorage.getItem(LSK.gistEtag)!;
@@ -71,21 +67,19 @@ export const getGist = async (): Promise<{
             ["If-None-Match"]: etag,
         },
     });
+    if (!res.ok) {
+        if (res.status >= 400) {
+            throw await res.json();
+        }
+    }
     localStorage.setItem(LSK.gistEtag, res.headers.get("etag")!);
-    const code = res.status;
-
     const ratelimit: Ratelimit = {
         "x-ratelimit-limit": res.headers.get("x-ratelimit-limit")!,
         "x-ratelimit-remaining": res.headers.get("x-ratelimit-remaining")!,
         "x-ratelimit-reset": res.headers.get("x-ratelimit-reset")!,
     };
-
     sessionStorage.setItem(SSK.ratelimit, JSON.stringify(ratelimit));
-
-    return {
-        code,
-        result: code === 200 ? await res.json() : null,
-    };
+    return res.status === 200 ? res.json() : null;
 };
 
 export const patchGist = async (

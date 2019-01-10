@@ -5,7 +5,7 @@ import { createPubSub } from "../utils/pubsub.js";
 import { Content } from "./content.js";
 import { Footer } from "./footer.js";
 import { Header } from "./header.js";
-import { Toast } from "./toast.js";
+import { Toast, toastPubSub } from "./toast.js";
 
 const { useState, useEffect, useRef, useCallback } = React;
 
@@ -74,6 +74,10 @@ export const App: React.FC = () => {
                 audioStatePubSub.pub({
                     type: AudioActionType.getDuration,
                     payload: audioRef.duration,
+                });
+                toastPubSub.pub({
+                    type: "success",
+                    text: "File loaded",
                 });
             },
             passive,
@@ -242,6 +246,12 @@ export const App: React.FC = () => {
                     src={audioSrc}
                     controls={prefState.builtInAudio}
                     hidden={!prefState.builtInAudio}
+                    onError={(ev) => {
+                        toastPubSub.pub({
+                            type: "warning",
+                            text: (ev.target as any).error.message,
+                        });
+                    }}
                 />
             </Footer>
             <Toast />

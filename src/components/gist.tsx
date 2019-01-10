@@ -12,6 +12,7 @@ import {
     Ratelimit,
 } from "../utils/gistapi.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
+import { toastPubSub } from "./toast.js";
 
 const { useState, useCallback, useEffect, useMemo } = React;
 
@@ -111,25 +112,33 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                 return;
             }
 
-            getGist().then(({ result }) => {
-                if (result === null) {
-                    return;
-                }
+            getGist()
+                .then((result) => {
+                    if (result === null) {
+                        return;
+                    }
 
-                const files = Object.values(result.files).filter((file) =>
-                    file.filename.endsWith(".lrc"),
-                );
-                localStorage.setItem(
-                    LSK.gistFile,
-                    JSON.stringify(files, [
-                        "filename",
-                        "content",
-                        "truncated",
-                        "raw_url",
-                    ]),
-                );
-                setFileList(files);
-            });
+                    const files = Object.values(result.files).filter((file) =>
+                        file.filename.endsWith(".lrc"),
+                    );
+                    localStorage.setItem(
+                        LSK.gistFile,
+                        JSON.stringify(files, [
+                            "filename",
+                            "content",
+                            "truncated",
+                            "raw_url",
+                        ]),
+                    );
+                    setFileList(files);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toastPubSub.pub({
+                        type: "warning",
+                        text: error.message,
+                    });
+                });
         },
         [gistId],
     );
