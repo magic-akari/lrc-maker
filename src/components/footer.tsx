@@ -1,6 +1,7 @@
 import { State as PrefState } from "../hooks/usePref.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio } from "./loadaudio.js";
+import { toastPubSub } from "./toast.js";
 
 const { useEffect, useCallback } = React;
 
@@ -27,6 +28,24 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
 
                         setAudioSrc(URL.createObjectURL(musicFile));
                     }
+                    if (ev.data.type === "error") {
+                        toastPubSub.pub({
+                            type: "warning",
+                            text: ev.data.data,
+                        });
+                    }
+                },
+                { once: true },
+            );
+
+            worker.addEventListener(
+                "error",
+                (ev) => {
+                    toastPubSub.pub({
+                        type: "warning",
+                        text: ev.message,
+                    });
+                    worker.terminate();
                 },
                 { once: true },
             );
