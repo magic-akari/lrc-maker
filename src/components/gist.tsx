@@ -172,6 +172,39 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
         [],
     );
 
+    const onClear = useCallback(() => {
+        setGistId(null);
+        setToken(null);
+    }, []);
+
+    const RateLimitJSX = useMemo(
+        () => {
+            if (ratelimit === null) {
+                return false;
+            }
+
+            return (
+                <section className="ratelimit">
+                    <p>
+                        {"ratelimit-limit: "}
+                        {ratelimit["x-ratelimit-limit"]}
+                    </p>
+                    <p>
+                        {"ratelimit-remaining: "}
+                        {ratelimit["x-ratelimit-remaining"]}
+                    </p>
+                    <p>
+                        {"ratelimit-reset: "}
+                        {new Date(
+                            Number.parseInt(ratelimit["x-ratelimit-reset"], 10),
+                        ).toLocaleString()}
+                    </p>
+                </section>
+            );
+        },
+        [ratelimit],
+    );
+
     return (
         <div className="gist">
             {(() => {
@@ -253,39 +286,61 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                 }
                 if (fileList !== null) {
                     return (
-                        <section className="file-list" onClick={onLoadFile}>
-                            {fileList.map((file, index) => {
-                                return (
-                                    <article
-                                        className="file-item"
-                                        key={file.raw_url}>
-                                        <section className="file-content">
-                                            {file.content}
-                                        </section>
-                                        <hr />
-                                        <section className="file-bar">
-                                            <span className="file-title">
-                                                {file.filename}
+                        <>
+                            <details className="gist-details">
+                                <summary>info</summary>
+                                <section className="gist-bar">
+                                    <section className="gist-info">
+                                        <p>
+                                            {"gist id: "}
+                                            <span className="select-all">
+                                                {gistId}
                                             </span>
-                                            <span className="file-action">
-                                                <a
-                                                    className="file-load"
-                                                    href={Path.editor}
-                                                    data-key={index}>
-                                                    <EditorSVG />
-                                                </a>
-                                                <a
-                                                    className="file-load"
-                                                    href={Path.synchronizer}
-                                                    data-key={index}>
-                                                    <SynchronizerSVG />
-                                                </a>
-                                            </span>
-                                        </section>
-                                    </article>
-                                );
-                            })}
-                        </section>
+                                        </p>
+                                        <button
+                                            className="button"
+                                            onClick={onClear}>
+                                            clear token and gist id
+                                        </button>
+                                    </section>
+                                    {RateLimitJSX}
+                                </section>
+                            </details>
+
+                            <section className="file-list" onClick={onLoadFile}>
+                                {fileList.map((file, index) => {
+                                    return (
+                                        <article
+                                            className="file-item"
+                                            key={file.raw_url}>
+                                            <section className="file-content">
+                                                {file.content}
+                                            </section>
+                                            <hr />
+                                            <section className="file-bar">
+                                                <span className="file-title">
+                                                    {file.filename}
+                                                </span>
+                                                <span className="file-action">
+                                                    <a
+                                                        className="file-load"
+                                                        href={Path.editor}
+                                                        data-key={index}>
+                                                        <EditorSVG />
+                                                    </a>
+                                                    <a
+                                                        className="file-load"
+                                                        href={Path.synchronizer}
+                                                        data-key={index}>
+                                                        <SynchronizerSVG />
+                                                    </a>
+                                                </span>
+                                            </section>
+                                        </article>
+                                    );
+                                })}
+                            </section>
+                        </>
                     );
                 }
 

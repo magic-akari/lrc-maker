@@ -1,7 +1,7 @@
 .gist {
     width: 100%;
-
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -65,13 +65,12 @@
 }
 
 .file-list {
-    height: 100%;
     width: 100%;
     flex: 1 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     grid-gap: 1rem;
-    padding: 1rem;
+    margin: 1rem;
 }
 
 .file-item {
@@ -124,4 +123,30 @@
 
 .file-load:hover {
     color: var(--theme-color);
+}
+
+.gist-details {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.gist-details {
+    user-select: none;
+}
+
+.gist-bar {
+    width: 100%;
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.gist-info,
+.ratelimit {
+    flex: 1 1 auto;
+}
+
+.ratelimit > p {
+    margin: 0;
+    line-height: 1.5;
 }
