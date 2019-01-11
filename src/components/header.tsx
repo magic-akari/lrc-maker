@@ -1,4 +1,10 @@
-import { CloudSVG, EditorSVG, PreferencesSVG, SynchronizerSVG } from "./svg.js";
+import {
+    CloudSVG,
+    EditorSVG,
+    HomeSVG,
+    PreferencesSVG,
+    SynchronizerSVG,
+} from "./svg.js";
 
 export const Header: React.FC<{ lang: Language }> = ({ lang }) => {
     console.info("Header.render");
@@ -6,7 +12,10 @@ export const Header: React.FC<{ lang: Language }> = ({ lang }) => {
     return (
         <header className="app-header">
             <a href={Path.home} id={Path.homeID} className="app-title">
-                {lang.app.name}
+                <span className="app-title-text">{lang.app.name}</span>
+                <span className="app-title-svg">
+                    <HomeSVG />
+                </span>
             </a>
             <nav className="app-nav">
                 <a className="app-tab" href={Path.editor} id={Path.editorID}>
