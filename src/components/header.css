@@ -26,6 +26,22 @@
     font-size: 1.5rem;
 }
 
+.app-title-text {
+    display: none;
+}
+.app-title-svg {
+    display: inline-flex;
+}
+
+@media screen and (min-width: 768px) {
+    .app-title-text {
+        display: inline-flex;
+    }
+    .app-title-svg {
+        display: none;
+    }
+}
+
 .app-header a {
     color: white;
     display: inline-flex;
@@ -78,6 +94,7 @@
     transform: scaleY(1);
 }
 
+.app-title-svg > svg,
 .app-tab > svg {
     margin: 0;
     height: 30px;

@@ -1,0 +1,66 @@
+.home {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 60px;
+    bottom: 32px;
+}
+
+.home-tip {
+    padding: 1rem;
+    margin: 1rem;
+    color: var(--white);
+    border-radius: var(--border-radius);
+    background: var(--semi-black-color);
+    max-width: 45%;
+}
+
+.home-tip-top-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.home-tip-top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.home-tip-bottom-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.home-tip-bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.home-tip::after {
+    content: " ";
+    position: absolute;
+    left: 50%;
+    margin-left: -0.5rem;
+    border-width: 0.5rem;
+    border-style: solid;
+}
+
+.home-tip-top-left::after,
+.home-tip-bottom-left::after {
+    left: 2rem;
+}
+
+.home-tip-top-left::after,
+.home-tip-top-right::after {
+    bottom: 100%;
+    border-color: transparent transparent var(--semi-black-color) transparent;
+}
+
+.home-tip-bottom-left::after,
+.home-tip-bottom-right::after {
+    top: 100%;
+    border-color: var(--semi-black-color) transparent transparent transparent;
+}
