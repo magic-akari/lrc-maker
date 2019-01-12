@@ -4,6 +4,7 @@ import {
     State as PrefState,
     themeColor,
 } from "../hooks/usePref.js";
+import { AkariHideWall } from "./svg.js";
 
 const { useCallback, useRef, useEffect } = React;
 
@@ -356,6 +357,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                     <section className="list-item">清除缓存</section>
                 </li>
             </ul>
+            <AkariHideWall />
         </div>
     );
 };

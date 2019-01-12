@@ -14,7 +14,7 @@
 }
 
 .preferences li:nth-child(even) {
-    background-color: #ddd;
+    background-color: #00000022;
 }
 
 .list-item {
@@ -187,4 +187,28 @@ input[type="number"] {
     background: 0;
     border: 0;
     border-bottom: 1px solid var(--theme-color);
+}
+
+.akari-hide-wall {
+    position: fixed;
+    bottom: 32px;
+    right: 0;
+    height: 256px;
+    width: 256px;
+    z-index: -1;
+    opacity: 0.8;
+    stroke-width: 4px;
+    transform: translateX(100%);
+    animation: akariSlideIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) 3s
+        forwards;
+}
+
+@keyframes akariSlideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(34%);
+    }
 }
