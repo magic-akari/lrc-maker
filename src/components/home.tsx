@@ -14,3 +14,15 @@ export const Home: React.FC = () => {
         </div>
     );
 };
+
+document.addEventListener("keydown", (ev) => {
+    const { code, key, target } = ev;
+
+    if (["text", "textarea", "url"].includes((target as any).type as string)) {
+        return;
+    }
+
+    if (key === "?" || (code === "Slash" && ev.shiftKey)) {
+        location.hash = Path.home;
+    }
+});
