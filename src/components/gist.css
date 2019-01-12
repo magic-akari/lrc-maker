@@ -70,7 +70,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     grid-gap: 1rem;
-    margin: 1rem;
 }
 
 .file-item {
@@ -127,7 +126,13 @@
 
 .gist-details {
     width: 100%;
-    margin-top: 1rem;
+    padding: 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+    .gist-details {
+        padding: 1rem 0;
+    }
 }
 
 .gist-details {
@@ -141,9 +146,16 @@
     justify-content: space-between;
 }
 
+@media screen and (max-width: 768px) {
+    .gist-bar {
+        flex-direction: column;
+    }
+}
+
 .gist-info,
 .ratelimit {
     flex: 1 1 auto;
+    padding: 0.5rem;
 }
 
 .ratelimit > p {
