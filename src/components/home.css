@@ -4,6 +4,13 @@
     right: 0;
     top: 60px;
     bottom: 32px;
+
+    user-select: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .home-tip {
@@ -63,4 +70,15 @@
 .home-tip-bottom-right::after {
     top: 100%;
     border-color: var(--semi-black-color) transparent transparent transparent;
+}
+
+.home-tip-text {
+    line-height: 1.5;
+    vertical-align: baseline;
+
+    font-size: 1.2rem;
+}
+
+.home-tip-text-svg {
+    padding: 0.5rem;
 }
