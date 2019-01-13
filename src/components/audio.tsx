@@ -42,7 +42,6 @@ const Slider: React.FC<ISliderProps> = ({
             <progress value={percent} />
             <input
                 type="range"
-                tabIndex={-1}
                 className={className}
                 min={min}
                 max={max}
@@ -186,10 +185,7 @@ const RateSlider = () => {
 
     return (
         <>
-            <button
-                className="ripple glow"
-                tabIndex={-1}
-                onClick={restPlaybackRate}>
+            <button className="ripple glow" onClick={restPlaybackRate}>
                 {"X "}
                 {playbackRate.toFixed(2)}
             </button>
@@ -254,27 +250,23 @@ export const LrcAudio: React.FC = () => {
     return (
         <section className={"lrc-audio" + (paused ? "" : " playing")}>
             <button
-                tabIndex={-1}
                 className="ripple glow loadaudio-button"
                 onClick={loadAudioButtonClick}>
                 <LoadAudioSVG />
             </button>
             <button
-                tabIndex={-1}
                 className="ripple glow"
                 onClick={replay5s}
                 disabled={!duration}>
                 <Replay5sSVG />
             </button>
             <button
-                tabIndex={-1}
                 className="ripple glow"
                 disabled={!duration}
                 onClick={togglePlayPause}>
                 {paused ? <PlaySVG /> : <PauseSVG />}
             </button>
             <button
-                tabIndex={-1}
                 className="ripple glow"
                 onClick={forward5s}
                 disabled={!duration}>
