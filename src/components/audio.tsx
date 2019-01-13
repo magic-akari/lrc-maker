@@ -141,7 +141,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({
     );
 };
 
-const RateSlider = () => {
+const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
     const self = useRef(Symbol(RateSlider.name));
 
     const [playbackRate, setPlaybackRate] = useState(audioRef.playbackRate);
@@ -185,7 +185,10 @@ const RateSlider = () => {
 
     return (
         <>
-            <button className="ripple glow" onClick={restPlaybackRate}>
+            <button
+                className="ripple glow"
+                title={lang.audio.resetRate}
+                onClick={restPlaybackRate}>
                 {"X "}
                 {playbackRate.toFixed(2)}
             </button>
@@ -202,7 +205,7 @@ const RateSlider = () => {
     );
 };
 
-export const LrcAudio: React.FC = () => {
+export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
     console.info("LrcAudio.render");
 
     const self = useRef(Symbol(LrcAudio.name));
@@ -251,30 +254,34 @@ export const LrcAudio: React.FC = () => {
         <section className={"lrc-audio" + (paused ? "" : " playing")}>
             <button
                 className="ripple glow loadaudio-button"
+                title={lang.audio.loadAudio}
                 onClick={loadAudioButtonClick}>
                 <LoadAudioSVG />
             </button>
             <button
                 className="ripple glow"
+                title={lang.audio.replay5s}
                 onClick={replay5s}
                 disabled={!duration}>
                 <Replay5sSVG />
             </button>
             <button
                 className="ripple glow"
+                title={paused ? lang.audio.play : lang.audio.pause}
                 disabled={!duration}
                 onClick={togglePlayPause}>
                 {paused ? <PlaySVG /> : <PauseSVG />}
             </button>
             <button
                 className="ripple glow"
+                title={lang.audio.forward5s}
                 onClick={forward5s}
                 disabled={!duration}>
                 <Forward5sSVG />
             </button>
 
             <TimeLine duration={duration} paused={paused} />
-            <RateSlider />
+            <RateSlider lang={lang} />
         </section>
     );
 };

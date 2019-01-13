@@ -239,8 +239,15 @@ export const App: React.FC = () => {
     return (
         <>
             <Header lang={lang} />
-            <Content prefState={prefState} prefDispatch={prefDispatch} />
-            <Footer prefState={prefState} setAudioSrc={refreshAudioSrc}>
+            <Content
+                prefState={prefState}
+                prefDispatch={prefDispatch}
+                lang={lang}
+            />
+            <Footer
+                prefState={prefState}
+                setAudioSrc={refreshAudioSrc}
+                lang={lang}>
                 <audio
                     ref={audioRef}
                     src={audioSrc}

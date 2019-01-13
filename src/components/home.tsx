@@ -1,27 +1,27 @@
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { EditorSVG, LoadAudioSVG, SynchronizerSVG } from "./svg.js";
 
-export const Home: React.FC = () => {
+export const Home: React.FC<{ lang: Language }> = ({ lang }) => {
     return (
         <div className="home">
-            <p className="home-tip home-tip-top-left">
-                点击这里可以回到这个帮助页面
+            <p className="home-tip home-tip-top-left">{lang.home.tipTopLeft}</p>
+            <p className="home-tip home-tip-top-right">
+                {lang.home.tipTopRight}
             </p>
-            <p className="home-tip home-tip-top-right">点击这里切换页面</p>
             <p className="home-tip home-tip-bottom-left">
-                这里可以加载音频，控制播放
+                {lang.home.tipBottomLeft}
             </p>
             <p className="home-tip home-tip-bottom-right">
-                这里可以调节播放速度
+                {lang.home.tipBottomRight}
             </p>
             <section className="home-tip-text">
-                <p>提示：</p>
+                <p>{lang.home.tips}</p>
                 <ol>
                     <li>
                         <a className="home-tip-text-svg" href={Path.editor}>
                             <EditorSVG />
                         </a>
-                        {"切换到编辑页面，粘贴歌词文本。"}
+                        {lang.home.tipForLyricText}
                     </li>
                     <li>
                         <button
@@ -29,7 +29,7 @@ export const Home: React.FC = () => {
                             onClick={() => loadAudioDialogRef.showModal()}>
                             <LoadAudioSVG />
                         </button>
-                        {"点击左下方按钮，载入音频文件。"}
+                        {lang.home.tipForUploadAudio}
                     </li>
                     <li>
                         <a
@@ -37,7 +37,7 @@ export const Home: React.FC = () => {
                             href={Path.synchronizer}>
                             <SynchronizerSVG />
                         </a>
-                        {"切换到打轴页面，开始制作滚动歌词吧～"}
+                        {lang.home.tipForSynchronizer}
                     </li>
                 </ol>
             </section>

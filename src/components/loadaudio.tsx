@@ -3,10 +3,6 @@ import { CloseSVG } from "./svg.js";
 
 const { useRef, useEffect, useCallback } = React;
 
-interface ILoadAudioOptions {
-    setAudioSrc: (src: string) => void;
-}
-
 interface ILoadAudioDialogRef extends React.RefObject<HTMLDialogElement> {
     open: boolean;
     showModal: () => void;
@@ -39,7 +35,15 @@ export const loadAudioDialogRef: ILoadAudioDialogRef = {
     },
 };
 
-export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
+interface ILoadAudioOptions {
+    setAudioSrc: (src: string) => void;
+    lang: Language;
+}
+
+export const LoadAudio: React.FC<ILoadAudioOptions> = ({
+    setAudioSrc,
+    lang,
+}) => {
     console.info("LoadAudio.render");
 
     const self = useRef(Symbol(LoadAudio.name));
@@ -99,11 +103,11 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
                     defaultChecked
                 />
                 <label className="ripple" htmlFor="tab-file">
-                    File
+                    {lang.loadAudio.file}
                 </label>
                 <div className="content">
                     <label className="audio-input-tip" htmlFor="audio-input">
-                        Click here or drop audio in the page
+                        {lang.loadAudio.loadFile}
                     </label>
                 </div>
             </div>
@@ -111,7 +115,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc }) => {
             <div className="dialog-tab loadaudio-via-url">
                 <input type="radio" name="tabgroup" id="tab-url" />
                 <label className="ripple" htmlFor="tab-url">
-                    URL
+                    {lang.loadAudio.url}
                 </label>
                 <div className="content">
                     <form className="audio-input-form" onSubmit={onSubmit}>

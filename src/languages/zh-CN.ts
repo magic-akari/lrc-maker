@@ -1,23 +1,56 @@
 export const language = {
-    language_name: "简体中文",
+    languageName: "简体中文",
+
     app: {
         name: "歌词滚动姬",
         fullname: "灯里的歌词滚动姬",
-        edit: "编辑",
-        synchronize: "打轴",
-        preferences: "设置",
-        editor_tip: "点击这里编辑歌词文本",
-        synchronizer_tip: "点击这里打轴",
-        preferences_tip: "语言及其他设置",
     },
-    lrc: {
+
+    header: {
+        home: "主页",
+        editor: "编辑",
+        synchronizer: "打轴",
+        gist: "Githu Gist",
+        preferences: "设置",
+    },
+
+    audio: {
+        loadAudio: "加载音频",
+        play: "播放",
+        pause: "暂停",
+        replay5s: "后退 5 秒",
+        forward5s: "前进 5 秒",
+        resetRate: "重置播放速度·",
+    },
+
+    loadAudio: {
+        file: "文件",
+        url: "外链",
+        loadFile: "点击这里或直接拖放音频到这个页面",
+    },
+
+    home: {
+        tips: "提示",
+        tipForLyricText: "切换到编辑页面，粘贴歌词文本。",
+        tipForUploadAudio: "点击左下方按钮，载入音频文件。",
+        tipForSynchronizer: "切换到打轴页面，开始制作滚动歌词吧～",
+        tipTopLeft: "点击这里可以回到这个帮助页面",
+        tipTopRight: "点击这里切换页面",
+        tipBottomLeft: "这里可以加载音频，控制播放",
+        tipBottomRight: "这里可以调节播放速度",
+    },
+
+    editor: {
+        metaInfo: "元信息",
         album: "所属专辑",
         title: "歌曲名",
         artist: "艺人名",
-        load_audio: "加载音频",
-        load_text: "加载文本",
-        select_all: "全选复制",
+        uploadText: "加载文本",
+        copyText: "全选复制",
+        downloadText: "下载",
+        saveToGist: "保存到 Github Gist",
     },
+
     preferences: {
         language: "语言",
         version: "App 版本",
