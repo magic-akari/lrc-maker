@@ -10,9 +10,9 @@ export const useLang = (): [Language, (lang: string) => void] => {
     const setLang = (langName: string) => {
         if (cache.has(langName)) {
             const cachedLang = cache.get(langName)!;
-            if (cachedLang !== value) {
-                setValue(cachedLang);
-            }
+
+            setValue(cachedLang);
+
             return;
         }
 

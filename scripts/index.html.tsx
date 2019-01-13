@@ -1,10 +1,10 @@
 import { execSync } from "child_process";
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import { readdirSync, readFileSync } from "fs";
+import { parse, resolve } from "path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { sri } from "./sri";
+import { sri, sriContent } from "./sri";
 
 const isProduction = process.env.NODE_ENV === "production";
 const useCDN = process.env.USE_CDN === "USE_CDN";
@@ -61,6 +61,37 @@ const appUrl = (
     }
 };
 
+const getLanguageMap = (): { [filename: string]: string } => {
+    const langDir = resolve(__dirname, "../src/languages");
+    const fileList = readdirSync(langDir);
+
+    return fileList.reduce((map, filename) => {
+        const { language } = require(resolve(langDir, filename));
+
+        return {
+            ...map,
+            [parse(filename).name]: language.languageName,
+        };
+    }, {});
+};
+
+const swRegister = () => {
+    const content = readFileSync(__dirname + "/sw.register.js", {
+        encoding: "utf8",
+    }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " ");
+    // tslint:disable-next-line:no-shadowed-variable
+    const sri = sriContent(content);
+    return { content, sri };
+};
+
+const swUnregister = () => {
+    const content = readFileSync(__dirname + "/sw.unregister.js", {
+        encoding: "utf8",
+    });
+
+    return { content };
+};
+
 const Html = () => {
     const version = process.env.npm_package_version;
     const hash = process.env.npm_package_gitHead!.slice(0, 7);
@@ -69,15 +100,7 @@ const Html = () => {
         .toString()
         .trim();
 
-    const swRegister = () =>
-        readFileSync(__dirname + "/sw.register.js", {
-            encoding: "utf8",
-        }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " ");
-
-    const swUnregister = () =>
-        readFileSync(__dirname + "/sw.unregister.js", {
-            encoding: "utf8",
-        });
+    const reg = isProduction ? swRegister() : swUnregister();
 
     return (
         <html>
@@ -171,7 +194,12 @@ const Html = () => {
                     id="app-info"
                     type="application/json"
                     dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({ version, hash, updateTime }),
+                        __html: JSON.stringify({
+                            version,
+                            hash,
+                            updateTime,
+                            languages: getLanguageMap(),
+                        }),
                     }}
                 />
             </head>
@@ -179,7 +207,7 @@ const Html = () => {
                 <div className="app-container" />
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: isProduction ? swRegister() : swUnregister(),
+                        __html: reg.content,
                     }}
                 />
             </body>

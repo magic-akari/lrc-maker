@@ -66,11 +66,13 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
 interface IFooterProps {
     prefState: PrefState;
     setAudioSrc: TsetAudioSrc;
+    lang: Language;
 }
 
 export const Footer: React.FC<IFooterProps> = ({
     prefState,
     setAudioSrc,
+    lang,
     children,
 }) => {
     console.info("Footer.render");
@@ -107,9 +109,9 @@ export const Footer: React.FC<IFooterProps> = ({
                 hidden={true}
                 onChange={onAudioInputChange}
             />
-            <LoadAudio setAudioSrc={setAudioSrc} />
+            <LoadAudio setAudioSrc={setAudioSrc} lang={lang} />
             {children}
-            {prefState.builtInAudio || <LrcAudio />}
+            {prefState.builtInAudio || <LrcAudio lang={lang} />}
         </footer>
     );
 };

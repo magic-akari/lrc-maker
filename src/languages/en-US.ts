@@ -1,23 +1,57 @@
 export const language = {
-    language_name: "English",
+    languageName: "English",
+
     app: {
-        name: "Lrc Maker",
-        fullname: "Lrc Maker",
-        edit: "Edit",
-        synchronize: "Synchronize",
-        preferences: "Preferences",
-        editor_tip: "Click here to edit lyric lines",
-        synchronizer_tip: "Click here to synchronize lyric",
-        preferences_tip: "language and other preferences",
+        name: "LRC Maker",
+        fullname: "Akari's LRC Maker",
     },
-    lrc: {
-        album: "Album",
-        title: "Title",
-        artist: "Artist",
-        load_audio: "Load Audio",
-        load_text: "Load Text",
-        select_all: "Select All & Copy",
+
+    header: {
+        home: "home",
+        editor: "editor",
+        synchronizer: "synchronizer",
+        gist: "Githu Gist",
+        preferences: "preferences",
     },
+
+    audio: {
+        loadAudio: "load audio",
+        play: "play",
+        pause: "pause",
+        replay5s: "replay 5s",
+        forward5s: "forward 5s",
+        resetRate: "reset playback rate",
+    },
+
+    loadAudio: {
+        file: "File",
+        url: "URL",
+        loadFile: "Click here or drop audio file in this page",
+    },
+
+    home: {
+        tips: "Tips",
+        tipForLyricText: "Navigate to the editor page and paste lyric text.",
+        tipForUploadAudio: "Click the bottom left button to load audio file.",
+        tipForSynchronizer:
+            "Navigate to synchronizer page and make your lrc :)",
+        tipTopLeft: "Click here come back to this page",
+        tipTopRight: "Click here to navigate to other page",
+        tipBottomLeft: "load audio here, and control the audio",
+        tipBottomRight: "change the playback rate here",
+    },
+
+    editor: {
+        metaInfo: "meta info",
+        album: "album",
+        title: "title",
+        artist: "artist",
+        uploadText: "upload text",
+        copyText: "select all and copy",
+        downloadText: "download",
+        saveToGist: "save to Github Gist",
+    },
+
     preferences: {
         language: "Language",
         version: "App Version",

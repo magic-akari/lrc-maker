@@ -18,11 +18,13 @@ const { useState, useEffect, useRef, useMemo } = React;
 interface IContentProps {
     prefState: PrefState;
     prefDispatch: React.Dispatch<PrefAction>;
+    lang: Language;
 }
 
 export const Content: React.FC<IContentProps> = ({
     prefState,
     prefDispatch,
+    lang,
 }) => {
     console.info("Content.render");
     const self = useRef(Symbol(Content.name));
@@ -209,6 +211,7 @@ export const Content: React.FC<IContentProps> = ({
                                 lrcState={lrcState}
                                 lrcDispatch={lrcDispatch}
                                 prefState={prefState}
+                                lang={lang}
                             />
                         );
                     }
@@ -237,7 +240,7 @@ export const Content: React.FC<IContentProps> = ({
                     }
                 }
 
-                return <Home />;
+                return <Home lang={lang} />;
             })()}
         </main>
     );

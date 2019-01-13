@@ -13,9 +13,9 @@ interface IPreferencesProps {
     prefDispatch: React.Dispatch<PrefAction>;
 }
 
-const info: Record<"version" | "hash" | "updateTime", string> = JSON.parse(
-    document.getElementById("app-info")!.textContent!,
-);
+const info: Record<"version" | "hash" | "updateTime", string> & {
+    languages: { [name: string]: string };
+} = JSON.parse(document.getElementById("app-info")!.textContent!);
 
 interface INumberInput {
     min?: number;
@@ -185,10 +185,23 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                     <section className="list-item">
                         <span>语言</span>
                         <div className="option-select">
-                            <select defaultValue={"en-US"}>
-                                <option key={"en-US"} value={"en-US"}>
-                                    English
-                                </option>
+                            <select
+                                value={prefState.lang}
+                                onChange={(ev) => {
+                                    prefDispatch({
+                                        type: "lang",
+                                        payload: ev.target.value,
+                                    });
+                                }}>
+                                {Object.entries(info.languages).map(
+                                    ([lang, langName]) => {
+                                        return (
+                                            <option key={lang} value={lang}>
+                                                {langName}
+                                            </option>
+                                        );
+                                    },
+                                )}
                             </select>
                         </div>
                     </section>

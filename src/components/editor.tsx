@@ -38,7 +38,8 @@ export const Eidtor: React.SFC<{
     lrcState: LrcState;
     lrcDispatch: React.Dispatch<LrcAction>;
     prefState: PrefState;
-}> = ({ lrcState, lrcDispatch, prefState }) => {
+    lang: Language;
+}> = ({ lrcState, lrcDispatch, prefState, lang }) => {
     console.info("Eidtor.render");
 
     const parse = useCallback((ev: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -161,13 +162,13 @@ export const Eidtor: React.SFC<{
     return (
         <div className="app-editor">
             <details ref={details} open={detailsOpened}>
-                <summary>info</summary>
+                <summary>{lang.editor.metaInfo}</summary>
                 <section className="app-editor-infobox">
                     <label htmlFor="info-ti">[ti:</label>
                     <input
                         id="info-ti"
                         name="ti"
-                        placeholder="title"
+                        placeholder={lang.editor.title}
                         onBlur={setInfo}
                         {...disableCheck}
                         {...useDefaultValue(lrcState.info.get("ti") || "")}
@@ -177,7 +178,7 @@ export const Eidtor: React.SFC<{
                     <input
                         id="info-ar"
                         name="ar"
-                        placeholder="artist"
+                        placeholder={lang.editor.artist}
                         onBlur={setInfo}
                         {...disableCheck}
                         {...useDefaultValue(lrcState.info.get("ar") || "")}
@@ -187,7 +188,7 @@ export const Eidtor: React.SFC<{
                     <input
                         id="info-al"
                         name="al"
-                        placeholder="album"
+                        placeholder={lang.editor.album}
                         onBlur={setInfo}
                         {...disableCheck}
                         {...useDefaultValue(lrcState.info.get("al") || "")}
@@ -197,7 +198,9 @@ export const Eidtor: React.SFC<{
             </details>
 
             <section className="editor-tools">
-                <label className="editor-tools-item ripple">
+                <label
+                    className="editor-tools-item ripple"
+                    title={lang.editor.uploadText}>
                     <input
                         hidden
                         type="file"
@@ -208,11 +211,13 @@ export const Eidtor: React.SFC<{
                 </label>
                 <button
                     className="editor-tools-item ripple"
+                    title={lang.editor.copyText}
                     onClick={onCopyClick}>
                     <CopySVG />
                 </button>
                 <a
                     className="editor-tools-item ripple"
+                    title={lang.editor.downloadText}
                     href={href}
                     onClick={onDownloadClick}
                     download={downloadName}>
@@ -220,6 +225,7 @@ export const Eidtor: React.SFC<{
                 </a>
 
                 <a
+                    title={lang.editor.uploadText}
                     href={canSaveToGist ? "javascript:;" : Path.gist}
                     className="editor-tools-item ripple"
                     onClick={saveToGist}>
