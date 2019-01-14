@@ -7,12 +7,7 @@ import {
 import { unregister } from "../utils/sw.unregister.js";
 import { AkariHideWall } from "./svg.js";
 
-const { useCallback, useRef, useEffect } = React;
-
-interface IPreferencesProps {
-    prefState: PrefState;
-    prefDispatch: React.Dispatch<PrefAction>;
-}
+const { useCallback, useRef, useEffect, useMemo } = React;
 
 const info: Record<"version" | "hash" | "updateTime", string> & {
     languages: { [name: string]: string };
@@ -56,9 +51,16 @@ const useNumberInput = (
     return { type: "number", step: 1, ref, onChange, onBlur };
 };
 
+interface IPreferencesProps {
+    prefState: PrefState;
+    prefDispatch: React.Dispatch<PrefAction>;
+    lang: Language;
+}
+
 export const Preferences: React.FC<IPreferencesProps> = ({
     prefState,
     prefDispatch,
+    lang,
 }) => {
     const onColorPick = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,30 +139,50 @@ export const Preferences: React.FC<IPreferencesProps> = ({
         unregister();
     }, []);
 
+    const updateTime = useMemo(
+        () => {
+            const date = new Date(info.updateTime);
+            const options = {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
+                timeZoneName: "short",
+                hour12: false,
+            };
+            return new Intl.DateTimeFormat(prefState.lang, options).format(
+                date,
+            );
+        },
+        [prefState.lang],
+    );
+
     return (
         <div className="preferences">
             <ul>
                 <li>
                     <section className="list-item">
-                        <span>版本</span>
+                        <span>{lang.preferences.version}</span>
                         <span className="select-all">{info.version}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
-                        <span>Commit hash</span>
+                        <span>{lang.preferences.commitHash}</span>
                         <span className="select-all">{info.hash}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
-                        <span>最近更新</span>
-                        <span>{info.updateTime}</span>
+                        <span>{lang.preferences.updateTime}</span>
+                        <span>{updateTime}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
-                        <span>项目地址</span>
+                        <span>{lang.preferences.repo}</span>
                         <a className="link" href={Repo.url} target="_blank">
                             Github
                         </a>
@@ -168,7 +190,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <section className="list-item">
-                        <span>关于 &amp; 帮助</span>
+                        <span>{lang.preferences.help}</span>
                         <a className="link" href={Repo.wiki} target="_blank">
                             Github Wiki
                         </a>
@@ -176,7 +198,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <section className="list-item">
-                        <span>语言</span>
+                        <span>{lang.preferences.language}</span>
                         <div className="option-select">
                             <select
                                 value={prefState.lang}
@@ -187,9 +209,11 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                                     });
                                 }}>
                                 {Object.entries(info.languages).map(
-                                    ([lang, langName]) => {
+                                    ([langCode, langName]) => {
                                         return (
-                                            <option key={lang} value={lang}>
+                                            <option
+                                                key={langCode}
+                                                value={langCode}>
                                                 {langName}
                                             </option>
                                         );
@@ -201,7 +225,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <label className="list-item">
-                        <span>使用浏览器内建播放器</span>
+                        <span>{lang.preferences.builtInAudio}</span>
                         <label className="label-switch">
                             <input
                                 type="checkbox"
@@ -219,7 +243,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <label className="list-item">
-                        <span>启用虚拟空格键</span>
+                        <span>{lang.preferences.spaceButton}</span>
                         <label className="label-switch">
                             <input
                                 type="checkbox"
@@ -238,7 +262,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
 
                 <li>
                     <section className="list-item">
-                        <span>主题颜色</span>
+                        <span>{lang.preferences.themeColor}</span>
                         <form onSubmit={onColorSubmit}>
                             {Object.values(themeColor).map((color) => {
                                 const checked = color === prefState.themeColor;
@@ -290,7 +314,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <section className="list-item">
-                        <span>歌词输出格式控制</span>
+                        <span>{lang.preferences.lrcFormat}</span>
                         <span>
                             <time className="format-example-time">
                                 {convertTimeToTag(83.456, prefState.fixed)}
@@ -307,7 +331,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <section className="list-item">
-                        <span>小数点</span>
+                        <span>{lang.preferences.fixed}</span>
                         <div className="option-select">
                             <select
                                 name="fixed"
@@ -331,7 +355,9 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <label className="list-item">
-                        <label htmlFor="space-start">左侧空格</label>
+                        <label htmlFor="space-start">
+                            {lang.preferences.leftSpace}
+                        </label>
                         <input
                             name="spaceStart"
                             id="space-start"
@@ -346,7 +372,9 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                 </li>
                 <li>
                     <label className="list-item">
-                        <label htmlFor="space-end">右侧空格</label>
+                        <label htmlFor="space-end">
+                            {lang.preferences.rightSpace}
+                        </label>
                         <input
                             name="spaceEnd"
                             id="space-end"
@@ -360,7 +388,9 @@ export const Preferences: React.FC<IPreferencesProps> = ({
                     </label>
                 </li>
                 <li className="ripple" onClick={clearCache}>
-                    <section className="list-item">清除缓存</section>
+                    <section className="list-item">
+                        {lang.preferences.clearCache}
+                    </section>
                 </li>
             </ul>
             <AkariHideWall />
