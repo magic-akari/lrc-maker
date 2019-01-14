@@ -65,6 +65,6 @@ export const language = {
         fixed: "时间标签小数点",
         leftSpace: "左侧空格",
         rightSpace: "右侧空格",
-        clearCache: "清楚缓存",
+        clearCache: "清除缓存",
     },
 };
