@@ -89,7 +89,7 @@ const swRegister = () => {
 
 const swUnregister = () => {
     let content = readFileSync(
-        resolve(__dirname, "../src/components/sw.unregister.ts"),
+        resolve(__dirname, "../src/utils/sw.unregister.ts"),
         {
             encoding: "utf8",
         },
