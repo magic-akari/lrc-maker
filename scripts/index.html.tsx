@@ -47,11 +47,12 @@ const appUrl = (
     integrity?: string;
     crossOrigin?: "anonymous";
 } => {
-    const name = process.env.npm_package_name!;
+    const appName = process.env.npm_package_name!;
+    const version = process.env.npm_package_version!;
+
     if (useCDN) {
-        const version = process.env.npm_package_version!;
         const src = new URL(
-            resolve("/npm", `${name}@${version}`, "build", path),
+            resolve("/npm", `${appName}@${version}`, "build", path),
             `${jsdelivr}`,
         ).href;
         const integrity = sri(resolve(__dirname, "../build", path));
@@ -79,8 +80,10 @@ const swRegister = () => {
     const content = readFileSync(__dirname + "/sw.register.js", {
         encoding: "utf8",
     }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " ");
+
     // tslint:disable-next-line:no-shadowed-variable
     const sri = sriContent(content);
+
     return { content, sri };
 };
 
@@ -89,8 +92,42 @@ const swUnregister = () => {
         encoding: "utf8",
     });
 
-    return { content };
+    // tslint:disable-next-line:no-shadowed-variable
+    const sri = sriContent(content);
+
+    return { content, sri };
 };
+
+const csp = {
+    "default-src": ["'none'"],
+    "img-src": ["'self'"],
+    "style-src": ["'self'", jsdelivr],
+    "script-src": ["'self'", jsdelivr, "blob:"],
+    "media-src": ["*", "blob:"],
+    "connect-src": ["https://api.github.com"],
+};
+
+const preloadScripts = [
+    "./hooks/usePref.js",
+    "./utils/audioref.js",
+    "./utils/pubsub.js",
+    "./components/content.js",
+    "./components/footer.js",
+    "./components/header.js",
+    "./components/toast.js",
+    "./components/audio.js",
+    "./components/loadaudio.js",
+    "./components/svg.js",
+    "./hooks/useLrc.js",
+    "./components/editor.js",
+    "./components/gist.js",
+    "./components/home.js",
+    "./components/preferences.js",
+    "./components/synchronizer.js",
+    "./utils/gistapi.js",
+    "./components/asidepanel.js",
+    "./components/curser.js",
+];
 
 const Html = () => {
     const version = process.env.npm_package_version;
@@ -101,12 +138,23 @@ const Html = () => {
         .trim();
 
     const reg = isProduction ? swRegister() : swUnregister();
+    if (useCDN) {
+        csp["script-src"].push("'" + reg.sri + "'");
+    }
 
     return (
         <html>
             <head>
                 <meta charSet="utf-8" />
                 <title>LRC Maker</title>
+                <meta
+                    httpEquiv="Content-Security-Policy"
+                    content={Object.entries(csp)
+                        .map(([key, value]) => {
+                            return [key, ...value].join(" ");
+                        })
+                        .join("; ")}
+                />
                 <meta
                     name="description"
                     content="LRC Maker｜The easiest way to create cool LRC files by yourself. 灯里的歌词滚动姬｜迄今为止最易用的歌词制作工具"
@@ -189,6 +237,10 @@ const Html = () => {
                     )}
                 />
                 <script {...appUrl("./polyfill.js")} type="module" async />
+                {isProduction &&
+                    preloadScripts.reverse().map((name) => {
+                        return <script {...appUrl(name)} type="module" />;
+                    })}
                 <script {...appUrl("./components/app.js")} type="module" />
                 <script
                     id="app-info"
