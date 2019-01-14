@@ -235,6 +235,7 @@ export const Content: React.FC<IContentProps> = ({
                             <Preferences
                                 prefState={prefState}
                                 prefDispatch={prefDispatch}
+                                lang={lang}
                             />
                         );
                     }
