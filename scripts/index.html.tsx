@@ -77,7 +77,7 @@ const getLanguageMap = (): { [filename: string]: string } => {
 };
 
 const swRegister = () => {
-    const content = readFileSync(__dirname + "/sw.register.js", {
+    const content = readFileSync(resolve(__dirname, "sw.register.js"), {
         encoding: "utf8",
     }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " ");
 
@@ -88,9 +88,14 @@ const swRegister = () => {
 };
 
 const swUnregister = () => {
-    const content = readFileSync(__dirname + "/sw.unregister.js", {
-        encoding: "utf8",
-    });
+    let content = readFileSync(
+        resolve(__dirname, "../src/components/sw.unregister.ts"),
+        {
+            encoding: "utf8",
+        },
+    );
+
+    content = content.replace("export", "") + "unregister();";
 
     // tslint:disable-next-line:no-shadowed-variable
     const sri = sriContent(content);
@@ -107,26 +112,29 @@ const csp = {
     "connect-src": ["https://api.github.com"],
 };
 
-const preloadScripts = [
-    "./hooks/usePref.js",
-    "./utils/audioref.js",
-    "./utils/pubsub.js",
-    "./components/content.js",
-    "./components/footer.js",
+const preloadScripts: string[] = [
     "./components/header.js",
+    "./components/footer.js",
+    "./components/content.js",
     "./components/toast.js",
-    "./components/audio.js",
-    "./components/loadaudio.js",
-    "./components/svg.js",
-    "./hooks/useLrc.js",
     "./components/editor.js",
     "./components/gist.js",
     "./components/home.js",
     "./components/preferences.js",
     "./components/synchronizer.js",
-    "./utils/gistapi.js",
+    "./components/audio.js",
+    "./components/loadaudio.js",
     "./components/asidepanel.js",
+    "./components/svg.js",
     "./components/curser.js",
+
+    "./hooks/useLrc.js",
+    "./hooks/usePref.js",
+
+    "./utils/audioref.js",
+    "./utils/pubsub.js",
+    "./utils/gistapi.js",
+    "./utils/sw.unregister.js",
 ];
 
 const Html = () => {
@@ -138,8 +146,11 @@ const Html = () => {
         .trim();
 
     const reg = isProduction ? swRegister() : swUnregister();
-    if (useCDN) {
+    if (isProduction) {
         csp["script-src"].push("'" + reg.sri + "'");
+    } else {
+        csp["script-src"].push("'unsafe-inline'");
+        csp["connect-src"].push("*");
     }
 
     return (

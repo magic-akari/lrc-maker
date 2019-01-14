@@ -4,6 +4,7 @@ import {
     State as PrefState,
     themeColor,
 } from "../hooks/usePref.js";
+import { unregister } from "../utils/sw.unregister.js";
 import { AkariHideWall } from "./svg.js";
 
 const { useCallback, useRef, useEffect } = React;
@@ -133,15 +134,7 @@ export const Preferences: React.FC<IPreferencesProps> = ({
     );
 
     const clearCache = useCallback(() => {
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.getRegistration().then((registration) => {
-                if (registration) {
-                    registration.unregister().then(() => {
-                        location.reload(true);
-                    });
-                }
-            });
-        }
+        unregister();
     }, []);
 
     return (
