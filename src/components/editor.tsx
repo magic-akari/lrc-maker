@@ -225,7 +225,7 @@ export const Eidtor: React.SFC<{
                 </a>
 
                 <a
-                    title={lang.editor.uploadText}
+                    title={lang.editor.saveToGist}
                     href={canSaveToGist ? "javascript:;" : Path.gist}
                     className="editor-tools-item ripple"
                     onClick={saveToGist}>

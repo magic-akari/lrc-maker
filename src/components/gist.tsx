@@ -21,9 +21,11 @@ const newTokenUrl =
 
 interface IGistProps {
     lrcDispatch: React.Dispatch<LrcAction>;
+    langName: string;
+    lang: Language;
 }
 
-export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
+export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
     const [token, setToken] = useState(localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(localStorage.getItem(LSK.gistId));
     const [gistIdList, setGistIdList] = useState<string[] | undefined>(
@@ -195,14 +197,27 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                     </p>
                     <p>
                         {"ratelimit-reset: "}
-                        {new Date(
-                            Number.parseInt(ratelimit["x-ratelimit-reset"], 10),
-                        ).toLocaleString()}
+                        {new Intl.DateTimeFormat(langName, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                            hour12: false,
+                        }).format(
+                            new Date(
+                                Number.parseInt(
+                                    ratelimit["x-ratelimit-reset"],
+                                    10,
+                                ) * 1000,
+                            ),
+                        )}
                     </p>
                 </section>
             );
         },
-        [ratelimit],
+        [ratelimit, langName],
     );
 
     return (
@@ -213,14 +228,13 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                         <section className="new-token">
                             <GithubSVG />
                             <p className="new-token-tip-text">
-                                lrc-maker need Github Token to get and post
-                                lyric to Github Gist.
+                                {lang.gist.newTokenTip}
                             </p>
                             <a
                                 className="new-token-tip button"
                                 target="_blank"
                                 href={newTokenUrl}>
-                                Generate a new Github Token
+                                {lang.gist.newTokenButton}
                             </a>
                             <form
                                 className="new-token-form"
@@ -247,10 +261,13 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                     return (
                         <section className="get-gist-id">
                             <GithubSVG />
+                            <p className="gist-id-tip-text">
+                                {lang.gist.newGistTip}
+                            </p>
                             <button
                                 className="create-new-gist button"
                                 onClick={onCreateNewGist}>
-                                Create a new Gist Repo
+                                {lang.gist.newGistRepoButton}
                             </button>
                             <form
                                 className="gist-id-form"
@@ -262,7 +279,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                                     name="gist-id"
                                     type="text"
                                     list="gist-list"
-                                    placeholder="Or assign an exist one"
+                                    placeholder={lang.gist.gistIdPlaceholder}
                                     required
                                     autoCapitalize="off"
                                     autoComplete="off"
@@ -288,11 +305,11 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                     return (
                         <>
                             <details className="gist-details">
-                                <summary>info</summary>
+                                <summary>{lang.gist.info}</summary>
                                 <section className="gist-bar">
                                     <section className="gist-info">
                                         <p>
-                                            {"gist id: "}
+                                            {"Gist id: "}
                                             <span className="select-all">
                                                 {gistId}
                                             </span>
@@ -300,7 +317,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch }) => {
                                         <button
                                             className="button"
                                             onClick={onClear}>
-                                            clear token and gist id
+                                            {lang.gist.clearTokenAndGist}
                                         </button>
                                     </section>
                                     {RateLimitJSX}
