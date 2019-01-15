@@ -172,11 +172,11 @@ const Html = () => {
                 />
                 <meta
                     name="description"
-                    content="LRC Maker｜The easiest way to create cool LRC files by yourself. 灯里的歌词滚动姬｜迄今为止最易用的歌词制作工具"
+                    content={process.env.npm_package_description}
                 />
                 <meta
                     name="keywords"
-                    content="lrc maker,lrc generate,歌词制作,歌词滚动"
+                    content="lrc maker, lrc generate, 歌词制作, 歌词滚动"
                 />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="renderer" content="webkit" />
