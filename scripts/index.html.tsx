@@ -111,9 +111,9 @@ const csp = {
     "default-src": ["'none'"],
     "img-src": ["'self'", "data:"],
     "style-src": ["'self'", jsdelivr],
-    "script-src": ["'self'", jsdelivr, "blob:"],
-    "media-src": ["*", "blob:"],
-    "connect-src": ["https://api.github.com"],
+    "script-src": ["'self'", "blob:", jsdelivr],
+    "media-src": ["'self'", "blob:", "*"],
+    "connect-src": ["blob:", "https://api.github.com"],
 };
 
 const preloadScripts: string[] = [
