@@ -5,7 +5,7 @@ import {
     stringify,
 } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
-import { patchGist } from "../utils/gistapi.js";
+import { createFile } from "../utils/gistapi.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
 
 const { useState, useRef, useEffect, useCallback, useMemo } = React;
@@ -152,7 +152,7 @@ export const Eidtor: React.SFC<{
             setTimeout(() => {
                 const name = prompt("filename", downloadName);
                 if (name) {
-                    patchGist(name, textarea.current!.value);
+                    createFile(name, textarea.current!.value);
                 }
             }, 100);
         },

@@ -18,7 +18,7 @@ export type Ratelimit = Record<
     string
 >;
 
-export const getAllGists = async (): Promise<IGistRepo[]> => {
+export const getRepos = async (): Promise<IGistRepo[]> => {
     const token = localStorage.getItem(LSK.token);
 
     const res = await fetch(apiUrl, {
@@ -37,7 +37,7 @@ export const enum GistInfo {
     fileContent = "This file is used to be tracked and identified by https://lrc-maker.github.io",
 }
 
-export const postGist = async (): Promise<IGistRepo> => {
+export const createRepo = async (): Promise<IGistRepo> => {
     const token = localStorage.getItem(LSK.token);
 
     const res = await fetch(apiUrl, {
@@ -56,7 +56,25 @@ export const postGist = async (): Promise<IGistRepo> => {
     return res.json();
 };
 
-export const getGist = async (): Promise<IGistRepo | null> => {
+export const assignRepo = async (): Promise<IGistRepo> => {
+    const token = localStorage.getItem(LSK.token);
+
+    const res = await fetch(apiUrl, {
+        method: "PATCH",
+        headers: {
+            Authorization: `token ${token}`,
+        },
+        body: JSON.stringify({
+            description: GistInfo.description,
+            files: {
+                [GistInfo.fileName]: { content: GistInfo.fileContent },
+            },
+        }),
+    });
+    return res.json();
+};
+
+export const getFils = async (): Promise<IGistRepo | null> => {
     const token = localStorage.getItem(LSK.token);
     const id = localStorage.getItem(LSK.gistId);
     const etag = localStorage.getItem(LSK.gistEtag)!;
@@ -82,7 +100,7 @@ export const getGist = async (): Promise<IGistRepo | null> => {
     return res.status === 200 ? res.json() : null;
 };
 
-export const patchGist = async (
+export const createFile = async (
     fileName: string,
     content: string,
 ): Promise<IGistRepo> => {

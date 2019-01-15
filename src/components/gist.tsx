@@ -3,12 +3,13 @@ import {
     ActionType as LrcActionType,
 } from "../hooks/useLrc.js";
 import {
-    getAllGists,
-    getGist,
+    assignRepo,
+    createRepo,
+    getFils,
+    getRepos,
     GistInfo,
     IGistFile,
     IGistRepo,
-    postGist,
     Ratelimit,
 } from "../utils/gistapi.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
@@ -60,10 +61,17 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
     );
 
     const onCreateNewGist = useCallback(() => {
-        postGist().then((json: IGistRepo) => {
-            localStorage.setItem(LSK.gistId, json.id);
-            setGistId(json.id);
-        });
+        createRepo()
+            .then((json: IGistRepo) => {
+                localStorage.setItem(LSK.gistId, json.id);
+                setGistId(json.id);
+            })
+            .catch((error) => {
+                toastPubSub.pub({
+                    type: "warning",
+                    text: error.message,
+                });
+            });
     }, []);
 
     const onSubmitGistId = useCallback(
@@ -78,6 +86,13 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
 
             localStorage.setItem(LSK.gistId, value);
             setGistId(value);
+
+            assignRepo().catch((error) => {
+                toastPubSub.pub({
+                    type: "warning",
+                    text: error.message,
+                });
+            });
         },
         [],
     );
@@ -92,18 +107,25 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
                 return;
             }
 
-            getAllGists().then((result) => {
-                setGistIdList(
-                    result
-                        .filter((gist) => {
-                            return (
-                                gist.description === GistInfo.description &&
-                                GistInfo.fileName in gist.files
-                            );
-                        })
-                        .map(({ id }) => id),
-                );
-            });
+            getRepos()
+                .then((result) => {
+                    setGistIdList(
+                        result
+                            .filter((gist) => {
+                                return (
+                                    gist.description === GistInfo.description &&
+                                    GistInfo.fileName in gist.files
+                                );
+                            })
+                            .map(({ id }) => id),
+                    );
+                })
+                .catch((error) => {
+                    toastPubSub.pub({
+                        type: "warning",
+                        text: error.message,
+                    });
+                });
         },
         [token, gistId],
     );
@@ -114,7 +136,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
                 return;
             }
 
-            getGist()
+            getFils()
                 .then((result) => {
                     if (result === null) {
                         return;
@@ -135,7 +157,6 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
                     setFileList(files);
                 })
                 .catch((error) => {
-                    console.log(error);
                     toastPubSub.pub({
                         type: "warning",
                         text: error.message,
@@ -162,6 +183,12 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
                         lrcDispatch({
                             type: LrcActionType.parse,
                             payload: text,
+                        });
+                    })
+                    .catch((error) => {
+                        toastPubSub.pub({
+                            type: "warning",
+                            text: error.message,
                         });
                     });
             } else {
@@ -310,9 +337,12 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
                                     <section className="gist-info">
                                         <p>
                                             {"Gist id: "}
-                                            <span className="select-all">
+                                            <a
+                                                href={`https://gist.github.com/${gistId}`}
+                                                target="_blank"
+                                                className="link">
                                                 {gistId}
-                                            </span>
+                                            </a>
                                         </p>
                                         <button
                                             className="button"
