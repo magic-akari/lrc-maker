@@ -30,22 +30,22 @@
     "dependencies": {
         "dialog-polyfill": "^0.4.10",
         "normalize.css": "^8.0.1",
-        "react": "^16.7.0-alpha.2",
-        "react-dom": "^16.7.0-alpha.2"
+        "react": "^16.8.0-alpha.0",
+        "react-dom": "^16.8.0-alpha.0"
     },
     "devDependencies": {
         "@types/node": "^10.12.18",
-        "@types/react": "^16.7.17",
+        "@types/react": "^16.7.18",
         "@types/react-dom": "^16.0.11",
-        "autoprefixer": "^9.4.2",
-        "cssnano": "^4.1.7",
-        "postcss": "^7.0.6",
-        "postcss-cli": "^6.0.1",
+        "autoprefixer": "^9.4.5",
+        "cssnano": "^4.1.8",
+        "postcss": "^7.0.11",
+        "postcss-cli": "^6.1.1",
         "postcss-custom-properties": "^8.0.9",
         "postcss-import": "^12.0.1",
         "prettier": "^1.15.3",
         "ts-node": "^7.0.1",
-        "tslint": "^5.11.0",
-        "typescript": "^3.3.0-dev.20181229"
+        "tslint": "^5.12.1",
+        "typescript": "^3.3.0-dev.20190112"
     }
 }
