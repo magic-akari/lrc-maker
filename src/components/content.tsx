@@ -227,7 +227,13 @@ export const Content: React.FC<IContentProps> = ({
                     }
 
                     case Path.gist: {
-                        return <Gist lrcDispatch={lrcDispatch} />;
+                        return (
+                            <Gist
+                                lrcDispatch={lrcDispatch}
+                                langName={prefState.lang}
+                                lang={lang}
+                            />
+                        );
                     }
 
                     case Path.preferences: {

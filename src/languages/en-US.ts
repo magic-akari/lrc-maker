@@ -52,6 +52,18 @@ export const language = {
         saveToGist: "save to Github Gist",
     },
 
+    gist: {
+        newTokenTip:
+            "LRC Maker use Github Token to fetch and store data to Github Gist",
+        newTokenButton: "Generate a new Github Token",
+        newGistTip:
+            "Create a new Gist repository or assign an existing Gist id",
+        newGistRepoButton: "Create a new Gist Repository",
+        gistIdPlaceholder: "Or assign an existing Gist id",
+        info: "info",
+        clearTokenAndGist: "Clear token and Gist id",
+    },
+
     preferences: {
         version: "Version",
         commitHash: "Commit hash",

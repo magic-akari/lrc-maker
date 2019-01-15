@@ -28,7 +28,8 @@
     text-align: center;
 }
 
-.new-token-tip-text {
+.new-token-tip-text,
+.gist-id-tip-text {
     font-size: 1.2rem;
     margin: 1rem;
     text-align: center;

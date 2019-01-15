@@ -49,6 +49,13 @@ export const App: React.FC = () => {
         [prefState.lang],
     );
 
+    useEffect(
+        () => {
+            document.title = lang.app.fullname;
+        },
+        [lang],
+    );
+
     const [audioSrc, setAudioSrc] = useState<string | undefined>(
         sessionStorage.getItem(SSK.audioSrc) || undefined,
     );

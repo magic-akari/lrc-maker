@@ -20,7 +20,7 @@ export const language = {
         pause: "暂停",
         replay5s: "后退 5 秒",
         forward5s: "前进 5 秒",
-        resetRate: "重置播放速度·",
+        resetRate: "重置播放速度",
     },
 
     loadAudio: {
@@ -49,6 +49,16 @@ export const language = {
         copyText: "全选复制",
         downloadText: "下载",
         saveToGist: "保存到 Github Gist",
+    },
+
+    gist: {
+        newTokenTip: "歌词滚动姬使用 Github Token 来存取 Github Gist 上的数据",
+        newTokenButton: "生成新的 Github Token",
+        newGistTip: "创建一个新的 Gist 仓库或指定一个已存在的 Gist id",
+        newGistRepoButton: "创建一个新的 Gist 仓库",
+        gistIdPlaceholder: "或指定一个已存在的 Gist id",
+        info: "信息",
+        clearTokenAndGist: "清除 Github Token 和 Gist id",
     },
 
     preferences: {
