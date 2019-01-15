@@ -36,7 +36,11 @@ const libUrl = (
         );
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
-        return { src: `${nodeModules}${name}${devPath || prodPath}` };
+        return {
+            src: `${nodeModules}${name}${
+                isProduction ? prodPath : devPath || prodPath
+            }`,
+        };
     }
 };
 
@@ -105,7 +109,7 @@ const swUnregister = () => {
 
 const csp = {
     "default-src": ["'none'"],
-    "img-src": ["'self'"],
+    "img-src": ["'self'", "data:"],
     "style-src": ["'self'", jsdelivr],
     "script-src": ["'self'", jsdelivr, "blob:"],
     "media-src": ["*", "blob:"],
