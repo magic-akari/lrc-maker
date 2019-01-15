@@ -10,6 +10,11 @@ audio::-webkit-media-controls-enclosure {
     border-radius: 0;
 }
 
+[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .lrc-audio {
     font-size: 14px;
     display: flex;
