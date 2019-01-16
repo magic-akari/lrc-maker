@@ -1,3 +1,4 @@
+import { appContext, ChangBits } from "./app.context.js";
 import {
     CloudSVG,
     EditorSVG,
@@ -6,8 +7,12 @@ import {
     SynchronizerSVG,
 } from "./svg.js";
 
-export const Header: React.FC<{ lang: Language }> = ({ lang }) => {
+const { useContext } = React;
+
+export const Header: React.FC = () => {
     console.info("Header.render");
+
+    const { lang } = useContext(appContext, ChangBits.lang);
 
     return (
         <header className="app-header">

@@ -1,7 +1,12 @@
 import { language } from "./languages/en-US";
 
 declare global {
-    export namespace React {}
+    export namespace React {
+        function useContext<T>(
+            context: Context<T>,
+            observedBits?: number | boolean,
+        ): T;
+    }
     export namespace ReactDOM {}
 
     export namespace dialogPolyfill {

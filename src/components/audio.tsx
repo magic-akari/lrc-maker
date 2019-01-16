@@ -5,7 +5,7 @@ import {
     AudioState,
     audioStatePubSub,
     currentTimePubSub,
-} from "./app.js";
+} from "./footer.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import {
     Forward5sSVG,

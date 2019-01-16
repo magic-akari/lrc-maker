@@ -12,10 +12,11 @@ import {
     IGistRepo,
     Ratelimit,
 } from "../utils/gistapi.js";
+import { appContext, ChangBits } from "./app.context.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
 
-const { useState, useCallback, useEffect, useMemo } = React;
+const { useCallback, useContext, useEffect, useMemo, useState } = React;
 
 const newTokenUrl =
     "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
@@ -23,10 +24,11 @@ const newTokenUrl =
 interface IGistProps {
     lrcDispatch: React.Dispatch<LrcAction>;
     langName: string;
-    lang: Language;
 }
 
-export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName, lang }) => {
+export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
+    const { lang } = useContext(appContext, ChangBits.lang);
+
     const [token, setToken] = useState(localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(localStorage.getItem(LSK.gistId));
     const [gistIdList, setGistIdList] = useState<string[] | undefined>(

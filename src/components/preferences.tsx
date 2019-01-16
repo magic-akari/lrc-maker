@@ -1,13 +1,10 @@
 import { convertTimeToTag, formatText } from "../hooks/useLrc.js";
-import {
-    Action as PrefAction,
-    State as PrefState,
-    themeColor,
-} from "../hooks/usePref.js";
+import { themeColor } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
+import { appContext } from "./app.context.js";
 import { AkariHideWall } from "./svg.js";
 
-const { useCallback, useRef, useEffect, useMemo } = React;
+const { useCallback, useContext, useEffect, useMemo, useRef } = React;
 
 const info: Record<"version" | "hash" | "updateTime", string> & {
     languages: { [name: string]: string };
@@ -51,17 +48,9 @@ const useNumberInput = (
     return { type: "number", step: 1, ref, onChange, onBlur };
 };
 
-interface IPreferencesProps {
-    prefState: PrefState;
-    prefDispatch: React.Dispatch<PrefAction>;
-    lang: Language;
-}
+export const Preferences: React.FC = () => {
+    const { prefState, prefDispatch, lang } = useContext(appContext);
 
-export const Preferences: React.FC<IPreferencesProps> = ({
-    prefState,
-    prefDispatch,
-    lang,
-}) => {
     const onColorPick = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
             prefDispatch({

@@ -1,4 +1,4 @@
-import { AudioActionType, audioStatePubSub } from "./app.js";
+import { AudioActionType, audioStatePubSub } from "./footer.js";
 import { CloseSVG } from "./svg.js";
 
 const { useRef, useEffect, useCallback } = React;

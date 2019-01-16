@@ -4,30 +4,22 @@ import {
     stringify,
     useLrc,
 } from "../hooks/useLrc.js";
-import { Action as PrefAction, State as PrefState } from "../hooks/usePref.js";
 import { audioRef } from "../utils/audioref.js";
-import { AudioActionType, audioStatePubSub } from "./app.js";
+import { appContext } from "./app.context.js";
 import { Eidtor } from "./editor.js";
+import { AudioActionType, audioStatePubSub } from "./footer.js";
 import { Gist } from "./gist.js";
 import { Home } from "./home.js";
 import { Preferences } from "./preferences.js";
 import { Synchronizer } from "./synchronizer.js";
 
-const { useState, useEffect, useRef, useMemo } = React;
+const { useContext, useEffect, useMemo, useRef, useState } = React;
 
-interface IContentProps {
-    prefState: PrefState;
-    prefDispatch: React.Dispatch<PrefAction>;
-    lang: Language;
-}
-
-export const Content: React.FC<IContentProps> = ({
-    prefState,
-    prefDispatch,
-    lang,
-}) => {
+export const Content: React.FC = () => {
     console.info("Content.render");
     const self = useRef(Symbol(Content.name));
+
+    const { prefState, lang } = useContext(appContext);
 
     useEffect(
         () => {
@@ -210,8 +202,6 @@ export const Content: React.FC<IContentProps> = ({
                             <Eidtor
                                 lrcState={lrcState}
                                 lrcDispatch={lrcDispatch}
-                                prefState={prefState}
-                                lang={lang}
                             />
                         );
                     }
@@ -221,7 +211,6 @@ export const Content: React.FC<IContentProps> = ({
                             <Synchronizer
                                 lrcState={lrcState}
                                 lrcDispatch={lrcDispatch}
-                                prefState={prefState}
                             />
                         );
                     }
@@ -231,19 +220,12 @@ export const Content: React.FC<IContentProps> = ({
                             <Gist
                                 lrcDispatch={lrcDispatch}
                                 langName={prefState.lang}
-                                lang={lang}
                             />
                         );
                     }
 
                     case Path.preferences: {
-                        return (
-                            <Preferences
-                                prefState={prefState}
-                                prefDispatch={prefDispatch}
-                                lang={lang}
-                            />
-                        );
+                        return <Preferences />;
                     }
                 }
 
