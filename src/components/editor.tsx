@@ -4,11 +4,11 @@ import {
     State as LrcState,
     stringify,
 } from "../hooks/useLrc.js";
-import { State as PrefState } from "../hooks/usePref.js";
 import { createFile } from "../utils/gistapi.js";
+import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
 
-const { useState, useRef, useEffect, useCallback, useMemo } = React;
+const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
 const disableCheck = {
     autoCapitalize: "off",
@@ -37,10 +37,10 @@ const useDefaultValue = (
 export const Eidtor: React.SFC<{
     lrcState: LrcState;
     lrcDispatch: React.Dispatch<LrcAction>;
-    prefState: PrefState;
-    lang: Language;
-}> = ({ lrcState, lrcDispatch, prefState, lang }) => {
+}> = ({ lrcState, lrcDispatch }) => {
     console.info("Eidtor.render");
+
+    const { prefState, lang } = useContext(appContext);
 
     const parse = useCallback((ev: React.FocusEvent<HTMLTextAreaElement>) => {
         lrcDispatch({

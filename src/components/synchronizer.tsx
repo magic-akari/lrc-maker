@@ -6,13 +6,13 @@ import {
     State as LrcState,
     stringify,
 } from "../hooks/useLrc.js";
-import { State as PrefState } from "../hooks/usePref.js";
 import { audioRef } from "../utils/audioref.js";
-import { currentTimePubSub } from "./app.js";
+import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
 import { Curser } from "./curser.js";
+import { currentTimePubSub } from "./footer.js";
 
-const { useState, useCallback, useEffect, useRef, useMemo } = React;
+const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
 const SpaceButton: React.FC<{ sync: (() => void) }> = ({ sync }) => {
     return (
@@ -33,18 +33,18 @@ const cachedState = {
 
 interface ISynchronizerProps {
     lrcState: LrcState;
-    prefState: PrefState;
     lrcDispatch: React.Dispatch<LrcAction>;
 }
 
 export const Synchronizer: React.FC<ISynchronizerProps> = ({
     lrcState,
     lrcDispatch,
-    prefState,
 }) => {
     console.info("Synchronizer.render");
 
     const self = useRef(Symbol(Synchronizer.name));
+
+    const { prefState } = useContext(appContext);
 
     useEffect(() => {
         lrcDispatch({

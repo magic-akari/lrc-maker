@@ -1,9 +1,272 @@
-import { State as PrefState } from "../hooks/usePref.js";
+import { audioRef } from "../utils/audioref.js";
+import { createPubSub } from "../utils/pubsub.js";
+import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio } from "./loadaudio.js";
 import { toastPubSub } from "./toast.js";
 
-const { useEffect, useCallback } = React;
+const { useCallback, useContext, useEffect, useRef, useState } = React;
+
+export const enum AudioActionType {
+    pause,
+    getDuration,
+    rateChange,
+}
+
+export type AudioState =
+    | {
+          type: AudioActionType.pause;
+          payload: boolean;
+      }
+    | {
+          type: AudioActionType.getDuration;
+          payload: number;
+      }
+    | {
+          type: AudioActionType.rateChange;
+          payload: number;
+      };
+
+export const audioStatePubSub = createPubSub<AudioState>();
+export const currentTimePubSub = createPubSub<number>();
+
+export const Footer: React.FC = () => {
+    console.info("Footer.render");
+
+    const { prefState, lang } = useContext(
+        appContext,
+        // tslint:disable-next-line:no-bitwise
+        ChangBits.lang | ChangBits.builtInAudio,
+    );
+
+    const [audioSrc, privateSetAudioSrc] = useState<string | undefined>(
+        sessionStorage.getItem(SSK.audioSrc) || undefined,
+    );
+
+    const setAudioSrc = useCallback((src: string) => {
+        URL.revokeObjectURL(audioRef.src);
+        return privateSetAudioSrc(src);
+    }, []);
+
+    const rafId = useRef(0);
+
+    useEffect(() => {
+        const syncCurrentTime = () => {
+            currentTimePubSub.pub(audioRef.currentTime);
+            rafId.current = requestAnimationFrame(syncCurrentTime);
+        };
+
+        const ac = audioRef.current!;
+
+        const passive = { passive: true };
+
+        ac.addEventListener(
+            "loadedmetadata",
+            () => {
+                cancelAnimationFrame(rafId.current);
+                audioStatePubSub.pub({
+                    type: AudioActionType.getDuration,
+                    payload: audioRef.duration,
+                });
+                toastPubSub.pub({
+                    type: "success",
+                    text: "File loaded",
+                });
+            },
+            passive,
+        );
+
+        ac.addEventListener(
+            "play",
+            () => {
+                rafId.current = requestAnimationFrame(syncCurrentTime);
+                audioStatePubSub.pub({
+                    type: AudioActionType.pause,
+                    payload: false,
+                });
+            },
+            passive,
+        );
+
+        ac.addEventListener(
+            "timeupdate",
+            () => {
+                if (ac.paused) {
+                    currentTimePubSub.pub(audioRef.currentTime);
+                }
+            },
+            passive,
+        );
+
+        ac.addEventListener(
+            "pause",
+            () => {
+                cancelAnimationFrame(rafId.current);
+                audioStatePubSub.pub({
+                    type: AudioActionType.pause,
+                    payload: true,
+                });
+            },
+            passive,
+        );
+
+        ac.addEventListener(
+            "ended",
+            () => {
+                cancelAnimationFrame(rafId.current);
+                audioStatePubSub.pub({
+                    type: AudioActionType.pause,
+                    payload: true,
+                });
+            },
+            passive,
+        );
+
+        ac.addEventListener(
+            "ratechange",
+            () => {
+                audioStatePubSub.pub({
+                    type: AudioActionType.rateChange,
+                    payload: ac.playbackRate,
+                });
+            },
+            passive,
+        );
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener("keydown", (ev) => {
+            const { code, key, target } = ev;
+
+            if (
+                ["text", "textarea", "url"].includes((target as any)
+                    .type as string)
+            ) {
+                return;
+            }
+
+            const ac = audioRef.current!;
+
+            if (!ac.src) {
+                return;
+            }
+
+            if (ev.metaKey === true || ev.ctrlKey === true) {
+                if (
+                    code === "ArrowUp" ||
+                    code === "KeyJ" ||
+                    key === "ArrowUp" ||
+                    key === "Up" ||
+                    key === "J" ||
+                    key === "j"
+                ) {
+                    ev.preventDefault();
+
+                    const rate = ac.playbackRate;
+                    const newRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
+
+                    ac.playbackRate = newRate;
+                } else if (
+                    code === "ArrowDown" ||
+                    code === "KeyK" ||
+                    key === "ArrowDown" ||
+                    key === "Down" ||
+                    key === "K" ||
+                    key === "k"
+                ) {
+                    ev.preventDefault();
+
+                    const rate = ac.playbackRate;
+                    const newRate = Math.exp(
+                        Math.max(Math.log(rate) - 0.2, -1),
+                    );
+
+                    ac.playbackRate = newRate;
+                } else if (code === "Enter" || key === "Enter") {
+                    ev.preventDefault();
+                    audioRef.toggle();
+                }
+            } else {
+                if (
+                    code === "ArrowLeft" ||
+                    code === "KeyA" ||
+                    key === "ArrowLeft" ||
+                    key === "Left" ||
+                    key === "A" ||
+                    key === "a"
+                ) {
+                    ev.preventDefault();
+
+                    ac.currentTime -= 5;
+                } else if (
+                    code === "ArrowRight" ||
+                    code === "KeyD" ||
+                    key === "ArrowRight" ||
+                    key === "Right" ||
+                    key === "D" ||
+                    key === "d"
+                ) {
+                    ev.preventDefault();
+
+                    ac.currentTime += 5;
+                } else if (code === "KeyR" || key === "R" || key === "r") {
+                    ev.preventDefault();
+
+                    ac.playbackRate = 1;
+                }
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        document.body.addEventListener("drop", (ev) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            const file = ev.dataTransfer!.files[0];
+            receiveFile(file, privateSetAudioSrc);
+
+            return false;
+        });
+
+        return () => {
+            console.error("Footer should never unmount.");
+        };
+    }, []);
+
+    const onAudioInputChange = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            const file = ev.target.files![0];
+            receiveFile(file, privateSetAudioSrc);
+        },
+        [],
+    );
+
+    return (
+        <footer className="app-footer">
+            <input
+                id="audio-input"
+                type="file"
+                accept="audio/*, .ncm"
+                hidden={true}
+                onChange={onAudioInputChange}
+            />
+            <LoadAudio setAudioSrc={setAudioSrc} lang={lang} />
+            <audio
+                ref={audioRef}
+                src={audioSrc}
+                controls={prefState.builtInAudio}
+                hidden={!prefState.builtInAudio}
+                onError={(ev) => {
+                    toastPubSub.pub({
+                        type: "warning",
+                        text: (ev.target as any).error.message,
+                    });
+                }}
+            />
+            {prefState.builtInAudio || <LrcAudio lang={lang} />}
+        </footer>
+    );
+};
 
 type TsetAudioSrc = (src: string) => void;
 
@@ -63,55 +326,9 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
     }
 };
 
-interface IFooterProps {
-    prefState: PrefState;
-    setAudioSrc: TsetAudioSrc;
-    lang: Language;
-}
-
-export const Footer: React.FC<IFooterProps> = ({
-    prefState,
-    setAudioSrc,
-    lang,
-    children,
-}) => {
-    console.info("Footer.render");
-
-    useEffect(() => {
-        document.body.addEventListener("drop", (ev) => {
-            ev.stopPropagation();
-            ev.preventDefault();
-            const file = ev.dataTransfer!.files[0];
-            receiveFile(file, setAudioSrc);
-
-            return false;
-        });
-
-        return () => {
-            console.error("Footer should never unmount.");
-        };
-    }, []);
-
-    const onAudioInputChange = useCallback(
-        (ev: React.ChangeEvent<HTMLInputElement>) => {
-            const file = ev.target.files![0];
-            receiveFile(file, setAudioSrc);
-        },
-        [],
-    );
-
-    return (
-        <footer className="app-footer">
-            <input
-                id="audio-input"
-                type="file"
-                accept="audio/*, .ncm"
-                hidden={true}
-                onChange={onAudioInputChange}
-            />
-            <LoadAudio setAudioSrc={setAudioSrc} lang={lang} />
-            {children}
-            {prefState.builtInAudio || <LrcAudio lang={lang} />}
-        </footer>
-    );
-};
+// side effect
+document.addEventListener("visibilitychange", () => {
+    if (!audioRef.paused) {
+        audioRef.toggle();
+    }
+});
