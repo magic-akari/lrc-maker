@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import { sync as glob } from "fast-glob";
 import { readdirSync, readFileSync } from "fs";
 import { parse, resolve } from "path";
 import * as React from "react";
@@ -116,30 +117,17 @@ const csp = {
     "connect-src": ["blob:", "https://api.github.com"],
 };
 
-const preloadScripts: string[] = [
-    "./components/header.js",
-    "./components/footer.js",
-    "./components/content.js",
-    "./components/toast.js",
-    "./components/editor.js",
-    "./components/gist.js",
-    "./components/home.js",
-    "./components/preferences.js",
-    "./components/synchronizer.js",
-    "./components/audio.js",
-    "./components/loadaudio.js",
-    "./components/asidepanel.js",
-    "./components/svg.js",
-    "./components/curser.js",
+const buildPath = resolve(__dirname, "../build");
 
-    "./hooks/useLrc.js",
-    "./hooks/usePref.js",
+const excludeKeywords = ["languages", "useLang.js", "app.js"];
 
-    "./utils/audioref.js",
-    "./utils/pubsub.js",
-    "./utils/gistapi.js",
-    "./utils/sw.unregister.js",
-];
+const preloadScripts: string[] = glob(buildPath + "/*/*.js")
+    .map((path) => {
+        return (path as string).replace(buildPath, ".");
+    })
+    .filter((path) => {
+        return !excludeKeywords.some((key) => path.includes(key));
+    });
 
 const Html = () => {
     const version = process.env.npm_package_version;
@@ -253,7 +241,7 @@ const Html = () => {
                 />
                 <script {...appUrl("./polyfill.js")} type="module" async />
                 {isProduction &&
-                    preloadScripts.reverse().map((name) => {
+                    preloadScripts.map((name) => {
                         return <script {...appUrl(name)} type="module" />;
                     })}
                 <script {...appUrl("./components/app.js")} type="module" />
