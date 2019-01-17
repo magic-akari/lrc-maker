@@ -4,10 +4,13 @@ import {
     stringify,
     useLrc,
 } from "../hooks/useLrc.js";
-import { audioRef } from "../utils/audioref.js";
+import {
+    AudioActionType,
+    audioRef,
+    audioStatePubSub,
+} from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { Eidtor } from "./editor.js";
-import { AudioActionType, audioStatePubSub } from "./footer.js";
 import { Gist } from "./gist.js";
 import { Home } from "./home.js";
 import { Preferences } from "./preferences.js";

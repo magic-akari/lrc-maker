@@ -1,9 +1,9 @@
-import { audioRef } from "../utils/audioref.js";
 import {
     AudioActionType,
+    audioRef,
     audioStatePubSub,
     currentTimePubSub,
-} from "./footer.js";
+} from "../utils/audiomodule.js";
 
 const { useState, useEffect, useRef } = React;
 

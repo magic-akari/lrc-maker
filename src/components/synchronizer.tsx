@@ -6,11 +6,10 @@ import {
     State as LrcState,
     stringify,
 } from "../hooks/useLrc.js";
-import { audioRef } from "../utils/audioref.js";
+import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
 import { Curser } from "./curser.js";
-import { currentTimePubSub } from "./footer.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 

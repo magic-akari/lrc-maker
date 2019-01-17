@@ -1,3 +1,5 @@
+import { createPubSub } from "./pubsub.js";
+
 interface IAudioRef extends React.RefObject<HTMLAudioElement> {
     readonly src: string;
     readonly duration: number;
@@ -46,3 +48,26 @@ export const audioRef: IAudioRef = {
         }
     },
 };
+
+export const enum AudioActionType {
+    pause,
+    getDuration,
+    rateChange,
+}
+
+export type AudioState =
+    | {
+          type: AudioActionType.pause;
+          payload: boolean;
+      }
+    | {
+          type: AudioActionType.getDuration;
+          payload: number;
+      }
+    | {
+          type: AudioActionType.rateChange;
+          payload: number;
+      };
+
+export const audioStatePubSub = createPubSub<AudioState>();
+export const currentTimePubSub = createPubSub<number>();
