@@ -113,21 +113,27 @@ const csp = {
     "img-src": ["'self'", "data:"],
     "style-src": ["'self'", jsdelivr],
     "script-src": ["'self'", "blob:", jsdelivr],
+    "worker-src": ["'self'"],
     "media-src": ["'self'", "blob:", "*"],
     "connect-src": ["blob:", "https://api.github.com"],
 };
 
 const buildPath = resolve(__dirname, "../build");
 
-const excludeKeywords = ["languages", "useLang.js", "app.js"];
-
-const preloadScripts: string[] = glob(buildPath + "/*/*.js")
+const preloadScripts = glob(buildPath + "/*/*.js")
     .map((path) => {
         return (path as string).replace(buildPath, ".");
     })
     .filter((path) => {
-        return !excludeKeywords.some((key) => path.includes(key));
+        return !path.includes("languages");
+    })
+    .map((path) => {
+        return appUrl(path);
     });
+
+preloadScripts.find((script) => {
+    return script.src.includes("useLang.js");
+})!.integrity = undefined;
 
 const Html = () => {
     const version = process.env.npm_package_version;
@@ -138,12 +144,17 @@ const Html = () => {
         .trim();
 
     const reg = isProduction ? swRegister() : swUnregister();
+    const dynamicImportErrorHandler = "dynamicImportError(event);return false;";
     if (isProduction) {
         csp["script-src"].push("'" + reg.sri + "'");
     } else {
-        csp["script-src"].push("'unsafe-inline'");
+        csp["script-src"].push(
+            "'unsafe-inline'",
+            sriContent(dynamicImportErrorHandler),
+        );
         csp["connect-src"].push("*");
     }
+    const useLang = appUrl("./hooks/useLang.js");
 
     return (
         <html>
@@ -241,8 +252,8 @@ const Html = () => {
                 />
                 <script {...appUrl("./polyfill.js")} type="module" async />
                 {isProduction &&
-                    preloadScripts.map((name) => {
-                        return <script {...appUrl(name)} type="module" />;
+                    preloadScripts.map((script) => {
+                        return <script {...script} type="module" />;
                     })}
                 <script {...appUrl("./components/app.js")} type="module" />
                 <script
