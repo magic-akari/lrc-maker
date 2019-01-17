@@ -30,8 +30,9 @@ audio::-webkit-media-controls-enclosure {
 }
 
 .slider {
+    --slider-height: 32px;
     position: relative;
-    height: 32px;
+    height: var(--slider-height);
     margin: 0 5px;
 }
 
@@ -41,9 +42,13 @@ audio::-webkit-media-controls-enclosure {
     width: 100%;
 }
 
-@media screen and (max-width: 512px) {
+@media screen and (max-width: 768px) {
     .time-line-slider {
-        display: none;
+        --slider-height: 4px;
+        position: absolute;
+        width: 100%;
+        top: -4px;
+        margin: 0;
     }
 }
 
@@ -83,7 +88,6 @@ audio + .lrc-audio > .loadaudio-button > svg {
 }
 
 input[type="range"] {
-    --slider-height: 32px;
     --thumb-size: 16px;
 
     height: var(--slider-height);
@@ -123,7 +127,7 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50%;
     background: var(--theme-color);
     -webkit-appearance: none;
-    margin-top: 8px;
+    margin-top: calc((var(--slider-height) - var(--thumb-size)) / 2);
     z-index: 10;
     box-shadow: 0 0 4px 1px var(--black);
     transition: box-shadow 250ms ease-in-out;
@@ -142,7 +146,7 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 50%;
     background: var(--theme-color);
     -moz-appearance: none;
-    margin-top: 8px;
+    margin-top: calc((var(--slider-height) - var(--thumb-size)) / 2);
     z-index: 10;
     box-shadow: 0 0 4px 1px var(--black);
     transition: box-shadow 250ms ease-in-out;
@@ -173,13 +177,13 @@ input[type="range"]::-ms-tooltip {
     display: none;
 }
 
-progress {
+.slider > progress {
     --progress-meter-color: var(--theme-color);
 
     appearance: none;
     border: none;
     border-radius: 2px;
-    margin: 14px 0;
+    margin: calc(var(--slider-height) / 2 - 2px) 0;
     height: 4px;
     box-sizing: border-box;
     display: inline-block;
@@ -199,10 +203,10 @@ progress::-moz-progress-bar {
     border-radius: 2px;
     background-image: linear-gradient(
         -45deg,
-        rgba(255, 255, 255, 0) 0,
-        rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.75) 62.5%,
-        rgba(255, 255, 255, 0) 75%
+        #ffffff00 0,
+        #ffffff00 50%,
+        #ffffffcc 62.5%,
+        #ffffff00 75%
     );
     background-size: 35px 20px, 100% 100%, 100% 100%;
 }
@@ -220,10 +224,10 @@ progress::-webkit-progress-value {
     background-color: var(--progress-meter-color);
     background-image: linear-gradient(
         -45deg,
-        rgba(255, 255, 255, 0) 0,
-        rgba(255, 255, 255, 0) 50%,
-        rgba(255, 255, 255, 0.75) 62.5%,
-        rgba(255, 255, 255, 0) 75%
+        #ffffff00 0,
+        #ffffff00 50%,
+        #ffffffcc 62.5%,
+        #ffffff00 75%
     );
     background-repeat: repeat-x;
 }

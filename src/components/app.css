@@ -39,10 +39,9 @@ svg {
     outline: none;
 }
 
-a,
-:visited {
-    color: currentColor;
+a {
     text-decoration: none;
+    color: currentColor;
 }
 
 a,
