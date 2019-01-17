@@ -12,7 +12,7 @@ import {
     IGistRepo,
     Ratelimit,
 } from "../utils/gistapi.js";
-import { appContext, ChangBits } from "./app.context.js";
+import { appContext } from "./app.context.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
 
@@ -27,7 +27,7 @@ interface IGistProps {
 }
 
 export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
-    const { lang } = useContext(appContext, ChangBits.lang);
+    const { lang } = useContext(appContext);
 
     const [token, setToken] = useState(localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(localStorage.getItem(LSK.gistId));
@@ -208,7 +208,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         setToken(null);
     }, []);
 
-    const RateLimitJSX = useMemo(
+    const RateLimitjs = useMemo(
         () => {
             if (ratelimit === null) {
                 return false;
@@ -352,7 +352,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                                             {lang.gist.clearTokenAndGist}
                                         </button>
                                     </section>
-                                    {RateLimitJSX}
+                                    {RateLimitjs}
                                 </section>
                             </details>
 

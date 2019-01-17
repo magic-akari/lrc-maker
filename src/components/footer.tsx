@@ -35,7 +35,6 @@ export const Footer: React.FC = () => {
 
     const { prefState, lang } = useContext(
         appContext,
-        // tslint:disable-next-line:no-bitwise
         ChangBits.lang | ChangBits.builtInAudio,
     );
 

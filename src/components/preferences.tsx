@@ -1,7 +1,7 @@
 import { convertTimeToTag, formatText } from "../hooks/useLrc.js";
 import { themeColor } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
-import { appContext } from "./app.context.js";
+import { appContext, ChangBits } from "./app.context.js";
 import { AkariHideWall } from "./svg.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef } = React;
@@ -49,7 +49,10 @@ const useNumberInput = (
 };
 
 export const Preferences: React.FC = () => {
-    const { prefState, prefDispatch, lang } = useContext(appContext);
+    const { prefState, prefDispatch, lang } = useContext(
+        appContext,
+        ChangBits.lang || ChangBits.prefState,
+    );
 
     const onColorPick = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {

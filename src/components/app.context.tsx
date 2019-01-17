@@ -13,64 +13,60 @@ interface IAppContext {
     prefDispatch: React.Dispatch<PrefAction>;
 }
 
-// tslint:disable:no-bitwise
 const enum Bits {
     lang,
-    spaceStart,
-    spaceEnd,
-    fixed,
+    // lrcFormat,
     builtInAudio,
-    screenButton,
-    themeColor,
+    // screenButton,
+    // themeColor,
+    prefState,
 }
 
 export const enum ChangBits {
     lang = 1 << Bits.lang,
-    spaceStart = 1 << Bits.spaceStart,
-    spaceEnd = 1 << Bits.spaceEnd,
-    fixed = 1 << Bits.fixed,
+    // lrcFormat = 1 << Bits.lrcFormat,
     builtInAudio = 1 << Bits.builtInAudio,
-    screenButton = 1 << Bits.screenButton,
-    themeColor = 1 << Bits.themeColor,
-
-    prefState = lang |
-        spaceStart |
-        spaceEnd |
-        fixed |
-        builtInAudio |
-        screenButton |
-        themeColor,
+    // screenButton = 1 << Bits.screenButton,
+    // themeColor = 1 << Bits.themeColor,
+    prefState = 1 << Bits.prefState,
 }
 
 export const appContext = createContext<IAppContext>(
-    {} as IAppContext,
+    undefined,
     (prev, next) => {
         let bits = 0;
 
         if (prev.lang !== next.lang) {
             bits |= ChangBits.lang;
         }
-        if (prev.prefState.spaceStart !== next.prefState.spaceStart) {
-            bits |= ChangBits.spaceStart;
-        }
-        if (prev.prefState.spaceEnd !== next.prefState.spaceEnd) {
-            bits |= ChangBits.spaceEnd;
-        }
-        if (prev.prefState.fixed !== next.prefState.fixed) {
-            bits |= ChangBits.fixed;
-        }
+
+        // const changed = (prop: keyof IAppContext["prefState"]) => {
+        //     return prev.prefState[prop] !== next.prefState[prop];
+        // };
+
+        // if (changed("spaceStart") || changed("spaceEnd") || changed("fixed")) {
+        //     bits |= ChangBits.lrcFormat;
+        // }
+
+        // if (changed("builtInAudio")) {
+        //     bits |= ChangBits.builtInAudio;
+        // }
+        // if (changed("screenButton")) {
+        //     bits |= ChangBits.screenButton;
+        // }
+
+        // if (changed("themeColor")) {
+        //     bits |= ChangBits.themeColor;
+        // }
+
         if (prev.prefState.builtInAudio !== next.prefState.builtInAudio) {
             bits |= ChangBits.builtInAudio;
         }
-        if (prev.prefState.screenButton !== next.prefState.screenButton) {
-            bits |= ChangBits.screenButton;
+
+        if (prev.prefState !== next.prefState) {
+            bits |= ChangBits.prefState;
         }
-        if (prev.prefState.screenButton !== next.prefState.screenButton) {
-            bits |= ChangBits.screenButton;
-        }
-        if (prev.prefState.themeColor !== next.prefState.themeColor) {
-            bits |= ChangBits.themeColor;
-        }
+
         return bits;
     },
 );
@@ -94,6 +90,16 @@ export const AppProvider: React.FC = ({ children }) => {
             document.title = lang.app.fullname;
         },
         [lang],
+    );
+
+    useEffect(
+        () => {
+            document.documentElement.style.setProperty(
+                "--theme-color",
+                prefState.themeColor,
+            );
+        },
+        [prefState.themeColor],
     );
 
     const value = useMemo(

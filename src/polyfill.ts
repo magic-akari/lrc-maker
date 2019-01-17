@@ -54,7 +54,6 @@
     if (!StrProto.padStart) {
         StrProto.padStart = function(maxLength, fillString) {
             // floor if number or convert non-number to 0;
-            // tslint:disable-next-line:no-bitwise
             maxLength = maxLength >> 0;
 
             if (this.length > maxLength) {
