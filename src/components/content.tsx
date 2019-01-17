@@ -5,7 +5,7 @@ import {
     useLrc,
 } from "../hooks/useLrc.js";
 import { audioRef } from "../utils/audioref.js";
-import { appContext } from "./app.context.js";
+import { appContext, ChangBits } from "./app.context.js";
 import { Eidtor } from "./editor.js";
 import { AudioActionType, audioStatePubSub } from "./footer.js";
 import { Gist } from "./gist.js";
@@ -19,17 +19,7 @@ export const Content: React.FC = () => {
     console.info("Content.render");
     const self = useRef(Symbol(Content.name));
 
-    const { prefState, lang } = useContext(appContext);
-
-    useEffect(
-        () => {
-            document.documentElement.style.setProperty(
-                "--theme-color",
-                prefState.themeColor,
-            );
-        },
-        [prefState.themeColor],
-    );
+    const { prefState } = useContext(appContext, ChangBits.prefState);
 
     const [path, setPath] = useState(location.hash);
     useEffect(() => {
@@ -179,7 +169,6 @@ export const Content: React.FC = () => {
             const hex2rgb = (hex: string): [number, number, number] => {
                 hex = hex.slice(1);
                 const value = Number.parseInt(hex, 16);
-                // tslint:disable:no-bitwise
                 const r = (value >> 0x10) & 0xff;
                 const g = (value >> 0x08) & 0xff;
                 const b = (value >> 0x00) & 0xff;
@@ -229,7 +218,7 @@ export const Content: React.FC = () => {
                     }
                 }
 
-                return <Home lang={lang} />;
+                return <Home />;
             })()}
         </main>
     );

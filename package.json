@@ -18,9 +18,10 @@
     ],
     "scripts": {
         "start": "npm run html && npm run tsc:watch",
-        "build": "npm run css && npm run tsc && npm run html",
-        "tsc": "tsc -b",
-        "tsc:watch": "tsc -b --watch",
+        "build": "npm run css && npm run tsc:build && npm run html",
+        "tsc": "tsc",
+        "tsc:build": "tsc -b",
+        "tsc:watch": "tsc -w",
         "css": "postcss src/index.css -m -d build",
         "html": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
         "prehtml": "mkdir -p build",

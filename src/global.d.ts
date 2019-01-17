@@ -6,6 +6,10 @@ declare global {
             context: Context<T>,
             observedBits?: number | boolean,
         ): T;
+        function createContext<T>(
+            defaultValue?: T,
+            calculateChangedBits?: (prev: T, next: T) => number,
+        ): Context<T>;
     }
     export namespace ReactDOM {}
 

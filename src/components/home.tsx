@@ -1,7 +1,12 @@
+import { appContext } from "./app.context.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { EditorSVG, LoadAudioSVG, SynchronizerSVG } from "./svg.js";
 
-export const Home: React.FC<{ lang: Language }> = ({ lang }) => {
+const { useContext } = React;
+
+export const Home: React.FC = () => {
+    const { lang } = useContext(appContext);
+
     return (
         <div className="home">
             <p className="home-tip home-tip-top-left">{lang.home.tipTopLeft}</p>
