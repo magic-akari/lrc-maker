@@ -1,34 +1,15 @@
-import { audioRef } from "../utils/audioref.js";
-import { createPubSub } from "../utils/pubsub.js";
+import {
+    AudioActionType,
+    audioRef,
+    audioStatePubSub,
+    currentTimePubSub,
+} from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio } from "./loadaudio.js";
 import { toastPubSub } from "./toast.js";
 
 const { useCallback, useContext, useEffect, useRef, useState } = React;
-
-export const enum AudioActionType {
-    pause,
-    getDuration,
-    rateChange,
-}
-
-export type AudioState =
-    | {
-          type: AudioActionType.pause;
-          payload: boolean;
-      }
-    | {
-          type: AudioActionType.getDuration;
-          payload: number;
-      }
-    | {
-          type: AudioActionType.rateChange;
-          payload: number;
-      };
-
-export const audioStatePubSub = createPubSub<AudioState>();
-export const currentTimePubSub = createPubSub<number>();
 
 export const Footer: React.FC = () => {
     console.info("Footer.render");
