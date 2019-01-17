@@ -101,7 +101,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
 
     useEffect(
         () => {
-            if (gistId !== null) {
+            if (gistId !== null || token === null) {
                 return;
             }
 
