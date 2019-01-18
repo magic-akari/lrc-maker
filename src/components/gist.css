@@ -163,3 +163,10 @@
     margin: 0;
     line-height: 1.5;
 }
+
+.gist-loading {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

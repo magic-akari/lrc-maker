@@ -208,7 +208,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         setToken(null);
     }, []);
 
-    const RateLimitjs = useMemo(
+    const RateLimit = useMemo(
         () => {
             if (ratelimit === null) {
                 return false;
@@ -249,8 +249,40 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         [ratelimit, langName],
     );
 
+    const GistDetails = useMemo(
+        () => {
+            if (gistId !== null && token !== null) {
+                return (
+                    <details className="gist-details">
+                        <summary>{lang.gist.info}</summary>
+                        <section className="gist-bar">
+                            <section className="gist-info">
+                                <p>
+                                    {"Gist id: "}
+                                    <a
+                                        href={`https://gist.github.com/${gistId}`}
+                                        target="_blank"
+                                        className="link">
+                                        {gistId}
+                                    </a>
+                                </p>
+                                <button className="button" onClick={onClear}>
+                                    {lang.gist.clearTokenAndGist}
+                                </button>
+                            </section>
+                            {RateLimit}
+                        </section>
+                    </details>
+                );
+            }
+            return false;
+        },
+        [gistId, token, RateLimit],
+    );
+
     return (
         <div className="gist">
+            {GistDetails}
             {(() => {
                 if (token === null) {
                     return (
@@ -333,29 +365,6 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 if (fileList !== null) {
                     return (
                         <>
-                            <details className="gist-details">
-                                <summary>{lang.gist.info}</summary>
-                                <section className="gist-bar">
-                                    <section className="gist-info">
-                                        <p>
-                                            {"Gist id: "}
-                                            <a
-                                                href={`https://gist.github.com/${gistId}`}
-                                                target="_blank"
-                                                className="link">
-                                                {gistId}
-                                            </a>
-                                        </p>
-                                        <button
-                                            className="button"
-                                            onClick={onClear}>
-                                            {lang.gist.clearTokenAndGist}
-                                        </button>
-                                    </section>
-                                    {RateLimitjs}
-                                </section>
-                            </details>
-
                             <section className="file-list" onClick={onLoadFile}>
                                 {fileList.map((file, index) => {
                                     return (
@@ -393,7 +402,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                     );
                 }
 
-                return "loading";
+                return <section className="gist-loading">{"loading"}</section>;
             })()}
         </div>
     );

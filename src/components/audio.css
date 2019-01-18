@@ -20,7 +20,7 @@ audio::-webkit-media-controls-enclosure {
     display: flex;
     align-items: center;
     user-select: none;
-    justify-content: space-between;
+    justify-content: space-around;
     background: var(--semi-black-color);
     color: var(--white);
 }

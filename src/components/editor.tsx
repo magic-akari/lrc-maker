@@ -146,15 +146,12 @@ export const Eidtor: React.SFC<{
 
     const saveToGist = useCallback(
         () => {
-            if (!canSaveToGist) {
-                return;
-            }
             setTimeout(() => {
                 const name = prompt("filename", downloadName);
                 if (name) {
                     createFile(name, textarea.current!.value);
                 }
-            }, 100);
+            }, 500);
         },
         [downloadName],
     );
@@ -226,9 +223,9 @@ export const Eidtor: React.SFC<{
 
                 <a
                     title={lang.editor.saveToGist}
-                    href={canSaveToGist ? "javascript:;" : Path.gist}
+                    href={canSaveToGist ? undefined : Path.gist}
                     className="editor-tools-item ripple"
-                    onClick={saveToGist}>
+                    onClick={canSaveToGist ? saveToGist : undefined}>
                     <CloudUploadSVG />
                 </a>
             </section>
