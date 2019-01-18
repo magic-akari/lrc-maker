@@ -113,13 +113,6 @@ input[type="range"]::-moz-range-track {
     border: 0;
 }
 
-input[type="range"]::-ms-track {
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-    top: -6px;
-}
-
 input[type="range"]::-webkit-slider-thumb {
     height: var(--thumb-size);
     width: var(--thumb-size);
@@ -156,25 +149,6 @@ input[type="range"]::-moz-range-thumb {
 
 input[type="range"]:hover::-moz-range-thumb {
     box-shadow: 0 0 4px var(--white);
-}
-
-input[type="range"]::-ms-fill-upper,
-input[type="range"]::-ms-fill-lower {
-    background: transparent;
-}
-
-input[type="range"]::-ms-thumb {
-    margin-top: -1px;
-    height: var(--thumb-size);
-    width: var(--thumb-size);
-    border-radius: 50%;
-    background: var(--theme-color);
-
-    filter: brightness(120%);
-}
-
-input[type="range"]::-ms-tooltip {
-    display: none;
 }
 
 .slider > progress {
