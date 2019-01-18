@@ -88,6 +88,7 @@ export const AppProvider: React.FC = ({ children }) => {
     useEffect(
         () => {
             document.title = lang.app.fullname;
+            document.documentElement.lang = prefState.lang;
         },
         [lang],
     );

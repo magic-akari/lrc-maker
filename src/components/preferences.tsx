@@ -175,7 +175,11 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.repo}</span>
-                        <a className="link" href={Repo.url} target="_blank">
+                        <a
+                            className="link"
+                            href={Repo.url}
+                            target="_blank"
+                            rel="noopener">
                             Github
                         </a>
                     </section>
@@ -183,7 +187,11 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.help}</span>
-                        <a className="link" href={Repo.wiki} target="_blank">
+                        <a
+                            className="link"
+                            href={Repo.wiki}
+                            target="_blank"
+                            rel="noopener">
                             Github Wiki
                         </a>
                     </section>
