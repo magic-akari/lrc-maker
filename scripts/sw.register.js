@@ -1,11 +1,8 @@
 if ("serviceWorker" in navigator) {
     window.addEventListener("error", (ev) => {
         if (
-            // Firefox
-            (ev.message.includes("SyntaxError") &&
-                ev.filename.includes("useLang.js")) ||
-            // Edge
-            ev.message === "Syntax error"
+            ev.message.includes("SyntaxError") &&
+            ev.filename.includes("useLang.js")
         ) {
             ev.preventDefault();
             location.reload();
