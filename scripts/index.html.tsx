@@ -250,12 +250,11 @@ const Html = () => {
                         "/umd/react-dom.development.js",
                     )}
                 />
-                <script {...appUrl("./polyfill.js")} type="module" async />
-                {isProduction &&
-                    preloadScripts.map((script) => {
-                        return <script {...script} type="module" />;
-                    })}
-                <script {...appUrl("./components/app.js")} type="module" />
+                <script {...appUrl("./polyfill.js")} async={true} />
+                <script {...appUrl("./languages/en-US.js")} type="module" />
+                {preloadScripts.map((script, index) => {
+                    return <script key={index} {...script} type="module" />;
+                })}
                 <script
                     id="app-info"
                     type="application/json"
