@@ -4,6 +4,7 @@ import {
     State as PrefState,
     usePref,
 } from "../hooks/usePref.js";
+import { toastPubSub } from "./toast.js";
 
 const { createContext, useEffect, useMemo } = React;
 
@@ -80,7 +81,12 @@ export const AppProvider: React.FC = ({ children }) => {
 
     useEffect(
         () => {
-            setLang(prefState.lang);
+            setLang(prefState.lang).catch((error) => {
+                toastPubSub.pub({
+                    type: "warning",
+                    text: error.message,
+                });
+            });
         },
         [prefState.lang],
     );
