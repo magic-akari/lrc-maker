@@ -4,7 +4,7 @@
     "jsRules": {},
     "rules": {
         "object-literal-sort-keys": false,
-        "no-bitwise":false,
+        "no-bitwise": false,
         "no-console": false
     },
     "rulesDirectory": []
