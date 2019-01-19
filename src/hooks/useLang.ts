@@ -1,10 +1,9 @@
-import { toastPubSub } from "../components/toast.js";
 import { language as en_US } from "../languages/en-US.js";
 
 const cache = new Map<string, Language>();
 cache.set("en-US", en_US);
 
-export const useLang = (): [Language, (lang: string) => void] => {
+export const useLang = (): [Language, (lang: string) => Promise<void>] => {
     const [value, setValue] = React.useState<Language>(en_US);
 
     const setLang = (langName: string) => {
@@ -13,20 +12,13 @@ export const useLang = (): [Language, (lang: string) => void] => {
 
             setValue(cachedLang);
 
-            return;
+            return Promise.resolve();
         }
 
-        try {
-            import(`../languages/${langName}.js`).then(({ language }) => {
-                cache.set(langName, language);
-                setValue(language);
-            });
-        } catch (error) {
-            toastPubSub.pub({
-                type: "warning",
-                text: error.message,
-            });
-        }
+        return import(`../languages/${langName}.js`).then(({ language }) => {
+            cache.set(langName, language);
+            setValue(language);
+        });
     };
 
     return [value, React.useCallback((lang: string) => setLang(lang), [])];
