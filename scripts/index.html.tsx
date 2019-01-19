@@ -7,6 +7,21 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { sri, sriContent } from "./sri";
 
+// tslint:disable-next-line:no-var-requires
+const { name, version, description, dependencies } = require("../package.json");
+
+const hash = (() => {
+    const root = resolve(__dirname, "../");
+    const rev = readFileSync(resolve(root, ".git/HEAD"))
+        .toString()
+        .trim();
+    if (!rev.includes(":")) {
+        return rev;
+    } else {
+        return readFileSync(resolve(root, ".git/", rev.slice(5))).toString();
+    }
+})().slice(0, 7);
+
 const isProduction = process.env.NODE_ENV === "production";
 const useCDN = process.env.USE_CDN === "USE_CDN";
 
@@ -14,7 +29,7 @@ const jsdelivr = "https://cdn.jsdelivr.net";
 const nodeModules = "../node_modules/";
 
 const libUrl = (
-    name: string,
+    libName: string,
     prodPath: string,
     devPath?: string,
 ): {
@@ -23,22 +38,20 @@ const libUrl = (
     crossOrigin?: "anonymous";
 } => {
     if (useCDN) {
-        const version = (() => {
-            const v = process.env[
-                "npm_package_dependencies_" + name.replace(/[\-\.]/g, "_")
-            ]!;
+        const libVersion = (() => {
+            const v = dependencies[libName];
 
             return v[0] === "~" || v[0] === "^" ? v.slice(1) : v;
         })();
 
-        const src = `${jsdelivr}/npm/${name}@${version}${prodPath}`;
+        const src = `${jsdelivr}/npm/${libName}@${libVersion}${prodPath}`;
         const integrity = sri(
-            resolve(__dirname, `../node_modules/${name}${prodPath}`),
+            resolve(__dirname, `${nodeModules}${libName}${prodPath}`),
         );
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
         return {
-            src: `${nodeModules}${name}${
+            src: `${nodeModules}${libName}${
                 isProduction ? prodPath : devPath || prodPath
             }`,
         };
@@ -52,12 +65,9 @@ const appUrl = (
     integrity?: string;
     crossOrigin?: "anonymous";
 } => {
-    const appName = process.env.npm_package_name!;
-    const version = process.env.npm_package_version!;
-
     if (useCDN) {
         const src = new URL(
-            resolve("/npm", `${appName}@${version}`, "build", path),
+            resolve("/npm", `${name}@${version}`, "build", path),
             `${jsdelivr}`,
         ).href;
         const integrity = sri(resolve(__dirname, "../build", path));
@@ -86,10 +96,9 @@ const swRegister = () => {
         encoding: "utf8",
     }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " ");
 
-    // tslint:disable-next-line:no-shadowed-variable
-    const sri = sriContent(content);
+    const integrity = sriContent(content);
 
-    return { content, sri };
+    return { content, integrity };
 };
 
 const swUnregister = () => {
@@ -102,10 +111,9 @@ const swUnregister = () => {
 
     content = content.replace("export", "") + "unregister();";
 
-    // tslint:disable-next-line:no-shadowed-variable
-    const sri = sriContent(content);
+    const integrity = sriContent(content);
 
-    return { content, sri };
+    return { content, integrity };
 };
 
 const csp = {
@@ -113,7 +121,7 @@ const csp = {
     "img-src": ["'self'", "data:"],
     "style-src": ["'self'", jsdelivr],
     "script-src": ["'self'", "blob:", jsdelivr],
-    "worker-src": ["'self'"],
+    "child-src": ["'self'"],
     "media-src": ["'self'", "blob:", "*"],
     "connect-src": ["blob:", "https://api.github.com"],
 };
@@ -136,25 +144,18 @@ preloadScripts.find((script) => {
 })!.integrity = undefined;
 
 const Html = () => {
-    const version = process.env.npm_package_version;
-    const hash = process.env.npm_package_gitHead!.slice(0, 7);
-
     const updateTime = execSync("git log -1 --format=%cI")
         .toString()
         .trim();
 
     const reg = isProduction ? swRegister() : swUnregister();
-    const dynamicImportErrorHandler = "dynamicImportError(event);return false;";
+
     if (isProduction) {
-        csp["script-src"].push("'" + reg.sri + "'");
+        csp["script-src"].push(`'${reg.integrity}'`);
     } else {
-        csp["script-src"].push(
-            "'unsafe-inline'",
-            sriContent(dynamicImportErrorHandler),
-        );
+        csp["script-src"].push("'unsafe-inline'");
         csp["connect-src"].push("*");
     }
-    const useLang = appUrl("./hooks/useLang.js");
 
     return (
         <html>
@@ -169,10 +170,7 @@ const Html = () => {
                         })
                         .join("; ")}
                 />
-                <meta
-                    name="description"
-                    content={process.env.npm_package_description}
-                />
+                <meta name="description" content={description} />
                 <meta
                     name="keywords"
                     content="lrc maker, lrc generate, 歌词制作, 歌词滚动"
