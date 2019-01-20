@@ -88,47 +88,40 @@ self.addEventListener("message", async (ev) => {
     }
 
     let offset = 10;
-    const keyLen = dataview.getUint32(offset, true);
-    offset += 4;
-    const keyDate = new Uint8Array(filebuffer, offset, keyLen).map(
-        (data) => data ^ 0x64,
-    );
-    offset += keyLen;
 
-    const deKeyData = (await AES_ECB_DECRYPT(CORE_KEY, keyDate)).slice(17);
-
-    let keyBox = new Uint8Array(Array.from(Array(256).keys()));
-
-    {
-        const deKeyLen = deKeyData.length;
-
-        let j = 0;
-
-        for (let i = 0; i < 256; i++) {
-            j = (keyBox[i] + j + deKeyData[i % deKeyLen]) & 0xff;
-            [keyBox[i], keyBox[j]] = [keyBox[j], keyBox[i]];
-        }
-
-        keyBox = keyBox.map(
-            (item, i, arr) => arr[(item + arr[(item + i) & 0xff]) & 0xff],
-        );
-    }
-
-    {
-        const metaDataLen = dataview.getUint32(offset, true);
-
-        offset += 4 + metaDataLen;
-        offset += 9;
-
-        const imageSize = dataview.getUint32(offset, true);
-
+    const keyBox = await (async () => {
+        const keyLen = dataview.getUint32(offset, true);
         offset += 4;
+        let keyDate = new Uint8Array(filebuffer, offset, keyLen).map(
+            (data) => data ^ 0x64,
+        );
+        offset += keyLen;
 
-        if (imageSize === 0) {
-            offset = 8367;
-        } else {
-            offset += imageSize;
+        keyDate = (await AES_ECB_DECRYPT(CORE_KEY, keyDate)).slice(17);
+
+        let box = new Uint8Array(Array.from(Array(256).keys()));
+
+        {
+            const deKeyLen = keyDate.length;
+
+            let j = 0;
+
+            for (let i = 0; i < 256; i++) {
+                j = (box[i] + j + keyDate[i % deKeyLen]) & 0xff;
+                [box[i], box[j]] = [box[j], box[i]];
+            }
+
+            box = box.map(
+                (item, i, arr) => arr[(item + arr[(item + i) & 0xff]) & 0xff],
+            );
         }
+
+        return box;
+    })();
+
+    {
+        offset += dataview.getUint32(offset, true) + 4;
+        offset += dataview.getUint32(offset + 5, true) + 13;
     }
 
     const decryptedData = new Uint8Array(filebuffer, offset);
