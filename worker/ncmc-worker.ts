@@ -22,6 +22,64 @@ const CORE_KEY = Uint8Array.of(
 );
 
 const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
+    /**
+     * simulate ECB with CBC
+     *
+     *  ECB
+     *  encryption:
+     *          Plaintext                                 Plaintext
+     *              |                                         |
+     * key -> | block cipher |                   key -> | block cipher |
+     *        |  encryption  |                          |  encryption  |
+     *              |                                         |
+     *          Ciphertext                                Ciphertext
+     *
+     *
+     *  decryption:
+     *          Ciphertext                                 Ciphertext
+     *              |                                          |
+     * key -> | block cipher |                   key -> | block cipher |
+     *        |  decryption  |                          |  decryption  |
+     *              |                                          |
+     *          Plaintext                                 Plaintext
+     *
+     *
+     *  CBC
+     *  encryption:
+     *          Plaintext                                 Plaintext
+     *              |                                          |
+     *  iv -------> x                   |--------------------> x
+     *              |                   |                      |
+     *        | block cipher |          |               | block cipher |
+     * key -> |  encryption  |          |        key -> |  encryption  |
+     *              |                   |                      |
+     *              | -------------------                      |
+     *          Ciphertext                                Ciphertext
+     *
+     *
+     *  decryption:
+     *          Ciphertext                                Ciphertext
+     *              |                                          |
+     *  iv -------> x                   |--------------------> x
+     *              |                   |                      |
+     *        | block cipher |          |               | block cipher |
+     * key -> |  decryption  |          |        key -> |  decryption  |
+     *              |                   |                      |
+     *              | -------------------                      |
+     *          Plaintext                                 Plaintext
+     *
+     *
+     * Encrypt One Block
+     * let iv = 0;
+     * CBC_ENCRYPT(plaintext, iv) == ENCRYPT(plaintext, iv)
+     *                            == ENCRYPT(plaintext) == ECB_ENCRYPT(plaintext)
+     * -> one blcok ciphertext + one block padding
+     *
+     * Decrypt One Block
+     * Plaintext block  = CBC_DECRYPT(ciphertext block + encryptedPadding)
+     * encryptedPadding = ENCRYPT(ciphertext block).slice(0, 16)
+     */
+
     const AES = {
         name: "AES-CBC",
         iv: new Uint8Array(16),
@@ -149,14 +207,11 @@ self.addEventListener("message", async (ev) => {
         console.timeEnd("decryptedFile");
     })();
 
-    let mimeType = "audio/mpeg";
-
-    if (
-        new DataView(decryptedData.buffer).getUint32(0, true) ===
-        0x664c6143 /** fLaC */
-    ) {
-        mimeType = "audio/flac";
-    }
+    const mimeType =
+        0x664c6143 /** fLaC */ ===
+        new DataView(decryptedData.buffer).getUint32(0, true)
+            ? "audio/flac"
+            : "audio/mpeg";
 
     self.postMessage(
         { type: "url", dataArray: decryptedData, mime: mimeType },
