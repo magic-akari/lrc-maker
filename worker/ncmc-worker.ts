@@ -125,23 +125,29 @@ self.addEventListener("message", async (ev) => {
     }
 
     const decryptedData = new Uint8Array(filebuffer, offset);
-    const decryptedDataLength = decryptedData.length;
-    const step = 0x8000;
-    const tailLength = decryptedDataLength % step;
-    const bodyLength = decryptedDataLength - tailLength;
 
-    console.time("decryptedFile");
+    // workaround for Firefox which async function causes performance problems
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1521435
+    (() => {
+        const decryptedDataLength = decryptedData.length;
+        const step = 0x8000;
+        const tailLength = decryptedDataLength % step;
+        const bodyLength = decryptedDataLength - tailLength;
 
-    for (let index = 0; index < bodyLength; index += step) {
-        for (let cur = 0; cur < step; cur++) {
-            decryptedData[index + cur] ^= keyBox[(cur + 1) & 0xff];
+        console.time("decryptedFile");
+
+        for (let index = 0; index < bodyLength; index += step) {
+            for (let cur = 0; cur < step; cur++) {
+                decryptedData[index + cur] ^= keyBox[(cur + 1) & 0xff];
+            }
         }
-    }
 
-    for (let cur = 0; cur < tailLength; cur++) {
-        decryptedData[bodyLength + cur] ^= keyBox[(cur + 1) & 0xff];
-    }
-    console.timeEnd("decryptedFile");
+        for (let cur = 0; cur < tailLength; cur++) {
+            decryptedData[bodyLength + cur] ^= keyBox[(cur + 1) & 0xff];
+        }
+
+        console.timeEnd("decryptedFile");
+    })();
 
     let mimeType = "audio/mpeg";
 
