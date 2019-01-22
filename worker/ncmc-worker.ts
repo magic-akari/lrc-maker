@@ -25,59 +25,65 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
     /**
      * simulate ECB with CBC
      *
-     *  ECB
-     *  encryption:
-     *          Plaintext                                 Plaintext
-     *              |                                         |
+     *  ECB encryption:
+     *           Plaintext                                 Plaintext(padding)
+     *               |                                         |
      * key -> | block cipher |                   key -> | block cipher |
      *        |  encryption  |                          |  encryption  |
-     *              |                                         |
-     *          Ciphertext                                Ciphertext
+     *               |                                         |
+     *           Ciphertext                                Ciphertext(encryptedPadding)
      *
      *
-     *  decryption:
-     *          Ciphertext                                 Ciphertext
-     *              |                                          |
+     *  ECB decryption:
+     *           Ciphertext                                Ciphertext(encryptedPadding)
+     *               |                                         |
      * key -> | block cipher |                   key -> | block cipher |
      *        |  decryption  |                          |  decryption  |
-     *              |                                          |
-     *          Plaintext                                 Plaintext
+     *               |                                         |
+     *           Plaintext                                 Plaintext(padding)
      *
      *
-     *  CBC
-     *  encryption:
-     *          Plaintext                                 Plaintext
-     *              |                                          |
-     *  iv -------> x                   |--------------------> x
-     *              |                   |                      |
-     *        | block cipher |          |               | block cipher |
-     * key -> |  encryption  |          |        key -> |  encryption  |
-     *              |                   |                      |
-     *              | -------------------                      |
-     *          Ciphertext                                Ciphertext
+     *  CBC encryption:
+     *          Plaintext                                  Plaintext(padding)
+     *               |                                         |
+     *  iv --------> x                   --------------------> x
+     *               |                   |                     |
+     *        | block cipher |           |              | block cipher |
+     * key -> |  encryption  |           |       key -> |  encryption  |
+     *               |                   |                     |
+     *               | ------------------|                     |
+     *           Ciphertext                                Ciphertext(encryptedPadding)
      *
      *
-     *  decryption:
-     *          Ciphertext                                Ciphertext
-     *              |                                          |
-     *  iv -------> x                   |--------------------> x
-     *              |                   |                      |
-     *        | block cipher |          |               | block cipher |
-     * key -> |  decryption  |          |        key -> |  decryption  |
-     *              |                   |                      |
-     *              | -------------------                      |
-     *          Plaintext                                 Plaintext
+     *  CBC decryption:
+     *           Ciphertext                                Ciphertext(encryptedPadding)
+     *               |                                         |
+     *  iv --------> x                   --------------------> x
+     *               |                   |                     |
+     *        | block cipher |           |              | block cipher |
+     * key -> |  decryption  |           |       key -> |  decryption  |
+     *               |                   |                     |
+     *               | ------------------|                     |
+     *          Plaintext                                  Plaintext(padding)
      *
      *
-     * Encrypt One Block
-     * let iv = 0;
-     * CBC_ENCRYPT(plaintext, iv) == ENCRYPT(plaintext, iv)
-     *                            == ENCRYPT(plaintext) == ECB_ENCRYPT(plaintext)
-     * -> one blcok ciphertext + one block padding
-     *
-     * Decrypt One Block
-     * Plaintext block  = CBC_DECRYPT(ciphertext block + encryptedPadding)
-     * encryptedPadding = ENCRYPT(ciphertext block).slice(0, 16)
+     *  Simulate:
+     *   ---------------------------------------|
+     *   |            Plaintext                 |                 Padding
+     *   |                |                     |                    |
+     *   |                |                     -------------------> x
+     *   |                |                                          |
+     *   |          |    ECB     |                             |    CBC     |
+     *   |   key -> | encryption |                      key -> | encryption |
+     *   |                |                                          |
+     *   |---- Ciphertext + encryptedPadding  <==>  encryptedPadding + anoter block (not used)
+     *                    |
+     *     iv(0) ------>  x
+     *                    |
+     *              |    CBC     |
+     *       key -> | decryption |
+     *                    |
+     *                Plaintext
      */
 
     const AES = {
@@ -105,7 +111,7 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
 
     const padding = new Uint8Array(16);
     padding.fill(16);
-    const concated = new Uint8Array(32);
+    const cipher = new Uint8Array(32);
 
     for (let curser = 0; curser < bodyLength; curser += 16) {
         const clip = data.slice(curser, curser + 16);
@@ -119,13 +125,13 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
             padding,
         );
 
-        concated.set(clip, 0);
-        concated.set(new Uint8Array(encryptedPadding).slice(0, 16), 16);
+        cipher.set(clip, 0);
+        cipher.set(new Uint8Array(encryptedPadding).slice(0, 16), 16);
 
         const result = await crypto.subtle.decrypt(
             { name: "AES-CBC", iv: new ArrayBuffer(16) },
             cryptoKey,
-            concated,
+            cipher,
         );
         decrypted.set(new Uint8Array(result), curser);
     }
