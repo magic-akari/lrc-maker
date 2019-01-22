@@ -153,34 +153,35 @@ self.addEventListener("message", async (ev) => {
 
     let offset = 10;
 
-    const keyBox = await (async () => {
+    const keyDate = (await (() => {
         const keyLen = dataview.getUint32(offset, true);
         offset += 4;
-        let keyDate = new Uint8Array(filebuffer, offset, keyLen).map(
-            (data) => data ^ 0x64,
+        const data = new Uint8Array(filebuffer, offset, keyLen).map(
+            (uint8) => uint8 ^ 0x64,
         );
         offset += keyLen;
 
-        keyDate = (await AES_ECB_DECRYPT(CORE_KEY, keyDate)).slice(17);
+        return AES_ECB_DECRYPT(CORE_KEY, data);
+    })()).slice(17);
 
-        let box = new Uint8Array(Array.from(Array(256).keys()));
+    const keyBox = (() => {
+        const box = new Uint8Array(Array(256).keys());
 
-        {
-            const deKeyLen = keyDate.length;
+        const keyDataLen = keyDate.length;
 
-            let j = 0;
+        let j = 0;
 
-            for (let i = 0; i < 256; i++) {
-                j = (box[i] + j + keyDate[i % deKeyLen]) & 0xff;
-                [box[i], box[j]] = [box[j], box[i]];
-            }
-
-            box = box.map(
-                (item, i, arr) => arr[(item + arr[(item + i) & 0xff]) & 0xff],
-            );
+        for (let i = 0; i < 256; i++) {
+            j = (box[i] + j + keyDate[i % keyDataLen]) & 0xff;
+            [box[i], box[j]] = [box[j], box[i]];
         }
 
-        return box;
+        return box.map((_, i, arr) => {
+            i = (i + 1) & 0xff;
+            const si = arr[i];
+            const sj = arr[(i + si) & 0xff];
+            return arr[(si + sj) & 0xff];
+        });
     })();
 
     {
@@ -188,29 +189,21 @@ self.addEventListener("message", async (ev) => {
         offset += dataview.getUint32(offset + 5, true) + 13;
     }
 
-    const decryptedData = new Uint8Array(filebuffer, offset);
-
     // workaround for Firefox which async function causes performance problems
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1521435
-    (() => {
-        const decryptedDataLength = decryptedData.length;
-        const step = 0x8000;
-        const tailLength = decryptedDataLength % step;
-        const bodyLength = decryptedDataLength - tailLength;
+    const decryptedData = (() => {
+        const data = new Uint8Array(filebuffer, offset);
+        const dataLength = data.length;
 
         console.time("decryptedFile");
 
-        for (let index = 0; index < bodyLength; index += step) {
-            for (let cur = 0; cur < step; cur++) {
-                decryptedData[index + cur] ^= keyBox[(cur + 1) & 0xff];
-            }
-        }
-
-        for (let cur = 0; cur < tailLength; cur++) {
-            decryptedData[bodyLength + cur] ^= keyBox[(cur + 1) & 0xff];
+        for (let cur = 0; cur < dataLength; ++cur) {
+            data[cur] ^= keyBox[cur & 0xff];
         }
 
         console.timeEnd("decryptedFile");
+
+        return data;
     })();
 
     const mimeType =
