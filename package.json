@@ -38,16 +38,16 @@
         "@types/node": "^10.12.18",
         "@types/react": "^16.7.20",
         "@types/react-dom": "^16.0.11",
-        "autoprefixer": "^9.4.5",
+        "autoprefixer": "^9.4.6",
         "cssnano": "^4.1.8",
         "fast-glob": "^2.2.6",
-        "postcss": "^7.0.13",
+        "postcss": "^7.0.14",
         "postcss-cli": "^6.1.1",
         "postcss-custom-properties": "^8.0.9",
         "postcss-import": "^12.0.1",
-        "prettier": "^1.15.3",
-        "ts-node": "^7.0.1",
+        "prettier": "^1.16.1",
+        "ts-node": "^8.0.1",
         "tslint": "^5.12.1",
-        "typescript": "^3.3.0-dev.20190119"
+        "typescript": "3.3.0-rc"
     }
 }
