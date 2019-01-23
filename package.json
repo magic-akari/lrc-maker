@@ -17,11 +17,13 @@
         "build"
     ],
     "scripts": {
-        "start": "npm run html && npm run tsc:watch",
-        "build": "npm run css && npm run tsc:build && npm run html",
+        "start": "npm run html && npm run tsc:worker && npm run tsc:watch",
+        "build": "npm run css && npm run tsc:build && npm run nomodule && npm run html",
         "tsc": "tsc",
         "tsc:build": "tsc -b",
-        "tsc:watch": "tsc -w",
+        "tsc:watch": "tsc -w --sourceMap false",
+        "tsc:worker": "tsc -P worker/tsconfig.json",
+        "nomodule": "tsc -P tsconfig.webpack.json && webpack -p",
         "css": "postcss src/index.css -m -d build",
         "html": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
         "prehtml": "mkdir -p build",
@@ -46,8 +48,11 @@
         "postcss-custom-properties": "^8.0.9",
         "postcss-import": "^12.0.1",
         "prettier": "^1.16.1",
+        "source-map-loader": "^0.2.4",
         "ts-node": "^8.0.1",
         "tslint": "^5.12.1",
-        "typescript": "3.3.0-rc"
+        "typescript": "3.3.0-rc",
+        "webpack": "^4.29.0",
+        "webpack-cli": "^3.2.1"
     }
 }

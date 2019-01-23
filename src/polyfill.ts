@@ -74,6 +74,30 @@
             }
         };
     }
+
+    if (!StrProto.padEnd) {
+        StrProto.padEnd = function(maxLength, fillString) {
+            // floor if number or convert non-number to 0;
+            maxLength = maxLength >> 0;
+
+            if (this.length > maxLength) {
+                return String(this);
+            } else {
+                fillString = String(
+                    typeof fillString !== "undefined" ? fillString : " ",
+                );
+
+                const padLength = maxLength - this.length;
+                if (padLength > fillString.length) {
+                    // append to original to ensure we are longer than needed
+                    fillString += fillString.repeat(
+                        padLength / fillString.length,
+                    );
+                }
+                return String(this) + fillString.slice(0, padLength);
+            }
+        };
+    }
 })();
 
 // dialog

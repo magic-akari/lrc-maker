@@ -139,9 +139,12 @@ const preloadScripts = glob(buildPath + "/*/*.js")
         return appUrl(path);
     });
 
-preloadScripts.find((script) => {
+const useLangjs = preloadScripts.find((script) => {
     return script.src.includes("useLang.js");
-})!.integrity = undefined;
+});
+if (useLangjs) {
+    useLangjs.integrity = undefined;
+}
 
 const Html = () => {
     const updateTime = execSync("git log -1 --format=%cI")
@@ -248,11 +251,12 @@ const Html = () => {
                         "/umd/react-dom.development.js",
                     )}
                 />
-                <script {...appUrl("./polyfill.js")} async={true} />
+                <script {...appUrl("./polyfill.js")} type="module" async />
                 <script {...appUrl("./languages/en-US.js")} type="module" />
                 {preloadScripts.map((script, index) => {
                     return <script key={index} {...script} type="module" />;
                 })}
+                <script {...appUrl("./nomodule.js")} noModule defer />
                 <script
                     id="app-info"
                     type="application/json"
