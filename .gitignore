@@ -61,6 +61,7 @@ typings/
 .next
 
 build
+build.es6
 
 .vscode
 

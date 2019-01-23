@@ -15,7 +15,8 @@ export const useLang = (): [Language, (lang: string) => Promise<void>] => {
             return Promise.resolve();
         }
 
-        return import(`../languages/${langName}.js`).then(({ language }) => {
+        return import(/* webpackMode: "eager" */
+        `../languages/${langName}.js`).then(({ language }) => {
             cache.set(langName, language);
             setValue(language);
         });
