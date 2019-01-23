@@ -38,38 +38,35 @@ export const Curser: React.FC<ICurserProps> = ({ converter, fixed }) => {
         };
     }, []);
 
-    useEffect(
-        () => {
-            //
-            // Nyquist–Shannon sampling theorem
-            //
-            // If a function x(t) contains no frequencies higher than B hertz,
-            // it is completely determined by giving its ordinates at a series
-            // of points spaced 1/(2B) seconds apart.
-            //
+    useEffect(() => {
+        //
+        // Nyquist–Shannon sampling theorem
+        //
+        // If a function x(t) contains no frequencies higher than B hertz,
+        // it is completely determined by giving its ordinates at a series
+        // of points spaced 1/(2B) seconds apart.
+        //
 
-            const B = [1, 10, 100, 1000][fixed] * rate;
+        const B = [1, 10, 100, 1000][fixed] * rate;
 
-            if (paused || 2 * B > 60 /** 60fps */) {
-                currentTimePubSub.sub(self.current, (date) => {
-                    setTime(date);
-                });
+        if (paused || 2 * B > 60 /** 60fps */) {
+            currentTimePubSub.sub(self.current, (date) => {
+                setTime(date);
+            });
 
-                return () => {
-                    currentTimePubSub.unsub(self.current);
-                };
-            } else {
-                const id = setInterval(() => {
-                    setTime(audioRef.currentTime);
-                }, 1000 / (2 * B));
+            return () => {
+                currentTimePubSub.unsub(self.current);
+            };
+        } else {
+            const id = setInterval(() => {
+                setTime(audioRef.currentTime);
+            }, 1000 / (2 * B));
 
-                return () => {
-                    clearInterval(id);
-                };
-            }
-        },
-        [fixed, paused, rate],
-    );
+            return () => {
+                clearInterval(id);
+            };
+        }
+    }, [fixed, paused, rate]);
 
     return <time className="curser">{converter(time)}</time>;
 };

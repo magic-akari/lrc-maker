@@ -140,50 +140,47 @@ export const Content: React.FC = () => {
         };
     }, []);
 
-    const textColor = useMemo(
-        () => {
-            // https://www.w3.org/TR/WCAG20/#relativeluminancedef
-            const luminanace = (...rgb: [number, number, number]) => {
-                return rgb
-                    .map((v) => v / 255)
-                    .map((v) =>
-                        v <= 0.03928
-                            ? v / 12.92
-                            : Math.pow((v + 0.055) / 1.055, 2.4),
-                    )
-                    .reduce((p, c, i) => {
-                        return p + c * [0.2126, 0.7152, 0.0722][i];
-                    }, 0);
-            };
+    const textColor = useMemo(() => {
+        // https://www.w3.org/TR/WCAG20/#relativeluminancedef
+        const luminanace = (...rgb: [number, number, number]) => {
+            return rgb
+                .map((v) => v / 255)
+                .map((v) =>
+                    v <= 0.03928
+                        ? v / 12.92
+                        : Math.pow((v + 0.055) / 1.055, 2.4),
+                )
+                .reduce((p, c, i) => {
+                    return p + c * [0.2126, 0.7152, 0.0722][i];
+                }, 0);
+        };
 
-            // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
-            // const contrast = (rgb1, rgb2) => {
-            //   const c1 = luminanace(...rgb1) + 0.05;
-            //   const c2 = luminanace(...rgb2) + 0.05;
-            //   return c1 > c2 ? c1 / c2 : c2 / c1;
-            // };
+        // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
+        // const contrast = (rgb1, rgb2) => {
+        //   const c1 = luminanace(...rgb1) + 0.05;
+        //   const c2 = luminanace(...rgb2) + 0.05;
+        //   return c1 > c2 ? c1 / c2 : c2 / c1;
+        // };
 
-            // c: color ; b: black; w: white;
-            // if we need black text
-            //
-            // (lum(c) + 0.05) / (l(b) + 0.05) > (l(w) + 0.05) / (lum(c) + 0.05);
-            // => (lum(c) + 0.05)^2 > (l(b) +0.05) * (l(w) + 0.05) = 1.05 * 0.05 = 0.0525
+        // c: color ; b: black; w: white;
+        // if we need black text
+        //
+        // (lum(c) + 0.05) / (l(b) + 0.05) > (l(w) + 0.05) / (lum(c) + 0.05);
+        // => (lum(c) + 0.05)^2 > (l(b) +0.05) * (l(w) + 0.05) = 1.05 * 0.05 = 0.0525
 
-            const hex2rgb = (hex: string): [number, number, number] => {
-                hex = hex.slice(1);
-                const value = Number.parseInt(hex, 16);
-                const r = (value >> 0x10) & 0xff;
-                const g = (value >> 0x08) & 0xff;
-                const b = (value >> 0x00) & 0xff;
-                return [r, g, b];
-            };
+        const hex2rgb = (hex: string): [number, number, number] => {
+            hex = hex.slice(1);
+            const value = Number.parseInt(hex, 16);
+            const r = (value >> 0x10) & 0xff;
+            const g = (value >> 0x08) & 0xff;
+            const b = (value >> 0x00) & 0xff;
+            return [r, g, b];
+        };
 
-            const lum = luminanace(...hex2rgb(prefState.themeColor));
-            const con = lum + 0.05;
-            return con * con > 0.0525 ? "text-black" : "text-white";
-        },
-        [prefState.themeColor],
-    );
+        const lum = luminanace(...hex2rgb(prefState.themeColor));
+        const con = lum + 0.05;
+        return con * con > 0.0525 ? "text-black" : "text-white";
+    }, [prefState.themeColor]);
 
     return (
         <main className={`app-main ${textColor}`}>

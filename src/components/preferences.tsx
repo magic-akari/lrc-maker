@@ -21,12 +21,9 @@ const useNumberInput = (
     { defaultValue, callback }: INumberInput,
     ref = useRef<HTMLInputElement>(null),
 ) => {
-    useEffect(
-        () => {
-            ref.current!.value = defaultValue.toString();
-        },
-        [defaultValue],
-    );
+    useEffect(() => {
+        ref.current!.value = defaultValue.toString();
+    }, [defaultValue]);
 
     const onChange = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,12 +107,9 @@ export const Preferences: React.FC = () => {
         [],
     );
 
-    useEffect(
-        () => {
-            userColorInput.current!.value = prefState.themeColor.slice(1);
-        },
-        [prefState.themeColor],
-    );
+    useEffect(() => {
+        userColorInput.current!.value = prefState.themeColor.slice(1);
+    }, [prefState.themeColor]);
 
     const spaceChangeCallback = useCallback(
         (value: number, ref: React.RefObject<HTMLInputElement>) => {
@@ -131,25 +125,20 @@ export const Preferences: React.FC = () => {
         unregister();
     }, []);
 
-    const updateTime = useMemo(
-        () => {
-            const date = new Date(info.updateTime);
-            const options = {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-                timeZoneName: "short",
-                hour12: false,
-            };
-            return new Intl.DateTimeFormat(prefState.lang, options).format(
-                date,
-            );
-        },
-        [prefState.lang],
-    );
+    const updateTime = useMemo(() => {
+        const date = new Date(info.updateTime);
+        const options = {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            timeZoneName: "short",
+            hour12: false,
+        };
+        return new Intl.DateTimeFormat(prefState.lang, options).format(date);
+    }, [prefState.lang]);
 
     return (
         <div className="preferences">

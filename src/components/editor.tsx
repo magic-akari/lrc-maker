@@ -25,12 +25,9 @@ const useDefaultValue = (
 
     const currentValue = ref.current ? ref.current.value : defaultValue;
 
-    useEffect(
-        () => {
-            ref.current!.value = defaultValue;
-        },
-        [defaultValue, currentValue],
-    );
+    useEffect(() => {
+        ref.current!.value = defaultValue;
+    }, [defaultValue, currentValue]);
     return { ref, defaultValue };
 };
 
@@ -115,27 +112,24 @@ export const Eidtor: React.SFC<{
         document.execCommand("copy");
     }, []);
 
-    const downloadName = useMemo(
-        () => {
-            const list: string[] = [];
-            const lrcInfo = lrcState.info;
-            if (lrcInfo.has("ti")) {
-                list.push(lrcInfo.get("ti")!);
+    const downloadName = useMemo(() => {
+        const list: string[] = [];
+        const lrcInfo = lrcState.info;
+        if (lrcInfo.has("ti")) {
+            list.push(lrcInfo.get("ti")!);
+        }
+        if (lrcInfo.has("ar")) {
+            list.push(lrcInfo.get("ar")!);
+        }
+        if (list.length === 0) {
+            if (lrcInfo.has("al")) {
+                list.push(lrcInfo.get("al")!);
             }
-            if (lrcInfo.has("ar")) {
-                list.push(lrcInfo.get("ar")!);
-            }
-            if (list.length === 0) {
-                if (lrcInfo.has("al")) {
-                    list.push(lrcInfo.get("al")!);
-                }
-            }
-            list.push(Date.now().toString());
+        }
+        list.push(Date.now().toString());
 
-            return list.join(" - ") + ".lrc";
-        },
-        [lrcState.info],
-    );
+        return list.join(" - ") + ".lrc";
+    }, [lrcState.info]);
 
     const canSaveToGist = useMemo(() => {
         return (
@@ -144,17 +138,14 @@ export const Eidtor: React.SFC<{
         );
     }, []);
 
-    const saveToGist = useCallback(
-        () => {
-            setTimeout(() => {
-                const name = prompt("filename", downloadName);
-                if (name) {
-                    createFile(name, textarea.current!.value);
-                }
-            }, 500);
-        },
-        [downloadName],
-    );
+    const saveToGist = useCallback(() => {
+        setTimeout(() => {
+            const name = prompt("filename", downloadName);
+            if (name) {
+                createFile(name, textarea.current!.value);
+            }
+        }, 500);
+    }, [downloadName]);
 
     return (
         <div className="app-editor">

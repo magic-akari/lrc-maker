@@ -79,46 +79,34 @@ export const AppProvider: React.FC = ({ children }) => {
 
     const [lang, setLang] = useLang();
 
-    useEffect(
-        () => {
-            setLang(prefState.lang).catch((error) => {
-                toastPubSub.pub({
-                    type: "warning",
-                    text: error.message,
-                });
+    useEffect(() => {
+        setLang(prefState.lang).catch((error) => {
+            toastPubSub.pub({
+                type: "warning",
+                text: error.message,
             });
-        },
-        [prefState.lang],
-    );
+        });
+    }, [prefState.lang]);
 
-    useEffect(
-        () => {
-            document.title = lang.app.fullname;
-            document.documentElement.lang = prefState.lang;
-        },
-        [lang],
-    );
+    useEffect(() => {
+        document.title = lang.app.fullname;
+        document.documentElement.lang = prefState.lang;
+    }, [lang]);
 
-    useEffect(
-        () => {
-            document.documentElement.style.setProperty(
-                "--theme-color",
-                prefState.themeColor,
-            );
-        },
-        [prefState.themeColor],
-    );
+    useEffect(() => {
+        document.documentElement.style.setProperty(
+            "--theme-color",
+            prefState.themeColor,
+        );
+    }, [prefState.themeColor]);
 
-    const value = useMemo(
-        () => {
-            return {
-                lang,
-                prefState,
-                prefDispatch,
-            };
-        },
-        [lang, prefState],
-    );
+    const value = useMemo(() => {
+        return {
+            lang,
+            prefState,
+            prefDispatch,
+        };
+    }, [lang, prefState]);
 
     return <appContext.Provider value={value}>{children}</appContext.Provider>;
 };

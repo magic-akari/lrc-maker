@@ -38,12 +38,9 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         JSON.parse(localStorage.getItem(LSK.gistFile)!),
     );
 
-    const ratelimit: Ratelimit | null = useMemo(
-        () => {
-            return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!);
-        },
-        [fileList],
-    );
+    const ratelimit: Ratelimit | null = useMemo(() => {
+        return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!);
+    }, [fileList]);
 
     const onSubmitToken = useCallback(
         (ev: React.FormEvent<HTMLFormElement>) => {
@@ -99,74 +96,68 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         [],
     );
 
-    useEffect(
-        () => {
-            if (gistId !== null || token === null) {
-                return;
-            }
+    useEffect(() => {
+        if (gistId !== null || token === null) {
+            return;
+        }
 
-            if (!("HTMLDataListElement" in window)) {
-                return;
-            }
+        if (!("HTMLDataListElement" in window)) {
+            return;
+        }
 
-            getRepos()
-                .then((result) => {
-                    setGistIdList(
-                        result
-                            .filter((gist) => {
-                                return (
-                                    gist.description === GistInfo.description &&
-                                    GistInfo.fileName in gist.files
-                                );
-                            })
-                            .map(({ id }) => id),
-                    );
-                })
-                .catch((error) => {
-                    toastPubSub.pub({
-                        type: "warning",
-                        text: error.message,
-                    });
+        getRepos()
+            .then((result) => {
+                setGistIdList(
+                    result
+                        .filter((gist) => {
+                            return (
+                                gist.description === GistInfo.description &&
+                                GistInfo.fileName in gist.files
+                            );
+                        })
+                        .map(({ id }) => id),
+                );
+            })
+            .catch((error) => {
+                toastPubSub.pub({
+                    type: "warning",
+                    text: error.message,
                 });
-        },
-        [token, gistId],
-    );
+            });
+    }, [token, gistId]);
 
-    useEffect(
-        () => {
-            if (gistId === null) {
-                return;
-            }
+    useEffect(() => {
+        if (gistId === null) {
+            return;
+        }
 
-            getFils()
-                .then((result) => {
-                    if (result === null) {
-                        return;
-                    }
+        getFils()
+            .then((result) => {
+                if (result === null) {
+                    return;
+                }
 
-                    const files = Object.values(result.files).filter((file) =>
-                        file.filename.endsWith(".lrc"),
-                    );
-                    localStorage.setItem(
-                        LSK.gistFile,
-                        JSON.stringify(files, [
-                            "filename",
-                            "content",
-                            "truncated",
-                            "raw_url",
-                        ]),
-                    );
-                    setFileList(files);
-                })
-                .catch((error) => {
-                    toastPubSub.pub({
-                        type: "warning",
-                        text: error.message,
-                    });
+                const files = Object.values(result.files).filter((file) =>
+                    file.filename.endsWith(".lrc"),
+                );
+                localStorage.setItem(
+                    LSK.gistFile,
+                    JSON.stringify(files, [
+                        "filename",
+                        "content",
+                        "truncated",
+                        "raw_url",
+                    ]),
+                );
+                setFileList(files);
+            })
+            .catch((error) => {
+                toastPubSub.pub({
+                    type: "warning",
+                    text: error.message,
                 });
-        },
-        [gistId],
-    );
+            });
+    }, [gistId]);
 
     const onLoadFile = useCallback(
         (ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -208,77 +199,71 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         setToken(null);
     }, []);
 
-    const RateLimit = useMemo(
-        () => {
-            if (ratelimit === null) {
-                return false;
-            }
-
-            return (
-                <section className="ratelimit">
-                    <p>
-                        {"ratelimit-limit: "}
-                        {ratelimit["x-ratelimit-limit"]}
-                    </p>
-                    <p>
-                        {"ratelimit-remaining: "}
-                        {ratelimit["x-ratelimit-remaining"]}
-                    </p>
-                    <p>
-                        {"ratelimit-reset: "}
-                        {new Intl.DateTimeFormat(langName, {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                            hour: "numeric",
-                            minute: "numeric",
-                            second: "numeric",
-                            hour12: false,
-                        }).format(
-                            new Date(
-                                Number.parseInt(
-                                    ratelimit["x-ratelimit-reset"],
-                                    10,
-                                ) * 1000,
-                            ),
-                        )}
-                    </p>
-                </section>
-            );
-        },
-        [ratelimit, langName],
-    );
-
-    const GistDetails = useMemo(
-        () => {
-            if (gistId !== null && token !== null) {
-                return (
-                    <details className="gist-details">
-                        <summary>{lang.gist.info}</summary>
-                        <section className="gist-bar">
-                            <section className="gist-info">
-                                <p>
-                                    {"Gist id: "}
-                                    <a
-                                        href={`https://gist.github.com/${gistId}`}
-                                        target="_blank"
-                                        className="link">
-                                        {gistId}
-                                    </a>
-                                </p>
-                                <button className="button" onClick={onClear}>
-                                    {lang.gist.clearTokenAndGist}
-                                </button>
-                            </section>
-                            {RateLimit}
-                        </section>
-                    </details>
-                );
-            }
+    const RateLimit = useMemo(() => {
+        if (ratelimit === null) {
             return false;
-        },
-        [gistId, token, RateLimit],
-    );
+        }
+
+        return (
+            <section className="ratelimit">
+                <p>
+                    {"ratelimit-limit: "}
+                    {ratelimit["x-ratelimit-limit"]}
+                </p>
+                <p>
+                    {"ratelimit-remaining: "}
+                    {ratelimit["x-ratelimit-remaining"]}
+                </p>
+                <p>
+                    {"ratelimit-reset: "}
+                    {new Intl.DateTimeFormat(langName, {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        second: "numeric",
+                        hour12: false,
+                    }).format(
+                        new Date(
+                            Number.parseInt(
+                                ratelimit["x-ratelimit-reset"],
+                                10,
+                            ) * 1000,
+                        ),
+                    )}
+                </p>
+            </section>
+        );
+    }, [ratelimit, langName]);
+
+    const GistDetails = useMemo(() => {
+        if (gistId !== null && token !== null) {
+            return (
+                <details className="gist-details">
+                    <summary>{lang.gist.info}</summary>
+                    <section className="gist-bar">
+                        <section className="gist-info">
+                            <p>
+                                {"Gist id: "}
+                                <a
+                                    href={`https://gist.github.com/${gistId}`}
+                                    target="_blank"
+                                    className="link">
+                                    {gistId}
+                                </a>
+                            </p>
+                            <button className="button" onClick={onClear}>
+                                {lang.gist.clearTokenAndGist}
+                            </button>
+                        </section>
+                        {RateLimit}
+                    </section>
+                </details>
+            );
+        }
+        return false;
+    }, [gistId, token, RateLimit]);
 
     return (
         <div className="gist">

@@ -22,7 +22,7 @@ interface ISliderProps {
     max: number;
     step?: string | number;
     value: number;
-    onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void);
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     className: string;
 }
 
@@ -73,29 +73,26 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({
         };
     }, []);
 
-    useEffect(
-        () => {
-            if (paused) {
-                // paused but user changing the time
-                currentTimePubSub.sub(self.current, (data) => {
-                    setCurrentTime(data);
-                });
+    useEffect(() => {
+        if (paused) {
+            // paused but user changing the time
+            currentTimePubSub.sub(self.current, (data) => {
+                setCurrentTime(data);
+            });
 
-                return () => {
-                    currentTimePubSub.unsub(self.current);
-                };
-            } else {
-                const id = setInterval(() => {
-                    setCurrentTime(audioRef.currentTime);
-                }, 500 / rate);
+            return () => {
+                currentTimePubSub.unsub(self.current);
+            };
+        } else {
+            const id = setInterval(() => {
+                setCurrentTime(audioRef.currentTime);
+            }, 500 / rate);
 
-                return () => {
-                    clearInterval(id);
-                };
-            }
-        },
-        [paused, rate],
-    );
+            return () => {
+                clearInterval(id);
+            };
+        }
+    }, [paused, rate]);
 
     const rafId = useRef(0);
 
@@ -113,14 +110,9 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({
         });
     }, []);
 
-    const durationTimeTag = useMemo(
-        () => {
-            return duration
-                ? " / " + convertTimeToTag(duration, 0, false)
-                : false;
-        },
-        [duration],
-    );
+    const durationTimeTag = useMemo(() => {
+        return duration ? " / " + convertTimeToTag(duration, 0, false) : false;
+    }, [duration]);
 
     return (
         <>
@@ -163,12 +155,9 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
     // playbackRateSliderValue === ln(playbackRate)
     // playbackRate === exp(playbackRateSliderValue)
 
-    const playbackRateSliderValue = useMemo(
-        () => {
-            return Math.log(playbackRate);
-        },
-        [playbackRate],
-    );
+    const playbackRateSliderValue = useMemo(() => {
+        return Math.log(playbackRate);
+    }, [playbackRate]);
 
     const onPlaybackRateSliderValueChanged = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
