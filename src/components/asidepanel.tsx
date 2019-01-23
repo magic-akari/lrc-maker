@@ -10,16 +10,11 @@ export const AsidePanel: React.FC<{
     createDownloadFile: () => string;
 }> = ({ syncMode, setSyncMode, lrcInfo, createDownloadFile }) => {
     const [href, setHref] = useState<string | undefined>(undefined);
-    const toggleSyncMode = useCallback(
-        () => {
-            setSyncMode(
-                syncMode === SyncMode.select
-                    ? SyncMode.highlight
-                    : SyncMode.select,
-            );
-        },
-        [syncMode],
-    );
+    const toggleSyncMode = useCallback(() => {
+        setSyncMode(
+            syncMode === SyncMode.select ? SyncMode.highlight : SyncMode.select,
+        );
+    }, [syncMode]);
     const onDownloadClick = useCallback(() => {
         if (href) {
             URL.revokeObjectURL(href);
@@ -31,25 +26,22 @@ export const AsidePanel: React.FC<{
         );
         setHref(url);
     }, []);
-    const downloadName = useMemo(
-        () => {
-            const list = [];
-            if (lrcInfo.has("ti")) {
-                list.push(lrcInfo.get("ti"));
+    const downloadName = useMemo(() => {
+        const list = [];
+        if (lrcInfo.has("ti")) {
+            list.push(lrcInfo.get("ti"));
+        }
+        if (lrcInfo.has("ar")) {
+            list.push(lrcInfo.get("ar"));
+        }
+        if (list.length === 0) {
+            if (lrcInfo.has("al")) {
+                list.push(lrcInfo.get("al"));
             }
-            if (lrcInfo.has("ar")) {
-                list.push(lrcInfo.get("ar"));
-            }
-            if (list.length === 0) {
-                if (lrcInfo.has("al")) {
-                    list.push(lrcInfo.get("al"));
-                }
-                list.push(new Date().toLocaleString());
-            }
-            return list.join(" - ") + ".lrc";
-        },
-        [lrcInfo],
-    );
+            list.push(new Date().toLocaleString());
+        }
+        return list.join(" - ") + ".lrc";
+    }, [lrcInfo]);
     return (
         <aside className="aside-panel">
             <button

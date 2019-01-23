@@ -13,7 +13,7 @@ import { Curser } from "./curser.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
-const SpaceButton: React.FC<{ sync: (() => void) }> = ({ sync }) => {
+const SpaceButton: React.FC<{ sync: () => void }> = ({ sync }) => {
     return (
         <button className="space_button" onClick={sync}>
             space
@@ -85,68 +85,53 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
     const [highLight, setHighLight] = useState(0);
     const [needReCalc, setNeedReCalc] = useState(Symbol());
 
-    useEffect(
-        () => {
-            sessionStorage.setItem(SSK.syncMode, syncMode.toString());
-        },
-        [syncMode],
-    );
+    useEffect(() => {
+        sessionStorage.setItem(SSK.syncMode, syncMode.toString());
+    }, [syncMode]);
 
     const needScrollLine = {
         [SyncMode.select]: selectedLine,
         [SyncMode.highlight]: highLight,
     }[syncMode];
 
-    useEffect(
-        () => {
-            ul.current!.children[needScrollLine].scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "center",
-            });
-        },
-        [needScrollLine],
-    );
+    useEffect(() => {
+        ul.current!.children[needScrollLine].scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center",
+        });
+    }, [needScrollLine]);
 
-    const trackedLine = useMemo(
-        () => {
-            return lyric.reduce(
-                (p, c, i) => {
-                    if (c.time) {
-                        if (
-                            c.time < p.nextTime &&
-                            c.time > audioRef.currentTime
-                        ) {
-                            p.nextTime = c.time;
-                            p.nextIndex = i;
-                        }
-                        if (
-                            c.time > p.currentTime &&
-                            c.time <= audioRef.currentTime
-                        ) {
-                            p.currentTime = c.time;
-                            p.currentIndex = i;
-                        }
+    const trackedLine = useMemo(() => {
+        return lyric.reduce(
+            (p, c, i) => {
+                if (c.time) {
+                    if (c.time < p.nextTime && c.time > audioRef.currentTime) {
+                        p.nextTime = c.time;
+                        p.nextIndex = i;
                     }
-                    return p;
-                },
-                {
-                    currentTime: 0,
-                    currentIndex: 0,
-                    nextTime: Infinity,
-                    nextIndex: Infinity,
-                },
-            );
-        },
-        [lyric, needReCalc],
-    );
+                    if (
+                        c.time > p.currentTime &&
+                        c.time <= audioRef.currentTime
+                    ) {
+                        p.currentTime = c.time;
+                        p.currentIndex = i;
+                    }
+                }
+                return p;
+            },
+            {
+                currentTime: 0,
+                currentIndex: 0,
+                nextTime: Infinity,
+                nextIndex: Infinity,
+            },
+        );
+    }, [lyric, needReCalc]);
 
-    useEffect(
-        () => {
-            setHighLight(trackedLine.currentIndex);
-        },
-        [trackedLine.currentIndex],
-    );
+    useEffect(() => {
+        setHighLight(trackedLine.currentIndex);
+    }, [trackedLine.currentIndex]);
 
     const ref = useRef(trackedLine);
 
@@ -183,109 +168,103 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         };
     }, []);
 
-    const sync = useCallback(
-        () => {
-            if (!audioRef.duration) {
-                return;
-            }
+    const sync = useCallback(() => {
+        if (!audioRef.duration) {
+            return;
+        }
 
+        lrcDispatch({
+            type: LrcActionType.set_time,
+            payload: {
+                index: selectedLine,
+                time: audioRef.currentTime,
+            },
+        });
+        setSelectLine(guard(selectedLine + 1));
+    }, [selectedLine]);
+
+    useEffect(() => {
+        const deleteTimeTag = () => {
             lrcDispatch({
                 type: LrcActionType.set_time,
                 payload: {
                     index: selectedLine,
-                    time: audioRef.currentTime,
+                    time: undefined,
                 },
             });
-            setSelectLine(guard(selectedLine + 1));
-        },
-        [selectedLine],
-    );
+        };
 
-    useEffect(
-        () => {
-            const deleteTimeTag = () => {
-                lrcDispatch({
-                    type: LrcActionType.set_time,
-                    payload: {
-                        index: selectedLine,
-                        time: undefined,
-                    },
-                });
-            };
+        const listener = (ev: KeyboardEvent) => {
+            const { code, key, target } = ev;
 
-            const listener = (ev: KeyboardEvent) => {
-                const { code, key, target } = ev;
+            if (
+                ["text", "textarea", "url"].includes((target as any)
+                    .type as string)
+            ) {
+                return;
+            }
 
-                if (
-                    ["text", "textarea", "url"].includes((target as any)
-                        .type as string)
-                ) {
-                    return;
-                }
+            if (
+                code === "Backspace" ||
+                code === "Delete" ||
+                key === "Backspace" ||
+                key === "Delete" ||
+                key === "Del"
+            ) {
+                ev.preventDefault();
+                deleteTimeTag();
+                return;
+            }
 
-                if (
-                    code === "Backspace" ||
-                    code === "Delete" ||
-                    key === "Backspace" ||
-                    key === "Delete" ||
-                    key === "Del"
-                ) {
-                    ev.preventDefault();
-                    deleteTimeTag();
-                    return;
-                }
+            if (ev.metaKey === true || ev.ctrlKey === true) {
+                return;
+            }
 
-                if (ev.metaKey === true || ev.ctrlKey === true) {
-                    return;
-                }
+            if (code === "Space" || key === " " || key === "Spacebar") {
+                ev.preventDefault();
 
-                if (code === "Space" || key === " " || key === "Spacebar") {
-                    ev.preventDefault();
+                sync();
+            } else if (
+                ["ArrowUp", "KeyW", "KeyJ"].includes(code) ||
+                ["ArrowUp", "Up", "W", "w", "J", "j"].includes(key)
+            ) {
+                ev.preventDefault();
 
-                    sync();
-                } else if (
-                    ["ArrowUp", "KeyW", "KeyJ"].includes(code) ||
-                    ["ArrowUp", "Up", "W", "w", "J", "j"].includes(key)
-                ) {
-                    ev.preventDefault();
+                setSelectLine(guard(selectedLine - 1));
+            } else if (
+                ["ArrowDown", "KeyS", "KeyK"].includes(code) ||
+                ["ArrowDown", "Down", "S", "s", "K", "k"].includes(key)
+            ) {
+                ev.preventDefault();
 
-                    setSelectLine(guard(selectedLine - 1));
-                } else if (
-                    ["ArrowDown", "KeyS", "KeyK"].includes(code) ||
-                    ["ArrowDown", "Down", "S", "s", "K", "k"].includes(key)
-                ) {
-                    ev.preventDefault();
+                setSelectLine(guard(selectedLine + 1));
+            } else if (code === "Home" || key === "Home") {
+                ev.preventDefault();
 
-                    setSelectLine(guard(selectedLine + 1));
-                } else if (code === "Home" || key === "Home") {
-                    ev.preventDefault();
+                setSelectLine(0);
+            } else if (code === "End" || key === "End") {
+                ev.preventDefault();
 
-                    setSelectLine(0);
-                } else if (code === "End" || key === "End") {
-                    ev.preventDefault();
+                setSelectLine(lyric.length - 1);
+            } else if (code === "PageUp" || key === "PageUp") {
+                ev.preventDefault();
 
-                    setSelectLine(lyric.length - 1);
-                } else if (code === "PageUp" || key === "PageUp") {
-                    ev.preventDefault();
+                setSelectLine(guard(selectedLine - 10));
+            } else if (code === "PageDown" || key === "PageDown") {
+                ev.preventDefault();
 
-                    setSelectLine(guard(selectedLine - 10));
-                } else if (code === "PageDown" || key === "PageDown") {
-                    ev.preventDefault();
+                setSelectLine(guard(selectedLine + 10));
+            }
+        };
 
-                    setSelectLine(guard(selectedLine + 10));
-                }
-            };
+        document.addEventListener("keydown", listener);
 
-            document.addEventListener("keydown", listener);
+        return () => {
+            document.removeEventListener("keydown", listener);
 
-            return () => {
-                document.removeEventListener("keydown", listener);
-
-                cachedState.selectedLine = selectedLine;
-            };
-        },
-        [selectedLine],
-    );
+            cachedState.selectedLine = selectedLine;
+        };
+    }, [selectedLine]);
 
     const onLineClick = useCallback(
         (ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
@@ -344,12 +323,9 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
     const lrcStateRef = useRef(lrcState);
     lrcStateRef.current = lrcState;
 
-    const createDownloadFile = useCallback(
-        () => {
-            return stringify(lrcStateRef.current, prefState);
-        },
-        [prefState],
-    );
+    const createDownloadFile = useCallback(() => {
+        return stringify(lrcStateRef.current, prefState);
+    }, [prefState]);
 
     return (
         <>
