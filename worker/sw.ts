@@ -49,8 +49,6 @@ self.addEventListener("fetch", (event) => {
         return;
     }
 
-    console.log("sw.fetch", url);
-
     event.respondWith(
         caches.match(event.request).then(
             (match) =>

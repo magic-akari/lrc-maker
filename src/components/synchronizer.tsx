@@ -39,8 +39,6 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
     lrcState,
     lrcDispatch,
 }) => {
-    console.info("Synchronizer.render");
-
     const self = useRef(Symbol(Synchronizer.name));
 
     const { prefState } = useContext(appContext);

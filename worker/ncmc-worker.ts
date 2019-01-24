@@ -1,4 +1,3 @@
-// tslint:disable:no-bitwise
 declare const self: DedicatedWorkerGlobalScope;
 export {};
 
@@ -195,13 +194,13 @@ self.addEventListener("message", async (ev) => {
         const data = new Uint8Array(filebuffer, offset);
         const dataLength = data.length;
 
-        console.time("decryptedFile");
+        // console.time("decryptedFile");
 
         for (let cur = 0; cur < dataLength; ++cur) {
             data[cur] ^= keyBox[cur & 0xff];
         }
 
-        console.timeEnd("decryptedFile");
+        // console.timeEnd("decryptedFile");
 
         return data;
     })();

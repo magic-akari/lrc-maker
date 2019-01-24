@@ -19,7 +19,6 @@ import { Synchronizer } from "./synchronizer.js";
 const { useContext, useEffect, useMemo, useRef, useState } = React;
 
 export const Content: React.FC = () => {
-    console.info("Content.render");
     const self = useRef(Symbol(Content.name));
 
     const { prefState } = useContext(appContext, ChangBits.prefState);
@@ -132,12 +131,6 @@ export const Content: React.FC = () => {
             }
             return false;
         });
-    }, []);
-
-    useEffect(() => {
-        return () => {
-            console.error("Content component never unmount");
-        };
     }, []);
 
     const textColor = useMemo(() => {

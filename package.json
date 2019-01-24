@@ -27,7 +27,7 @@
         "css": "postcss src/index.css -m -d build",
         "html": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
         "prehtml": "mkdir -p build",
-        "prettier": "prettier --write \"./{src,worker,scripts}/**/*.{ts,tsx,js,css,json}\" \"./*.{js,json,md}\" ",
+        "prettier": "prettier --write \"./{src,worker,scripts}/**/*.{ts,tsx,js,es6,css,json}\" \"./*.{js,json,md}\" ",
         "lint": "tslint {src,worker,scripts}/**/*.{ts,tsx}"
     },
     "dependencies": {

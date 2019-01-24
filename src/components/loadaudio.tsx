@@ -44,8 +44,6 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
     setAudioSrc,
     lang,
 }) => {
-    console.info("LoadAudio.render");
-
     const self = useRef(Symbol(LoadAudio.name));
 
     useEffect(() => {
@@ -82,12 +80,6 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
 
         sessionStorage.setItem(SSK.audioSrc, url);
         setAudioSrc(url);
-    }, []);
-
-    useEffect(() => {
-        return () => {
-            console.error("LoadAudio never unmount");
-        };
     }, []);
 
     return ReactDOM.createPortal(

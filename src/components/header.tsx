@@ -10,8 +10,6 @@ import {
 const { useContext } = React;
 
 export const Header: React.FC = () => {
-    console.info("Header.render");
-
     const { lang } = useContext(appContext, ChangBits.lang);
 
     return (
