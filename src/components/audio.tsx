@@ -195,8 +195,6 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
 };
 
 export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
-    console.info("LrcAudio.render");
-
     const self = useRef(Symbol(LrcAudio.name));
 
     const [paused, setPaused] = useState(audioRef.paused);

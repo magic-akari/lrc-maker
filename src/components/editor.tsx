@@ -35,8 +35,6 @@ export const Eidtor: React.SFC<{
     lrcState: LrcState;
     lrcDispatch: React.Dispatch<LrcAction>;
 }> = ({ lrcState, lrcDispatch }) => {
-    console.info("Eidtor.render");
-
     const { prefState, lang } = useContext(appContext);
 
     const parse = useCallback((ev: React.FocusEvent<HTMLTextAreaElement>) => {

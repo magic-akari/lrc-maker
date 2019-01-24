@@ -12,8 +12,6 @@ import { toastPubSub } from "./toast.js";
 const { useCallback, useContext, useEffect, useRef, useState } = React;
 
 export const Footer: React.FC = () => {
-    console.info("Footer.render");
-
     const { prefState, lang } = useContext(
         appContext,
         ChangBits.lang | ChangBits.builtInAudio,
@@ -207,10 +205,6 @@ export const Footer: React.FC = () => {
 
             return false;
         });
-
-        return () => {
-            console.error("Footer should never unmount.");
-        };
     }, []);
 
     const onAudioInputChange = useCallback(

@@ -5,8 +5,6 @@ import { Header } from "./header.js";
 import { Toast } from "./toast.js";
 
 const App: React.FC = () => {
-    console.info("App.render");
-
     return (
         <AppProvider>
             <Header />
