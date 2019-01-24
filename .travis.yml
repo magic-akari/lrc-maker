@@ -1,0 +1,29 @@
+language: node_js
+node_js: node
+
+before_script:
+  - export NODE_ENV=production
+  - export USE_CDN=USE_CDN
+
+script: npm run build
+
+before_deploy: 
+  - cp -r ./manifest/* ./build
+  - touch ./build/.nojekyll
+
+deploy:
+- provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  local-dir: build
+  on:
+    branch: master
+- provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  local-dir: build
+  repo: lrc-maker/lrc-maker.github.io
+  target-branch: master
+  on:
+    branch: master
+    tags: true
