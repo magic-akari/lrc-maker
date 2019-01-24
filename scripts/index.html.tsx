@@ -123,6 +123,7 @@ const csp = {
     "script-src": ["'self'", "blob:", jsdelivr],
     "child-src": ["'self'"],
     "media-src": ["'self'", "blob:", "*"],
+    "manifest-src": ["'self'"],
     "connect-src": ["blob:", "https://api.github.com"],
 };
 
@@ -213,7 +214,7 @@ const Html = () => {
 
                 <meta name="application-name" content="灯里的歌词滚动姬" />
                 <meta name="msapplication-TileColor" content="#ffffff" />
-                <meta name="theme-color" content="#ffffff" />
+                <meta name="theme-color" content="#484848" />
                 <meta
                     name="msapplication-config"
                     content="./favicons/browserconfig.xml"
