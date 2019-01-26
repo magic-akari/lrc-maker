@@ -1,3 +1,5 @@
+<p align="center"><img src="./manifest/favicons/apple-touch-icon.png" alt="logo" /></p>
+
 # [LRC Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/magic-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/magic-akari/lrc-maker)
 
 [中文](#这个项目是什么)
