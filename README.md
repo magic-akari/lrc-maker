@@ -1,5 +1,7 @@
 # [LRC Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/magic-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/magic-akari/lrc-maker)
 
+[中文](#这个项目是什么)
+
 ## What is this
 
 This repository is a tool which help you create your lrc file.
@@ -42,7 +44,7 @@ Most modern browser is supported. The current version uses a lot of modern brows
 
 The current version of Edge should be supported theoretically, but there are unexplained reasons for the code to not run after loading. This problem is left to be observed after the Edge with the V8 kernel is released.
 
-The browsers which do not have ES Module support will load the fallback script. Note: The fallback is not tested.
+The browsers which do not have ES Module support will load the fallback script. Note: The fallback is not tested. The old browsers may encounter css layout confusion.
 
 Ancient browsers such as IE are no longer supported. If you are ancient browser user, it is better to use old version of this project.
 
@@ -89,7 +91,7 @@ This project does not configured a local server, and a plugin for vscode is used
 | :---------------------------------------------------------------: | :----------: |
 |                         <kbd>space</kbd>                          | 插入时间标签 |
 |        <kbd>delete</kbd> / <kbd>⌘</kbd>+<kbd>delete</kbd>         | 移除时间标签 |
-| <kbd>ctrl</kbd>+<kbd>enter</kbd> / <kbd>⌘</kbd>+<kbd>return</kbd> |  播放/暂停   |
+| <kbd>ctrl</kbd>+<kbd>enter</kbd> / <kbd>⌘</kbd>+<kbd>return</kbd> | 播放 / 暂停  |
 |                    <kbd>←</kbd> / <kbd>a</kbd>                    |  回退 5 秒   |
 |                    <kbd>→</kbd> / <kbd>d</kbd>                    |  前进 5 秒   |
 |            <kbd>↑</kbd> / <kbd>w</kbd> / <kbd>j</kbd>             |  选择上一行  |
@@ -112,7 +114,7 @@ This project does not configured a local server, and a plugin for vscode is used
 
 当前版本的 Edge 理论上应该支持，但是目前有不明原因导致代码加载后没有运行，这个问题留到 V8 内核的 Edge 发布后再做观察。
 
-对于没有 ES Module 支持的浏览器，仍然做了回退处理以便正常使用。注意：此部分没有进行测试。
+对于没有 ES Module 支持的浏览器，仍然做了回退处理以便正常使用。注意：此部分没有进行测试，旧浏览器仍然可能遇到 css 的布局错乱问题。
 
 IE 等旧浏览器不再支持。对于这类浏览器使用者，可以使用本项目的旧版本。
 
