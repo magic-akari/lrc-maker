@@ -6,7 +6,7 @@
 
 ## What is this
 
-This repository is a tool which help you create your lrc file.
+This repository is a tool which helps you create your lrc file.
 
 ## why lrc-maker
 
@@ -15,10 +15,10 @@ It's hard to find a user-friendly and cross-platform tool to create lrc. So I ma
 ## How to use
 
 open [lrc-maker](https://lrc-maker.github.io) to start. You can add the link to browser bookmark. It is easy to use.  
-Darg and drop the file in the page to load audio file.  
-Use arrow key and space key to insert the timestamp.
+Darg and drop the file in the page to load an audio file.  
+Use the arrow key and space key to insert the timestamp.
 
-## Hot keys
+## Hotkeys
 
 |                                key                                |         function         |
 | :---------------------------------------------------------------: | :----------------------: |
@@ -35,7 +35,7 @@ Use arrow key and space key to insert the timestamp.
 
 ## Compatibility
 
-Most modern browser is supported. The current version uses a lot of modern browser APIs to improve performance and improve the user experience. This project uses the ES Module to load the script code, which means that the browser version should meet the following requirements.
+The most modern browser is supported. The current version uses a lot of modern browser APIs to improve performance and improve the user experience. This project uses the ES Module to load the script code, which means that the browser version should meet the following requirements.
 
 | browser | version |
 | :------ | :------ |
@@ -46,9 +46,9 @@ Most modern browser is supported. The current version uses a lot of modern brows
 
 The current version of Edge should be supported theoretically, but there are unexplained reasons for the code to not run after loading. This problem is left to be observed after the Edge with the V8 kernel is released.
 
-The browsers which do not have ES Module support will load the fallback script. Note: The fallback is not tested. The old browsers may encounter css layout confusion.
+The browsers which do not have ES Module support will load the fallback script. Note: The fallback is not tested. The old browsers may encounter CSS layout confusion.
 
-Ancient browsers such as IE are no longer supported. If you are ancient browser user, it is better to use old version of this project.
+Ancient browsers such as IE are no longer supported. If you are an ancient browser user, it is better to use the old version of this project.
 
 ## Development
 
@@ -71,7 +71,7 @@ yarn start # or `npm start`
 
 ```
 
-This project does not configured a local server, and a plugin for vscode is used in actual development.
+This project does not configure a local server, and a plugin for vscode is used in actual development.
 
 ---
 
@@ -97,7 +97,7 @@ This project does not configured a local server, and a plugin for vscode is used
 |                    <kbd>←</kbd> / <kbd>a</kbd>                    |  回退 5 秒   |
 |                    <kbd>→</kbd> / <kbd>d</kbd>                    |  前进 5 秒   |
 |            <kbd>↑</kbd> / <kbd>w</kbd> / <kbd>j</kbd>             |  选择上一行  |
-|            <kbd>↓</kbd> / <kbd>s</kbd> / <kbd>k</kbd>             |  现在下一行  |
+|            <kbd>↓</kbd> / <kbd>s</kbd> / <kbd>k</kbd>             |  选择下一行  |
 |     <kbd>ctrl</kbd>+<kbd>↑</kbd> / <kbd>⌘</kbd>+<kbd>↑</kbd>      | 提高播放速度 |
 |     <kbd>ctrl</kbd>+<kbd>↓</kbd> / <kbd>⌘</kbd>+<kbd>↓</kbd>      | 降低播放速度 |
 |                           <kbd>r</kbd>                            | 重置播放速度 |
