@@ -1,5 +1,6 @@
 import { language } from "./languages/en-US";
 
+// tslint:disable:interface-name
 declare global {
     export namespace React {
         function useContext<T>(

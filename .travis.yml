@@ -5,7 +5,10 @@ before_script:
   - export NODE_ENV=production
   - export USE_CDN=USE_CDN
 
-script: npm run build
+script:
+  - npm run listdiff
+  - npm run lint
+  - npm run build
 
 before_deploy: 
   - cp -r ./manifest/* ./build
