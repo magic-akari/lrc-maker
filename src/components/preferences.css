@@ -220,3 +220,76 @@ input[type="number"] {
         transform: translate(34%, 0);
     }
 }
+
+.current-theme-color {
+    font-family: Consolas, Monaco, monospace;
+    vertical-align: middle;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown > summary::-webkit-details-marker {
+    display: none;
+}
+
+.dropdown > summary::after {
+    color: var(--theme-color);
+    content: "\25BC";
+    pointer-events: none;
+    vertical-align: middle;
+}
+
+.dropdown[open] > summary::before {
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    cursor: default;
+    display: block;
+    position: fixed;
+    z-index: 80;
+}
+
+.dropdown-body {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 100;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid var(--theme-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0px 1rem var(--theme-color);
+    background-color: var(--background-color);
+}
+
+.dropdown-body::before {
+    content: "";
+    position: absolute;
+    right: 74px;
+    margin-left: -0.5rem;
+    border-width: 0.5rem;
+    border-style: solid;
+
+    bottom: 100%;
+    border-color: transparent transparent var(--theme-color) transparent;
+}
+
+.color-wall {
+    width: 200px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    grid-column-gap: 4px;
+    grid-row-gap: 4px;
+    justify-items: center;
+    align-items: center;
+}
+
+.user-color-input {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
