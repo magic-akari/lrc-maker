@@ -3,35 +3,28 @@ import { CloseSVG } from "./svg.js";
 
 const { useRef, useEffect, useCallback } = React;
 
-interface ILoadAudioDialogRef extends React.RefObject<HTMLDialogElement> {
-    open: boolean;
-    showModal: () => void;
+interface ILoadAudioDialogRef extends React.RefObject<HTMLDetailsElement> {
+    open: () => void;
     close: () => void;
 }
 
-let supportDialog = (window as any).HTMLDialogElement !== undefined;
+// let supportDialog = (window as any).HTMLDialogElement !== undefined;
 
 export const loadAudioDialogRef: ILoadAudioDialogRef = {
     current: null,
-    get open() {
-        return this.current ? this.current.open : false;
-    },
-    showModal() {
+
+    open() {
         if (this.current === null || this.current.open) {
             return;
         }
-        if (!supportDialog) {
-            dialogPolyfill.registerDialog(loadAudioDialogRef.current!);
-            supportDialog = true;
-        }
 
-        this.current.showModal();
+        this.current.open = true;
     },
     close() {
         if (this.current === null || !this.current.open) {
             return;
         }
-        this.current.close();
+        this.current.open = false;
     },
 };
 
@@ -57,8 +50,31 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
         };
     }, []);
 
-    const onClose = useCallback(() => {
-        loadAudioDialogRef.close();
+    useEffect(() => {
+        const handleEscape = (ev: KeyboardEvent) => {
+            if (ev.code === "Escape" || ev.key === "Escape") {
+                loadAudioDialogRef.close();
+            }
+        };
+
+        const handleToggle = () => {
+            if (loadAudioDialogRef.current!.open) {
+                window.addEventListener("keydown", handleEscape, {
+                    once: true,
+                });
+            } else {
+                window.removeEventListener("keydown", handleEscape);
+            }
+        };
+
+        loadAudioDialogRef.current!.addEventListener("toggle", handleToggle);
+
+        return () => {
+            loadAudioDialogRef.current!.removeEventListener(
+                "toggle",
+                handleToggle,
+            );
+        };
     }, []);
 
     const onSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
@@ -83,48 +99,54 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
     }, []);
 
     return ReactDOM.createPortal(
-        <dialog ref={loadAudioDialogRef} className="fixed app-loadaudio-dialog">
-            <button className="glow loadaudio-dialog-close" onClick={onClose}>
+        <details
+            ref={loadAudioDialogRef}
+            className="dialog fixed loadaudio-dialog">
+            <summary className="glow dialog-close">
                 <CloseSVG />
-            </button>
-            <div className="dialog-tab loadaudio-via-file">
-                <input
-                    type="radio"
-                    name="tabgroup"
-                    id="tab-file"
-                    defaultChecked
-                />
-                <label className="ripple" htmlFor="tab-file">
-                    {lang.loadAudio.file}
-                </label>
-                <div className="content">
-                    <label className="audio-input-tip" htmlFor="audio-input">
-                        {lang.loadAudio.loadFile}
+            </summary>
+            <section className="dialog-body loadaudio-body">
+                <div className="loadaudio-tab loadaudio-via-file">
+                    <input
+                        type="radio"
+                        name="tabgroup"
+                        id="tab-file"
+                        defaultChecked
+                    />
+                    <label className="ripple" htmlFor="tab-file">
+                        {lang.loadAudio.file}
                     </label>
+                    <div className="loadaudio-content">
+                        <label
+                            className="audio-input-tip"
+                            htmlFor="audio-input">
+                            {lang.loadAudio.loadFile}
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div className="dialog-tab loadaudio-via-url">
-                <input type="radio" name="tabgroup" id="tab-url" />
-                <label className="ripple" htmlFor="tab-url">
-                    {lang.loadAudio.url}
-                </label>
-                <div className="content">
-                    <form className="audio-input-form" onSubmit={onSubmit}>
-                        <input
-                            type="url"
-                            name="url"
-                            required
-                            autoCapitalize="off"
-                            autoComplete="off"
-                            autoCorrect="off"
-                            spellCheck={false}
-                        />
-                        <input className="button" type="submit" />
-                    </form>
+                <div className="loadaudio-tab loadaudio-via-url">
+                    <input type="radio" name="tabgroup" id="tab-url" />
+                    <label className="ripple" htmlFor="tab-url">
+                        {lang.loadAudio.url}
+                    </label>
+                    <div className="loadaudio-content">
+                        <form className="audio-input-form" onSubmit={onSubmit}>
+                            <input
+                                type="url"
+                                name="url"
+                                required
+                                autoCapitalize="off"
+                                autoComplete="off"
+                                autoCorrect="off"
+                                spellCheck={false}
+                            />
+                            <input className="button" type="submit" />
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </dialog>,
+            </section>
+        </details>,
         document.body,
     );
 };

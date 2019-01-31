@@ -234,7 +234,7 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
     }, []);
 
     const loadAudioButtonClick = useCallback(() => {
-        loadAudioDialogRef.showModal();
+        loadAudioDialogRef.open();
     }, []);
 
     return (

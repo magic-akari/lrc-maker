@@ -100,16 +100,6 @@
     }
 })();
 
-// dialog
-
-if ((window as any).HTMLDialogElement === undefined) {
-    const script = document.createElement("script");
-    script.integrity = JsdelivrDialog.integrity;
-    script.crossOrigin = "anonymous";
-    script.src = JsdelivrDialog.src;
-    document.head.appendChild(script);
-}
-
 // smooth scroll
 // only for special usage of lrc maker
 (() => {
