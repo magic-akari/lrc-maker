@@ -252,53 +252,75 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.themeColor}</span>
-                        <form onSubmit={onColorSubmit}>
-                            {Object.values(themeColor).map((color) => {
-                                const checked = color === prefState.themeColor;
-                                const classNames = ["color-picker", "ripple"];
-                                if (checked) {
-                                    classNames.push("checked");
-                                }
-                                return (
-                                    <label
-                                        className={classNames.join(Const.space)}
-                                        key={color}
-                                        style={{ backgroundColor: color }}>
-                                        <input
-                                            hidden
-                                            type="radio"
-                                            name="theme-color"
-                                            value={color}
-                                            checked={checked}
-                                            onChange={onColorPick}
-                                        />
-                                    </label>
-                                );
-                            })}
-                            <label
-                                className="color-picker ripple user-color-label"
-                                htmlFor="user-color-input"
-                                style={{
-                                    backgroundColor: prefState.themeColor,
-                                }}>
-                                #
-                            </label>
-                            <input
-                                ref={userColorInput}
-                                id="user-color-input"
-                                name="user-color-input"
-                                className="user-color-input"
-                                type="text"
-                                pattern="[\da-f]{3,6}"
-                                required
-                                autoCapitalize="off"
-                                autoComplete="off"
-                                autoCorrect="off"
-                                spellCheck={false}
-                                defaultValue={prefState.themeColor.slice(1)}
-                                onBlur={onUserColorInputBlur}
-                            />
-                        </form>
+                        <details className="dropdown">
+                            <summary>
+                                <span
+                                    className="color-picker ripple"
+                                    style={{
+                                        backgroundColor: prefState.themeColor,
+                                    }}>
+                                    {"#"}
+                                </span>
+                                <span className="current-theme-color">
+                                    {prefState.themeColor.slice(1)}
+                                </span>
+                            </summary>
+                            <form
+                                className="dropdown-body color-wall"
+                                onSubmit={onColorSubmit}>
+                                {Object.values(themeColor).map((color) => {
+                                    const checked =
+                                        color === prefState.themeColor;
+                                    const classNames = [
+                                        "color-picker",
+                                        "ripple",
+                                    ];
+                                    if (checked) {
+                                        classNames.push("checked");
+                                    }
+                                    return (
+                                        <label
+                                            className={classNames.join(
+                                                Const.space,
+                                            )}
+                                            key={color}
+                                            style={{ backgroundColor: color }}>
+                                            <input
+                                                hidden
+                                                type="radio"
+                                                name="theme-color"
+                                                value={color}
+                                                checked={checked}
+                                                onChange={onColorPick}
+                                            />
+                                        </label>
+                                    );
+                                })}
+                                <label
+                                    className="color-picker ripple user-color-label"
+                                    htmlFor="user-color-input"
+                                    style={{
+                                        backgroundColor: prefState.themeColor,
+                                    }}>
+                                    #
+                                </label>
+                                <input
+                                    ref={userColorInput}
+                                    id="user-color-input"
+                                    name="user-color-input"
+                                    className="user-color-input"
+                                    type="text"
+                                    pattern="[\da-f]{3,6}"
+                                    required
+                                    autoCapitalize="off"
+                                    autoComplete="off"
+                                    autoCorrect="off"
+                                    spellCheck={false}
+                                    defaultValue={prefState.themeColor.slice(1)}
+                                    onBlur={onUserColorInputBlur}
+                                />
+                            </form>
+                        </details>
                     </section>
                 </li>
                 <li>
