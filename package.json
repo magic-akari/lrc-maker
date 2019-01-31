@@ -1,6 +1,6 @@
 {
     "name": "lrc-maker",
-    "version": "5.0.0-beta.20190129",
+    "version": "5.0.0-beta.20190131",
     "description": "歌词滚动姬｜可能是你所能见到的最好用的歌词制作工具",
     "repository": "https://github.com/magic-akari/lrc-maker.git",
     "author": "阿卡琳 <hufan.akarin@Gmail.com>",
@@ -37,8 +37,8 @@
         "react-dom": "^16.8.0-alpha.1"
     },
     "devDependencies": {
-        "@types/node": "^10.12.18",
-        "@types/react": "^16.7.20",
+        "@types/node": "^10.12.20",
+        "@types/react": "^16.7.22",
         "@types/react-dom": "^16.0.11",
         "autoprefixer": "^9.4.7",
         "cssnano": "^4.1.8",
@@ -47,7 +47,7 @@
         "postcss-cli": "^6.1.1",
         "postcss-custom-properties": "^8.0.9",
         "postcss-import": "^12.0.1",
-        "prettier": "^1.16.1",
+        "prettier": "^1.16.3",
         "source-map-loader": "^0.2.4",
         "ts-node": "^8.0.2",
         "tslint": "^5.12.1",
