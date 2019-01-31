@@ -31,7 +31,7 @@ export const Home: React.FC = () => {
                     <li>
                         <button
                             className="home-tip-text-svg"
-                            onClick={() => loadAudioDialogRef.showModal()}>
+                            onClick={() => loadAudioDialogRef.open()}>
                             <LoadAudioSVG />
                         </button>
                         {lang.home.tipForUploadAudio}

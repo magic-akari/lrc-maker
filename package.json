@@ -32,7 +32,6 @@
         "lint": "tslint {src,worker,scripts}/**/*.{ts,tsx,es6}"
     },
     "dependencies": {
-        "dialog-polyfill": "^0.4.10",
         "normalize.css": "^8.0.1",
         "react": "^16.8.0-alpha.1",
         "react-dom": "^16.8.0-alpha.1"

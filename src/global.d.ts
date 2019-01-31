@@ -55,11 +55,6 @@ declare global {
         ratelimit = "x-ratelimit",
     }
 
-    const enum JsdelivrDialog {
-        src = "https://cdn.jsdelivr.net/npm/dialog-polyfill@0.4.10/dialog-polyfill.js",
-        integrity = "sha256-MzKeKXV3W7bf3Uu0xLNN/SiVj3OBfBUzD3VmMb/yyCQ=",
-    }
-
     const enum Repo {
         url = "https://github.com/magic-akari/lrc-maker",
         wiki = "https://github.com/magic-akari/lrc-maker/wiki",
