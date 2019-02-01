@@ -115,10 +115,9 @@
 }
 
 .user-color-input {
-    height: 30px;
-    width: 4rem;
+    justify-self: stretch;
+    align-self: stretch;
     margin: 2px;
-    vertical-align: middle;
 }
 
 .text-white .user-color-label {
@@ -234,6 +233,10 @@ input[type="number"] {
     display: none;
 }
 
+.dropdown > summary:first-of-type {
+    list-style-type: none;
+}
+
 .dropdown > summary::after {
     color: var(--theme-color);
     content: "\25BC";
@@ -290,6 +293,5 @@ input[type="number"] {
 }
 
 .user-color-input {
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column: span 2;
 }
