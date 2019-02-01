@@ -29,6 +29,10 @@
     display: none;
 }
 
+.dialog-close > summary:first-of-type {
+    list-style-type: none;
+}
+
 .dialog-close::before {
     content: "";
     position: fixed;

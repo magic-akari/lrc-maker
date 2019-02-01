@@ -102,7 +102,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
         <details
             ref={loadAudioDialogRef}
             className="dialog fixed loadaudio-dialog">
-            <summary className="glow dialog-close">
+            <summary className="dialog-close">
                 <CloseSVG />
             </summary>
             <section className="dialog-body loadaudio-body">
