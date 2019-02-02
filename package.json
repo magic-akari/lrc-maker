@@ -18,6 +18,7 @@
     ],
     "scripts": {
         "start": "npm run html && npm run tsc:worker && npm run tsc:watch",
+        "prebuild": "rm -rf ./build ./build.es6",
         "build": "npm run css && npm run tsc:build && npm run nomodule && npm run html",
         "tsc": "tsc",
         "tsc:build": "tsc -b",
@@ -25,8 +26,8 @@
         "tsc:worker": "tsc -P worker/tsconfig.json",
         "nomodule": "tsc -P tsconfig.webpack.json && webpack -p",
         "css": "postcss src/index.css -m -d build",
+        "prehtml": "mkdir -p build && cp -r ./svg ./build",
         "html": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
-        "prehtml": "mkdir -p build",
         "prettier": "prettier --write {src,worker,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
         "listdiff": "prettier -l {src,worker,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
         "lint": "tslint {src,worker,scripts}/**/*.{ts,tsx,es6}"

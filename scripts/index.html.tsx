@@ -161,6 +161,18 @@ const Html = () => {
         csp["connect-src"].push("*");
     }
 
+    const akariOdangoLoading = appUrl("./svg/akari-odango-loading.svg");
+    const akariHideWall = appUrl("./svg/akari-hide-wall.svg");
+
+    if (useCDN) {
+        csp["default-src"] = [
+            akariOdangoLoading.integrity!,
+            akariHideWall.integrity!,
+        ];
+    } else {
+        csp["default-src"] = ["'self'"];
+    }
+
     return (
         <html>
             <head>
@@ -223,6 +235,22 @@ const Html = () => {
                     name="apple-mobile-web-app-title"
                     content="灯里的歌词滚动姬"
                 />
+
+                <link
+                    className="preload-akari-odango-loading"
+                    rel="preload"
+                    as="image"
+                    href={akariOdangoLoading.src}
+                    crossOrigin={akariOdangoLoading.crossOrigin}
+                />
+                <link
+                    className="prefetch-akari-hide-wall"
+                    rel="prefetch"
+                    as="image"
+                    href={akariHideWall.src}
+                    crossOrigin={akariHideWall.crossOrigin}
+                />
+
                 <link
                     rel="stylesheet"
                     {...(() => {
@@ -273,6 +301,13 @@ const Html = () => {
             </head>
             <body>
                 <div className="app-container" />
+                <div className="page-loading">
+                    <img
+                        className="akari-odango-loading start-loading"
+                        src={akariOdangoLoading.src}
+                        alt="loading"
+                    />
+                </div>
                 <script
                     dangerouslySetInnerHTML={{
                         __html: reg.content,

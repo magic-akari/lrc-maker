@@ -2,7 +2,6 @@ import { convertTimeToTag, formatText } from "../hooks/useLrc.js";
 import { themeColor } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
-import { AkariHideWall } from "./svg.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef } = React;
 
@@ -139,6 +138,18 @@ export const Preferences: React.FC = () => {
         };
         return new Intl.DateTimeFormat(prefState.lang, options).format(date);
     }, [prefState.lang]);
+
+    const AkariHideWall = useMemo(() => {
+        const src = (document.querySelector(
+            ".prefetch-akari-hide-wall",
+        ) as HTMLLinkElement).href;
+
+        return (
+            <svg className="akari-hide-wall" viewBox="0 0 1024 1024">
+                <use xlinkHref={`${src}#main`} href={`${src}#main`} />
+            </svg>
+        );
+    }, []);
 
     return (
         <div className="preferences">
@@ -404,7 +415,7 @@ export const Preferences: React.FC = () => {
                     </section>
                 </li>
             </ul>
-            <AkariHideWall />
+            {AkariHideWall}
         </div>
     );
 };

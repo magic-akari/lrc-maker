@@ -64,7 +64,6 @@
     transform: scale(1);
     transition: all 250ms ease-in-out;
     width: 54px;
-    z-index: 1;
 }
 .label-switch input[type="checkbox"] + .checkbox::after {
     position: absolute;
@@ -171,7 +170,6 @@
     right: 0;
     color: var(--theme-color);
     content: "\25BC";
-    z-index: 1;
     pointer-events: none;
 }
 
