@@ -45,7 +45,7 @@ self.addEventListener("fetch", (event) => {
 
     const url = new URL(event.request.url);
 
-    if (!/(?:\.css|\.js|\/)$/.test(url.pathname)) {
+    if (!/(?:\.css|\.js|\.svg|\/)$/i.test(url.pathname)) {
         return;
     }
 
