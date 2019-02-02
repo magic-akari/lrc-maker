@@ -1,4 +1,8 @@
-<p align="center"><img src="./manifest/favicons/apple-touch-icon.png" alt="logo" /></p>
+<p align="center">
+    <a href="https://lrc-maker.github.io">
+        <img src="./manifest/favicons/apple-touch-icon.png" alt="logo" />
+    </a>
+</p>
 
 # [LRC Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/magic-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/magic-akari/lrc-maker)
 
@@ -73,6 +77,10 @@ yarn start # or `npm start`
 
 This project does not configure a local server, and a plugin for vscode is used in actual development.
 
+## Star this project :star:
+
+If you like give us a star :star: Share this project to help more people.
+
 ---
 
 ## 这个项目是什么
@@ -142,3 +150,7 @@ yarn start # 或者 `npm start`
 ```
 
 本项目没有配置本地服务器，实际开发中使用了 vs code 的插件。
+
+## 给这个项目点一个星星 :star:
+
+如果你喜欢这个项目，请点一个星星吧:star:，分享这个项目来帮助更多的人。
