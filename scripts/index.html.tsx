@@ -118,10 +118,12 @@ const swUnregister = () => {
 
 const csp = {
     "default-src": ["'none'"],
-    "img-src": ["'self'", "data:"],
+    "prefetch-src": ["'self'", jsdelivr],
+    "img-src": ["'self'", "data:", jsdelivr],
     "style-src": ["'self'", jsdelivr],
     "script-src": ["'self'", "blob:", jsdelivr],
     "child-src": ["'self'"],
+    "worker-src": ["'self'"],
     "media-src": ["'self'", "blob:", "*"],
     "manifest-src": ["'self'"],
     "connect-src": ["blob:", "https://api.github.com"],
@@ -163,15 +165,6 @@ const Html = () => {
 
     const akariOdangoLoading = appUrl("./svg/akari-odango-loading.svg");
     const akariHideWall = appUrl("./svg/akari-hide-wall.svg");
-
-    if (useCDN) {
-        csp["default-src"] = [
-            akariOdangoLoading.integrity!,
-            akariHideWall.integrity!,
-        ];
-    } else {
-        csp["default-src"] = ["'self'"];
-    }
 
     return (
         <html>
@@ -241,14 +234,12 @@ const Html = () => {
                     rel="preload"
                     as="image"
                     href={akariOdangoLoading.src}
-                    crossOrigin={akariOdangoLoading.crossOrigin}
                 />
                 <link
                     className="prefetch-akari-hide-wall"
                     rel="prefetch"
                     as="image"
                     href={akariHideWall.src}
-                    crossOrigin={akariHideWall.crossOrigin}
                 />
 
                 <link

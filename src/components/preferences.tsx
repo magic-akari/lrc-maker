@@ -145,9 +145,7 @@ export const Preferences: React.FC = () => {
         ) as HTMLLinkElement).href;
 
         return (
-            <svg className="akari-hide-wall" viewBox="0 0 1024 1024">
-                <use xlinkHref={`${src}#main`} href={`${src}#main`} />
-            </svg>
+            <img className="akari-hide-wall" src={src} alt="akari-hide-wall" />
         );
     }, []);
 
