@@ -77,4 +77,8 @@ export const language = {
         rightSpace: "右侧空格",
         clearCache: "清除缓存",
     },
+
+    notify: {
+        audioLoaded: "音频已载入",
+    },
 };

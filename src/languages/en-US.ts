@@ -80,4 +80,8 @@ export const language = {
         rightSpace: "Right space",
         clearCache: "Clear caches",
     },
+
+    notify: {
+        audioLoaded: "Audio loaded.",
+    },
 };
