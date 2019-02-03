@@ -265,6 +265,20 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         return false;
     }, [gistId, token, RateLimit]);
 
+    const AkariOdangoLoading = useMemo(() => {
+        const src = (document.querySelector(
+            ".preload-akari-odango-loading",
+        ) as HTMLLinkElement).href;
+
+        return (
+            <img
+                className="akari-odango-loading start-loading"
+                src={src}
+                alt="loading"
+            />
+        );
+    }, []);
+
     return (
         <div className="gist">
             {GistDetails}
@@ -387,7 +401,11 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                     );
                 }
 
-                return <section className="gist-loading">{"loading"}</section>;
+                return (
+                    <section className="gist-loading">
+                        {AkariOdangoLoading}
+                    </section>
+                );
             })()}
         </div>
     );
