@@ -26,6 +26,28 @@ export const Footer: React.FC = () => {
         return privateSetAudioSrc(src);
     }, []);
 
+    useEffect(() => {
+        const ac = audioRef.current!;
+
+        const onLoadMetadata = () => {
+            cancelAnimationFrame(rafId.current);
+            audioStatePubSub.pub({
+                type: AudioActionType.getDuration,
+                payload: audioRef.duration,
+            });
+            toastPubSub.pub({
+                type: "success",
+                text: lang.notify.audioLoaded,
+            });
+        };
+        ac.addEventListener("loadedmetadata", onLoadMetadata, {
+            passive: true,
+        });
+        return () => {
+            ac.removeEventListener("loadedmetadata", onLoadMetadata);
+        };
+    }, [lang]);
+
     const rafId = useRef(0);
 
     useEffect(() => {
@@ -37,22 +59,6 @@ export const Footer: React.FC = () => {
         const ac = audioRef.current!;
 
         const passive = { passive: true };
-
-        ac.addEventListener(
-            "loadedmetadata",
-            () => {
-                cancelAnimationFrame(rafId.current);
-                audioStatePubSub.pub({
-                    type: AudioActionType.getDuration,
-                    payload: audioRef.duration,
-                });
-                toastPubSub.pub({
-                    type: "success",
-                    text: "File loaded",
-                });
-            },
-            passive,
-        );
 
         ac.addEventListener(
             "play",
