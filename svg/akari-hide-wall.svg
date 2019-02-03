@@ -27,5 +27,5 @@
     <path fill="#fff" d="M607 576c5 37 9 71 10 105l7-1c-1-36-5-70-11-104"/>
     <path fill="none" stroke="#000" d="M183 243c-70-21-46-54 14-38m11-66c-44-31-10-80 27-21"/>
   </symbol>
-  <use xlink:href="#main" href="#main"/>
+  <use xlink:href="#main" href="#main" stroke-width="4"/>
 </svg>
