@@ -234,12 +234,14 @@ const Html = () => {
                     rel="preload"
                     as="image"
                     href={akariOdangoLoading.src}
+                    crossOrigin={akariOdangoLoading.crossOrigin}
                 />
                 <link
                     className="prefetch-akari-hide-wall"
                     rel="prefetch"
                     as="image"
                     href={akariHideWall.src}
+                    crossOrigin={akariHideWall.crossOrigin}
                 />
 
                 <link
@@ -297,6 +299,7 @@ const Html = () => {
                         className="akari-odango-loading start-loading"
                         src={akariOdangoLoading.src}
                         alt="loading"
+                        crossOrigin={akariOdangoLoading.crossOrigin}
                     />
                 </div>
                 <script
