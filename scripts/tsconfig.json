@@ -5,6 +5,7 @@
         "lib": ["dom", "es2018"],
         "jsx": "react",
         "strict": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "resolveJsonModule": true
     }
 }
