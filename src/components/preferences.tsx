@@ -140,12 +140,17 @@ export const Preferences: React.FC = () => {
     }, [prefState.lang]);
 
     const AkariHideWall = useMemo(() => {
-        const src = (document.querySelector(
+        const { href, crossOrigin } = document.querySelector(
             ".prefetch-akari-hide-wall",
-        ) as HTMLLinkElement).href;
+        ) as HTMLLinkElement;
 
         return (
-            <img className="akari-hide-wall" src={src} alt="akari-hide-wall" />
+            <img
+                className="akari-hide-wall"
+                alt="akari-hide-wall"
+                src={href}
+                crossOrigin={crossOrigin as "anonymous" | undefined}
+            />
         );
     }, []);
 

@@ -266,15 +266,16 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     }, [gistId, token, RateLimit]);
 
     const AkariOdangoLoading = useMemo(() => {
-        const src = (document.querySelector(
+        const { href, crossOrigin } = document.querySelector(
             ".preload-akari-odango-loading",
-        ) as HTMLLinkElement).href;
+        ) as HTMLLinkElement;
 
         return (
             <img
                 className="akari-odango-loading start-loading"
-                src={src}
                 alt="loading"
+                src={href}
+                crossOrigin={crossOrigin as "anonymous" | undefined}
             />
         );
     }, []);
