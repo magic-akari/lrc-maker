@@ -1,26 +1,9 @@
 html {
-    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB",
-        "Heiti SC", "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei",
-        "WenQuanYi Micro Hei", sans-serif;
-
-    text-size-adjust: 100%;
     font-feature-settings: "kern" 1;
     font-kerning: normal;
     color: var(--black);
     caret-color: var(--theme-color);
     background-color: var(--background-color);
-    box-sizing: border-box;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
-}
-
-* {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 svg {

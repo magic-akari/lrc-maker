@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import "../node_modules/normalize.css/normalize.css";
+@import "./normalize.css";
 @import "./variables.css";
 @import "./components/app.css";
 @import "./components/header.css";
