@@ -175,44 +175,34 @@ export const Content: React.FC = () => {
         return con * con > 0.0525 ? "text-black" : "text-white";
     }, [prefState.themeColor]);
 
-    return (
-        <main className={`app-main ${textColor}`}>
-            {(() => {
-                switch (path) {
-                    case Path.editor: {
-                        return (
-                            <Eidtor
-                                lrcState={lrcState}
-                                lrcDispatch={lrcDispatch}
-                            />
-                        );
-                    }
+    const content = (() => {
+        switch (path) {
+            case Path.editor: {
+                return <Eidtor lrcState={lrcState} lrcDispatch={lrcDispatch} />;
+            }
 
-                    case Path.synchronizer: {
-                        return (
-                            <Synchronizer
-                                lrcState={lrcState}
-                                lrcDispatch={lrcDispatch}
-                            />
-                        );
-                    }
+            case Path.synchronizer: {
+                return (
+                    <Synchronizer
+                        lrcState={lrcState}
+                        lrcDispatch={lrcDispatch}
+                    />
+                );
+            }
 
-                    case Path.gist: {
-                        return (
-                            <Gist
-                                lrcDispatch={lrcDispatch}
-                                langName={prefState.lang}
-                            />
-                        );
-                    }
+            case Path.gist: {
+                return (
+                    <Gist lrcDispatch={lrcDispatch} langName={prefState.lang} />
+                );
+            }
 
-                    case Path.preferences: {
-                        return <Preferences />;
-                    }
-                }
+            case Path.preferences: {
+                return <Preferences />;
+            }
+        }
 
-                return <Home />;
-            })()}
-        </main>
-    );
+        return <Home />;
+    })();
+
+    return <main className={`app-main ${textColor}`}>{content}</main>;
 };

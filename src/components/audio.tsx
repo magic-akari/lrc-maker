@@ -159,7 +159,7 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
         return Math.log(playbackRate);
     }, [playbackRate]);
 
-    const onPlaybackRateSliderValueChanged = useCallback(
+    const onPlaybackRateChange = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
             const value = Math.exp(Number.parseFloat(ev.target.value));
             setPlaybackRate(value);
@@ -168,7 +168,7 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
         [],
     );
 
-    const restPlaybackRate = useCallback(() => {
+    const onPlaybackRateReset = useCallback(() => {
         audioRef.playbackRate = 1;
     }, []);
 
@@ -177,7 +177,8 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
             <button
                 className="ripple glow"
                 title={lang.audio.resetRate}
-                onClick={restPlaybackRate}>
+                onClick={onPlaybackRateReset}
+            >
                 {"X "}
                 {playbackRate.toFixed(2)}
             </button>
@@ -188,7 +189,7 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
                 max={1}
                 step="any"
                 value={playbackRateSliderValue}
-                onChange={onPlaybackRateSliderValueChanged}
+                onChange={onPlaybackRateChange}
             />
         </>
     );
@@ -221,19 +222,19 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
         };
     }, []);
 
-    const replay5s = useCallback(() => {
+    const onReplay5s = useCallback(() => {
         audioRef.currentTime -= 5;
     }, []);
 
-    const forward5s = useCallback(() => {
+    const onForward5s = useCallback(() => {
         audioRef.currentTime += 5;
     }, []);
 
-    const togglePlayPause = useCallback(() => {
+    const onPlayPauseToggle = useCallback(() => {
         audioRef.toggle();
     }, []);
 
-    const loadAudioButtonClick = useCallback(() => {
+    const onLoadAudioButtonClick = useCallback(() => {
         loadAudioDialogRef.open();
     }, []);
 
@@ -242,28 +243,32 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
             <button
                 className="ripple glow loadaudio-button"
                 title={lang.audio.loadAudio}
-                onClick={loadAudioButtonClick}>
+                onClick={onLoadAudioButtonClick}
+            >
                 <LoadAudioSVG />
             </button>
             <button
                 className="ripple glow"
                 title={lang.audio.replay5s}
-                onClick={replay5s}
-                disabled={!duration}>
+                onClick={onReplay5s}
+                disabled={!duration}
+            >
                 <Replay5sSVG />
             </button>
             <button
                 className="ripple glow"
                 title={paused ? lang.audio.play : lang.audio.pause}
                 disabled={!duration}
-                onClick={togglePlayPause}>
+                onClick={onPlayPauseToggle}
+            >
                 {paused ? <PlaySVG /> : <PauseSVG />}
             </button>
             <button
                 className="ripple glow"
                 title={lang.audio.forward5s}
-                onClick={forward5s}
-                disabled={!duration}>
+                onClick={onForward5s}
+                disabled={!duration}
+            >
                 <Forward5sSVG />
             </button>
 

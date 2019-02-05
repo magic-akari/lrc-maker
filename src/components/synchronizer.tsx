@@ -3,6 +3,7 @@ import {
     ActionType as LrcActionType,
     convertTimeToTag,
     formatText,
+    ILyric,
     State as LrcState,
     stringify,
 } from "../hooks/useLrc.js";
@@ -325,60 +326,72 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         return stringify(lrcStateRef.current, prefState);
     }, [prefState]);
 
+    const LyricLine = useCallback(
+        (line: ILyric, index: number) => {
+            const className = ["line"];
+
+            let insertCurser: JSX.Element | null = null;
+
+            if (index === selectedLine) {
+                className.push("select");
+                insertCurser = curser.current;
+            }
+
+            if (index === highLight) {
+                className.push("highlight");
+            }
+
+            // (1 < undefined)         === false
+            // (undefined < 1)         === false
+            // (undefined < undefined) === false
+            if (
+                index > 0 &&
+                // lyric[index].time !== undefined &&
+                // lyric[index - 1].time !== undefined &&
+                lyric[index].time! <= lyric[index - 1].time!
+            ) {
+                className.push("error");
+            }
+
+            const lineTime = formatTimeTag(line.time);
+
+            const lineText = formatText(
+                line.text,
+                prefState.spaceStart,
+                prefState.spaceEnd,
+            );
+
+            return (
+                <li
+                    key={index}
+                    data-key={index}
+                    className={className.join(" ")}
+                >
+                    {insertCurser}
+                    <time className="line-time">{lineTime}</time>
+                    <span className="line-text">{lineText}</span>
+                </li>
+            );
+        },
+        [selectedLine, highLight],
+    );
+
+    const ulClassName = useMemo(() => {
+        if (prefState.screenButton) {
+            return "lyric-list on-screen-button";
+        }
+        return "lyric-list";
+    }, [prefState.screenButton]);
+
     return (
         <>
             <ul
                 ref={ul}
-                className={`lyric-list ${
-                    prefState.screenButton ? "on-screen-button" : ""
-                }`}
+                className={ulClassName}
                 onClickCapture={onLineClick}
-                onDoubleClickCapture={onLineDoubleClick}>
-                {lyric.map((line, index) => {
-                    const className = ["line"];
-
-                    let insertCurser: JSX.Element | null = null;
-
-                    if (index === selectedLine) {
-                        className.push("select");
-                        insertCurser = curser.current;
-                    }
-
-                    if (index === highLight) {
-                        className.push("highlight");
-                    }
-
-                    // (1 < undefined)         === false
-                    // (undefined < 1)         === false
-                    // (undefined < undefined) === false
-                    if (
-                        index > 0 &&
-                        // lyric[index].time !== undefined &&
-                        // lyric[index - 1].time !== undefined &&
-                        lyric[index].time! <= lyric[index - 1].time!
-                    ) {
-                        className.push("error");
-                    }
-
-                    return (
-                        <li
-                            key={index}
-                            data-key={index}
-                            className={className.join(" ")}>
-                            {insertCurser}
-                            <time className="line-time">
-                                {formatTimeTag(line.time)}
-                            </time>
-                            <span className="line-text">
-                                {formatText(
-                                    line.text,
-                                    prefState.spaceStart,
-                                    prefState.spaceEnd,
-                                )}
-                            </span>
-                        </li>
-                    );
-                })}
+                onDoubleClickCapture={onLineDoubleClick}
+            >
+                {lyric.map(LyricLine)}
             </ul>
             <AsidePanel
                 syncMode={syncMode}

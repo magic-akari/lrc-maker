@@ -101,7 +101,8 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
     return ReactDOM.createPortal(
         <details
             ref={loadAudioDialogRef}
-            className="dialog fixed loadaudio-dialog">
+            className="dialog fixed loadaudio-dialog"
+        >
             <summary className="dialog-close">
                 <CloseSVG />
             </summary>
@@ -111,7 +112,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
                         type="radio"
                         name="tabgroup"
                         id="tab-file"
-                        defaultChecked
+                        defaultChecked={true}
                     />
                     <label className="ripple" htmlFor="tab-file">
                         {lang.loadAudio.file}
@@ -119,7 +120,8 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
                     <div className="loadaudio-content">
                         <label
                             className="audio-input-tip"
-                            htmlFor="audio-input">
+                            htmlFor="audio-input"
+                        >
                             {lang.loadAudio.loadFile}
                         </label>
                     </div>
@@ -135,7 +137,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
                             <input
                                 type="url"
                                 name="url"
-                                required
+                                required={true}
                                 autoCapitalize="off"
                                 autoComplete="off"
                                 autoCorrect="off"

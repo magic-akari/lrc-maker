@@ -159,7 +159,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             });
     }, [gistId]);
 
-    const onLoadFile = useCallback(
+    const onFileLoad = useCallback(
         (ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
             const target = ev.target as HTMLElement;
 
@@ -204,6 +204,20 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             return false;
         }
 
+        const RatelimitReset = new Intl.DateTimeFormat(langName, {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            hour12: false,
+        }).format(
+            new Date(
+                Number.parseInt(ratelimit["x-ratelimit-reset"], 10) * 1000,
+            ),
+        );
+
         return (
             <section className="ratelimit">
                 <p>
@@ -216,28 +230,13 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 </p>
                 <p>
                     {"ratelimit-reset: "}
-                    {new Intl.DateTimeFormat(langName, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric",
-                        hour12: false,
-                    }).format(
-                        new Date(
-                            Number.parseInt(
-                                ratelimit["x-ratelimit-reset"],
-                                10,
-                            ) * 1000,
-                        ),
-                    )}
+                    {RatelimitReset}
                 </p>
             </section>
         );
     }, [ratelimit, langName]);
 
-    const GistDetails = useMemo(() => {
+    const GistDetails: React.FC = useCallback(() => {
         if (gistId !== null && token !== null) {
             return (
                 <details className="gist-details">
@@ -249,7 +248,8 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                                 <a
                                     href={`https://gist.github.com/${gistId}`}
                                     target="_blank"
-                                    className="link">
+                                    className="link"
+                                >
                                     {gistId}
                                 </a>
                             </p>
@@ -262,152 +262,150 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 </details>
             );
         }
-        return false;
+        return null;
     }, [gistId, token, RateLimit]);
 
-    const AkariOdangoLoading = useMemo(() => {
-        const { href, crossOrigin } = document.querySelector(
-            ".preload-akari-odango-loading",
-        ) as HTMLLinkElement;
+    const NewToken = useMemo(() => {
+        if (token === null) {
+            return (
+                <section className="new-token">
+                    <GithubSVG />
+                    <p className="new-token-tip-text">
+                        {lang.gist.newTokenTip}
+                    </p>
+                    <a
+                        className="new-token-tip button"
+                        target="_blank"
+                        href={newTokenUrl}
+                    >
+                        {lang.gist.newTokenButton}
+                    </a>
+                    <form className="new-token-form" onSubmit={onSubmitToken}>
+                        <label htmlFor="github-token">Token:</label>
+                        <input
+                            className="new-token-input"
+                            id="github-token"
+                            type="text"
+                            name="token"
+                            minLength={40}
+                            maxLength={40}
+                            required={true}
+                        />
+                        <input
+                            className="new-token-submit button"
+                            type="submit"
+                        />
+                    </form>
+                </section>
+            );
+        }
+    }, [token, lang]);
 
-        return (
+    const NewGistID = useMemo(() => {
+        if (gistId === null) {
+            const option = (id: string) => {
+                return <option key={id} value={id} />;
+            };
+            const gistIdDataList = gistIdList && (
+                <datalist id="gist-list">
+                    {gistIdList.map((id) => option(id))};
+                </datalist>
+            );
+
+            return (
+                <section className="get-gist-id">
+                    <GithubSVG />
+                    <p className="gist-id-tip-text">{lang.gist.newGistTip}</p>
+                    <button
+                        className="create-new-gist button"
+                        onClick={onCreateNewGist}
+                    >
+                        {lang.gist.newGistRepoButton}
+                    </button>
+                    <form className="gist-id-form" onSubmit={onSubmitGistId}>
+                        <label htmlFor="gist-id">Gist id:</label>
+                        <input
+                            className="gist-id-input"
+                            id="gist-id"
+                            name="gist-id"
+                            type="text"
+                            list="gist-list"
+                            placeholder={lang.gist.gistIdPlaceholder}
+                            required={true}
+                            autoCapitalize="off"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
+                        />
+
+                        <input className="button" type="submit" />
+                        {gistIdDataList}
+                    </form>
+                </section>
+            );
+        }
+    }, [gistId, lang, gistIdList]);
+
+    const FileCardList = useMemo(() => {
+        if (fileList !== null) {
+            const FileCard = (file: IGistFile, index: number) => {
+                return (
+                    <article className="file-item" key={file.raw_url}>
+                        <section className="file-content">
+                            {file.content}
+                        </section>
+                        <hr />
+                        <section className="file-bar">
+                            <span className="file-title">{file.filename}</span>
+                            <span className="file-action">
+                                <a
+                                    className="file-load"
+                                    href={Path.editor}
+                                    data-key={index}
+                                >
+                                    <EditorSVG />
+                                </a>
+                                <a
+                                    className="file-load"
+                                    href={Path.synchronizer}
+                                    data-key={index}
+                                >
+                                    <SynchronizerSVG />
+                                </a>
+                            </span>
+                        </section>
+                    </article>
+                );
+            };
+            return (
+                <section className="file-list" onClick={onFileLoad}>
+                    {fileList.map(FileCard)}
+                </section>
+            );
+        }
+    }, [fileList]);
+
+    return (
+        <div className="gist">
+            <GistDetails />
+            {NewToken || NewGistID || FileCardList || <GistLoading />}
+        </div>
+    );
+};
+
+const GistLoading: React.FC = () => {
+    const { href, crossOrigin } = document.querySelector(
+        ".preload-akari-odango-loading",
+    ) as HTMLLinkElement;
+
+    return (
+        <section className="gist-loading">
             <img
                 className="akari-odango-loading start-loading"
                 alt="loading"
                 src={href}
                 crossOrigin={crossOrigin as "anonymous" | undefined}
             />
-        );
-    }, []);
-
-    return (
-        <div className="gist">
-            {GistDetails}
-            {(() => {
-                if (token === null) {
-                    return (
-                        <section className="new-token">
-                            <GithubSVG />
-                            <p className="new-token-tip-text">
-                                {lang.gist.newTokenTip}
-                            </p>
-                            <a
-                                className="new-token-tip button"
-                                target="_blank"
-                                href={newTokenUrl}>
-                                {lang.gist.newTokenButton}
-                            </a>
-                            <form
-                                className="new-token-form"
-                                onSubmit={onSubmitToken}>
-                                <label htmlFor="github-token">Token:</label>
-                                <input
-                                    className="new-token-input"
-                                    id="github-token"
-                                    type="text"
-                                    name="token"
-                                    minLength={40}
-                                    maxLength={40}
-                                    required
-                                />
-                                <input
-                                    className="new-token-submit button"
-                                    type="submit"
-                                />
-                            </form>
-                        </section>
-                    );
-                }
-                if (gistId === null) {
-                    return (
-                        <section className="get-gist-id">
-                            <GithubSVG />
-                            <p className="gist-id-tip-text">
-                                {lang.gist.newGistTip}
-                            </p>
-                            <button
-                                className="create-new-gist button"
-                                onClick={onCreateNewGist}>
-                                {lang.gist.newGistRepoButton}
-                            </button>
-                            <form
-                                className="gist-id-form"
-                                onSubmit={onSubmitGistId}>
-                                <label htmlFor="gist-id">Gist id:</label>
-                                <input
-                                    className="gist-id-input"
-                                    id="gist-id"
-                                    name="gist-id"
-                                    type="text"
-                                    list="gist-list"
-                                    placeholder={lang.gist.gistIdPlaceholder}
-                                    required
-                                    autoCapitalize="off"
-                                    autoComplete="off"
-                                    autoCorrect="off"
-                                    spellCheck={false}
-                                />
-
-                                <input className="button" type="submit" />
-                                {gistIdList && (
-                                    <datalist id="gist-list">
-                                        {gistIdList.map((id) => {
-                                            return (
-                                                <option key={id} value={id} />
-                                            );
-                                        })}
-                                    </datalist>
-                                )}
-                            </form>
-                        </section>
-                    );
-                }
-                if (fileList !== null) {
-                    return (
-                        <>
-                            <section className="file-list" onClick={onLoadFile}>
-                                {fileList.map((file, index) => {
-                                    return (
-                                        <article
-                                            className="file-item"
-                                            key={file.raw_url}>
-                                            <section className="file-content">
-                                                {file.content}
-                                            </section>
-                                            <hr />
-                                            <section className="file-bar">
-                                                <span className="file-title">
-                                                    {file.filename}
-                                                </span>
-                                                <span className="file-action">
-                                                    <a
-                                                        className="file-load"
-                                                        href={Path.editor}
-                                                        data-key={index}>
-                                                        <EditorSVG />
-                                                    </a>
-                                                    <a
-                                                        className="file-load"
-                                                        href={Path.synchronizer}
-                                                        data-key={index}>
-                                                        <SynchronizerSVG />
-                                                    </a>
-                                                </span>
-                                            </section>
-                                        </article>
-                                    );
-                                })}
-                            </section>
-                        </>
-                    );
-                }
-
-                return (
-                    <section className="gist-loading">
-                        {AkariOdangoLoading}
-                    </section>
-                );
-            })()}
-        </div>
+        </section>
     );
 };
