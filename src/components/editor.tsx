@@ -87,7 +87,7 @@ export const Eidtor: React.SFC<{
         setHref(url);
     }, []);
 
-    const onUploadTextFile = useCallback(
+    const onTextFileUpload = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
             if (ev.target.files === null || ev.target.files.length === 0) {
                 return;
@@ -136,7 +136,7 @@ export const Eidtor: React.SFC<{
         );
     }, []);
 
-    const saveToGist = useCallback(() => {
+    const onGistSave = useCallback(() => {
         setTimeout(() => {
             const name = prompt("filename", downloadName);
             if (name) {
@@ -186,19 +186,21 @@ export const Eidtor: React.SFC<{
             <section className="editor-tools">
                 <label
                     className="editor-tools-item ripple"
-                    title={lang.editor.uploadText}>
+                    title={lang.editor.uploadText}
+                >
                     <input
-                        hidden
+                        hidden={true}
                         type="file"
                         accept="text/*, .txt, .lrc"
-                        onChange={onUploadTextFile}
+                        onChange={onTextFileUpload}
                     />
                     <OpenFileSVG />
                 </label>
                 <button
                     className="editor-tools-item ripple"
                     title={lang.editor.copyText}
-                    onClick={onCopyClick}>
+                    onClick={onCopyClick}
+                >
                     <CopySVG />
                 </button>
                 <a
@@ -206,7 +208,8 @@ export const Eidtor: React.SFC<{
                     title={lang.editor.downloadText}
                     href={href}
                     onClick={onDownloadClick}
-                    download={downloadName}>
+                    download={downloadName}
+                >
                     <DownloadSVG />
                 </a>
 
@@ -214,7 +217,8 @@ export const Eidtor: React.SFC<{
                     title={lang.editor.saveToGist}
                     href={canSaveToGist ? undefined : Path.gist}
                     className="editor-tools-item ripple"
-                    onClick={canSaveToGist ? saveToGist : undefined}>
+                    onClick={canSaveToGist ? onGistSave : undefined}
+                >
                     <CloudUploadSVG />
                 </a>
             </section>

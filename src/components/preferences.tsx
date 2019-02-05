@@ -62,32 +62,29 @@ export const Preferences: React.FC = () => {
 
     const userColorInput = useRef<HTMLInputElement>(null);
 
-    const handleUserInput = useCallback(
-        (input: EventTarget & HTMLInputElement) => {
-            let value = input.value;
+    const onUserInput = useCallback((input: EventTarget & HTMLInputElement) => {
+        let value = input.value;
 
-            if (!input.validity.valid) {
-                input.value = input.defaultValue;
-                return;
-            }
+        if (!input.validity.valid) {
+            input.value = input.defaultValue;
+            return;
+        }
 
-            if (value.length === 3) {
-                value = [].map.call(value, (v: string) => v + v).join("");
-            }
-            if (value.length < 6) {
-                value = value.padEnd(6, "0");
-            }
+        if (value.length === 3) {
+            value = [].map.call(value, (v: string) => v + v).join("");
+        }
+        if (value.length < 6) {
+            value = value.padEnd(6, "0");
+        }
 
-            prefDispatch({
-                type: "themeColor",
-                payload: "#" + value,
-            });
-        },
-        [],
-    );
+        prefDispatch({
+            type: "themeColor",
+            payload: "#" + value,
+        });
+    }, []);
 
     const onUserColorInputBlur = useCallback(
-        (ev: React.FocusEvent<HTMLInputElement>) => handleUserInput(ev.target),
+        (ev: React.FocusEvent<HTMLInputElement>) => onUserInput(ev.target),
         [],
     );
 
@@ -101,7 +98,7 @@ export const Preferences: React.FC = () => {
                 "user-color-input",
             )! as HTMLInputElement;
 
-            return handleUserInput(input);
+            return onUserInput(input);
         },
         [],
     );
@@ -110,7 +107,7 @@ export const Preferences: React.FC = () => {
         userColorInput.current!.value = prefState.themeColor.slice(1);
     }, [prefState.themeColor]);
 
-    const spaceChangeCallback = useCallback(
+    const onSpaceChange = useCallback(
         (value: number, ref: React.RefObject<HTMLInputElement>) => {
             prefDispatch({
                 type: ref.current!.name as "spaceStart" & "spaceEnd",
@@ -120,7 +117,7 @@ export const Preferences: React.FC = () => {
         [],
     );
 
-    const clearCache = useCallback(() => {
+    const onCacheClear = useCallback(() => {
         unregister();
     }, []);
 
@@ -154,6 +151,85 @@ export const Preferences: React.FC = () => {
         );
     }, []);
 
+    const onLangChanged = useCallback(
+        (ev: React.ChangeEvent<HTMLSelectElement>) => {
+            prefDispatch({
+                type: "lang",
+                payload: ev.target.value,
+            });
+        },
+        [],
+    );
+
+    const onBuiltInAudioToggle = useCallback(
+        () =>
+            prefDispatch({
+                type: "builtInAudio",
+                payload: !prefState.builtInAudio,
+            }),
+        [prefState.builtInAudio],
+    );
+
+    const onFixedChanged = useCallback(
+        (ev: React.ChangeEvent<HTMLSelectElement>) => {
+            prefDispatch({
+                type: "fixed",
+                payload: Number.parseInt(ev.target.value, 10) as Fixed,
+            });
+        },
+        [],
+    );
+
+    const LangOptionList = useMemo(() => {
+        return Object.entries(info.languages).map(([langCode, langName]) => {
+            return (
+                <option key={langCode} value={langCode}>
+                    {langName}
+                </option>
+            );
+        });
+    }, []);
+
+    const ColorPickerWall = useMemo(() => {
+        return Object.values(themeColor).map((color) => {
+            const checked = color === prefState.themeColor;
+            const classNames = ["color-picker", "ripple"];
+            if (checked) {
+                classNames.push("checked");
+            }
+            return (
+                <label
+                    className={classNames.join(Const.space)}
+                    key={color}
+                    style={{ backgroundColor: color }}
+                >
+                    <input
+                        hidden={true}
+                        type="radio"
+                        name="theme-color"
+                        value={color}
+                        checked={checked}
+                        onChange={onColorPick}
+                    />
+                </label>
+            );
+        });
+    }, []);
+
+    const currentThemeColorStyle = useMemo(() => {
+        return {
+            backgroundColor: prefState.themeColor,
+        };
+    }, [prefState.themeColor]);
+
+    const formatedText = useMemo(() => {
+        return formatText(
+            "   hello   世界～   ",
+            prefState.spaceStart,
+            prefState.spaceEnd,
+        );
+    }, [prefState.spaceStart, prefState.spaceEnd]);
+
     return (
         <div className="preferences">
             <ul>
@@ -182,7 +258,8 @@ export const Preferences: React.FC = () => {
                             className="link"
                             href={Repo.url}
                             target="_blank"
-                            rel="noopener">
+                            rel="noopener"
+                        >
                             Github
                         </a>
                     </section>
@@ -194,7 +271,8 @@ export const Preferences: React.FC = () => {
                             className="link"
                             href={Repo.wiki}
                             target="_blank"
-                            rel="noopener">
+                            rel="noopener"
+                        >
                             Github Wiki
                         </a>
                     </section>
@@ -205,23 +283,9 @@ export const Preferences: React.FC = () => {
                         <div className="option-select">
                             <select
                                 value={prefState.lang}
-                                onChange={(ev) => {
-                                    prefDispatch({
-                                        type: "lang",
-                                        payload: ev.target.value,
-                                    });
-                                }}>
-                                {Object.entries(info.languages).map(
-                                    ([langCode, langName]) => {
-                                        return (
-                                            <option
-                                                key={langCode}
-                                                value={langCode}>
-                                                {langName}
-                                            </option>
-                                        );
-                                    },
-                                )}
+                                onChange={onLangChanged}
+                            >
+                                {LangOptionList}
                             </select>
                         </div>
                     </section>
@@ -233,12 +297,7 @@ export const Preferences: React.FC = () => {
                             <input
                                 type="checkbox"
                                 checked={prefState.builtInAudio}
-                                onChange={() =>
-                                    prefDispatch({
-                                        type: "builtInAudio",
-                                        payload: !prefState.builtInAudio,
-                                    })
-                                }
+                                onChange={onBuiltInAudioToggle}
                             />
                             <div className="checkbox" />
                         </label>
@@ -251,12 +310,7 @@ export const Preferences: React.FC = () => {
                             <input
                                 type="checkbox"
                                 checked={prefState.screenButton}
-                                onChange={() => {
-                                    prefDispatch({
-                                        type: "screenButton",
-                                        payload: !prefState.screenButton,
-                                    });
-                                }}
+                                onChange={onBuiltInAudioToggle}
                             />
                             <div className="checkbox" />
                         </label>
@@ -270,9 +324,8 @@ export const Preferences: React.FC = () => {
                             <summary>
                                 <span
                                     className="color-picker ripple"
-                                    style={{
-                                        backgroundColor: prefState.themeColor,
-                                    }}>
+                                    style={currentThemeColorStyle}
+                                >
                                     {"#"}
                                 </span>
                                 <span className="current-theme-color">
@@ -281,41 +334,14 @@ export const Preferences: React.FC = () => {
                             </summary>
                             <form
                                 className="dropdown-body color-wall"
-                                onSubmit={onColorSubmit}>
-                                {Object.values(themeColor).map((color) => {
-                                    const checked =
-                                        color === prefState.themeColor;
-                                    const classNames = [
-                                        "color-picker",
-                                        "ripple",
-                                    ];
-                                    if (checked) {
-                                        classNames.push("checked");
-                                    }
-                                    return (
-                                        <label
-                                            className={classNames.join(
-                                                Const.space,
-                                            )}
-                                            key={color}
-                                            style={{ backgroundColor: color }}>
-                                            <input
-                                                hidden
-                                                type="radio"
-                                                name="theme-color"
-                                                value={color}
-                                                checked={checked}
-                                                onChange={onColorPick}
-                                            />
-                                        </label>
-                                    );
-                                })}
+                                onSubmit={onColorSubmit}
+                            >
+                                {ColorPickerWall}
                                 <label
                                     className="color-picker ripple user-color-label"
                                     htmlFor="user-color-input"
-                                    style={{
-                                        backgroundColor: prefState.themeColor,
-                                    }}>
+                                    style={currentThemeColorStyle}
+                                >
                                     #
                                 </label>
                                 <input
@@ -325,7 +351,7 @@ export const Preferences: React.FC = () => {
                                     className="user-color-input"
                                     type="text"
                                     pattern="[\da-f]{3,6}"
-                                    required
+                                    required={true}
                                     autoCapitalize="off"
                                     autoComplete="off"
                                     autoCorrect="off"
@@ -345,11 +371,7 @@ export const Preferences: React.FC = () => {
                                 {convertTimeToTag(83.456, prefState.fixed)}
                             </time>
                             <span className="format-example-text">
-                                {formatText(
-                                    "   hello   世界～   ",
-                                    prefState.spaceStart,
-                                    prefState.spaceEnd,
-                                )}
+                                {formatedText}
                             </span>
                         </span>
                     </section>
@@ -361,15 +383,8 @@ export const Preferences: React.FC = () => {
                             <select
                                 name="fixed"
                                 value={prefState.fixed}
-                                onChange={(ev) => {
-                                    prefDispatch({
-                                        type: "fixed",
-                                        payload: Number.parseInt(
-                                            ev.target.value,
-                                            10,
-                                        ) as Fixed,
-                                    });
-                                }}>
+                                onChange={onFixedChanged}
+                            >
                                 <option value={0}>0</option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
@@ -386,11 +401,11 @@ export const Preferences: React.FC = () => {
                         <input
                             name="spaceStart"
                             id="space-start"
-                            required
+                            required={true}
                             min={-1}
                             {...useNumberInput({
                                 defaultValue: prefState.spaceStart,
-                                callback: spaceChangeCallback,
+                                callback: onSpaceChange,
                             })}
                         />
                     </label>
@@ -403,16 +418,16 @@ export const Preferences: React.FC = () => {
                         <input
                             name="spaceEnd"
                             id="space-end"
-                            required
+                            required={true}
                             min={-1}
                             {...useNumberInput({
                                 defaultValue: prefState.spaceEnd,
-                                callback: spaceChangeCallback,
+                                callback: onSpaceChange,
                             })}
                         />
                     </label>
                 </li>
-                <li className="ripple" onClick={clearCache}>
+                <li className="ripple" onClick={onCacheClear}>
                     <section className="list-item">
                         {lang.preferences.clearCache}
                     </section>

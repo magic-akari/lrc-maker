@@ -5,10 +5,8 @@ import { parse, resolve } from "path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { dependencies, description, name, version } from "../package.json";
 import { sri, sriContent } from "./sri";
-
-// tslint:disable-next-line:no-var-requires
-const { name, version, description, dependencies } = require("../package.json");
 
 const hash = (() => {
     const root = resolve(__dirname, "../");
@@ -39,7 +37,7 @@ const libUrl = (
 } => {
     if (useCDN) {
         const libVersion = (() => {
-            const v = dependencies[libName];
+            const v = (dependencies as any)[libName];
 
             return v[0] === "~" || v[0] === "^" ? v.slice(1) : v;
         })();
@@ -141,6 +139,10 @@ const preloadScripts = glob(buildPath + "/*/*.js")
     .map((path) => {
         return appUrl(path);
     });
+
+if (preloadScripts.length === 0) {
+    preloadScripts.push({ src: "./components/app.js" });
+}
 
 const useLangjs = preloadScripts.find((script) => {
     return script.src.includes("useLang.js");

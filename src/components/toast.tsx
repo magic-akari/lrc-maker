@@ -10,7 +10,7 @@ interface IMessage {
 
 export const toastPubSub = createPubSub<IMessage>();
 
-const { useState, useEffect, useCallback, useRef } = React;
+const { useCallback, useEffect, useMemo, useRef, useState } = React;
 
 let id = 0;
 
@@ -42,28 +42,26 @@ export const Toast = () => {
         [],
     );
 
+    const ToastIter = useCallback((toast: IToast) => {
+        const badge = {
+            info: <InfoSVG />,
+            success: <CheckSVG />,
+            warning: <ProblemSVG />,
+        }[toast.type];
+
+        return (
+            <section className="toast" key={toast.id}>
+                <section className={`toast-badge toast-${toast.type}`}>
+                    {badge}
+                </section>
+                <section className="toast-text">{toast.text}</section>
+            </section>
+        );
+    }, []);
+
     return (
         <div className="toast-queue" onAnimationEnd={onAnimationEnd}>
-            {toastQueue.map((toast) => {
-                const badge = (() => {
-                    switch (toast.type) {
-                        case "info":
-                            return <InfoSVG />;
-                        case "success":
-                            return <CheckSVG />;
-                        case "warning":
-                            return <ProblemSVG />;
-                    }
-                })();
-                return (
-                    <section className="toast" key={toast.id}>
-                        <section className={`toast-badge toast-${toast.type}`}>
-                            {badge}
-                        </section>
-                        <section className="toast-text">{toast.text}</section>
-                    </section>
-                );
-            })}
+            {toastQueue.map(ToastIter)}
         </div>
     );
 };

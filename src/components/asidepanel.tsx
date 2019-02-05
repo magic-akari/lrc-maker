@@ -10,7 +10,7 @@ export const AsidePanel: React.FC<{
     createDownloadFile: () => string;
 }> = ({ syncMode, setSyncMode, lrcInfo, createDownloadFile }) => {
     const [href, setHref] = useState<string | undefined>(undefined);
-    const toggleSyncMode = useCallback(() => {
+    const onSyncModeToggle = useCallback(() => {
         setSyncMode(
             syncMode === SyncMode.select ? SyncMode.highlight : SyncMode.select,
         );
@@ -42,21 +42,26 @@ export const AsidePanel: React.FC<{
         }
         return list.join(" - ") + ".lrc";
     }, [lrcInfo]);
+
+    const className = [
+        "aside-button",
+        "syncmode-button",
+        "ripple",
+        "glow ",
+        syncMode === SyncMode.select ? "select" : "highlight",
+    ].join(Const.space);
+
     return (
         <aside className="aside-panel">
-            <button
-                className={
-                    "aside-button syncmode-button ripple glow " +
-                    (syncMode === SyncMode.select ? "select" : "highlight")
-                }
-                onClick={toggleSyncMode}>
+            <button className={className} onClick={onSyncModeToggle}>
                 <LockSVG />
             </button>
             <a
                 href={href}
                 download={downloadName}
                 className="aside-button ripple glow"
-                onClick={onDownloadClick}>
+                onClick={onDownloadClick}
+            >
                 <DownloadSVG />
             </a>
         </aside>

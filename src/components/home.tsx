@@ -31,7 +31,8 @@ export const Home: React.FC = () => {
                     <li>
                         <button
                             className="home-tip-text-svg"
-                            onClick={() => loadAudioDialogRef.open()}>
+                            onClick={loadAudioDialogRef.open}
+                        >
                             <LoadAudioSVG />
                         </button>
                         {lang.home.tipForUploadAudio}
@@ -39,7 +40,8 @@ export const Home: React.FC = () => {
                     <li>
                         <a
                             className="home-tip-text-svg"
-                            href={Path.synchronizer}>
+                            href={Path.synchronizer}
+                        >
                             <SynchronizerSVG />
                         </a>
                         {lang.home.tipForSynchronizer}

@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
         sessionStorage.getItem(SSK.audioSrc) || undefined,
     );
 
-    const setAudioSrc = useCallback((src: string) => {
+    const onAudioSrcSet = useCallback((src: string) => {
         URL.revokeObjectURL(audioRef.src);
         return privateSetAudioSrc(src);
     }, []);
@@ -221,6 +221,13 @@ export const Footer: React.FC = () => {
         [],
     );
 
+    const onAudioError = useCallback((ev) => {
+        toastPubSub.pub({
+            type: "warning",
+            text: (ev.target as any).error.message,
+        });
+    }, []);
+
     return (
         <footer className="app-footer">
             <input
@@ -230,18 +237,13 @@ export const Footer: React.FC = () => {
                 hidden={true}
                 onChange={onAudioInputChange}
             />
-            <LoadAudio setAudioSrc={setAudioSrc} lang={lang} />
+            <LoadAudio setAudioSrc={onAudioSrcSet} lang={lang} />
             <audio
                 ref={audioRef}
                 src={audioSrc}
                 controls={prefState.builtInAudio}
                 hidden={!prefState.builtInAudio}
-                onError={(ev) => {
-                    toastPubSub.pub({
-                        type: "warning",
-                        text: (ev.target as any).error.message,
-                    });
-                }}
+                onError={onAudioError}
             />
             {prefState.builtInAudio || <LrcAudio lang={lang} />}
         </footer>
