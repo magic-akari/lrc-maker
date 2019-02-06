@@ -170,6 +170,15 @@ export const Preferences: React.FC = () => {
         [prefState.builtInAudio],
     );
 
+    const onScreenButtonToggle = useCallback(
+        () =>
+            prefDispatch({
+                type: "screenButton",
+                payload: !prefState.screenButton,
+            }),
+        [prefState.screenButton],
+    );
+
     const onFixedChanged = useCallback(
         (ev: React.ChangeEvent<HTMLSelectElement>) => {
             prefDispatch({
@@ -310,7 +319,7 @@ export const Preferences: React.FC = () => {
                             <input
                                 type="checkbox"
                                 checked={prefState.screenButton}
-                                onChange={onBuiltInAudioToggle}
+                                onChange={onScreenButtonToggle}
                             />
                             <div className="checkbox" />
                         </label>
