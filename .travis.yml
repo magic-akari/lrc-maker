@@ -16,16 +16,14 @@ before_deploy:
 deploy:
     - provider: pages
       skip-cleanup: true
-      github-token:
-          secure: $GITHUB_TOKEN
+      github-token: $GITHUB_TOKEN
       local-dir: build
       on:
           branch: master
 
     - provider: pages
       skip-cleanup: true
-      github-token:
-          secure: $GITHUB_TOKEN
+      github-token: $GITHUB_TOKEN
       local-dir: build
       repo: lrc-maker/lrc-maker.github.io
       target-branch: master
@@ -36,8 +34,7 @@ deploy:
     - provider: npm
       skip-cleanup: true
       email: $NPM_EMAIL
-      api_key:
-          secure: $NPM_AUTH_TOKEN
+      api_key: $NPM_AUTH_TOKEN
       on:
           branch: master
           tags: false
@@ -46,8 +43,7 @@ deploy:
     - provider: npm
       skip-cleanup: true
       email: $NPM_EMAIL
-      api_key:
-          secure: $NPM_AUTH_TOKEN
+      api_key: $NPM_AUTH_TOKEN
       on:
           branch: master
           tags: true
