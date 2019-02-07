@@ -223,7 +223,7 @@ export const Preferences: React.FC = () => {
                 </label>
             );
         });
-    }, []);
+    }, [prefState.themeColor]);
 
     const currentThemeColorStyle = useMemo(() => {
         return {
