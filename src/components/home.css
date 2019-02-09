@@ -72,13 +72,22 @@
     border-color: var(--semi-black-color) transparent transparent transparent;
 }
 
-.home-tip-text {
+.home-tip-section {
     line-height: 1.5;
-    vertical-align: baseline;
-
     font-size: 1.2rem;
 }
 
-.home-tip-text-svg {
-    padding: 0.5rem;
+.home-tip-item {
+    margin: 0.5rem;
+    padding: 0;
+    cursor: default;
+}
+
+.home-tip-item > svg {
+    margin-right: 0.5rem;
+}
+
+.home-tip-text,
+.home-tip-item > svg {
+    vertical-align: middle;
 }

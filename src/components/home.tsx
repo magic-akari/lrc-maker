@@ -7,6 +7,10 @@ const { useContext } = React;
 export const Home: React.FC = () => {
     const { lang } = useContext(appContext);
 
+    const onLoadAudioDialogOpen = () => {
+        loadAudioDialogRef.open();
+    };
+
     return (
         <div className="home">
             <p className="home-tip home-tip-top-left">{lang.home.tipTopLeft}</p>
@@ -19,32 +23,35 @@ export const Home: React.FC = () => {
             <p className="home-tip home-tip-bottom-right">
                 {lang.home.tipBottomRight}
             </p>
-            <section className="home-tip-text">
+            <section className="home-tip-section">
                 <p>{lang.home.tips}</p>
                 <ol>
                     <li>
-                        <a className="home-tip-text-svg" href={Path.editor}>
+                        <a className="home-tip-item" href={Path.editor}>
                             <EditorSVG />
+                            <span className="home-tip-text">
+                                {lang.home.tipForLyricText}
+                            </span>
                         </a>
-                        {lang.home.tipForLyricText}
                     </li>
                     <li>
-                        <button
-                            className="home-tip-text-svg"
-                            onClick={loadAudioDialogRef.open}
+                        <span
+                            className="home-tip-item"
+                            onClick={onLoadAudioDialogOpen}
                         >
                             <LoadAudioSVG />
-                        </button>
-                        {lang.home.tipForUploadAudio}
+                            <span className="home-tip-text">
+                                {lang.home.tipForUploadAudio}
+                            </span>
+                        </span>
                     </li>
                     <li>
-                        <a
-                            className="home-tip-text-svg"
-                            href={Path.synchronizer}
-                        >
+                        <a className="home-tip-item" href={Path.synchronizer}>
                             <SynchronizerSVG />
+                            <span className="home-tip-text">
+                                {lang.home.tipForSynchronizer}
+                            </span>
                         </a>
-                        {lang.home.tipForSynchronizer}
                     </li>
                 </ol>
             </section>
