@@ -170,3 +170,8 @@
     justify-content: center;
     align-items: center;
 }
+
+.gist-no-data {
+    flex: 1 1 auto;
+    display: flex;
+}

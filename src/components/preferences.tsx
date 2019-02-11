@@ -2,6 +2,7 @@ import { convertTimeToTag, formatText } from "../hooks/useLrc.js";
 import { themeColor } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
+import { AkariHideWall } from "./svg.img.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef } = React;
 
@@ -135,21 +136,6 @@ export const Preferences: React.FC = () => {
         };
         return new Intl.DateTimeFormat(prefState.lang, options).format(date);
     }, [prefState.lang]);
-
-    const AkariHideWall = useMemo(() => {
-        const { href, crossOrigin } = document.querySelector(
-            ".prefetch-akari-hide-wall",
-        ) as HTMLLinkElement;
-
-        return (
-            <img
-                className="akari-hide-wall"
-                alt="akari-hide-wall"
-                src={href}
-                crossOrigin={crossOrigin as "anonymous" | undefined}
-            />
-        );
-    }, []);
 
     const onLangChanged = useCallback(
         (ev: React.ChangeEvent<HTMLSelectElement>) => {
@@ -442,7 +428,7 @@ export const Preferences: React.FC = () => {
                     </section>
                 </li>
             </ul>
-            {AkariHideWall}
+            <AkariHideWall />
         </div>
     );
 };

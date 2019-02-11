@@ -13,6 +13,7 @@ import {
     Ratelimit,
 } from "../utils/gistapi.js";
 import { appContext } from "./app.context.js";
+import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
 
@@ -377,6 +378,14 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                     </article>
                 );
             };
+            if (fileList.length === 0) {
+                return (
+                    <section className="gist-no-data">
+                        <AkariNotFound />
+                    </section>
+                );
+            }
+
             return (
                 <section className="file-list" onClick={onFileLoad}>
                     {fileList.map(FileCard)}
@@ -393,19 +402,10 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     );
 };
 
-const GistLoading: React.FC = () => {
-    const { href, crossOrigin } = document.querySelector(
-        ".preload-akari-odango-loading",
-    ) as HTMLLinkElement;
-
+const GistLoading = React.memo(() => {
     return (
         <section className="gist-loading">
-            <img
-                className="akari-odango-loading start-loading"
-                alt="loading"
-                src={href}
-                crossOrigin={crossOrigin as "anonymous" | undefined}
-            />
+            <AkariOangoLoading />
         </section>
     );
-};
+});
