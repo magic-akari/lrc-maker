@@ -167,6 +167,7 @@ const Html = () => {
 
     const akariOdangoLoading = appUrl("./svg/akari-odango-loading.svg");
     const akariHideWall = appUrl("./svg/akari-hide-wall.svg");
+    const akariNotFound = appUrl("./svg/akari-not-found.svg");
 
     return (
         <html>
@@ -244,6 +245,13 @@ const Html = () => {
                     as="image"
                     href={akariHideWall.src}
                     crossOrigin={akariHideWall.crossOrigin}
+                />
+                <link
+                    className="prefetch-akari-not-found"
+                    rel="prefetch"
+                    as="image"
+                    href={akariNotFound.src}
+                    crossOrigin={akariNotFound.crossOrigin}
                 />
 
                 <link

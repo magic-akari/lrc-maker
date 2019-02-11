@@ -14,6 +14,7 @@ import { Eidtor } from "./editor.js";
 import { Gist } from "./gist.js";
 import { Home } from "./home.js";
 import { Preferences } from "./preferences.js";
+import { AkariNotFound } from "./svg.img.js";
 import { Synchronizer } from "./synchronizer.js";
 
 const { useContext, useEffect, useMemo, useRef, useState } = React;
@@ -182,6 +183,9 @@ export const Content: React.FC = () => {
             }
 
             case Path.synchronizer: {
+                if (lrcState.lyric.length === 0) {
+                    return <AkariNotFound />;
+                }
                 return (
                     <Synchronizer
                         lrcState={lrcState}

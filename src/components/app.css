@@ -181,3 +181,12 @@ body,
         opacity: 0.8;
     }
 }
+
+.akari-not-found {
+    flex: 1 1 auto;
+    align-self: flex-end;
+    max-height: 80vh;
+    max-width: 100vw;
+    opacity: 0.2;
+    filter: var(--drop-shadow);
+}
