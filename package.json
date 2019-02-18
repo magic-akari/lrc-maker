@@ -41,16 +41,16 @@
         "lint": "tslint {src,worker,scripts}/**/*.{ts,tsx,es6}"
     },
     "dependencies": {
-        "react": "^16.8.1",
-        "react-dom": "^16.8.1"
+        "react": "^16.8.2",
+        "react-dom": "^16.8.2"
     },
     "devDependencies": {
-        "@types/node": "^10.12.21",
-        "@types/prettier": "^1.15.2",
-        "@types/react": "^16.8.2",
-        "@types/react-dom": "^16.8.0",
+        "@types/node": "^11.9.4",
+        "@types/prettier": "^1.16.1",
+        "@types/react": "^16.8.3",
+        "@types/react-dom": "^16.8.2",
         "autoprefixer": "^9.4.7",
-        "cssnano": "^4.1.8",
+        "cssnano": "^4.1.10",
         "fast-glob": "^2.2.6",
         "postcss": "^7.0.14",
         "postcss-cli": "^6.1.1",
@@ -61,8 +61,8 @@
         "ts-node": "^8.0.2",
         "tslint": "^5.12.1",
         "tslint-react": "^3.6.0",
-        "typescript": "^3.3.1",
-        "webpack": "^4.29.3",
+        "typescript": "^3.3.3",
+        "webpack": "^4.29.4",
         "webpack-cli": "^3.2.3"
     }
 }
