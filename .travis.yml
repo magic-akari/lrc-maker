@@ -14,23 +14,6 @@ before_deploy:
     - touch ./build/.nojekyll
 
 deploy:
-    - provider: pages
-      skip-cleanup: true
-      github-token: $GITHUB_TOKEN
-      local-dir: build
-      on:
-          branch: master
-
-    - provider: pages
-      skip-cleanup: true
-      github-token: $GITHUB_TOKEN
-      local-dir: build
-      repo: lrc-maker/lrc-maker.github.io
-      target-branch: master
-      on:
-          branch: master
-          tags: true
-
     - provider: npm
       skip-cleanup: true
       email: $NPM_EMAIL
@@ -44,6 +27,23 @@ deploy:
       skip-cleanup: true
       email: $NPM_EMAIL
       api_key: $NPM_AUTH_TOKEN
+      on:
+          branch: master
+          tags: true
+
+    - provider: pages
+      skip-cleanup: true
+      github-token: $GITHUB_TOKEN
+      local-dir: build
+      on:
+          branch: master
+
+    - provider: pages
+      skip-cleanup: true
+      github-token: $GITHUB_TOKEN
+      local-dir: build
+      repo: lrc-maker/lrc-maker.github.io
+      target-branch: master
       on:
           branch: master
           tags: true
