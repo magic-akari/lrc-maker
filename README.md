@@ -39,7 +39,7 @@ Use the arrow key and space key to insert the timestamp.
 
 ## Compatibility
 
-The most modern browser is supported. The current version uses a lot of modern browser APIs to improve performance and improve the user experience. This project uses the ES Module to load the script code, which means that the browser version should meet the following requirements.
+The most modern browsers are supported. The current version uses a lot of modern browser APIs to improve performance and improve the user experience. This project uses the ES Module to load the script code, which means that the browser version should meet the following requirements.
 
 | browser | version |
 | :------ | :------ |
