@@ -56,10 +56,8 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
 
     const lyric = lrcState.lyric;
 
-    const ul = useRef<HTMLUListElement>(null);
-
     const guard = useCallback(
-        (value: number, min = 0, max = lyric.length - 1) => {
+        (value: number, min: number = 0, max: number = lyric.length - 1) => {
             if (value < min) {
                 return min;
             }
@@ -82,11 +80,12 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
     );
 
     const [highLight, setHighLight] = useState(0);
-    const [needReCalc, setNeedReCalc] = useState(Symbol());
 
     useEffect(() => {
         sessionStorage.setItem(SSK.syncMode, syncMode.toString());
     }, [syncMode]);
+
+    const ul = useRef<HTMLUListElement>(null);
 
     const needScrollLine = {
         [SyncMode.select]: selectedLine,
@@ -94,49 +93,26 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
     }[syncMode];
 
     useEffect(() => {
-        ul.current!.children[needScrollLine].scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-            inline: "center",
-        });
+        const line = ul.current!.children[needScrollLine];
+        if (line !== undefined) {
+            line.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "center",
+            });
+        }
     }, [needScrollLine]);
 
-    const trackedLine = useMemo(() => {
-        return lyric.reduce(
-            (p, c, i) => {
-                if (c.time) {
-                    if (c.time < p.nextTime && c.time > audioRef.currentTime) {
-                        p.nextTime = c.time;
-                        p.nextIndex = i;
-                    }
-                    if (
-                        c.time > p.currentTime &&
-                        c.time <= audioRef.currentTime
-                    ) {
-                        p.currentTime = c.time;
-                        p.currentIndex = i;
-                    }
-                }
-                return p;
-            },
-            {
-                currentTime: 0,
-                currentIndex: 0,
-                nextTime: Infinity,
-                nextIndex: Infinity,
-            },
-        );
-    }, [lyric, needReCalc]);
+    const trackedLine = useRef(calcTrackedLine(lrcState.lyric));
 
     useEffect(() => {
-        setHighLight(trackedLine.currentIndex);
-    }, [trackedLine.currentIndex]);
-
-    const ref = useRef(trackedLine);
-
-    ref.current = trackedLine;
+        trackedLine.current = calcTrackedLine(lrcState.lyric);
+        setHighLight(trackedLine.current.currentIndex);
+    }, [lrcState]);
 
     useEffect(() => {
+        setHighLight(trackedLine.current.currentIndex);
+
         currentTimePubSub.sub(self.current, (time) => {
             //
             // inefficient method
@@ -153,12 +129,14 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
             // );
             // setHighLight(index);
 
-            const { currentTime, nextTime } = ref.current;
-
-            if (time > currentTime && time < nextTime) {
+            if (
+                time >= trackedLine.current.currentTime &&
+                time < trackedLine.current.nextTime
+            ) {
                 return;
             } else {
-                setNeedReCalc(Symbol());
+                trackedLine.current = calcTrackedLine(lyric);
+                setHighLight(trackedLine.current.currentIndex);
             }
         });
 
@@ -391,7 +369,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
                 onClickCapture={onLineClick}
                 onDoubleClickCapture={onLineDoubleClick}
             >
-                {lyric.map(LyricLine)}
+                {lrcState.lyric.map(LyricLine)}
             </ul>
             <AsidePanel
                 syncMode={syncMode}
@@ -401,5 +379,31 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
             />
             {prefState.screenButton && <SpaceButton sync={sync} />}
         </>
+    );
+};
+
+const calcTrackedLine = (lyric: Array<Readonly<ILyric>>) => {
+    const audioTime = audioRef.currentTime;
+
+    return lyric.reduce(
+        (p, c, i) => {
+            if (c.time) {
+                if (c.time < p.nextTime && c.time > audioTime) {
+                    p.nextTime = c.time;
+                    p.nextIndex = i;
+                }
+                if (c.time > p.currentTime && c.time <= audioTime) {
+                    p.currentTime = c.time;
+                    p.currentIndex = i;
+                }
+            }
+            return p;
+        },
+        {
+            currentTime: -Infinity,
+            currentIndex: -Infinity,
+            nextTime: Infinity,
+            nextIndex: Infinity,
+        },
     );
 };
