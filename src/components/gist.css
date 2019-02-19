@@ -74,12 +74,11 @@
 }
 
 .file-item {
-    color: var(--black);
-    background: rgba(255, 255, 255, 0.9);
     padding: 0.5rem;
     border-radius: var(--border-radius);
     user-select: none;
     transition: box-shadow 250ms ease-in-out;
+    box-shadow: 0 0 2px var(--font-color);
 }
 
 .file-item:hover {

@@ -1,9 +1,15 @@
 html {
     font-feature-settings: "kern" 1;
     font-kerning: normal;
-    color: var(--black);
+    color: var(--font-color);
     caret-color: var(--theme-color);
     background-color: var(--background-color);
+}
+
+select,
+input,
+textarea {
+    color: inherit;
 }
 
 svg {
@@ -69,6 +75,7 @@ time {
 }
 
 .button {
+    color: var(--black);
     background: white;
     padding: 0.5rem;
     border-radius: var(--border-radius);
