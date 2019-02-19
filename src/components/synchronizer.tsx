@@ -79,7 +79,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
             : SyncMode.select,
     );
 
-    const [highLight, setHighLight] = useState(0);
+    const [highLight, setHighLight] = useState(-Infinity);
 
     useEffect(() => {
         sessionStorage.setItem(SSK.syncMode, syncMode.toString());
