@@ -61,7 +61,7 @@ export const Preferences: React.FC = () => {
         [],
     );
 
-    const userColorInput = useRef<HTMLInputElement>(null);
+    const userColorInputText = useRef<HTMLInputElement>(null);
 
     const onUserInput = useCallback((input: EventTarget & HTMLInputElement) => {
         let value = input.value;
@@ -105,7 +105,7 @@ export const Preferences: React.FC = () => {
     );
 
     useEffect(() => {
-        userColorInput.current!.value = prefState.themeColor.slice(1);
+        userColorInputText.current!.value = prefState.themeColor.slice(1);
     }, [prefState.themeColor]);
 
     const onSpaceChange = useCallback(
@@ -225,6 +225,15 @@ export const Preferences: React.FC = () => {
         );
     }, [prefState.spaceStart, prefState.spaceEnd]);
 
+    const userColorLabel = useRef<HTMLLabelElement>(null);
+    const userColorInput = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (userColorInput.current!.type === "color") {
+            userColorLabel.current!.removeAttribute("for");
+        }
+    }, []);
+
     return (
         <div className="preferences">
             <ul>
@@ -336,11 +345,19 @@ export const Preferences: React.FC = () => {
                                     className="color-picker ripple user-color-label"
                                     htmlFor="user-color-input"
                                     style={currentThemeColorStyle}
+                                    ref={userColorLabel}
                                 >
-                                    #
+                                    {"#"}
+                                    <input
+                                        type="color"
+                                        className="color-picker pseudo-hidden"
+                                        value={prefState.themeColor}
+                                        onChange={onColorPick}
+                                        ref={userColorInput}
+                                    />
                                 </label>
                                 <input
-                                    ref={userColorInput}
+                                    ref={userColorInputText}
                                     id="user-color-input"
                                     name="user-color-input"
                                     className="user-color-input"

@@ -293,3 +293,8 @@ input[type="number"] {
 .user-color-input {
     grid-column: span 2;
 }
+
+.pseudo-hidden {
+    visibility: hidden;
+    position: absolute;
+}
