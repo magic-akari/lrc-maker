@@ -7,6 +7,9 @@
 }
 
 .toast {
+    color: var(--black);
+    background: var(--semi-white-color);
+
     margin: 1rem;
     background-color: #ffffffdd;
     border-radius: var(--border-radius);

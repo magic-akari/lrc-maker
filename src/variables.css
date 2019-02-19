@@ -3,9 +3,12 @@
     --black: #111;
 
     --theme-color: #f58ea8;
+
+    --font-color: var(--black);
     --background-color: #f1f3f4;
 
-    --semi-black-color: rgba(40, 40, 40, 0.85);
+    --semi-black-color: #202020cc;
+    --semi-white-color: #e0e0e0cc;
 
     --border-radius: 0.4rem;
 
@@ -14,4 +17,11 @@
     --drop-shadow: drop-shadow(0 0 4px currentcolor);
 
     --animation-out-back: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: var(--black);
+        --font-color: var(--white);
+    }
 }
