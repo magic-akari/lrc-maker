@@ -22,6 +22,13 @@ const { useCallback, useContext, useEffect, useMemo, useState } = React;
 const newTokenUrl =
     "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
 
+const disableCheck = {
+    autoCapitalize: "off",
+    autoComplete: "off",
+    autoCorrect: "off",
+    spellCheck: false,
+};
+
 interface IGistProps {
     lrcDispatch: React.Dispatch<LrcAction>;
     langName: string;
@@ -284,13 +291,15 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                     <form className="new-token-form" onSubmit={onSubmitToken}>
                         <label htmlFor="github-token">Token:</label>
                         <input
+                            type="text"
                             className="new-token-input"
                             id="github-token"
-                            type="text"
                             name="token"
+                            key="token"
                             minLength={40}
                             maxLength={40}
                             required={true}
+                            {...disableCheck}
                         />
                         <input
                             className="new-token-submit button"
@@ -326,17 +335,15 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                     <form className="gist-id-form" onSubmit={onSubmitGistId}>
                         <label htmlFor="gist-id">Gist id:</label>
                         <input
+                            type="text"
                             className="gist-id-input"
                             id="gist-id"
                             name="gist-id"
-                            type="text"
+                            key="gist-id"
                             list="gist-list"
                             placeholder={lang.gist.gistIdPlaceholder}
                             required={true}
-                            autoCapitalize="off"
-                            autoComplete="off"
-                            autoCorrect="off"
-                            spellCheck={false}
+                            {...disableCheck}
                         />
 
                         <input className="button" type="submit" />
