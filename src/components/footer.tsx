@@ -1,9 +1,4 @@
-import {
-    AudioActionType,
-    audioRef,
-    audioStatePubSub,
-    currentTimePubSub,
-} from "../utils/audiomodule.js";
+import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio } from "./loadaudio.js";
@@ -12,10 +7,7 @@ import { toastPubSub } from "./toast.js";
 const { useCallback, useContext, useEffect, useRef, useState } = React;
 
 export const Footer: React.FC = () => {
-    const { prefState, lang } = useContext(
-        appContext,
-        ChangBits.lang | ChangBits.builtInAudio,
-    );
+    const { prefState, lang } = useContext(appContext, ChangBits.lang | ChangBits.builtInAudio);
 
     const [audioSrc, privateSetAudioSrc] = useState<string | undefined>(
         sessionStorage.getItem(SSK.audioSrc) || undefined,
@@ -122,10 +114,7 @@ export const Footer: React.FC = () => {
         document.addEventListener("keydown", (ev) => {
             const { code, key, target } = ev;
 
-            if (
-                ["text", "textarea", "url"].includes((target as any)
-                    .type as string)
-            ) {
+            if (["text", "textarea", "url"].includes((target as any).type as string)) {
                 return;
             }
 
@@ -161,9 +150,7 @@ export const Footer: React.FC = () => {
                     ev.preventDefault();
 
                     const rate = ac.playbackRate;
-                    const newRate = Math.exp(
-                        Math.max(Math.log(rate) - 0.2, -1),
-                    );
+                    const newRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
 
                     ac.playbackRate = newRate;
                 } else if (code === "Enter" || key === "Enter") {
@@ -213,13 +200,10 @@ export const Footer: React.FC = () => {
         });
     }, []);
 
-    const onAudioInputChange = useCallback(
-        (ev: React.ChangeEvent<HTMLInputElement>) => {
-            const file = ev.target.files![0];
-            receiveFile(file, privateSetAudioSrc);
-        },
-        [],
-    );
+    const onAudioInputChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
+        const file = ev.target.files![0];
+        receiveFile(file, privateSetAudioSrc);
+    }, []);
 
     const onAudioError = useCallback((ev) => {
         toastPubSub.pub({
@@ -230,13 +214,7 @@ export const Footer: React.FC = () => {
 
     return (
         <footer className="app-footer">
-            <input
-                id="audio-input"
-                type="file"
-                accept="audio/*, .ncm"
-                hidden={true}
-                onChange={onAudioInputChange}
-            />
+            <input id="audio-input" type="file" accept="audio/*, .ncm" hidden={true} onChange={onAudioInputChange} />
             <LoadAudio setAudioSrc={onAudioSrcSet} lang={lang} />
             <audio
                 ref={audioRef}
@@ -297,9 +275,7 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
 
             const fileReader = new FileReader();
             fileReader.addEventListener("load", () => {
-                worker.postMessage(fileReader.result, [
-                    fileReader.result as ArrayBuffer,
-                ]);
+                worker.postMessage(fileReader.result, [fileReader.result as ArrayBuffer]);
             });
             fileReader.readAsArrayBuffer(file);
 

@@ -17,10 +17,7 @@ interface INumberInput {
     callback: (value: number, ref: React.RefObject<HTMLInputElement>) => void;
 }
 
-const useNumberInput = (
-    { defaultValue, callback }: INumberInput,
-    ref = useRef<HTMLInputElement>(null),
-) => {
+const useNumberInput = ({ defaultValue, callback }: INumberInput, ref = useRef<HTMLInputElement>(null)) => {
     useEffect(() => {
         ref.current!.value = defaultValue.toString();
     }, [defaultValue]);
@@ -46,20 +43,14 @@ const useNumberInput = (
 };
 
 export const Preferences: React.FC = () => {
-    const { prefState, prefDispatch, lang } = useContext(
-        appContext,
-        ChangBits.lang || ChangBits.prefState,
-    );
+    const { prefState, prefDispatch, lang } = useContext(appContext, ChangBits.lang || ChangBits.prefState);
 
-    const onColorPick = useCallback(
-        (ev: React.ChangeEvent<HTMLInputElement>) => {
-            prefDispatch({
-                type: "themeColor",
-                payload: ev.target.value,
-            });
-        },
-        [],
-    );
+    const onColorPick = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
+        prefDispatch({
+            type: "themeColor",
+            payload: ev.target.value,
+        });
+    }, []);
 
     const userColorInputText = useRef<HTMLInputElement>(null);
 
@@ -84,39 +75,28 @@ export const Preferences: React.FC = () => {
         });
     }, []);
 
-    const onUserColorInputBlur = useCallback(
-        (ev: React.FocusEvent<HTMLInputElement>) => onUserInput(ev.target),
-        [],
-    );
+    const onUserColorInputBlur = useCallback((ev: React.FocusEvent<HTMLInputElement>) => onUserInput(ev.target), []);
 
-    const onColorSubmit = useCallback(
-        (ev: React.FormEvent<HTMLFormElement>) => {
-            ev.preventDefault();
+    const onColorSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
 
-            const form = ev.target as HTMLFormElement;
+        const form = ev.target as HTMLFormElement;
 
-            const input = form.elements.namedItem(
-                "user-color-input",
-            )! as HTMLInputElement;
+        const input = form.elements.namedItem("user-color-input")! as HTMLInputElement;
 
-            return onUserInput(input);
-        },
-        [],
-    );
+        return onUserInput(input);
+    }, []);
 
     useEffect(() => {
         userColorInputText.current!.value = prefState.themeColor.slice(1);
     }, [prefState.themeColor]);
 
-    const onSpaceChange = useCallback(
-        (value: number, ref: React.RefObject<HTMLInputElement>) => {
-            prefDispatch({
-                type: ref.current!.name as "spaceStart" & "spaceEnd",
-                payload: value,
-            });
-        },
-        [],
-    );
+    const onSpaceChange = useCallback((value: number, ref: React.RefObject<HTMLInputElement>) => {
+        prefDispatch({
+            type: ref.current!.name as "spaceStart" & "spaceEnd",
+            payload: value,
+        });
+    }, []);
 
     const onCacheClear = useCallback(() => {
         unregister();
@@ -137,15 +117,12 @@ export const Preferences: React.FC = () => {
         return new Intl.DateTimeFormat(prefState.lang, options).format(date);
     }, [prefState.lang]);
 
-    const onLangChanged = useCallback(
-        (ev: React.ChangeEvent<HTMLSelectElement>) => {
-            prefDispatch({
-                type: "lang",
-                payload: ev.target.value,
-            });
-        },
-        [],
-    );
+    const onLangChanged = useCallback((ev: React.ChangeEvent<HTMLSelectElement>) => {
+        prefDispatch({
+            type: "lang",
+            payload: ev.target.value,
+        });
+    }, []);
 
     const onBuiltInAudioToggle = useCallback(
         () =>
@@ -165,15 +142,12 @@ export const Preferences: React.FC = () => {
         [prefState.screenButton],
     );
 
-    const onFixedChanged = useCallback(
-        (ev: React.ChangeEvent<HTMLSelectElement>) => {
-            prefDispatch({
-                type: "fixed",
-                payload: Number.parseInt(ev.target.value, 10) as Fixed,
-            });
-        },
-        [],
-    );
+    const onFixedChanged = useCallback((ev: React.ChangeEvent<HTMLSelectElement>) => {
+        prefDispatch({
+            type: "fixed",
+            payload: Number.parseInt(ev.target.value, 10) as Fixed,
+        });
+    }, []);
 
     const LangOptionList = useMemo(() => {
         return Object.entries(info.languages).map(([langCode, langName]) => {
@@ -193,11 +167,7 @@ export const Preferences: React.FC = () => {
                 classNames.push("checked");
             }
             return (
-                <label
-                    className={classNames.join(Const.space)}
-                    key={color}
-                    style={{ backgroundColor: color }}
-                >
+                <label className={classNames.join(Const.space)} key={color} style={{ backgroundColor: color }}>
                     <input
                         hidden={true}
                         type="radio"
@@ -218,11 +188,7 @@ export const Preferences: React.FC = () => {
     }, [prefState.themeColor]);
 
     const formatedText = useMemo(() => {
-        return formatText(
-            "   hello   世界～   ",
-            prefState.spaceStart,
-            prefState.spaceEnd,
-        );
+        return formatText("   hello   世界～   ", prefState.spaceStart, prefState.spaceEnd);
     }, [prefState.spaceStart, prefState.spaceEnd]);
 
     const userColorLabel = useRef<HTMLLabelElement>(null);
@@ -258,12 +224,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.repo}</span>
-                        <a
-                            className="link"
-                            href={Repo.url}
-                            target="_blank"
-                            rel="noopener"
-                        >
+                        <a className="link" href={Repo.url} target="_blank" rel="noopener">
                             Github
                         </a>
                     </section>
@@ -271,12 +232,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.help}</span>
-                        <a
-                            className="link"
-                            href={Repo.wiki}
-                            target="_blank"
-                            rel="noopener"
-                        >
+                        <a className="link" href={Repo.wiki} target="_blank" rel="noopener">
                             Github Wiki
                         </a>
                     </section>
@@ -285,10 +241,7 @@ export const Preferences: React.FC = () => {
                     <section className="list-item">
                         <span>{lang.preferences.language}</span>
                         <div className="option-select">
-                            <select
-                                value={prefState.lang}
-                                onChange={onLangChanged}
-                            >
+                            <select value={prefState.lang} onChange={onLangChanged}>
                                 {LangOptionList}
                             </select>
                         </div>
@@ -298,11 +251,7 @@ export const Preferences: React.FC = () => {
                     <label className="list-item">
                         <span>{lang.preferences.builtInAudio}</span>
                         <label className="label-switch">
-                            <input
-                                type="checkbox"
-                                checked={prefState.builtInAudio}
-                                onChange={onBuiltInAudioToggle}
-                            />
+                            <input type="checkbox" checked={prefState.builtInAudio} onChange={onBuiltInAudioToggle} />
                             <div className="checkbox" />
                         </label>
                     </label>
@@ -311,11 +260,7 @@ export const Preferences: React.FC = () => {
                     <label className="list-item">
                         <span>{lang.preferences.spaceButton}</span>
                         <label className="label-switch">
-                            <input
-                                type="checkbox"
-                                checked={prefState.screenButton}
-                                onChange={onScreenButtonToggle}
-                            />
+                            <input type="checkbox" checked={prefState.screenButton} onChange={onScreenButtonToggle} />
                             <div className="checkbox" />
                         </label>
                     </label>
@@ -326,20 +271,12 @@ export const Preferences: React.FC = () => {
                         <span>{lang.preferences.themeColor}</span>
                         <details className="dropdown">
                             <summary>
-                                <span
-                                    className="color-picker ripple"
-                                    style={currentThemeColorStyle}
-                                >
+                                <span className="color-picker ripple" style={currentThemeColorStyle}>
                                     {"#"}
                                 </span>
-                                <span className="current-theme-color">
-                                    {prefState.themeColor.slice(1)}
-                                </span>
+                                <span className="current-theme-color">{prefState.themeColor.slice(1)}</span>
                             </summary>
-                            <form
-                                className="dropdown-body color-wall"
-                                onSubmit={onColorSubmit}
-                            >
+                            <form className="dropdown-body color-wall" onSubmit={onColorSubmit}>
                                 {ColorPickerWall}
                                 <label
                                     className="color-picker ripple user-color-label"
@@ -379,12 +316,8 @@ export const Preferences: React.FC = () => {
                     <section className="list-item">
                         <span>{lang.preferences.lrcFormat}</span>
                         <span>
-                            <time className="format-example-time">
-                                {convertTimeToTag(83.456, prefState.fixed)}
-                            </time>
-                            <span className="format-example-text">
-                                {formatedText}
-                            </span>
+                            <time className="format-example-time">{convertTimeToTag(83.456, prefState.fixed)}</time>
+                            <span className="format-example-text">{formatedText}</span>
                         </span>
                     </section>
                 </li>
@@ -392,11 +325,7 @@ export const Preferences: React.FC = () => {
                     <section className="list-item">
                         <span>{lang.preferences.fixed}</span>
                         <div className="option-select">
-                            <select
-                                name="fixed"
-                                value={prefState.fixed}
-                                onChange={onFixedChanged}
-                            >
+                            <select name="fixed" value={prefState.fixed} onChange={onFixedChanged}>
                                 <option value={0}>0</option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
@@ -407,9 +336,7 @@ export const Preferences: React.FC = () => {
                 </li>
                 <li>
                     <label className="list-item">
-                        <label htmlFor="space-start">
-                            {lang.preferences.leftSpace}
-                        </label>
+                        <label htmlFor="space-start">{lang.preferences.leftSpace}</label>
                         <input
                             name="spaceStart"
                             id="space-start"
@@ -424,9 +351,7 @@ export const Preferences: React.FC = () => {
                 </li>
                 <li>
                     <label className="list-item">
-                        <label htmlFor="space-end">
-                            {lang.preferences.rightSpace}
-                        </label>
+                        <label htmlFor="space-end">{lang.preferences.rightSpace}</label>
                         <input
                             name="spaceEnd"
                             id="space-end"
@@ -440,9 +365,7 @@ export const Preferences: React.FC = () => {
                     </label>
                 </li>
                 <li className="ripple" onClick={onCacheClear}>
-                    <section className="list-item">
-                        {lang.preferences.clearCache}
-                    </section>
+                    <section className="list-item">{lang.preferences.clearCache}</section>
                 </li>
             </ul>
             <AkariHideWall />

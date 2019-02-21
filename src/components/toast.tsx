@@ -31,16 +31,13 @@ export const Toast = () => {
         });
     }, []);
 
-    const onAnimationEnd = useCallback(
-        (ev: React.AnimationEvent<HTMLElement>) => {
-            if (ev.animationName === "slideOutRight") {
-                const newQueue = queueRef.current.slice();
-                newQueue.pop();
-                setToastQueue(newQueue);
-            }
-        },
-        [],
-    );
+    const onAnimationEnd = useCallback((ev: React.AnimationEvent<HTMLElement>) => {
+        if (ev.animationName === "slideOutRight") {
+            const newQueue = queueRef.current.slice();
+            newQueue.pop();
+            setToastQueue(newQueue);
+        }
+    }, []);
 
     const ToastIter = useCallback((toast: IToast) => {
         const badge = {
@@ -51,9 +48,7 @@ export const Toast = () => {
 
         return (
             <section className="toast" key={toast.id}>
-                <section className={`toast-badge toast-${toast.type}`}>
-                    {badge}
-                </section>
+                <section className={`toast-badge toast-${toast.type}`}>{badge}</section>
                 <section className="toast-text">{toast.text}</section>
             </section>
         );

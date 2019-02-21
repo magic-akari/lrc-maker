@@ -1,14 +1,5 @@
-import {
-    ActionType as LrcActionType,
-    convertTimeToTag,
-    stringify,
-    useLrc,
-} from "../hooks/useLrc.js";
-import {
-    AudioActionType,
-    audioRef,
-    audioStatePubSub,
-} from "../utils/audiomodule.js";
+import { ActionType as LrcActionType, convertTimeToTag, stringify, useLrc } from "../hooks/useLrc.js";
+import { AudioActionType, audioRef, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { Eidtor } from "./editor.js";
 import { Gist } from "./gist.js";
@@ -31,9 +22,7 @@ export const Content: React.FC = () => {
         });
     }, []);
 
-    const [lrcState, lrcDispatch] = useLrc(
-        localStorage.getItem(LSK.lyric) || Const.emptyString,
-    );
+    const [lrcState, lrcDispatch] = useLrc(localStorage.getItem(LSK.lyric) || Const.emptyString);
 
     const stateRef = useRef({ lrcState, prefState });
 
@@ -47,11 +36,7 @@ export const Content: React.FC = () => {
                     type: LrcActionType.set_info,
                     payload: {
                         name: "length",
-                        value: convertTimeToTag(
-                            data.payload,
-                            stateRef.current.prefState.fixed,
-                            false,
-                        ),
+                        value: convertTimeToTag(data.payload, stateRef.current.prefState.fixed, false),
                     },
                 });
             }
@@ -96,10 +81,7 @@ export const Content: React.FC = () => {
             ev.preventDefault();
             const file = ev.dataTransfer!.files[0];
             if (file) {
-                if (
-                    file.type.startsWith("text/") ||
-                    /(?:\.lrc|\.txt)$/i.test(file.name)
-                ) {
+                if (file.type.startsWith("text/") || /(?:\.lrc|\.txt)$/i.test(file.name)) {
                     const fileReader = new FileReader();
 
                     const onload = () => {
@@ -112,11 +94,7 @@ export const Content: React.FC = () => {
                                 type: LrcActionType.set_info,
                                 payload: {
                                     name: "length",
-                                    value: convertTimeToTag(
-                                        audioRef.duration,
-                                        stateRef.current.prefState.fixed,
-                                        false,
-                                    ),
+                                    value: convertTimeToTag(audioRef.duration, stateRef.current.prefState.fixed, false),
                                 },
                             });
                         }
@@ -140,11 +118,7 @@ export const Content: React.FC = () => {
         const luminanace = (...rgb: [number, number, number]) => {
             return rgb
                 .map((v) => v / 255)
-                .map((v) =>
-                    v <= 0.03928
-                        ? v / 12.92
-                        : Math.pow((v + 0.055) / 1.055, 2.4),
-                )
+                .map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)))
                 .reduce((p, c, i) => {
                     return p + c * [0.2126, 0.7152, 0.0722][i];
                 }, 0);
@@ -187,18 +161,11 @@ export const Content: React.FC = () => {
                 if (lrcState.lyric.length === 0) {
                     return <AkariNotFound />;
                 }
-                return (
-                    <Synchronizer
-                        lrcState={lrcState}
-                        lrcDispatch={lrcDispatch}
-                    />
-                );
+                return <Synchronizer lrcState={lrcState} lrcDispatch={lrcDispatch} />;
             }
 
             case Path.gist: {
-                return (
-                    <Gist lrcDispatch={lrcDispatch} langName={prefState.lang} />
-                );
+                return <Gist lrcDispatch={lrcDispatch} langName={prefState.lang} />;
             }
 
             case Path.preferences: {

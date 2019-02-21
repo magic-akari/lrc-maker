@@ -1,9 +1,6 @@
 if ("serviceWorker" in navigator) {
     window.addEventListener("error", (ev) => {
-        if (
-            ev.message.includes("SyntaxError") &&
-            ev.filename.includes("useLang.js")
-        ) {
+        if (ev.message.includes("SyntaxError") && ev.filename.includes("useLang.js")) {
             ev.preventDefault();
             location.reload();
         }
@@ -16,10 +13,7 @@ if ("serviceWorker" in navigator) {
             // Registration was successful
             registration.update();
             window.serviceWorkerRegistration = registration;
-            console.log(
-                "ServiceWorker Registed (｡･ω･｡)ﾉ: ",
-                registration.scope
-            );
+            console.log("ServiceWorker Registed (｡･ω･｡)ﾉ: ", registration.scope);
         },
         (err) => {
             // registration failed :(

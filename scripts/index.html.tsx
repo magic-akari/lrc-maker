@@ -43,15 +43,11 @@ const libUrl = (
         })();
 
         const src = `${jsdelivr}/npm/${libName}@${libVersion}${prodPath}`;
-        const integrity = sri(
-            resolve(__dirname, `${nodeModules}${libName}${prodPath}`),
-        );
+        const integrity = sri(resolve(__dirname, `${nodeModules}${libName}${prodPath}`));
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
         return {
-            src: `${nodeModules}${libName}${
-                isProduction ? prodPath : devPath || prodPath
-            }`,
+            src: `${nodeModules}${libName}${isProduction ? prodPath : devPath || prodPath}`,
         };
     }
 };
@@ -64,10 +60,7 @@ const appUrl = (
     crossOrigin?: "anonymous";
 } => {
     if (useCDN) {
-        const src = new URL(
-            resolve("/npm", `${name}@${version}`, "build", path),
-            `${jsdelivr}`,
-        ).href;
+        const src = new URL(resolve("/npm", `${name}@${version}`, "build", path), `${jsdelivr}`).href;
         const integrity = sri(resolve(__dirname, "../build", path));
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
@@ -100,12 +93,9 @@ const swRegister = () => {
 };
 
 const swUnregister = () => {
-    let content = readFileSync(
-        resolve(__dirname, "../src/utils/sw.unregister.ts"),
-        {
-            encoding: "utf8",
-        },
-    );
+    let content = readFileSync(resolve(__dirname, "../src/utils/sw.unregister.ts"), {
+        encoding: "utf8",
+    });
 
     content = content.replace("export", "") + "unregister();";
 
@@ -183,54 +173,24 @@ const Html = () => {
                         .join("; ")}
                 />
                 <meta name="description" content={description} />
-                <meta
-                    name="keywords"
-                    content="lrc maker, lrc generate, 歌词制作, 歌词滚动"
-                />
+                <meta name="keywords" content="lrc maker, lrc generate, 歌词制作, 歌词滚动" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="renderer" content="webkit" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="google" content="notranslate" />
 
-                <link
-                    rel="apple-touch-icon"
-                    sizes="180x180"
-                    href="./favicons/apple-touch-icon.png"
-                />
-                <link
-                    rel="icon"
-                    type="image/png"
-                    href="./favicons/favicon-32x32.png"
-                    sizes="32x32"
-                />
-                <link
-                    rel="icon"
-                    type="image/png"
-                    href="./favicons/favicon-16x16.png"
-                    sizes="16x16"
-                />
+                <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" href="./favicons/favicon-32x32.png" sizes="32x32" />
+                <link rel="icon" type="image/png" href="./favicons/favicon-16x16.png" sizes="16x16" />
                 <link rel="manifest" href="./site.webmanifest" />
-                <link
-                    rel="mask-icon"
-                    href="./favicons/safari-pinned-tab.svg"
-                    color="#ff4081"
-                />
+                <link rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#ff4081" />
                 <link rel="shortcut icon" href="./favicons/favicon.ico" />
 
                 <meta name="application-name" content="灯里的歌词滚动姬" />
                 <meta name="msapplication-TileColor" content="#ffffff" />
                 <meta name="theme-color" content="#484848" />
-                <meta
-                    name="msapplication-config"
-                    content="./favicons/browserconfig.xml"
-                />
-                <meta
-                    name="apple-mobile-web-app-title"
-                    content="灯里的歌词滚动姬"
-                />
+                <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
+                <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬" />
 
                 <link
                     className="preload-akari-odango-loading"
@@ -258,31 +218,15 @@ const Html = () => {
                     rel="stylesheet"
                     {...(() => {
                         if (isProduction) {
-                            const {
-                                src: href,
-                                integrity,
-                                crossOrigin,
-                            } = appUrl("./index.css");
+                            const { src: href, integrity, crossOrigin } = appUrl("./index.css");
                             return { href, integrity, crossOrigin };
                         }
 
                         return { href: "../src/index.css" };
                     })()}
                 />
-                <script
-                    {...libUrl(
-                        "react",
-                        "/umd/react.production.min.js",
-                        "/umd/react.development.js",
-                    )}
-                />
-                <script
-                    {...libUrl(
-                        "react-dom",
-                        "/umd/react-dom.production.min.js",
-                        "/umd/react-dom.development.js",
-                    )}
-                />
+                <script {...libUrl("react", "/umd/react.production.min.js", "/umd/react.development.js")} />
+                <script {...libUrl("react-dom", "/umd/react-dom.production.min.js", "/umd/react-dom.development.js")} />
                 <script {...appUrl("./polyfill.js")} type="module" async />
                 <script {...appUrl("./languages/en-US.js")} type="module" />
                 {preloadScripts.map((script, index) => {

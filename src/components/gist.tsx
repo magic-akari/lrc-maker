@@ -1,7 +1,4 @@
-import {
-    Action as LrcAction,
-    ActionType as LrcActionType,
-} from "../hooks/useLrc.js";
+import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import {
     assignRepo,
     createRepo,
@@ -19,8 +16,7 @@ import { toastPubSub } from "./toast.js";
 
 const { useCallback, useContext, useEffect, useMemo, useState } = React;
 
-const newTokenUrl =
-    "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
+const newTokenUrl = "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
 
 const disableCheck = {
     autoCapitalize: "off",
@@ -39,33 +35,24 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
 
     const [token, setToken] = useState(localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(localStorage.getItem(LSK.gistId));
-    const [gistIdList, setGistIdList] = useState<string[] | undefined>(
-        undefined,
-    );
-    const [fileList, setFileList] = useState<IGistFile[] | null>(
-        JSON.parse(localStorage.getItem(LSK.gistFile)!),
-    );
+    const [gistIdList, setGistIdList] = useState<string[] | undefined>(undefined);
+    const [fileList, setFileList] = useState<IGistFile[] | null>(JSON.parse(localStorage.getItem(LSK.gistFile)!));
 
     const ratelimit: Ratelimit | null = useMemo(() => {
         return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!);
     }, [fileList]);
 
-    const onSubmitToken = useCallback(
-        (ev: React.FormEvent<HTMLFormElement>) => {
-            ev.preventDefault();
+    const onSubmitToken = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
 
-            const form = ev.target as HTMLFormElement;
-            const tokenInput = form.elements.namedItem(
-                "token",
-            )! as HTMLInputElement;
+        const form = ev.target as HTMLFormElement;
+        const tokenInput = form.elements.namedItem("token")! as HTMLInputElement;
 
-            const value = tokenInput.value;
+        const value = tokenInput.value;
 
-            localStorage.setItem(LSK.token, value);
-            setToken(value);
-        },
-        [],
-    );
+        localStorage.setItem(LSK.token, value);
+        setToken(value);
+    }, []);
 
     const onCreateNewGist = useCallback(() => {
         createRepo()
@@ -81,28 +68,23 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             });
     }, []);
 
-    const onSubmitGistId = useCallback(
-        (ev: React.FormEvent<HTMLFormElement>) => {
-            ev.preventDefault();
+    const onSubmitGistId = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
 
-            const form = ev.target as HTMLFormElement;
-            const gistIdInput = form.elements.namedItem(
-                "gist-id",
-            )! as HTMLInputElement;
-            const value = gistIdInput.value;
+        const form = ev.target as HTMLFormElement;
+        const gistIdInput = form.elements.namedItem("gist-id")! as HTMLInputElement;
+        const value = gistIdInput.value;
 
-            localStorage.setItem(LSK.gistId, value);
-            setGistId(value);
+        localStorage.setItem(LSK.gistId, value);
+        setGistId(value);
 
-            assignRepo().catch((error) => {
-                toastPubSub.pub({
-                    type: "warning",
-                    text: error.message,
-                });
+        assignRepo().catch((error) => {
+            toastPubSub.pub({
+                type: "warning",
+                text: error.message,
             });
-        },
-        [],
-    );
+        });
+    }, []);
 
     useEffect(() => {
         if (gistId !== null || token === null) {
@@ -118,10 +100,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 setGistIdList(
                     result
                         .filter((gist) => {
-                            return (
-                                gist.description === GistInfo.description &&
-                                GistInfo.fileName in gist.files
-                            );
+                            return gist.description === GistInfo.description && GistInfo.fileName in gist.files;
                         })
                         .map(({ id }) => id),
                 );
@@ -145,17 +124,10 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                     return;
                 }
 
-                const files = Object.values(result.files).filter((file) =>
-                    file.filename.endsWith(".lrc"),
-                );
+                const files = Object.values(result.files).filter((file) => file.filename.endsWith(".lrc"));
                 localStorage.setItem(
                     LSK.gistFile,
-                    JSON.stringify(files, [
-                        "filename",
-                        "content",
-                        "truncated",
-                        "raw_url",
-                    ]),
+                    JSON.stringify(files, ["filename", "content", "truncated", "raw_url"]),
                 );
                 setFileList(files);
             })
@@ -167,40 +139,37 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             });
     }, [gistId]);
 
-    const onFileLoad = useCallback(
-        (ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
-            const target = ev.target as HTMLElement;
+    const onFileLoad = useCallback((ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        const target = ev.target as HTMLElement;
 
-            if (!("key" in target.dataset)) {
-                return;
-            }
+        if (!("key" in target.dataset)) {
+            return;
+        }
 
-            const key = Number.parseInt(target.dataset.key!, 10);
-            const file = fileList![key];
-            if (file.truncated) {
-                fetch(file.raw_url)
-                    .then((res) => res.text())
-                    .then((text) => {
-                        lrcDispatch({
-                            type: LrcActionType.parse,
-                            payload: text,
-                        });
-                    })
-                    .catch((error) => {
-                        toastPubSub.pub({
-                            type: "warning",
-                            text: error.message,
-                        });
+        const key = Number.parseInt(target.dataset.key!, 10);
+        const file = fileList![key];
+        if (file.truncated) {
+            fetch(file.raw_url)
+                .then((res) => res.text())
+                .then((text) => {
+                    lrcDispatch({
+                        type: LrcActionType.parse,
+                        payload: text,
                     });
-            } else {
-                lrcDispatch({
-                    type: LrcActionType.parse,
-                    payload: file.content,
+                })
+                .catch((error) => {
+                    toastPubSub.pub({
+                        type: "warning",
+                        text: error.message,
+                    });
                 });
-            }
-        },
-        [],
-    );
+        } else {
+            lrcDispatch({
+                type: LrcActionType.parse,
+                payload: file.content,
+            });
+        }
+    }, []);
 
     const onClear = useCallback(() => {
         setGistId(null);
@@ -220,11 +189,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             minute: "numeric",
             second: "numeric",
             hour12: false,
-        }).format(
-            new Date(
-                Number.parseInt(ratelimit["x-ratelimit-reset"], 10) * 1000,
-            ),
-        );
+        }).format(new Date(Number.parseInt(ratelimit["x-ratelimit-reset"], 10) * 1000));
 
         return (
             <section className="ratelimit">
@@ -253,11 +218,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                         <section className="gist-info">
                             <p>
                                 {"Gist id: "}
-                                <a
-                                    href={`https://gist.github.com/${gistId}`}
-                                    target="_blank"
-                                    className="link"
-                                >
+                                <a href={`https://gist.github.com/${gistId}`} target="_blank" className="link">
                                     {gistId}
                                 </a>
                             </p>
@@ -278,14 +239,8 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             return (
                 <section className="new-token">
                     <GithubSVG />
-                    <p className="new-token-tip-text">
-                        {lang.gist.newTokenTip}
-                    </p>
-                    <a
-                        className="new-token-tip button"
-                        target="_blank"
-                        href={newTokenUrl}
-                    >
+                    <p className="new-token-tip-text">{lang.gist.newTokenTip}</p>
+                    <a className="new-token-tip button" target="_blank" href={newTokenUrl}>
                         {lang.gist.newTokenButton}
                     </a>
                     <form className="new-token-form" onSubmit={onSubmitToken}>
@@ -301,10 +256,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                             required={true}
                             {...disableCheck}
                         />
-                        <input
-                            className="new-token-submit button"
-                            type="submit"
-                        />
+                        <input className="new-token-submit button" type="submit" />
                     </form>
                 </section>
             );
@@ -317,19 +269,14 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 return <option key={id} value={id} />;
             };
             const gistIdDataList = gistIdList && (
-                <datalist id="gist-list">
-                    {gistIdList.map((id) => option(id))};
-                </datalist>
+                <datalist id="gist-list">{gistIdList.map((id) => option(id))};</datalist>
             );
 
             return (
                 <section className="get-gist-id">
                     <GithubSVG />
                     <p className="gist-id-tip-text">{lang.gist.newGistTip}</p>
-                    <button
-                        className="create-new-gist button"
-                        onClick={onCreateNewGist}
-                    >
+                    <button className="create-new-gist button" onClick={onCreateNewGist}>
                         {lang.gist.newGistRepoButton}
                     </button>
                     <form className="gist-id-form" onSubmit={onSubmitGistId}>
@@ -359,25 +306,15 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             const FileCard = (file: IGistFile, index: number) => {
                 return (
                     <article className="file-item" key={file.raw_url}>
-                        <section className="file-content">
-                            {file.content}
-                        </section>
+                        <section className="file-content">{file.content}</section>
                         <hr />
                         <section className="file-bar">
                             <span className="file-title">{file.filename}</span>
                             <span className="file-action">
-                                <a
-                                    className="file-load"
-                                    href={Path.editor}
-                                    data-key={index}
-                                >
+                                <a className="file-load" href={Path.editor} data-key={index}>
                                     <EditorSVG />
                                 </a>
-                                <a
-                                    className="file-load"
-                                    href={Path.synchronizer}
-                                    data-key={index}
-                                >
+                                <a className="file-load" href={Path.synchronizer} data-key={index}>
                                     <SynchronizerSVG />
                                 </a>
                             </span>

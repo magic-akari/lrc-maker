@@ -192,8 +192,7 @@ input[type="number"] {
     opacity: 0.8;
     stroke-width: 4px;
     transform: translateX(100%);
-    animation: akariSlideIn 0.5s var(--animation-out-back) 3s forwards,
-        akariFloat 20s ease-in-out 3.5s infinite;
+    animation: akariSlideIn 0.5s var(--animation-out-back) 3s forwards, akariFloat 20s ease-in-out 3.5s infinite;
 }
 
 @keyframes akariSlideIn {

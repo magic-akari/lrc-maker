@@ -1,9 +1,5 @@
 import { useLang } from "../hooks/useLang.js";
-import {
-    Action as PrefAction,
-    State as PrefState,
-    usePref,
-} from "../hooks/usePref.js";
+import { Action as PrefAction, State as PrefState, usePref } from "../hooks/usePref.js";
 import { toastPubSub } from "./toast.js";
 
 const { createContext, useEffect, useMemo } = React;
@@ -32,50 +28,45 @@ export const enum ChangBits {
     prefState = 1 << Bits.prefState,
 }
 
-export const appContext = createContext<IAppContext>(
-    undefined,
-    (prev, next) => {
-        let bits = 0;
+export const appContext = createContext<IAppContext>(undefined, (prev, next) => {
+    let bits = 0;
 
-        if (prev.lang !== next.lang) {
-            bits |= ChangBits.lang;
-        }
+    if (prev.lang !== next.lang) {
+        bits |= ChangBits.lang;
+    }
 
-        // const changed = (prop: keyof IAppContext["prefState"]) => {
-        //     return prev.prefState[prop] !== next.prefState[prop];
-        // };
+    // const changed = (prop: keyof IAppContext["prefState"]) => {
+    //     return prev.prefState[prop] !== next.prefState[prop];
+    // };
 
-        // if (changed("spaceStart") || changed("spaceEnd") || changed("fixed")) {
-        //     bits |= ChangBits.lrcFormat;
-        // }
+    // if (changed("spaceStart") || changed("spaceEnd") || changed("fixed")) {
+    //     bits |= ChangBits.lrcFormat;
+    // }
 
-        // if (changed("builtInAudio")) {
-        //     bits |= ChangBits.builtInAudio;
-        // }
-        // if (changed("screenButton")) {
-        //     bits |= ChangBits.screenButton;
-        // }
+    // if (changed("builtInAudio")) {
+    //     bits |= ChangBits.builtInAudio;
+    // }
+    // if (changed("screenButton")) {
+    //     bits |= ChangBits.screenButton;
+    // }
 
-        // if (changed("themeColor")) {
-        //     bits |= ChangBits.themeColor;
-        // }
+    // if (changed("themeColor")) {
+    //     bits |= ChangBits.themeColor;
+    // }
 
-        if (prev.prefState.builtInAudio !== next.prefState.builtInAudio) {
-            bits |= ChangBits.builtInAudio;
-        }
+    if (prev.prefState.builtInAudio !== next.prefState.builtInAudio) {
+        bits |= ChangBits.builtInAudio;
+    }
 
-        if (prev.prefState !== next.prefState) {
-            bits |= ChangBits.prefState;
-        }
+    if (prev.prefState !== next.prefState) {
+        bits |= ChangBits.prefState;
+    }
 
-        return bits;
-    },
-);
+    return bits;
+});
 
 export const AppProvider: React.FC = ({ children }) => {
-    const [prefState, prefDispatch] = usePref(
-        localStorage.getItem(LSK.preferences) || Const.emptyString,
-    );
+    const [prefState, prefDispatch] = usePref(localStorage.getItem(LSK.preferences) || Const.emptyString);
 
     const [lang, setLang] = useLang();
 
@@ -94,10 +85,7 @@ export const AppProvider: React.FC = ({ children }) => {
     }, [lang]);
 
     useEffect(() => {
-        document.documentElement.style.setProperty(
-            "--theme-color",
-            prefState.themeColor,
-        );
+        document.documentElement.style.setProperty("--theme-color", prefState.themeColor);
     }, [prefState.themeColor]);
 
     const value = useMemo(() => {
