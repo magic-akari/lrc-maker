@@ -1,9 +1,4 @@
-import {
-    Action as LrcAction,
-    ActionType as LrcActionType,
-    State as LrcState,
-    stringify,
-} from "../hooks/useLrc.js";
+import { Action as LrcAction, ActionType as LrcActionType, State as LrcState, stringify } from "../hooks/useLrc.js";
 import { createFile } from "../utils/gistapi.js";
 import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
@@ -17,10 +12,7 @@ const disableCheck = {
     spellCheck: false,
 };
 
-const useDefaultValue = (
-    defaultValue: string,
-    ref = useRef<HTMLInputElement & HTMLTextAreaElement>(null),
-) => {
+const useDefaultValue = (defaultValue: string, ref = useRef<HTMLInputElement & HTMLTextAreaElement>(null)) => {
     // warning: make sure we always use outter ref or create new one.
 
     const currentValue = ref.current ? ref.current.value : defaultValue;
@@ -87,23 +79,20 @@ export const Eidtor: React.SFC<{
         setHref(url);
     }, []);
 
-    const onTextFileUpload = useCallback(
-        (ev: React.ChangeEvent<HTMLInputElement>) => {
-            if (ev.target.files === null || ev.target.files.length === 0) {
-                return;
-            }
+    const onTextFileUpload = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (ev.target.files === null || ev.target.files.length === 0) {
+            return;
+        }
 
-            const fileReader = new FileReader();
-            fileReader.addEventListener("load", () => {
-                lrcDispatch({
-                    type: LrcActionType.parse,
-                    payload: fileReader.result as string,
-                });
+        const fileReader = new FileReader();
+        fileReader.addEventListener("load", () => {
+            lrcDispatch({
+                type: LrcActionType.parse,
+                payload: fileReader.result as string,
             });
-            fileReader.readAsText(ev.target.files![0], "UTF-8");
-        },
-        [],
-    );
+        });
+        fileReader.readAsText(ev.target.files![0], "UTF-8");
+    }, []);
 
     const onCopyClick = useCallback(() => {
         textarea.current.select();
@@ -130,10 +119,7 @@ export const Eidtor: React.SFC<{
     }, [lrcState.info]);
 
     const canSaveToGist = useMemo(() => {
-        return (
-            localStorage.getItem(LSK.token) !== null &&
-            localStorage.getItem(LSK.gistId) !== null
-        );
+        return localStorage.getItem(LSK.token) !== null && localStorage.getItem(LSK.gistId) !== null;
     }, []);
 
     const onGistSave = useCallback(() => {
@@ -184,23 +170,11 @@ export const Eidtor: React.SFC<{
             </details>
 
             <section className="editor-tools">
-                <label
-                    className="editor-tools-item ripple"
-                    title={lang.editor.uploadText}
-                >
-                    <input
-                        hidden={true}
-                        type="file"
-                        accept="text/*, .txt, .lrc"
-                        onChange={onTextFileUpload}
-                    />
+                <label className="editor-tools-item ripple" title={lang.editor.uploadText}>
+                    <input hidden={true} type="file" accept="text/*, .txt, .lrc" onChange={onTextFileUpload} />
                     <OpenFileSVG />
                 </label>
-                <button
-                    className="editor-tools-item ripple"
-                    title={lang.editor.copyText}
-                    onClick={onCopyClick}
-                >
+                <button className="editor-tools-item ripple" title={lang.editor.copyText} onClick={onCopyClick}>
                     <CopySVG />
                 </button>
                 <a
@@ -223,12 +197,7 @@ export const Eidtor: React.SFC<{
                 </a>
             </section>
 
-            <textarea
-                className="app-textarea"
-                onBlur={parse}
-                {...disableCheck}
-                {...useDefaultValue(text, textarea)}
-            />
+            <textarea className="app-textarea" onBlur={parse} {...disableCheck} {...useDefaultValue(text, textarea)} />
         </div>
     );
 };

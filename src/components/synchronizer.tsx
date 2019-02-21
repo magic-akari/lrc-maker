@@ -36,10 +36,7 @@ interface ISynchronizerProps {
     lrcDispatch: React.Dispatch<LrcAction>;
 }
 
-export const Synchronizer: React.FC<ISynchronizerProps> = ({
-    lrcState,
-    lrcDispatch,
-}) => {
+export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispatch }) => {
     const self = useRef(Symbol(Synchronizer.name));
 
     const { prefState } = useContext(appContext);
@@ -69,16 +66,12 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         [lyric.length],
     );
 
-    const [selectIndex, setSelectIndex] = useState(
-        guard(cachedState.selectedLine),
-    );
+    const [selectIndex, setSelectIndex] = useState(guard(cachedState.selectedLine));
 
     const [highlightIndex, setHighlightIndex] = useState(-Infinity);
 
     const [syncMode, setSyncMode] = useState(
-        sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString()
-            ? SyncMode.highlight
-            : SyncMode.select,
+        sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString() ? SyncMode.highlight : SyncMode.select,
     );
 
     useEffect(() => {
@@ -129,10 +122,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
             // );
             // setHighLight(index);
 
-            if (
-                time >= trackedLine.current.currentTime &&
-                time < trackedLine.current.nextTime
-            ) {
+            if (time >= trackedLine.current.currentTime && time < trackedLine.current.nextTime) {
                 return;
             } else {
                 trackedLine.current = calcTrackedLine(lyric);
@@ -174,20 +164,11 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         const listener = (ev: KeyboardEvent) => {
             const { code, key, target } = ev;
 
-            if (
-                ["text", "textarea", "url"].includes((target as any)
-                    .type as string)
-            ) {
+            if (["text", "textarea", "url"].includes((target as any).type as string)) {
                 return;
             }
 
-            if (
-                code === "Backspace" ||
-                code === "Delete" ||
-                key === "Backspace" ||
-                key === "Delete" ||
-                key === "Del"
-            ) {
+            if (code === "Backspace" || code === "Delete" || key === "Backspace" || key === "Delete" || key === "Del") {
                 ev.preventDefault();
                 deleteTimeTag();
                 return;
@@ -243,45 +224,35 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         };
     }, [selectIndex]);
 
-    const onLineClick = useCallback(
-        (ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
-            ev.stopPropagation();
+    const onLineClick = useCallback((ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
+        ev.stopPropagation();
 
-            if ((ev.target as any).classList.contains("line")) {
-                const lineKey =
-                    Number.parseInt(
-                        (ev.target as HTMLElement).dataset.key!,
-                        10,
-                    ) || 0;
+        if ((ev.target as any).classList.contains("line")) {
+            const lineKey = Number.parseInt((ev.target as HTMLElement).dataset.key!, 10) || 0;
 
-                setSelectIndex(lineKey);
+            setSelectIndex(lineKey);
+        }
+    }, []);
+
+    const onLineDoubleClick = useCallback((ev: React.MouseEvent<HTMLUListElement | HTMLLIElement>) => {
+        ev.stopPropagation();
+
+        if (!audioRef.duration) {
+            return;
+        }
+
+        const target = ev.target as HTMLElement;
+
+        if (target.classList.contains("line")) {
+            const key = Number.parseInt(target.dataset.key!, 10);
+
+            const time = lyric[key].time;
+
+            if (time !== undefined) {
+                audioRef.currentTime = guard(time, 0, audioRef.duration);
             }
-        },
-        [],
-    );
-
-    const onLineDoubleClick = useCallback(
-        (ev: React.MouseEvent<HTMLUListElement | HTMLLIElement>) => {
-            ev.stopPropagation();
-
-            if (!audioRef.duration) {
-                return;
-            }
-
-            const target = ev.target as HTMLElement;
-
-            if (target.classList.contains("line")) {
-                const key = Number.parseInt(target.dataset.key!, 10);
-
-                const time = lyric[key].time;
-
-                if (time !== undefined) {
-                    audioRef.currentTime = guard(time, 0, audioRef.duration);
-                }
-            }
-        },
-        [],
-    );
+        }
+    }, []);
 
     const lrcStateRef = useRef(lrcState);
     lrcStateRef.current = lrcState;
@@ -301,8 +272,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         (line: Readonly<ILyric>, index: number, lines: Readonly<ILyric>[]) => {
             const select = index === selectIndex;
             const highlight = index === highlightIndex;
-            const error =
-                index > 0 && lines[index].time! <= lines[index - 1].time!;
+            const error = index > 0 && lines[index].time! <= lines[index - 1].time!;
 
             const className = Object.entries({
                 line: true,
@@ -321,26 +291,14 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
                 )
                 .join(Const.space);
 
-            return (
-                <LyricLine
-                    line={line}
-                    index={index}
-                    select={select}
-                    className={className}
-                />
-            );
+            return <LyricLine line={line} index={index} select={select} className={className} />;
         },
         [selectIndex, highlightIndex],
     );
 
     return (
         <>
-            <ul
-                ref={ul}
-                className={ulClassName}
-                onClickCapture={onLineClick}
-                onDoubleClickCapture={onLineDoubleClick}
-            >
+            <ul ref={ul} className={ulClassName} onClickCapture={onLineClick} onDoubleClickCapture={onLineDoubleClick}>
                 {lrcState.lyric.map(LyricLineIter)}
             </ul>
             <AsidePanel
@@ -361,21 +319,12 @@ interface ILyricLineProps {
     className: string;
 }
 
-const LyricLine: React.FC<ILyricLineProps> = ({
-    line,
-    index,
-    select,
-    className,
-}) => {
+const LyricLine: React.FC<ILyricLineProps> = ({ line, index, select, className }) => {
     const { prefState } = useContext(appContext);
 
     const lineTime = convertTimeToTag(line.time, prefState.fixed);
 
-    const lineText = formatText(
-        line.text,
-        prefState.spaceStart,
-        prefState.spaceEnd,
-    );
+    const lineText = formatText(line.text, prefState.spaceStart, prefState.spaceEnd);
 
     return (
         <li key={index} data-key={index} className={className}>

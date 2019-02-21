@@ -14,43 +14,28 @@ export const Home: React.FC = () => {
     return (
         <div className="home">
             <p className="home-tip home-tip-top-left">{lang.home.tipTopLeft}</p>
-            <p className="home-tip home-tip-top-right">
-                {lang.home.tipTopRight}
-            </p>
-            <p className="home-tip home-tip-bottom-left">
-                {lang.home.tipBottomLeft}
-            </p>
-            <p className="home-tip home-tip-bottom-right">
-                {lang.home.tipBottomRight}
-            </p>
+            <p className="home-tip home-tip-top-right">{lang.home.tipTopRight}</p>
+            <p className="home-tip home-tip-bottom-left">{lang.home.tipBottomLeft}</p>
+            <p className="home-tip home-tip-bottom-right">{lang.home.tipBottomRight}</p>
             <section className="home-tip-section">
                 <p>{lang.home.tips}</p>
                 <ol>
                     <li>
                         <a className="home-tip-item" href={Path.editor}>
                             <EditorSVG />
-                            <span className="home-tip-text">
-                                {lang.home.tipForLyricText}
-                            </span>
+                            <span className="home-tip-text">{lang.home.tipForLyricText}</span>
                         </a>
                     </li>
                     <li>
-                        <span
-                            className="home-tip-item"
-                            onClick={onLoadAudioDialogOpen}
-                        >
+                        <span className="home-tip-item" onClick={onLoadAudioDialogOpen}>
                             <LoadAudioSVG />
-                            <span className="home-tip-text">
-                                {lang.home.tipForUploadAudio}
-                            </span>
+                            <span className="home-tip-text">{lang.home.tipForUploadAudio}</span>
                         </span>
                     </li>
                     <li>
                         <a className="home-tip-item" href={Path.synchronizer}>
                             <SynchronizerSVG />
-                            <span className="home-tip-text">
-                                {lang.home.tipForSynchronizer}
-                            </span>
+                            <span className="home-tip-text">{lang.home.tipForSynchronizer}</span>
                         </a>
                     </li>
                 </ol>

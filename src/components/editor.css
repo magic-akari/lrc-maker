@@ -39,9 +39,6 @@
     grid-template-rows: 1fr 1fr 1fr;
 }
 
-.app-editor-infobox > input {
-}
-
 .app-textarea {
     flex: 1 0 auto;
     border: none;

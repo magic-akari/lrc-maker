@@ -13,10 +13,7 @@ export interface IGistRepo {
     files: { [filename: string]: IGistFile };
 }
 
-export type Ratelimit = Record<
-    "x-ratelimit-limit" | "x-ratelimit-remaining" | "x-ratelimit-reset",
-    string
->;
+export type Ratelimit = Record<"x-ratelimit-limit" | "x-ratelimit-remaining" | "x-ratelimit-reset", string>;
 
 export const getRepos = async (): Promise<IGistRepo[]> => {
     const token = localStorage.getItem(LSK.token);
@@ -100,10 +97,7 @@ export const getFils = async (): Promise<IGistRepo | null> => {
     return res.status === 200 ? res.json() : null;
 };
 
-export const createFile = async (
-    fileName: string,
-    content: string,
-): Promise<IGistRepo> => {
+export const createFile = async (fileName: string, content: string): Promise<IGistRepo> => {
     const token = localStorage.getItem(LSK.token);
     const id = localStorage.getItem(LSK.gistId);
 

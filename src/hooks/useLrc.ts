@@ -4,9 +4,7 @@ export const enum ActionType {
     parse,
 }
 
-type Map_Type_Payload<T, U> = {
-    [key in keyof T]: U extends key ? { type: key; payload: T[key] } : never
-}[keyof T];
+type Map_Type_Payload<T, U> = { [key in keyof T]: U extends key ? { type: key; payload: T[key] } : never }[keyof T];
 
 export type Action = Map_Type_Payload<
     {
@@ -106,11 +104,7 @@ const getFormatter = (fixed: Fixed) => {
     }
 };
 
-export const convertTimeToTag = (
-    time: number | undefined,
-    fixed: Fixed,
-    withBrackets = true,
-) => {
+export const convertTimeToTag = (time: number | undefined, fixed: Fixed, withBrackets = true) => {
     if (time === undefined) {
         return Const.emptyString;
     }
@@ -125,11 +119,7 @@ export const convertTimeToTag = (
     return withBrackets ? `[${mm}:${ss}]` : `${mm}:${ss}`;
 };
 
-export const formatText = (
-    text: string,
-    spaceStart: number,
-    spaceEnd: number,
-) => {
+export const formatText = (text: string, spaceStart: number, spaceEnd: number) => {
     let newText = text;
     if (spaceStart >= 0) {
         newText = Const.space.repeat(spaceStart) + newText.trimStart();

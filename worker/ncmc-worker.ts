@@ -90,13 +90,7 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
         iv: new Uint8Array(16),
     };
 
-    const cryptoKey = await crypto.subtle.importKey(
-        "raw",
-        keyData,
-        "AES-CBC",
-        false,
-        ["encrypt", "decrypt"],
-    );
+    const cryptoKey = await crypto.subtle.importKey("raw", keyData, "AES-CBC", false, ["encrypt", "decrypt"]);
 
     const bodyLength = data.byteLength - 16;
 
@@ -127,11 +121,7 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
         cipher.set(clip, 0);
         cipher.set(new Uint8Array(encryptedPadding).slice(0, 16), 16);
 
-        const result = await crypto.subtle.decrypt(
-            { name: "AES-CBC", iv: new ArrayBuffer(16) },
-            cryptoKey,
-            cipher,
-        );
+        const result = await crypto.subtle.decrypt({ name: "AES-CBC", iv: new ArrayBuffer(16) }, cryptoKey, cipher);
         decrypted.set(new Uint8Array(result), curser);
     }
 
@@ -142,10 +132,7 @@ self.addEventListener("message", async (ev) => {
     const filebuffer: ArrayBuffer = ev.data;
     const dataview = new DataView(ev.data);
 
-    if (
-        dataview.getUint32(0, true) !== 0x4e455443 ||
-        dataview.getUint32(4, true) !== 0x4d414446
-    ) {
+    if (dataview.getUint32(0, true) !== 0x4e455443 || dataview.getUint32(4, true) !== 0x4d414446) {
         self.postMessage({ type: "error", data: "not ncm file" });
         self.close();
     }
@@ -155,9 +142,7 @@ self.addEventListener("message", async (ev) => {
     const keyDate = (await (() => {
         const keyLen = dataview.getUint32(offset, true);
         offset += 4;
-        const data = new Uint8Array(filebuffer, offset, keyLen).map(
-            (uint8) => uint8 ^ 0x64,
-        );
+        const data = new Uint8Array(filebuffer, offset, keyLen).map((uint8) => uint8 ^ 0x64);
         offset += keyLen;
 
         return AES_ECB_DECRYPT(CORE_KEY, data);
@@ -206,14 +191,8 @@ self.addEventListener("message", async (ev) => {
     })();
 
     const mimeType =
-        0x664c6143 /** fLaC */ ===
-        new DataView(decryptedData.buffer).getUint32(0, true)
-            ? "audio/flac"
-            : "audio/mpeg";
+        0x664c6143 /** fLaC */ === new DataView(decryptedData.buffer).getUint32(0, true) ? "audio/flac" : "audio/mpeg";
 
-    self.postMessage(
-        { type: "url", dataArray: decryptedData, mime: mimeType },
-        [decryptedData.buffer],
-    );
+    self.postMessage({ type: "url", dataArray: decryptedData, mime: mimeType }, [decryptedData.buffer]);
     self.close();
 });

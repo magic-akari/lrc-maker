@@ -23,9 +23,7 @@ const initState = {
 
 export type State = Readonly<typeof initState>;
 
-export type Action = {
-    [key in keyof State]: { type: key; payload: State[key] }
-}[keyof State];
+export type Action = { [key in keyof State]: { type: key; payload: State[key] } }[keyof State];
 
 const reducer = (state: State, action: Action): State => {
     return {

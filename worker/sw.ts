@@ -25,10 +25,7 @@ self.addEventListener("activate", (event) => {
                 self.clients.claim(),
                 ...cacheNames
                     .filter((cacheName) => {
-                        return (
-                            cacheName.startsWith(APP_NAME) &&
-                            cacheName !== `${APP_NAME}-${VERSION}`
-                        );
+                        return cacheName.startsWith(APP_NAME) && cacheName !== `${APP_NAME}-${VERSION}`;
                     })
                     .map((cacheName) => {
                         return caches.delete(cacheName);
@@ -45,10 +42,7 @@ self.addEventListener("fetch", (event) => {
 
     const url = new URL(event.request.url);
 
-    if (
-        !/(?:\.css|\.js|\.svg)$/i.test(url.pathname) &&
-        url.origin !== self.location.origin
-    ) {
+    if (!/(?:\.css|\.js|\.svg)$/i.test(url.pathname) && url.origin !== self.location.origin) {
         return;
     }
 
@@ -61,10 +55,7 @@ self.addEventListener("fetch", (event) => {
                         if (response.status !== 200) {
                             return response;
                         }
-                        if (
-                            supportDynamicImport ||
-                            !/useLang\.js$/.test(event.request.url)
-                        ) {
+                        if (supportDynamicImport || !/useLang\.js$/.test(event.request.url)) {
                             cache.put(event.request, response.clone());
                             return response;
                         }

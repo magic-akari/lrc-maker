@@ -10,11 +10,11 @@ export const AsidePanel: React.FC<{
     createDownloadFile: () => string;
 }> = ({ syncMode, setSyncMode, lrcInfo, createDownloadFile }) => {
     const [href, setHref] = useState<string | undefined>(undefined);
+
     const onSyncModeToggle = useCallback(() => {
-        setSyncMode(
-            syncMode === SyncMode.select ? SyncMode.highlight : SyncMode.select,
-        );
+        setSyncMode(syncMode === SyncMode.select ? SyncMode.highlight : SyncMode.select);
     }, [syncMode]);
+
     const onDownloadClick = useCallback(() => {
         if (href) {
             URL.revokeObjectURL(href);
@@ -26,6 +26,7 @@ export const AsidePanel: React.FC<{
         );
         setHref(url);
     }, []);
+
     const downloadName = useMemo(() => {
         const list = [];
         if (lrcInfo.has("ti")) {
@@ -56,12 +57,7 @@ export const AsidePanel: React.FC<{
             <button className={className} onClick={onSyncModeToggle}>
                 <LockSVG />
             </button>
-            <a
-                href={href}
-                download={downloadName}
-                className="aside-button ripple glow"
-                onClick={onDownloadClick}
-            >
+            <a href={href} download={downloadName} className="aside-button ripple glow" onClick={onDownloadClick}>
                 <DownloadSVG />
             </a>
         </aside>

@@ -28,13 +28,7 @@ if (!Array.prototype.includes) {
         const k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
         const sameValueZero = (x, y) => {
-            return (
-                x === y ||
-                (typeof x === "number" &&
-                    typeof y === "number" &&
-                    isNaN(x) &&
-                    isNaN(y))
-            );
+            return x === y || (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y));
         };
 
         // 7. Repeat, while k < len
@@ -55,26 +49,13 @@ if (!Array.prototype.includes) {
 
 (() => {
     const reduce = Function.bind.call(Function.call, Array.prototype.reduce);
-    const isEnumerable = Function.bind.call(
-        Function.call,
-        Object.prototype.propertyIsEnumerable,
-    );
+    const isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
     const concat = Function.bind.call(Function.call, Array.prototype.concat);
     const keys = Reflect.ownKeys;
 
     if (!Object.values) {
         Object.values = function values(O) {
-            return reduce(
-                keys(O),
-                (v, k) =>
-                    concat(
-                        v,
-                        typeof k === "string" && isEnumerable(O, k)
-                            ? [O[k]]
-                            : [],
-                    ),
-                [],
-            );
+            return reduce(keys(O), (v, k) => concat(v, typeof k === "string" && isEnumerable(O, k) ? [O[k]] : []), []);
         };
     }
 
@@ -82,13 +63,7 @@ if (!Array.prototype.includes) {
         Object.entries = function entries(O) {
             return reduce(
                 keys(O),
-                (e, k) =>
-                    concat(
-                        e,
-                        typeof k === "string" && isEnumerable(O, k)
-                            ? [[k, O[k]]]
-                            : [],
-                    ),
+                (e, k) => concat(e, typeof k === "string" && isEnumerable(O, k) ? [[k, O[k]]] : []),
                 [],
             );
         };

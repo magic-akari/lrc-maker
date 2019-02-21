@@ -1,10 +1,5 @@
 import { convertTimeToTag } from "../hooks/useLrc.js";
-import {
-    AudioActionType,
-    audioRef,
-    audioStatePubSub,
-    currentTimePubSub,
-} from "../utils/audiomodule.js";
+import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 
 const { useState, useEffect, useRef } = React;
 

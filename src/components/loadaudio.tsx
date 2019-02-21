@@ -33,10 +33,7 @@ interface ILoadAudioOptions {
     lang: Language;
 }
 
-export const LoadAudio: React.FC<ILoadAudioOptions> = ({
-    setAudioSrc,
-    lang,
-}) => {
+export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) => {
     const self = useRef(Symbol(LoadAudio.name));
 
     useEffect(() => {
@@ -70,10 +67,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
         loadAudioDialogRef.current!.addEventListener("toggle", handleToggle);
 
         return () => {
-            loadAudioDialogRef.current!.removeEventListener(
-                "toggle",
-                handleToggle,
-            );
+            loadAudioDialogRef.current!.removeEventListener("toggle", handleToggle);
         };
     }, []);
 
@@ -99,29 +93,18 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({
     }, []);
 
     return ReactDOM.createPortal(
-        <details
-            ref={loadAudioDialogRef}
-            className="dialog fixed loadaudio-dialog"
-        >
+        <details ref={loadAudioDialogRef} className="dialog fixed loadaudio-dialog">
             <summary className="dialog-close">
                 <CloseSVG />
             </summary>
             <section className="dialog-body loadaudio-body">
                 <div className="loadaudio-tab loadaudio-via-file">
-                    <input
-                        type="radio"
-                        name="tabgroup"
-                        id="tab-file"
-                        defaultChecked={true}
-                    />
+                    <input type="radio" name="tabgroup" id="tab-file" defaultChecked={true} />
                     <label className="ripple" htmlFor="tab-file">
                         {lang.loadAudio.file}
                     </label>
                     <div className="loadaudio-content">
-                        <label
-                            className="audio-input-tip"
-                            htmlFor="audio-input"
-                        >
+                        <label className="audio-input-tip" htmlFor="audio-input">
                             {lang.loadAudio.loadFile}
                         </label>
                     </div>

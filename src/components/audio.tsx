@@ -1,19 +1,7 @@
 import { convertTimeToTag } from "../hooks/useLrc.js";
-import {
-    AudioActionType,
-    audioRef,
-    AudioState,
-    audioStatePubSub,
-    currentTimePubSub,
-} from "../utils/audiomodule.js";
+import { AudioActionType, audioRef, AudioState, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
-import {
-    Forward5sSVG,
-    LoadAudioSVG,
-    PauseSVG,
-    PlaySVG,
-    Replay5sSVG,
-} from "./svg.js";
+import { Forward5sSVG, LoadAudioSVG, PauseSVG, PlaySVG, Replay5sSVG } from "./svg.js";
 
 const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
@@ -26,14 +14,7 @@ interface ISliderProps {
     className: string;
 }
 
-const Slider: React.FC<ISliderProps> = ({
-    min,
-    max,
-    step,
-    value,
-    onChange,
-    className,
-}) => {
+const Slider: React.FC<ISliderProps> = ({ min, max, step, value, onChange, className }) => {
     const total = max - min || 1;
     const percent = (value - min) / total;
 
@@ -53,10 +34,7 @@ const Slider: React.FC<ISliderProps> = ({
     );
 };
 
-const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({
-    duration,
-    paused,
-}) => {
+const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, paused }) => {
     const self = useRef(Symbol(TimeLine.name));
     const [currentTime, setCurrentTime] = useState(audioRef.currentTime);
     const [rate, setRate] = useState(audioRef.playbackRate);
@@ -121,14 +99,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({
                 {durationTimeTag}
             </time>
 
-            <Slider
-                min={0}
-                max={duration}
-                step={1}
-                value={currentTime}
-                className="time-line"
-                onChange={onChange}
-            />
+            <Slider min={0} max={duration} step={1} value={currentTime} className="time-line" onChange={onChange} />
         </>
     );
 };
@@ -159,14 +130,11 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
         return Math.log(playbackRate);
     }, [playbackRate]);
 
-    const onPlaybackRateChange = useCallback(
-        (ev: React.ChangeEvent<HTMLInputElement>) => {
-            const value = Math.exp(Number.parseFloat(ev.target.value));
-            setPlaybackRate(value);
-            audioRef.playbackRate = value;
-        },
-        [],
-    );
+    const onPlaybackRateChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Math.exp(Number.parseFloat(ev.target.value));
+        setPlaybackRate(value);
+        audioRef.playbackRate = value;
+    }, []);
 
     const onPlaybackRateReset = useCallback(() => {
         audioRef.playbackRate = 1;
@@ -174,11 +142,7 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
 
     return (
         <>
-            <button
-                className="ripple glow"
-                title={lang.audio.resetRate}
-                onClick={onPlaybackRateReset}
-            >
+            <button className="ripple glow" title={lang.audio.resetRate} onClick={onPlaybackRateReset}>
                 {"X "}
                 {playbackRate.toFixed(2)}
             </button>
@@ -247,12 +211,7 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
             >
                 <LoadAudioSVG />
             </button>
-            <button
-                className="ripple glow"
-                title={lang.audio.replay5s}
-                onClick={onReplay5s}
-                disabled={!duration}
-            >
+            <button className="ripple glow" title={lang.audio.replay5s} onClick={onReplay5s} disabled={!duration}>
                 <Replay5sSVG />
             </button>
             <button
@@ -263,12 +222,7 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
             >
                 {paused ? <PlaySVG /> : <PauseSVG />}
             </button>
-            <button
-                className="ripple glow"
-                title={lang.audio.forward5s}
-                onClick={onForward5s}
-                disabled={!duration}
-            >
+            <button className="ripple glow" title={lang.audio.forward5s} onClick={onForward5s} disabled={!duration}>
                 <Forward5sSVG />
             </button>
 

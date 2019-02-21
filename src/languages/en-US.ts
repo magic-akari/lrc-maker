@@ -33,8 +33,7 @@ export const language = {
         tips: "Tips",
         tipForLyricText: "Navigate to the editor page and paste lyric text.",
         tipForUploadAudio: "Click the bottom left button to load audio file.",
-        tipForSynchronizer:
-            "Navigate to synchronizer page and make your lrc :)",
+        tipForSynchronizer: "Navigate to synchronizer page and make your lrc :)",
         tipTopLeft: "Click here come back to this page",
         tipTopRight: "Click here to navigate to other page",
         tipBottomLeft: "load audio here, and control the audio",
@@ -53,11 +52,9 @@ export const language = {
     },
 
     gist: {
-        newTokenTip:
-            "LRC Maker use Github Token to fetch and store data to Github Gist",
+        newTokenTip: "LRC Maker use Github Token to fetch and store data to Github Gist",
         newTokenButton: "Generate a new Github Token",
-        newGistTip:
-            "Create a new Gist repository or assign an existing Gist id",
+        newGistTip: "Create a new Gist repository or assign an existing Gist id",
         newGistRepoButton: "Create a new Gist Repository",
         gistIdPlaceholder: "Or assign an existing Gist id",
         info: "info",

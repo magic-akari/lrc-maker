@@ -47,7 +47,7 @@
 }
 
 .home-tip::after {
-    content: " ";
+    content: "";
     position: absolute;
     left: 50%;
     margin-left: -0.5rem;
