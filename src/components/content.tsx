@@ -1,4 +1,5 @@
-import { ActionType as LrcActionType, convertTimeToTag, stringify, useLrc } from "../hooks/useLrc.js";
+import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
+import { convertTimeToTag, stringify } from "../lrc-parser/lrc-parser.js";
 import { AudioActionType, audioRef, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { Eidtor } from "./editor.js";

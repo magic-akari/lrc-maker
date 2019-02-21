@@ -13,5 +13,6 @@
         "sourceMap": true
     },
     "include": ["src"],
-    "references": [{ "path": "./worker" }]
+    "exclude": ["src/@worker", "src/lrc-parser"],
+    "references": [{ "path": "./src/@worker" }, { "path": "./src/lrc-parser" }]
 }

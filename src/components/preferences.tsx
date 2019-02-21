@@ -1,5 +1,5 @@
-import { convertTimeToTag, formatText } from "../hooks/useLrc.js";
 import { themeColor } from "../hooks/usePref.js";
+import { convertTimeToTag, formatText } from "../lrc-parser/lrc-parser.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { AkariHideWall } from "./svg.img.js";

@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "../../node_modules/@lrc-maker/lrc-parser/src",
+        "outDir": "../../build/lrc-parser"
+    },
+    "include": ["../../node_modules/@lrc-maker/lrc-parser"],
+    "exclude": []
+}

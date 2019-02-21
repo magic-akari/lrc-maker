@@ -61,10 +61,7 @@ typings/
 .next
 
 build
-build.es6
 
 .vscode
-
-worker/version.d.ts
 
 .DS_Store

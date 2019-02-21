@@ -1,4 +1,4 @@
-import { convertTimeToTag } from "../hooks/useLrc.js";
+import { convertTimeToTag } from "../lrc-parser/lrc-parser.js";
 import { AudioActionType, audioRef, AudioState, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { Forward5sSVG, LoadAudioSVG, PauseSVG, PlaySVG, Replay5sSVG } from "./svg.js";

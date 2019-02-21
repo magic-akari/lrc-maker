@@ -2,8 +2,8 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "target": "es6",
-        "outDir": "./build.es6",
         "removeComments": false,
         "importHelpers": true
-    }
+    },
+    "references": [{ "path": "./src/lrc-parser" }]
 }
