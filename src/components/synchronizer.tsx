@@ -1,12 +1,5 @@
-import {
-    Action as LrcAction,
-    ActionType as LrcActionType,
-    convertTimeToTag,
-    formatText,
-    ILyric,
-    State as LrcState,
-    stringify,
-} from "../hooks/useLrc.js";
+import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import { convertTimeToTag, formatText, ILyric, State as LrcState, stringify } from "../lrc-parser/lrc-parser.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
@@ -269,7 +262,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
     }, [prefState.screenButton]);
 
     const LyricLineIter = useCallback(
-        (line: Readonly<ILyric>, index: number, lines: Readonly<ILyric>[]) => {
+        (line: Readonly<ILyric>, index: number, lines: Array<Readonly<ILyric>>) => {
             const select = index === selectIndex;
             const highlight = index === highlightIndex;
             const error = index > 0 && lines[index].time! <= lines[index - 1].time!;

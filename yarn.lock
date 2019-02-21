@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@lrc-maker/lrc-parser@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@lrc-maker/lrc-parser/-/lrc-parser-0.0.1.tgz#30b003a8ea74bc83301bfffc884c0c9cc43f8f21"
+  integrity sha512-H9PYLwqzykcUMhw17dM4VvBKBBOusZtjVuKt71bsOY5hVftTdSHk0xXP1WnPcyto3m0U3Y2xmHQScgFifsUSRw==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"

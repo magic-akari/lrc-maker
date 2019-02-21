@@ -15,32 +15,30 @@
     "homepage": "https://github.com/magic-akari/lrc-maker#readme",
     "files": [
         "src",
-        "worker",
         "build"
     ],
     "scripts": {
         "clean": "rm -rf ./build",
         "prestart": "npm run clean",
         "start": "npm run html && npm run esm:watch",
-        "prebuild": "npm run clean",
-        "build": "npm run css && npm run esm && npm run nomodule && npm run html",
-        "version": "ts-node -P scripts/tsconfig.json scripts/generate.version.ts > worker/version.d.ts",
-        "preesm": "npm run version",
+        "prebuild": "npm run clean && npm run version",
+        "build": "npm run css && npm run nomodule && npm run esm && npm run html",
+        "version": "ts-node -P scripts/tsconfig.json scripts/generate.version.ts > src/@worker/version.d.ts",
         "esm": "tsc -b",
         "preesm:watch": "npm run version",
-        "esm:watch": "tsc -b -w tsconfig.watch.json",
-        "prenomodule": "rm -rf ./build.es6",
-        "nomodule": "tsc -P tsconfig.webpack.json && webpack -p",
+        "esm:watch": "tsc -b -w",
+        "nomodule": "tsc -b tsconfig.webpack.json && webpack -p",
         "css": "postcss src/index.css -m -d build",
         "prehtml": "mkdir -p build && npm run manifest && npm run svg",
         "html": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
         "manifest": "cp -r ./manifest/* ./build",
         "svg": "cp -r ./svg ./build",
-        "prettier": "prettier --write {src,worker,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
-        "listdiff": "prettier -l {src,worker,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
-        "lint": "tslint {src,worker,scripts}/**/*.{ts,tsx,es6}"
+        "prettier": "prettier --write {src,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
+        "listdiff": "prettier -l {src,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
+        "lint": "tslint {src,scripts}/**/*.{ts,tsx,es6}"
     },
     "dependencies": {
+        "@lrc-maker/lrc-parser": "^0.0.1",
         "react": "^16.8.2",
         "react-dom": "^16.8.2"
     },

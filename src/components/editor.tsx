@@ -1,4 +1,5 @@
-import { Action as LrcAction, ActionType as LrcActionType, State as LrcState, stringify } from "../hooks/useLrc.js";
+import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import { State as LrcState, stringify } from "../lrc-parser/lrc-parser.js";
 import { createFile } from "../utils/gistapi.js";
 import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
