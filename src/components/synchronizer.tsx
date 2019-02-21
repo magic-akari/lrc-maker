@@ -69,17 +69,17 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         [lyric.length],
     );
 
-    const [selectedLine, setSelectLine] = useState(
+    const [selectIndex, setSelectIndex] = useState(
         guard(cachedState.selectedLine),
     );
+
+    const [highlightIndex, setHighlightIndex] = useState(-Infinity);
 
     const [syncMode, setSyncMode] = useState(
         sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString()
             ? SyncMode.highlight
             : SyncMode.select,
     );
-
-    const [highLight, setHighLight] = useState(-Infinity);
 
     useEffect(() => {
         sessionStorage.setItem(SSK.syncMode, syncMode.toString());
@@ -88,8 +88,8 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
     const ul = useRef<HTMLUListElement>(null);
 
     const needScrollLine = {
-        [SyncMode.select]: selectedLine,
-        [SyncMode.highlight]: highLight,
+        [SyncMode.select]: selectIndex,
+        [SyncMode.highlight]: highlightIndex,
     }[syncMode];
 
     useEffect(() => {
@@ -107,11 +107,11 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
 
     useEffect(() => {
         trackedLine.current = calcTrackedLine(lrcState.lyric);
-        setHighLight(trackedLine.current.currentIndex);
+        setHighlightIndex(trackedLine.current.currentIndex);
     }, [lrcState]);
 
     useEffect(() => {
-        setHighLight(trackedLine.current.currentIndex);
+        setHighlightIndex(trackedLine.current.currentIndex);
 
         currentTimePubSub.sub(self.current, (time) => {
             //
@@ -136,7 +136,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
                 return;
             } else {
                 trackedLine.current = calcTrackedLine(lyric);
-                setHighLight(trackedLine.current.currentIndex);
+                setHighlightIndex(trackedLine.current.currentIndex);
             }
         });
 
@@ -153,19 +153,19 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         lrcDispatch({
             type: LrcActionType.set_time,
             payload: {
-                index: selectedLine,
+                index: selectIndex,
                 time: audioRef.currentTime,
             },
         });
-        setSelectLine(guard(selectedLine + 1));
-    }, [selectedLine]);
+        setSelectIndex(guard(selectIndex + 1));
+    }, [selectIndex]);
 
     useEffect(() => {
         const deleteTimeTag = () => {
             lrcDispatch({
                 type: LrcActionType.set_time,
                 payload: {
-                    index: selectedLine,
+                    index: selectIndex,
                     time: undefined,
                 },
             });
@@ -207,30 +207,30 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
             ) {
                 ev.preventDefault();
 
-                setSelectLine(guard(selectedLine - 1));
+                setSelectIndex(guard(selectIndex - 1));
             } else if (
                 ["ArrowDown", "KeyS", "KeyK"].includes(code) ||
                 ["ArrowDown", "Down", "S", "s", "K", "k"].includes(key)
             ) {
                 ev.preventDefault();
 
-                setSelectLine(guard(selectedLine + 1));
+                setSelectIndex(guard(selectIndex + 1));
             } else if (code === "Home" || key === "Home") {
                 ev.preventDefault();
 
-                setSelectLine(0);
+                setSelectIndex(0);
             } else if (code === "End" || key === "End") {
                 ev.preventDefault();
 
-                setSelectLine(lyric.length - 1);
+                setSelectIndex(lyric.length - 1);
             } else if (code === "PageUp" || key === "PageUp") {
                 ev.preventDefault();
 
-                setSelectLine(guard(selectedLine - 10));
+                setSelectIndex(guard(selectIndex - 10));
             } else if (code === "PageDown" || key === "PageDown") {
                 ev.preventDefault();
 
-                setSelectLine(guard(selectedLine + 10));
+                setSelectIndex(guard(selectIndex + 10));
             }
         };
 
@@ -239,9 +239,9 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         return () => {
             document.removeEventListener("keydown", listener);
 
-            cachedState.selectedLine = selectedLine;
+            cachedState.selectedLine = selectIndex;
         };
-    }, [selectedLine]);
+    }, [selectIndex]);
 
     const onLineClick = useCallback(
         (ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
@@ -254,7 +254,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
                         10,
                     ) || 0;
 
-                setSelectLine(lineKey);
+                setSelectIndex(lineKey);
             }
         },
         [],
@@ -283,20 +283,6 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         [],
     );
 
-    const formatTimeTag = useCallback(
-        (time?: number) => {
-            return convertTimeToTag(time, prefState.fixed);
-        },
-        [prefState.fixed],
-    );
-    const curser = useRef(
-        <Curser
-            key="curser"
-            converter={formatTimeTag}
-            fixed={prefState.fixed}
-        />,
-    );
-
     const lrcStateRef = useRef(lrcState);
     lrcStateRef.current = lrcState;
 
@@ -304,62 +290,48 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
         return stringify(lrcStateRef.current, prefState);
     }, [prefState]);
 
-    const LyricLine = useCallback(
-        (line: ILyric, index: number) => {
-            const className = ["line"];
-
-            let insertCurser: JSX.Element | null = null;
-
-            if (index === selectedLine) {
-                className.push("select");
-                insertCurser = curser.current;
-            }
-
-            if (index === highLight) {
-                className.push("highlight");
-            }
-
-            // (1 < undefined)         === false
-            // (undefined < 1)         === false
-            // (undefined < undefined) === false
-            if (
-                index > 0 &&
-                // lyric[index].time !== undefined &&
-                // lyric[index - 1].time !== undefined &&
-                lyric[index].time! <= lyric[index - 1].time!
-            ) {
-                className.push("error");
-            }
-
-            const lineTime = formatTimeTag(line.time);
-
-            const lineText = formatText(
-                line.text,
-                prefState.spaceStart,
-                prefState.spaceEnd,
-            );
-
-            return (
-                <li
-                    key={index}
-                    data-key={index}
-                    className={className.join(" ")}
-                >
-                    {insertCurser}
-                    <time className="line-time">{lineTime}</time>
-                    <span className="line-text">{lineText}</span>
-                </li>
-            );
-        },
-        [selectedLine, highLight],
-    );
-
     const ulClassName = useMemo(() => {
         if (prefState.screenButton) {
             return "lyric-list on-screen-button";
         }
         return "lyric-list";
     }, [prefState.screenButton]);
+
+    const LyricLineIter = useCallback(
+        (line: Readonly<ILyric>, index: number, lines: Readonly<ILyric>[]) => {
+            const select = index === selectIndex;
+            const highlight = index === highlightIndex;
+            const error =
+                index > 0 && lines[index].time! <= lines[index - 1].time!;
+
+            const className = Object.entries({
+                line: true,
+                select,
+                highlight,
+                error,
+            })
+                .reduce(
+                    (p, [name, value]) => {
+                        if (value) {
+                            p.push(name);
+                        }
+                        return p;
+                    },
+                    [] as string[],
+                )
+                .join(Const.space);
+
+            return (
+                <LyricLine
+                    line={line}
+                    index={index}
+                    select={select}
+                    className={className}
+                />
+            );
+        },
+        [selectIndex, highlightIndex],
+    );
 
     return (
         <>
@@ -369,7 +341,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
                 onClickCapture={onLineClick}
                 onDoubleClickCapture={onLineDoubleClick}
             >
-                {lrcState.lyric.map(LyricLine)}
+                {lrcState.lyric.map(LyricLineIter)}
             </ul>
             <AsidePanel
                 syncMode={syncMode}
@@ -379,6 +351,38 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({
             />
             {prefState.screenButton && <SpaceButton sync={sync} />}
         </>
+    );
+};
+
+interface ILyricLineProps {
+    line: ILyric;
+    index: number;
+    select: boolean;
+    className: string;
+}
+
+const LyricLine: React.FC<ILyricLineProps> = ({
+    line,
+    index,
+    select,
+    className,
+}) => {
+    const { prefState } = useContext(appContext);
+
+    const lineTime = convertTimeToTag(line.time, prefState.fixed);
+
+    const lineText = formatText(
+        line.text,
+        prefState.spaceStart,
+        prefState.spaceEnd,
+    );
+
+    return (
+        <li key={index} data-key={index} className={className}>
+            {select && <Curser fixed={prefState.fixed} />}
+            <time className="line-time">{lineTime}</time>
+            <span className="line-text">{lineText}</span>
+        </li>
     );
 };
 
