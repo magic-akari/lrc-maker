@@ -120,12 +120,13 @@ export const Content: React.FC = () => {
                                 },
                             });
                         }
-                        location.hash = Path.editor;
                     };
 
                     fileReader.addEventListener("load", onload, {
                         once: true,
                     });
+
+                    location.hash = Path.editor;
 
                     fileReader.readAsText(file, "utf-8");
                 }

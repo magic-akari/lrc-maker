@@ -1,3 +1,4 @@
+import { convertTimeToTag } from "../hooks/useLrc.js";
 import {
     AudioActionType,
     audioRef,
@@ -8,11 +9,10 @@ import {
 const { useState, useEffect, useRef } = React;
 
 interface ICurserProps {
-    converter: (time?: number) => string;
     fixed: Fixed;
 }
 
-export const Curser: React.FC<ICurserProps> = ({ converter, fixed }) => {
+export const Curser: React.FC<ICurserProps> = ({ fixed }) => {
     const self = useRef(Symbol(Curser.name));
 
     const [time, setTime] = useState(audioRef.currentTime);
@@ -68,5 +68,5 @@ export const Curser: React.FC<ICurserProps> = ({ converter, fixed }) => {
         }
     }, [fixed, paused, rate]);
 
-    return <time className="curser">{converter(time)}</time>;
+    return <time className="curser">{convertTimeToTag(time, fixed)}</time>;
 };
