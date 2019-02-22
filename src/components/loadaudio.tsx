@@ -121,7 +121,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
                                 type="url"
                                 name="url"
                                 required={true}
-                                autoCapitalize="off"
+                                autoCapitalize="none"
                                 autoComplete="off"
                                 autoCorrect="off"
                                 spellCheck={false}

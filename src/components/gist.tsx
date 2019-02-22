@@ -19,7 +19,7 @@ const { useCallback, useContext, useEffect, useMemo, useState } = React;
 const newTokenUrl = "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
 
 const disableCheck = {
-    autoCapitalize: "off",
+    autoCapitalize: "none",
     autoComplete: "off",
     autoCorrect: "off",
     spellCheck: false,

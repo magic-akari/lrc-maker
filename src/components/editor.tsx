@@ -7,7 +7,7 @@ import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
 const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
 const disableCheck = {
-    autoCapitalize: "off",
+    autoCapitalize: "none",
     autoComplete: "off",
     autoCorrect: "off",
     spellCheck: false,
