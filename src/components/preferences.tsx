@@ -82,7 +82,7 @@ export const Preferences: React.FC = () => {
 
         const form = ev.target as HTMLFormElement;
 
-        const input = form.elements.namedItem("user-color-input")! as HTMLInputElement;
+        const input = form.elements.namedItem("user-color-input-text")! as HTMLInputElement;
 
         return onUserInput(input);
     }, []);
@@ -280,7 +280,7 @@ export const Preferences: React.FC = () => {
                                 {ColorPickerWall}
                                 <label
                                     className="color-picker ripple user-color-label"
-                                    htmlFor="user-color-input"
+                                    htmlFor="user-color-input-text"
                                     style={currentThemeColorStyle}
                                     ref={userColorLabel}
                                 >
@@ -295,9 +295,9 @@ export const Preferences: React.FC = () => {
                                 </label>
                                 <input
                                     ref={userColorInputText}
-                                    id="user-color-input"
-                                    name="user-color-input"
-                                    className="user-color-input"
+                                    id="user-color-input-text"
+                                    name="user-color-input-text"
+                                    className="user-color-input-text"
                                     type="text"
                                     pattern="[\da-f]{3,6}"
                                     required={true}
