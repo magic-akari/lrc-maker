@@ -113,7 +113,8 @@
     color: var(--white);
 }
 
-.user-color-input {
+.user-color-input-text {
+    min-width: 60px;
     justify-self: stretch;
     align-self: stretch;
     margin: 2px;
@@ -128,13 +129,13 @@
 }
 
 .user-color-label,
-.user-color-input {
+.user-color-input-text {
     display: none;
 }
 
 @media screen and (min-width: 768px) {
     .user-color-label,
-    .user-color-input {
+    .user-color-input-text {
         display: inline-flex;
     }
 }
@@ -289,7 +290,7 @@ input[type="number"] {
     align-items: center;
 }
 
-.user-color-input {
+.user-color-input-text {
     grid-column: span 2;
 }
 
