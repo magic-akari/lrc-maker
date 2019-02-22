@@ -301,7 +301,7 @@ export const Preferences: React.FC = () => {
                                     type="text"
                                     pattern="[\da-f]{3,6}"
                                     required={true}
-                                    autoCapitalize="off"
+                                    autoCapitalize="none"
                                     autoComplete="off"
                                     autoCorrect="off"
                                     spellCheck={false}
