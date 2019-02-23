@@ -38,20 +38,20 @@
         "lint": "tslint {src,scripts}/**/*.{ts,tsx,es6}"
     },
     "dependencies": {
-        "@lrc-maker/lrc-parser": "^0.0.1",
-        "react": "^16.8.2",
-        "react-dom": "^16.8.2"
+        "@lrc-maker/lrc-parser": "^0.1.1",
+        "react": "^16.8.3",
+        "react-dom": "^16.8.3"
     },
     "devDependencies": {
-        "@types/node": "^11.9.4",
+        "@types/node": "^11.9.5",
         "@types/prettier": "^1.16.1",
-        "@types/react": "^16.8.3",
+        "@types/react": "^16.8.4",
         "@types/react-dom": "^16.8.2",
-        "autoprefixer": "^9.4.7",
+        "autoprefixer": "^9.4.8",
         "cssnano": "^4.1.10",
         "fast-glob": "^2.2.6",
         "postcss": "^7.0.14",
-        "postcss-cli": "^6.1.1",
+        "postcss-cli": "^6.1.2",
         "postcss-custom-properties": "^8.0.9",
         "postcss-import": "^12.0.1",
         "prettier": "^1.16.4",
@@ -59,8 +59,8 @@
         "ts-node": "^8.0.2",
         "tslint": "^5.12.1",
         "tslint-react": "^3.6.0",
-        "typescript": "^3.3.3",
-        "webpack": "^4.29.4",
+        "typescript": "^3.3.3333",
+        "webpack": "^4.29.5",
         "webpack-cli": "^3.2.3"
     }
 }
