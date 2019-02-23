@@ -31,7 +31,7 @@ interface IGistProps {
 }
 
 export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
-    const { lang } = useContext(appContext);
+    const { lang, trimOptions } = useContext(appContext);
 
     const [token, setToken] = useState(localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(localStorage.getItem(LSK.gistId));
@@ -154,7 +154,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 .then((text) => {
                     lrcDispatch({
                         type: LrcActionType.parse,
-                        payload: text,
+                        payload: { text, options: trimOptions },
                     });
                 })
                 .catch((error) => {
@@ -166,7 +166,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         } else {
             lrcDispatch({
                 type: LrcActionType.parse,
-                payload: file.content,
+                payload: { text: file.content, options: trimOptions },
             });
         }
     }, []);

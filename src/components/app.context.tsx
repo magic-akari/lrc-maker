@@ -1,5 +1,6 @@
 import { useLang } from "../hooks/useLang.js";
 import { Action as PrefAction, State as PrefState, usePref } from "../hooks/usePref.js";
+import { TrimOptios } from "../lrc-parser/lrc-parser.js";
 import { toastPubSub } from "./toast.js";
 
 const { createContext, useEffect, useMemo } = React;
@@ -8,6 +9,7 @@ interface IAppContext {
     lang: Language;
     prefState: PrefState;
     prefDispatch: React.Dispatch<PrefAction>;
+    trimOptions: Required<TrimOptios>;
 }
 
 const enum Bits {
@@ -93,6 +95,10 @@ export const AppProvider: React.FC = ({ children }) => {
             lang,
             prefState,
             prefDispatch,
+            trimOptions: {
+                trimStart: prefState.spaceStart >= 0,
+                trimEnd: prefState.spaceEnd >= 0,
+            },
         };
     }, [lang, prefState]);
 

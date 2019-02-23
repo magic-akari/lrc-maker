@@ -1,4 +1,4 @@
-import { ILyric, parser, State } from "../lrc-parser/lrc-parser.js";
+import { ILyric, parser, State, TrimOptios } from "../lrc-parser/lrc-parser.js";
 
 export const enum ActionType {
     set_time,
@@ -12,7 +12,7 @@ export type Action = Map_Type_Payload<
     {
         [ActionType.set_info]: { name: string; value: string };
         [ActionType.set_time]: { index: number; time?: number };
-        [ActionType.parse]: string;
+        [ActionType.parse]: { text: string; options: TrimOptios };
     },
     ActionType
 >;
@@ -48,14 +48,15 @@ const reducer = (state: State, action: Action): State => {
         }
 
         case ActionType.parse: {
-            return parser(action.payload);
+            const { text, options } = action.payload;
+            return parser(text, options);
         }
     }
 
     return state;
 };
 
-export const useLrc = (initText: string) => {
-    const initialState = parser(initText);
+export const useLrc = (initText: string, options: TrimOptios) => {
+    const initialState = parser(initText, options);
     return React.useReducer(reducer, initialState);
 };
