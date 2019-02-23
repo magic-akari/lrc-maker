@@ -59,16 +59,12 @@
             if (this.length > maxLength) {
                 return String(this);
             } else {
-                fillString = String(
-                    typeof fillString !== "undefined" ? fillString : " ",
-                );
+                fillString = String(typeof fillString !== "undefined" ? fillString : " ");
 
                 const padLength = maxLength - this.length;
                 if (padLength > fillString.length) {
                     // append to original to ensure we are longer than needed
-                    fillString += fillString.repeat(
-                        padLength / fillString.length,
-                    );
+                    fillString += fillString.repeat(padLength / fillString.length);
                 }
                 return fillString.slice(0, padLength) + String(this);
             }
@@ -83,16 +79,12 @@
             if (this.length > maxLength) {
                 return String(this);
             } else {
-                fillString = String(
-                    typeof fillString !== "undefined" ? fillString : " ",
-                );
+                fillString = String(typeof fillString !== "undefined" ? fillString : " ");
 
                 const padLength = maxLength - this.length;
                 if (padLength > fillString.length) {
                     // append to original to ensure we are longer than needed
-                    fillString += fillString.repeat(
-                        padLength / fillString.length,
-                    );
+                    fillString += fillString.repeat(padLength / fillString.length);
                 }
                 return String(this) + fillString.slice(0, padLength);
             }
@@ -110,9 +102,7 @@
     const duration = 468;
 
     const now = (() => {
-        return "performance" in window
-            ? performance.now.bind(performance)
-            : Date.now;
+        return "performance" in window ? performance.now.bind(performance) : Date.now;
     })();
 
     const ease = (k: number) => {
@@ -163,8 +153,7 @@
         // apply easing to elapsed time
         const value = ease(elapsed);
 
-        const currentY =
-            context.startY + (context.stopY - context.startY) * value;
+        const currentY = context.startY + (context.stopY - context.startY) * value;
 
         context.method(0, currentY);
 

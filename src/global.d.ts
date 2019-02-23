@@ -3,14 +3,8 @@ import { language } from "./languages/en-US";
 // tslint:disable:interface-name
 declare global {
     export namespace React {
-        function useContext<T>(
-            context: Context<T>,
-            observedBits?: number | boolean,
-        ): T;
-        function createContext<T>(
-            defaultValue?: T,
-            calculateChangedBits?: (prev: T, next: T) => number,
-        ): Context<T>;
+        function useContext<T>(context: Context<T>, observedBits?: number | boolean): T;
+        function createContext<T>(defaultValue?: T, calculateChangedBits?: (prev: T, next: T) => number): Context<T>;
     }
     export namespace ReactDOM {}
 

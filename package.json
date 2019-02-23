@@ -33,9 +33,9 @@
         "html": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
         "manifest": "cp -r ./manifest/* ./build",
         "svg": "cp -r ./svg ./build",
-        "prettier": "prettier --write {src,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
-        "listdiff": "prettier -l {src,scripts}/**/*.{ts,tsx,js,es6,css,json} *.{js,json,md} ",
-        "lint": "tslint {src,scripts}/**/*.{ts,tsx,es6}"
+        "prettier": "prettier --write \"{src,scripts}/**/*.{ts,tsx,js,es6,css,json}\" \"*.{js,json,md}\"",
+        "listdiff": "prettier -l \"{src,scripts}/**/*.{ts,tsx,js,es6,css,json}\" \"*.{js,json,md}\"",
+        "lint": "tslint \"{src,scripts}/**/*.{ts,tsx,es6}\""
     },
     "dependencies": {
         "@lrc-maker/lrc-parser": "^0.1.1",
