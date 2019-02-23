@@ -28,12 +28,12 @@ export const Eidtor: React.SFC<{
     lrcState: LrcState;
     lrcDispatch: React.Dispatch<LrcAction>;
 }> = ({ lrcState, lrcDispatch }) => {
-    const { prefState, lang } = useContext(appContext);
+    const { prefState, lang, trimOptions } = useContext(appContext);
 
     const parse = useCallback((ev: React.FocusEvent<HTMLTextAreaElement>) => {
         lrcDispatch({
             type: LrcActionType.parse,
-            payload: ev.target!.value,
+            payload: { text: ev.target!.value, options: trimOptions },
         });
     }, []);
 
@@ -89,7 +89,7 @@ export const Eidtor: React.SFC<{
         fileReader.addEventListener("load", () => {
             lrcDispatch({
                 type: LrcActionType.parse,
-                payload: fileReader.result as string,
+                payload: { text: fileReader.result as string, options: trimOptions },
             });
         });
         fileReader.readAsText(ev.target.files![0], "UTF-8");

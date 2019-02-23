@@ -14,7 +14,7 @@ const { useContext, useEffect, useMemo, useRef, useState } = React;
 export const Content: React.FC = () => {
     const self = useRef(Symbol(Content.name));
 
-    const { prefState } = useContext(appContext, ChangBits.prefState);
+    const { prefState, trimOptions } = useContext(appContext, ChangBits.prefState);
 
     const [path, setPath] = useState(location.hash);
     useEffect(() => {
@@ -23,7 +23,7 @@ export const Content: React.FC = () => {
         });
     }, []);
 
-    const [lrcState, lrcDispatch] = useLrc(localStorage.getItem(LSK.lyric) || Const.emptyString);
+    const [lrcState, lrcDispatch] = useLrc(localStorage.getItem(LSK.lyric) || Const.emptyString, trimOptions);
 
     const stateRef = useRef({ lrcState, prefState });
 
@@ -88,7 +88,7 @@ export const Content: React.FC = () => {
                     const onload = () => {
                         lrcDispatch({
                             type: LrcActionType.parse,
-                            payload: fileReader.result as string,
+                            payload: { text: fileReader.result as string, options: trimOptions },
                         });
                         if (audioRef.duration) {
                             lrcDispatch({
