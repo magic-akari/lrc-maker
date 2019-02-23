@@ -52,9 +52,8 @@ body {
  */
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB",
-        "Heiti SC", "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei",
-        "WenQuanYi Micro Hei", sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Heiti SC", "Source Han Sans SC",
+        "Noto Sans CJK SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 
 /* Grouping content
