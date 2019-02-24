@@ -197,7 +197,7 @@ export const Eidtor: React.SFC<{
                     <CloudUploadSVG />
                 </a>
 
-                <a title={lang.editor.saveToGist} href="/lrc-utils" className="editor-tools-item ripple">
+                <a title={lang.editor.utils} href="/lrc-utils" className="editor-tools-item ripple">
                     <UtilitySVG />
                 </a>
             </section>
