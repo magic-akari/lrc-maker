@@ -50,6 +50,7 @@ export const language = {
         downloadText: "下载",
         saveToGist: "保存到 Github Gist",
         saveFileName: "文件名",
+        utils: "实用工具",
     },
 
     gist: {

@@ -50,6 +50,7 @@ export const language = {
         downloadText: "download",
         saveToGist: "save to Github Gist",
         saveFileName: "Filename",
+        utils: "lrc utils",
     },
 
     gist: {

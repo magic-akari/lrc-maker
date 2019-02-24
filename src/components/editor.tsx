@@ -2,7 +2,7 @@ import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLr
 import { State as LrcState, stringify } from "../lrc-parser/lrc-parser.js";
 import { createFile } from "../utils/gistapi.js";
 import { appContext } from "./app.context.js";
-import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG } from "./svg.js";
+import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG, UtilitySVG } from "./svg.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
@@ -195,6 +195,10 @@ export const Eidtor: React.SFC<{
                     onClick={canSaveToGist ? onGistSave : undefined}
                 >
                     <CloudUploadSVG />
+                </a>
+
+                <a title={lang.editor.saveToGist} href="/lrc-utils" className="editor-tools-item ripple">
+                    <UtilitySVG />
                 </a>
             </section>
 
