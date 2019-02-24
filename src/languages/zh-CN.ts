@@ -49,6 +49,7 @@ export const language = {
         copyText: "全选复制",
         downloadText: "下载",
         saveToGist: "保存到 Github Gist",
+        saveFileName: "文件名",
     },
 
     gist: {
