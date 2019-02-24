@@ -125,12 +125,12 @@ export const Eidtor: React.SFC<{
 
     const onGistSave = useCallback(() => {
         setTimeout(() => {
-            const name = prompt("filename", downloadName);
+            const name = prompt(lang.editor.saveFileName, downloadName);
             if (name) {
                 createFile(name, textarea.current!.value);
             }
         }, 500);
-    }, [downloadName]);
+    }, [downloadName, lang]);
 
     return (
         <div className="app-editor">

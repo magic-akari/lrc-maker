@@ -49,6 +49,7 @@ export const language = {
         copyText: "select all and copy",
         downloadText: "download",
         saveToGist: "save to Github Gist",
+        saveFileName: "Filename",
     },
 
     gist: {
