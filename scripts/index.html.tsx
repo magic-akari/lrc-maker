@@ -128,6 +128,10 @@ const Html = () => {
             return appScriptUrl(path);
         });
 
+    if (preloadScripts.length === 0) {
+        preloadScripts.push({ src: "./components/app.js" });
+    }
+
     const useLangjs = preloadScripts.find((script) => {
         return script.src.includes("useLang.js");
     });
