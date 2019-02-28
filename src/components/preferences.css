@@ -32,12 +32,18 @@
     margin: 0.5rem 0;
 }
 
+.list-item > .link {
+    padding: 0;
+}
+
 .toggle-switch {
     --switch-theme-color: var(--theme-color);
     --switch-margin: 0;
     --bar-height: 20px;
     --bar-width: 52px;
     --knob-size: 28px;
+    width: 60px;
+    justify-content: center;
 }
 
 .color-picker {
