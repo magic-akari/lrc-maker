@@ -11,6 +11,7 @@
 @import "./components/asidepanel.css";
 @import "./components/audio.css";
 @import "./components/loadaudio.css";
+@import "../node_modules/toggle-switch-css/src/toggle-switch.css";
 @import "./components/preferences.css";
 @import "./components/gist.css";
 @import "./components/toast.css";

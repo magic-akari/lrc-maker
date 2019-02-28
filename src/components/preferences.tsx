@@ -250,18 +250,22 @@ export const Preferences: React.FC = () => {
                 <li>
                     <label className="list-item">
                         <span>{lang.preferences.builtInAudio}</span>
-                        <label className="label-switch">
+                        <label className="toggle-switch">
                             <input type="checkbox" checked={prefState.builtInAudio} onChange={onBuiltInAudioToggle} />
-                            <div className="checkbox" />
+                            <span className="toggle-switch-label">
+                                <span className="toggle-switch-ripple" />
+                            </span>
                         </label>
                     </label>
                 </li>
                 <li>
                     <label className="list-item">
                         <span>{lang.preferences.spaceButton}</span>
-                        <label className="label-switch">
+                        <label className="toggle-switch">
                             <input type="checkbox" checked={prefState.screenButton} onChange={onScreenButtonToggle} />
-                            <div className="checkbox" />
+                            <span className="toggle-switch-label">
+                                <span className="toggle-switch-ripple" />
+                            </span>
                         </label>
                     </label>
                 </li>

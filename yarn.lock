@@ -3940,6 +3940,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
+toggle-switch-css@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/toggle-switch-css/-/toggle-switch-css-0.1.0.tgz#a5a1a1de34f21ed7cfb05a93b9616da47ea0bd00"
+  integrity sha512-t9WHMZH8Xi9YNHafhVAN6q8FwJ0Q3YAkPKq92Rmo24CE8GL3iSK25U5IfOdgmND1fotImJuIXHZTdYAE9rurgg==
+
 ts-node@^8.0.2:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.0.2.tgz#9ecdf8d782a0ca4c80d1d641cbb236af4ac1b756"

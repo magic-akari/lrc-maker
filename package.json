@@ -40,7 +40,8 @@
     "dependencies": {
         "@lrc-maker/lrc-parser": "^0.1.1",
         "react": "^16.8.3",
-        "react-dom": "^16.8.3"
+        "react-dom": "^16.8.3",
+        "toggle-switch-css": "^0.1.0"
     },
     "devDependencies": {
         "@types/node": "^11.9.5",
