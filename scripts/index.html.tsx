@@ -4,7 +4,6 @@ import { readdirSync, readFileSync } from "fs";
 import { parse, resolve } from "path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-
 import { dependencies, description, name, version } from "../package.json";
 import { sri, sriContent } from "./sri";
 
@@ -26,15 +25,13 @@ const useCDN = process.env.USE_CDN === "USE_CDN";
 const jsdelivr = "https://cdn.jsdelivr.net";
 const nodeModules = "../node_modules/";
 
-const libUrl = (
-    libName: string,
-    prodPath: string,
-    devPath?: string,
-): {
+interface IScriptProps {
     src: string;
     integrity?: string;
     crossOrigin?: "anonymous";
-} => {
+}
+
+const libUrl = (libName: string, prodPath: string, devPath?: string): IScriptProps => {
     if (useCDN) {
         const libVersion = (() => {
             const v = (dependencies as any)[libName];
@@ -52,13 +49,7 @@ const libUrl = (
     }
 };
 
-const appUrl = (
-    path: string,
-): {
-    src: string;
-    integrity?: string;
-    crossOrigin?: "anonymous";
-} => {
+const appScriptUrl = (path: string): IScriptProps => {
     if (useCDN) {
         const src = new URL(resolve("/npm", `${name}@${version}`, "build", path), `${jsdelivr}`).href;
         const integrity = sri(resolve(__dirname, "../build", path));
@@ -119,32 +110,30 @@ const csp = {
 
 const buildPath = resolve(__dirname, "../build");
 
-const preloadScripts = glob(buildPath + "/*/*.js")
-    .map((path) => {
-        return (path as string).replace(buildPath, ".");
-    })
-    .filter((path) => {
-        return !path.includes("languages");
-    })
-    .map((path) => {
-        return appUrl(path);
-    });
-
-if (preloadScripts.length === 0) {
-    preloadScripts.push({ src: "./components/app.js" });
-}
-
-const useLangjs = preloadScripts.find((script) => {
-    return script.src.includes("useLang.js");
-});
-if (useLangjs) {
-    useLangjs.integrity = undefined;
-}
-
 const Html = () => {
     const updateTime = execSync("git log -1 --format=%cI")
         .toString()
         .trim();
+
+    const exclued = ["languages"];
+
+    const preloadScripts = glob(buildPath + "/*/*.js")
+        .map((path) => {
+            return (path as string).replace(buildPath, ".");
+        })
+        .filter((path) => {
+            return !exclued.some((e) => path.includes(e));
+        })
+        .map((path) => {
+            return appScriptUrl(path);
+        });
+
+    const useLangjs = preloadScripts.find((script) => {
+        return script.src.includes("useLang.js");
+    });
+    if (useLangjs) {
+        useLangjs.integrity = undefined;
+    }
 
     const reg = isProduction ? swRegister() : swUnregister();
 
@@ -155,9 +144,9 @@ const Html = () => {
         csp["connect-src"].push("*");
     }
 
-    const akariOdangoLoading = appUrl("./svg/akari-odango-loading.svg");
-    const akariHideWall = appUrl("./svg/akari-hide-wall.svg");
-    const akariNotFound = appUrl("./svg/akari-not-found.svg");
+    const akariOdangoLoading = appScriptUrl("./svg/akari-odango-loading.svg");
+    const akariHideWall = appScriptUrl("./svg/akari-hide-wall.svg");
+    const akariNotFound = appScriptUrl("./svg/akari-not-found.svg");
 
     return (
         <html>
@@ -218,7 +207,7 @@ const Html = () => {
                     rel="stylesheet"
                     {...(() => {
                         if (isProduction) {
-                            const { src: href, integrity, crossOrigin } = appUrl("./index.css");
+                            const { src: href, integrity, crossOrigin } = appScriptUrl("./index.css");
                             return { href, integrity, crossOrigin };
                         }
 
@@ -227,12 +216,12 @@ const Html = () => {
                 />
                 <script {...libUrl("react", "/umd/react.production.min.js", "/umd/react.development.js")} />
                 <script {...libUrl("react-dom", "/umd/react-dom.production.min.js", "/umd/react-dom.development.js")} />
-                <script {...appUrl("./polyfill.js")} type="module" async />
-                <script {...appUrl("./languages/en-US.js")} type="module" />
+                <script {...appScriptUrl("./polyfill.js")} type="module" async />
+                <script {...appScriptUrl("./languages/en-US.js")} type="module" />
                 {preloadScripts.map((script, index) => {
                     return <script key={index} {...script} type="module" />;
                 })}
-                <script {...appUrl("./nomodule.js")} noModule defer />
+                <script {...appScriptUrl("./nomodule.js")} noModule defer />
                 <script
                     id="app-info"
                     type="application/json"
