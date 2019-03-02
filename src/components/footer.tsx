@@ -273,11 +273,7 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
                 { once: true },
             );
 
-            const fileReader = new FileReader();
-            fileReader.addEventListener("load", () => {
-                worker.postMessage(fileReader.result, [fileReader.result as ArrayBuffer]);
-            });
-            fileReader.readAsArrayBuffer(file);
+            worker.postMessage(file);
 
             return;
         }

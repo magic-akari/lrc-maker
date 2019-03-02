@@ -129,8 +129,9 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
 };
 
 self.addEventListener("message", async (ev) => {
-    const filebuffer: ArrayBuffer = ev.data;
-    const dataview = new DataView(ev.data);
+    const file: File = ev.data;
+    const filebuffer = new FileReaderSync().readAsArrayBuffer(file);
+    const dataview = new DataView(filebuffer);
 
     if (dataview.getUint32(0, true) !== 0x4e455443 || dataview.getUint32(4, true) !== 0x4d414446) {
         self.postMessage({ type: "error", data: "not ncm file" });
