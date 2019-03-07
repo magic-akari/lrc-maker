@@ -49,16 +49,8 @@ export const Eidtor: React.SFC<{
 
     const details = useRef<HTMLDetailsElement>(null);
 
-    useEffect(() => {
-        const dc = details.current!;
-        const toggle = () => {
-            sessionStorage.setItem(SSK.editorDetailsOpen, dc.open.toString());
-        };
-        dc.addEventListener("toggle", toggle);
-
-        return () => {
-            dc.removeEventListener("toggle", toggle);
-        };
+    const onDetailsToggle = useCallback(() => {
+        sessionStorage.setItem(SSK.editorDetailsOpen, details.current!.open.toString());
     }, []);
 
     const detailsOpened = useMemo(() => {
@@ -134,7 +126,7 @@ export const Eidtor: React.SFC<{
 
     return (
         <div className="app-editor">
-            <details ref={details} open={detailsOpened}>
+            <details ref={details} open={detailsOpened} onToggle={onDetailsToggle}>
                 <summary>{lang.editor.metaInfo}</summary>
                 <section className="app-editor-infobox">
                     <label htmlFor="info-ti">[ti:</label>

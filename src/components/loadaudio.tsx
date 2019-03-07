@@ -17,9 +17,9 @@ export const loadAudioDialogRef: ILoadAudioDialogRef = {
         if (this.current === null || this.current.open) {
             return;
         }
-
         this.current.open = true;
     },
+
     close() {
         if (this.current === null || !this.current.open) {
             return;
@@ -47,28 +47,18 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
         };
     }, []);
 
-    useEffect(() => {
-        const handleEscape = (ev: KeyboardEvent) => {
-            if (ev.code === "Escape" || ev.key === "Escape") {
-                loadAudioDialogRef.close();
-            }
-        };
+    const onEscapeKeyDown = useCallback((ev: KeyboardEvent) => {
+        if (ev.code === "Escape" || ev.key === "Escape") {
+            loadAudioDialogRef.close();
+        }
+    }, []);
 
-        const handleToggle = () => {
-            if (loadAudioDialogRef.current!.open) {
-                window.addEventListener("keydown", handleEscape, {
-                    once: true,
-                });
-            } else {
-                window.removeEventListener("keydown", handleEscape);
-            }
-        };
-
-        loadAudioDialogRef.current!.addEventListener("toggle", handleToggle);
-
-        return () => {
-            loadAudioDialogRef.current!.removeEventListener("toggle", handleToggle);
-        };
+    const onToggle = useCallback(() => {
+        if (loadAudioDialogRef.current!.open) {
+            window.addEventListener("keydown", onEscapeKeyDown);
+        } else {
+            window.removeEventListener("keydown", onEscapeKeyDown);
+        }
     }, []);
 
     const onSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
@@ -93,7 +83,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
     }, []);
 
     return ReactDOM.createPortal(
-        <details ref={loadAudioDialogRef} className="dialog fixed loadaudio-dialog">
+        <details ref={loadAudioDialogRef} className="dialog fixed loadaudio-dialog" onToggle={onToggle}>
             <summary className="dialog-close">
                 <CloseSVG />
             </summary>

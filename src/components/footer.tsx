@@ -19,98 +19,6 @@ export const Footer: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const ac = audioRef.current!;
-
-        const onLoadMetadata = () => {
-            cancelAnimationFrame(rafId.current);
-            audioStatePubSub.pub({
-                type: AudioActionType.getDuration,
-                payload: audioRef.duration,
-            });
-            toastPubSub.pub({
-                type: "success",
-                text: lang.notify.audioLoaded,
-            });
-        };
-        ac.addEventListener("loadedmetadata", onLoadMetadata, {
-            passive: true,
-        });
-        return () => {
-            ac.removeEventListener("loadedmetadata", onLoadMetadata);
-        };
-    }, [lang]);
-
-    const rafId = useRef(0);
-
-    useEffect(() => {
-        const syncCurrentTime = () => {
-            currentTimePubSub.pub(audioRef.currentTime);
-            rafId.current = requestAnimationFrame(syncCurrentTime);
-        };
-
-        const ac = audioRef.current!;
-
-        const passive = { passive: true };
-
-        ac.addEventListener(
-            "play",
-            () => {
-                rafId.current = requestAnimationFrame(syncCurrentTime);
-                audioStatePubSub.pub({
-                    type: AudioActionType.pause,
-                    payload: false,
-                });
-            },
-            passive,
-        );
-
-        ac.addEventListener(
-            "timeupdate",
-            () => {
-                if (ac.paused) {
-                    currentTimePubSub.pub(audioRef.currentTime);
-                }
-            },
-            passive,
-        );
-
-        ac.addEventListener(
-            "pause",
-            () => {
-                cancelAnimationFrame(rafId.current);
-                audioStatePubSub.pub({
-                    type: AudioActionType.pause,
-                    payload: true,
-                });
-            },
-            passive,
-        );
-
-        ac.addEventListener(
-            "ended",
-            () => {
-                cancelAnimationFrame(rafId.current);
-                audioStatePubSub.pub({
-                    type: AudioActionType.pause,
-                    payload: true,
-                });
-            },
-            passive,
-        );
-
-        ac.addEventListener(
-            "ratechange",
-            () => {
-                audioStatePubSub.pub({
-                    type: AudioActionType.rateChange,
-                    payload: ac.playbackRate,
-                });
-            },
-            passive,
-        );
-    }, []);
-
-    useEffect(() => {
         document.addEventListener("keydown", (ev) => {
             const { code, key, target } = ev;
 
@@ -205,10 +113,66 @@ export const Footer: React.FC = () => {
         receiveFile(file, privateSetAudioSrc);
     }, []);
 
+    const rafId = useRef(0);
+
+    const onAudioLoadedMetadata = useCallback(() => {
+        cancelAnimationFrame(rafId.current);
+        audioStatePubSub.pub({
+            type: AudioActionType.getDuration,
+            payload: audioRef.duration,
+        });
+        toastPubSub.pub({
+            type: "success",
+            text: lang.notify.audioLoaded,
+        });
+    }, [lang]);
+
+    const syncCurrentTime = useCallback(() => {
+        currentTimePubSub.pub(audioRef.currentTime);
+        rafId.current = requestAnimationFrame(syncCurrentTime);
+    }, []);
+
+    const onAudioPlay = useCallback(() => {
+        rafId.current = requestAnimationFrame(syncCurrentTime);
+        audioStatePubSub.pub({
+            type: AudioActionType.pause,
+            payload: false,
+        });
+    }, []);
+
+    const onAudioPause = useCallback(() => {
+        cancelAnimationFrame(rafId.current);
+        audioStatePubSub.pub({
+            type: AudioActionType.pause,
+            payload: true,
+        });
+    }, []);
+
+    const onAudioEnded = useCallback(() => {
+        cancelAnimationFrame(rafId.current);
+        audioStatePubSub.pub({
+            type: AudioActionType.pause,
+            payload: true,
+        });
+    }, []);
+
+    const onAudioTimeUpdate = useCallback(() => {
+        if (audioRef.paused) {
+            currentTimePubSub.pub(audioRef.currentTime);
+        }
+    }, []);
+
+    const onAudioRateChange = useCallback(() => {
+        audioStatePubSub.pub({
+            type: AudioActionType.rateChange,
+            payload: audioRef.playbackRate,
+        });
+    }, []);
+
     const onAudioError = useCallback((ev) => {
         toastPubSub.pub({
             type: "warning",
-            text: (ev.target as any).error.message,
+            text: (ev.target as HTMLAudioElement).error!.message,
         });
     }, []);
 
@@ -221,6 +185,12 @@ export const Footer: React.FC = () => {
                 src={audioSrc}
                 controls={prefState.builtInAudio}
                 hidden={!prefState.builtInAudio}
+                onLoadedMetadata={onAudioLoadedMetadata}
+                onPlay={onAudioPlay}
+                onPause={onAudioPause}
+                onEnded={onAudioEnded}
+                onTimeUpdate={onAudioTimeUpdate}
+                onRateChange={onAudioRateChange}
                 onError={onAudioError}
             />
             {prefState.builtInAudio || <LrcAudio lang={lang} />}
