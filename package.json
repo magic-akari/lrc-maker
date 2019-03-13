@@ -39,16 +39,16 @@
     },
     "dependencies": {
         "@lrc-maker/lrc-parser": "^0.1.1",
-        "react": "^16.8.3",
-        "react-dom": "^16.8.3",
-        "toggle-switch-css": "^0.1.0"
+        "react": "^16.8.4",
+        "react-dom": "^16.8.4",
+        "toggle-switch-css": "^0.1.1"
     },
     "devDependencies": {
-        "@types/node": "^11.9.5",
+        "@types/node": "^11.11.3",
         "@types/prettier": "^1.16.1",
-        "@types/react": "^16.8.4",
+        "@types/react": "^16.8.8",
         "@types/react-dom": "^16.8.2",
-        "autoprefixer": "^9.4.8",
+        "autoprefixer": "^9.4.10",
         "cssnano": "^4.1.10",
         "fast-glob": "^2.2.6",
         "postcss": "^7.0.14",
@@ -57,11 +57,11 @@
         "postcss-import": "^12.0.1",
         "prettier": "^1.16.4",
         "source-map-loader": "^0.2.4",
-        "ts-node": "^8.0.2",
-        "tslint": "^5.12.1",
+        "ts-node": "^8.0.3",
+        "tslint": "^5.13.1",
         "tslint-react": "^3.6.0",
         "typescript": "^3.3.3333",
-        "webpack": "^4.29.5",
+        "webpack": "^4.29.6",
         "webpack-cli": "^3.2.3"
     }
 }
