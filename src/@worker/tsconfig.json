@@ -3,7 +3,8 @@
     "compilerOptions": {
         "composite": true,
         "rootDir": ".",
-        "lib": ["webworker", "es2018"]
+        "lib": ["webworker", "es2018"],
+        "inlineSources": true
     },
     "include": ["."],
     "exclude": [],
