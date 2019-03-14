@@ -41,7 +41,7 @@
         "@lrc-maker/lrc-parser": "^0.1.1",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
-        "toggle-switch-css": "^0.1.1"
+        "toggle-switch-css": "^1.0.0"
     },
     "devDependencies": {
         "@types/node": "^11.11.3",
@@ -58,7 +58,7 @@
         "prettier": "^1.16.4",
         "source-map-loader": "^0.2.4",
         "ts-node": "^8.0.3",
-        "tslint": "^5.13.1",
+        "tslint": "^5.14.0",
         "tslint-react": "^3.6.0",
         "typescript": "^3.3.3333",
         "webpack": "^4.29.6",
