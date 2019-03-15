@@ -3951,10 +3951,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-toggle-switch-css@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/toggle-switch-css/-/toggle-switch-css-1.0.0.tgz#a4069f40b0e6f01c451085041594eeced415d8b1"
-  integrity sha512-hIZQ7+dKrC2vyyYk4j6h6BzCl/07gIanPew8D4//VgQGvbXlD1xiN3Fiq4VeIxB7eHGwieRew1/Uby0KWLSjtA==
+toggle-switch-css@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/toggle-switch-css/-/toggle-switch-css-1.0.1.tgz#26a4de9ff5586c039aea3a9b470e37e15d28035f"
+  integrity sha512-4c54vv4OPHUBe9e+/4QOYnjd+T/a8mOCzgW8AqXIkooU8t6JSPdy/QhiVsuopOtDZ+S8bufph+VrbkjVrsvF3w==
 
 ts-node@^8.0.3:
   version "8.0.3"

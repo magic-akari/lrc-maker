@@ -2,7 +2,8 @@
     --white: #eee;
     --black: #111;
 
-    --theme-color: #f58ea8;
+    --theme-rgb: 245, 142, 168;
+    --theme-color: rgb(var(--theme-rgb));
 
     --font-color: var(--black);
     --background-color: #f1f3f4;

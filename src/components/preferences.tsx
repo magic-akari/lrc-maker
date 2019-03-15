@@ -252,9 +252,7 @@ export const Preferences: React.FC = () => {
                         <span>{lang.preferences.builtInAudio}</span>
                         <label className="toggle-switch">
                             <input type="checkbox" checked={prefState.builtInAudio} onChange={onBuiltInAudioToggle} />
-                            <span className="toggle-switch-label">
-                                <span className="toggle-switch-ripple" />
-                            </span>
+                            <span className="toggle-switch-label" />
                         </label>
                     </label>
                 </li>
@@ -263,9 +261,7 @@ export const Preferences: React.FC = () => {
                         <span>{lang.preferences.spaceButton}</span>
                         <label className="toggle-switch">
                             <input type="checkbox" checked={prefState.screenButton} onChange={onScreenButtonToggle} />
-                            <span className="toggle-switch-label">
-                                <span className="toggle-switch-ripple" />
-                            </span>
+                            <span className="toggle-switch-label" />
                         </label>
                     </label>
                 </li>

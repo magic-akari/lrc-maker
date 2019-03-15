@@ -37,12 +37,13 @@
 }
 
 .toggle-switch {
-    --switch-theme-color: var(--theme-color);
+    --switch-theme-rgb: var(--theme-rgb);
     --switch-margin: 0;
     --bar-height: 20px;
     --bar-width: 52px;
     --knob-size: 28px;
-    width: 60px;
+    width: var(--switch-width);
+    height: var(--knob-size);
     justify-content: center;
 }
 

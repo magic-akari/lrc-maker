@@ -86,10 +86,6 @@ export const AppProvider: React.FC = ({ children }) => {
         document.documentElement.lang = prefState.lang;
     }, [lang]);
 
-    useEffect(() => {
-        document.documentElement.style.setProperty("--theme-color", prefState.themeColor);
-    }, [prefState.themeColor]);
-
     const value = useMemo(() => {
         return {
             lang,

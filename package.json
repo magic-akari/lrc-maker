@@ -41,7 +41,7 @@
         "@lrc-maker/lrc-parser": "^0.1.1",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
-        "toggle-switch-css": "^1.0.0"
+        "toggle-switch-css": "^1.0.1"
     },
     "devDependencies": {
         "@types/node": "^11.11.3",
