@@ -18,7 +18,7 @@ export const Content: React.FC = () => {
 
     const [path, setPath] = useState(location.hash);
     useEffect(() => {
-        addEventListener("hashchange", () => {
+        window.addEventListener("hashchange", () => {
             setPath(location.hash);
         });
     }, []);

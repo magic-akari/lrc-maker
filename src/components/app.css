@@ -3,7 +3,11 @@ html {
     font-kerning: normal;
     color: var(--font-color);
     caret-color: var(--theme-color);
-    background-color: var(--background-color);
+    background: var(--semi-black-color);
+}
+
+body {
+    background: var(--background-color);
 }
 
 select,
@@ -132,10 +136,8 @@ time {
     user-select: all;
 }
 
-html,
-body,
 .app-container {
-    height: 100%;
+    min-height: 100vh;
 }
 
 .page-loading::before {

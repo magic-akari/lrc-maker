@@ -12,7 +12,6 @@ if ("serviceWorker" in navigator) {
         (registration) => {
             // Registration was successful
             registration.update();
-            window.serviceWorkerRegistration = registration;
             console.log("ServiceWorker Registed (｡･ω･｡)ﾉ: ", registration.scope);
         },
         (err) => {
