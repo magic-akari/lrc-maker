@@ -4,5 +4,5 @@
     width: 100%;
     z-index: 233;
 
-    animation: slideInUp 250ms ease forwards;
+    animation: slideInUp var(--animation-duration) ease forwards;
 }

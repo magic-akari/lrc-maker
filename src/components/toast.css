@@ -15,8 +15,9 @@
     border-radius: var(--border-radius);
     border: 1px solid var(--theme-color);
     box-shadow: 0 0 1rem var(--theme-color);
-    animation: heightChange 250ms ease forwards, slideInRight 250ms ease-in forwards,
-        slideOutRight 250ms ease-out 5s forwards;
+    animation: heightChange var(--animation-duration) ease forwards,
+        slideInRight var(--animation-duration) ease-in forwards,
+        slideOutRight var(--animation-duration) ease-out 5s forwards;
 
     display: flex;
 

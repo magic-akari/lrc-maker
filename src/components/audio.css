@@ -123,7 +123,7 @@ input[type="range"]::-webkit-slider-thumb {
     margin-top: calc((var(--slider-height) - var(--thumb-size)) / 2);
     z-index: 10;
     box-shadow: 0 0 4px 1px var(--black);
-    transition: box-shadow 250ms ease-in-out;
+    transition: box-shadow var(--transition-duration) ease-in-out;
 
     filter: brightness(120%);
 }
@@ -142,7 +142,7 @@ input[type="range"]::-moz-range-thumb {
     margin-top: calc((var(--slider-height) - var(--thumb-size)) / 2);
     z-index: 10;
     box-shadow: 0 0 4px 1px var(--black);
-    transition: box-shadow 250ms ease-in-out;
+    transition: box-shadow var(--transition-duration) ease-in-out;
 
     filter: brightness(120%);
 }
@@ -163,7 +163,7 @@ input[type="range"]:hover::-moz-range-thumb {
     display: inline-block;
     background: var(--white);
     vertical-align: 0;
-    transition: box-shadow 250ms ease-in-out;
+    transition: box-shadow var(--transition-duration) ease-in-out;
     color: var(--progress-meter-color);
     box-shadow: 0 0 4px var(--black);
 }

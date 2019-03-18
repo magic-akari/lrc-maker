@@ -12,8 +12,8 @@
     z-index: 233;
     user-select: none;
     box-shadow: 0 1px 1px var(--theme-color);
-    transform: translateY(-100%);
-    animation: slideInDown 250ms ease-in-out forwards;
+
+    animation: slideInDown var(--animation-duration) ease-in-out forwards;
 }
 
 @media screen and (max-width: 768px) {
@@ -51,7 +51,7 @@
     user-select: none;
     min-height: 60px;
     min-width: 60px;
-    transition: color 250ms ease-in-out;
+    transition: color var(--transition-duration) ease-in-out;
     padding: 0;
 }
 
@@ -81,7 +81,7 @@
     left: 0;
     z-index: -1;
     transform-origin: center 0;
-    transition: transform 250ms ease-in-out;
+    transition: transform var(--transition-duration) ease-in-out;
 }
 
 .app-tab::before,
@@ -107,17 +107,17 @@
 }
 
 .app-tab:nth-child(1) {
-    animation: slideInDown 500ms ease-out 100ms forwards;
+    animation: slideInDown var(--animation-durationx2) ease-out 100ms forwards;
 }
 
 .app-tab:nth-child(2) {
-    animation: slideInDown 500ms ease-out 200ms forwards;
+    animation: slideInDown var(--animation-durationx2) ease-out 200ms forwards;
 }
 
 .app-tab:nth-child(3) {
-    animation: slideInDown 500ms ease-out 300ms forwards;
+    animation: slideInDown var(--animation-durationx2) ease-out 300ms forwards;
 }
 
 .app-tab:nth-child(4) {
-    animation: slideInDown 500ms ease-out 400ms forwards;
+    animation: slideInDown var(--animation-durationx2) ease-out 400ms forwards;
 }

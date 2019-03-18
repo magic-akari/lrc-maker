@@ -17,6 +17,10 @@
 
     --drop-shadow: drop-shadow(0 0 4px currentcolor);
 
+    --transition-duration: 250ms;
+    --animation-duration: 250ms;
+    --animation-durationx2: calc(var(--animation-duration) * 2);
+
     --animation-out-back: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
@@ -24,5 +28,12 @@
     :root {
         --background-color: var(--black);
         --font-color: var(--white);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --transition-duration: 10ms;
+        --animation-duration: 100ms;
     }
 }
