@@ -128,13 +128,12 @@ export const Eidtor: React.SFC<{
         <div className="app-editor">
             <details ref={details} open={detailsOpened} onToggle={onDetailsToggle}>
                 <summary>{lang.editor.metaInfo}</summary>
-                <section className="app-editor-infobox">
+                <section className="app-editor-infobox" onBlur={setInfo}>
                     <label htmlFor="info-ti">[ti:</label>
                     <input
                         id="info-ti"
                         name="ti"
                         placeholder={lang.editor.title}
-                        onBlur={setInfo}
                         {...disableCheck}
                         {...useDefaultValue(lrcState.info.get("ti") || "")}
                     />
@@ -144,7 +143,6 @@ export const Eidtor: React.SFC<{
                         id="info-ar"
                         name="ar"
                         placeholder={lang.editor.artist}
-                        onBlur={setInfo}
                         {...disableCheck}
                         {...useDefaultValue(lrcState.info.get("ar") || "")}
                     />
@@ -154,7 +152,6 @@ export const Eidtor: React.SFC<{
                         id="info-al"
                         name="al"
                         placeholder={lang.editor.album}
-                        onBlur={setInfo}
                         {...disableCheck}
                         {...useDefaultValue(lrcState.info.get("al") || "")}
                     />

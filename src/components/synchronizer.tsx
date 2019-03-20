@@ -1,4 +1,5 @@
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import { State as PrefState } from "../hooks/usePref.js";
 import { convertTimeToTag, formatText, ILyric, State as LrcState, stringify } from "../lrc-parser/lrc-parser.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { appContext } from "./app.context.js";
@@ -284,9 +285,9 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
                 )
                 .join(Const.space);
 
-            return <LyricLine line={line} index={index} select={select} className={className} />;
+            return <LyricLine line={line} index={index} select={select} className={className} prefState={prefState} />;
         },
-        [selectIndex, highlightIndex],
+        [selectIndex, highlightIndex, prefState],
     );
 
     return (
@@ -310,11 +311,10 @@ interface ILyricLineProps {
     index: number;
     select: boolean;
     className: string;
+    prefState: PrefState;
 }
 
-const LyricLine: React.FC<ILyricLineProps> = ({ line, index, select, className }) => {
-    const { prefState } = useContext(appContext);
-
+const LyricLine: React.FC<ILyricLineProps> = ({ line, index, select, className, prefState }) => {
     const lineTime = convertTimeToTag(line.time, prefState.fixed);
 
     const lineText = formatText(line.text, prefState.spaceStart, prefState.spaceEnd);
