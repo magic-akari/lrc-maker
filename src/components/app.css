@@ -3,10 +3,6 @@ html {
     font-kerning: normal;
     color: var(--font-color);
     caret-color: var(--theme-color);
-    background: var(--semi-black-color);
-}
-
-body {
     background: var(--background-color);
 }
 
