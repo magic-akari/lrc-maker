@@ -158,11 +158,13 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
         const listener = (ev: KeyboardEvent) => {
             const { code, key, target } = ev;
 
+            const codeOrKey = code || key;
+
             if (["text", "textarea", "url"].includes((target as any).type as string)) {
                 return;
             }
 
-            if (code === "Backspace" || code === "Delete" || key === "Backspace" || key === "Delete" || key === "Del") {
+            if (codeOrKey === "Backspace" || codeOrKey === "Delete" || codeOrKey === "Del") {
                 ev.preventDefault();
                 deleteTimeTag();
                 return;
@@ -176,33 +178,27 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
                 ev.preventDefault();
 
                 sync();
-            } else if (
-                ["ArrowUp", "KeyW", "KeyJ"].includes(code) ||
-                ["ArrowUp", "Up", "W", "w", "J", "j"].includes(key)
-            ) {
+            } else if (["ArrowUp", "KeyW", "KeyJ", "Up", "W", "w", "J", "j"].includes(codeOrKey)) {
                 ev.preventDefault();
 
                 setSelectIndex(guard(selectIndex - 1));
-            } else if (
-                ["ArrowDown", "KeyS", "KeyK"].includes(code) ||
-                ["ArrowDown", "Down", "S", "s", "K", "k"].includes(key)
-            ) {
+            } else if (["ArrowDown", "KeyS", "KeyK", "Down", "S", "s", "K", "k"].includes(codeOrKey)) {
                 ev.preventDefault();
 
                 setSelectIndex(guard(selectIndex + 1));
-            } else if (code === "Home" || key === "Home") {
+            } else if (codeOrKey === "Home") {
                 ev.preventDefault();
 
                 setSelectIndex(0);
-            } else if (code === "End" || key === "End") {
+            } else if (codeOrKey === "End") {
                 ev.preventDefault();
 
                 setSelectIndex(lyric.length - 1);
-            } else if (code === "PageUp" || key === "PageUp") {
+            } else if (codeOrKey === "PageUp") {
                 ev.preventDefault();
 
                 setSelectIndex(guard(selectIndex - 10));
-            } else if (code === "PageDown" || key === "PageDown") {
+            } else if (codeOrKey === "PageDown") {
                 ev.preventDefault();
 
                 setSelectIndex(guard(selectIndex + 10));

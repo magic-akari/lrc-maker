@@ -22,6 +22,8 @@ export const Footer: React.FC = () => {
         document.addEventListener("keydown", (ev) => {
             const { code, key, target } = ev;
 
+            const codeOrKey = code || key;
+
             if (["text", "textarea", "url"].includes((target as any).type as string)) {
                 return;
             }
@@ -33,58 +35,30 @@ export const Footer: React.FC = () => {
             }
 
             if (ev.metaKey === true || ev.ctrlKey === true) {
-                if (
-                    code === "ArrowUp" ||
-                    code === "KeyJ" ||
-                    key === "ArrowUp" ||
-                    key === "Up" ||
-                    key === "J" ||
-                    key === "j"
-                ) {
+                if (["ArrowUp", "KeyJ", "Up", "J", "j"].includes(codeOrKey)) {
                     ev.preventDefault();
 
                     const rate = ac.playbackRate;
                     const newRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
 
                     ac.playbackRate = newRate;
-                } else if (
-                    code === "ArrowDown" ||
-                    code === "KeyK" ||
-                    key === "ArrowDown" ||
-                    key === "Down" ||
-                    key === "K" ||
-                    key === "k"
-                ) {
+                } else if (["ArrowDown", "KeyK", "Down", "K", "k"].includes(codeOrKey)) {
                     ev.preventDefault();
 
                     const rate = ac.playbackRate;
                     const newRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
 
                     ac.playbackRate = newRate;
-                } else if (code === "Enter" || key === "Enter") {
+                } else if (codeOrKey === "Enter") {
                     ev.preventDefault();
                     audioRef.toggle();
                 }
             } else {
-                if (
-                    code === "ArrowLeft" ||
-                    code === "KeyA" ||
-                    key === "ArrowLeft" ||
-                    key === "Left" ||
-                    key === "A" ||
-                    key === "a"
-                ) {
+                if (["ArrowLeft", "KeyA", "KeyH", "Left", "A", "a", "H", "h"].includes(codeOrKey)) {
                     ev.preventDefault();
 
                     ac.currentTime -= 5;
-                } else if (
-                    code === "ArrowRight" ||
-                    code === "KeyD" ||
-                    key === "ArrowRight" ||
-                    key === "Right" ||
-                    key === "D" ||
-                    key === "d"
-                ) {
+                } else if (["ArrowRight", "KeyD", "KeyL", "Right", "D", "d", "L", "l"].includes(codeOrKey)) {
                     ev.preventDefault();
 
                     ac.currentTime += 5;
