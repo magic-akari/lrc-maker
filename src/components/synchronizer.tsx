@@ -33,17 +33,17 @@ interface ISynchronizerProps {
 export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispatch }) => {
     const self = useRef(Symbol(Synchronizer.name));
 
-    const { prefState } = useContext(appContext);
+    const { prefState, lang } = useContext(appContext);
 
     useEffect(() => {
         lrcDispatch({
             type: LrcActionType.set_info,
             payload: {
                 name: "tool",
-                value: "lrc-maker (https://lrc-maker.github.io)",
+                value: `${lang.app.name} https://lrc-maker.github.io`,
             },
         });
-    }, []);
+    }, [lang]);
 
     const lyric = lrcState.lyric;
 
