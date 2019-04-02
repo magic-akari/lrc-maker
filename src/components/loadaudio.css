@@ -96,7 +96,7 @@
 
 .loadaudio-tab > label {
     width: 100%;
-    padding: 0.5rem 0;
+    padding: 8px 0;
     display: inline-block;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -124,7 +124,7 @@
     width: 100%;
     transition: transform var(--transition-duration) ease-in-out;
 
-    padding: 1rem;
+    padding: 16px;
 }
 
 .audio-input-tip:hover {
@@ -137,7 +137,7 @@
     border: 0;
     border-bottom: 1px solid var(--theme-color);
     width: 60%;
-    margin: 0.5rem;
+    margin: 8px;
 
     font-size: 1.5rem;
 }

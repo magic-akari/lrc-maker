@@ -11,7 +11,7 @@
     --semi-black-color: #202020cc;
     --semi-white-color: #e0e0e0cc;
 
-    --border-radius: 0.4rem;
+    --border-radius: 8px;
 
     --text-shadow: 0 0 2px var(--black);
 

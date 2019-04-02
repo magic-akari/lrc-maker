@@ -8,8 +8,8 @@
     background-color: white;
     transition: box-shadow var(--transition-duration) ease-in-out;
 
-    margin: 1rem;
-    padding: 0.5rem;
+    margin: 16px;
+    padding: 8px;
     font-size: 1.2rem;
 
     position: relative;
@@ -66,12 +66,12 @@
     position: absolute;
     right: 0;
     top: 0;
-    padding: 0.5rem;
+    padding: 8px;
     display: flex;
 }
 
 .editor-tools-item {
-    padding: 0.5rem;
+    padding: 8px;
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
@@ -85,8 +85,8 @@
 }
 
 .editor-tools-item > svg {
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 24px;
+    width: 24px;
     color: currentColor;
 }
 

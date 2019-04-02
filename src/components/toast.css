@@ -27,7 +27,7 @@
 .toast-badge {
     height: 32px;
     width: 32px;
-    margin: 0.5rem;
+    margin: 8px;
 
     flex: 0 0 auto;
 }

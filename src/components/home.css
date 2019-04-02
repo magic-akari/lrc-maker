@@ -14,8 +14,8 @@
 }
 
 .home-tip {
-    padding: 1rem;
-    margin: 1rem;
+    padding: 16px;
+    margin: 16px;
     color: var(--white);
     border-radius: var(--border-radius);
     background: var(--semi-black-color);
@@ -50,14 +50,14 @@
     content: "";
     position: absolute;
     left: 50%;
-    margin-left: -0.5rem;
-    border-width: 0.5rem;
+    margin-left: -8px;
+    border-width: 8px;
     border-style: solid;
 }
 
 .home-tip-top-left::after,
 .home-tip-bottom-left::after {
-    left: 2rem;
+    left: 32px;
 }
 
 .home-tip-top-left::after,
@@ -78,13 +78,13 @@
 }
 
 .home-tip-item {
-    margin: 0.5rem;
+    margin: 8px;
     padding: 0;
     cursor: default;
 }
 
 .home-tip-item > svg {
-    margin-right: 0.5rem;
+    margin-right: 8px;
 }
 
 .home-tip-text,

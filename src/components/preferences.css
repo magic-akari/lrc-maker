@@ -10,7 +10,7 @@
 
 .preferences li {
     width: 100%;
-    padding: 0 0.5rem;
+    padding: 0 8px;
 }
 
 .preferences li:nth-child(even) {
@@ -29,7 +29,7 @@
 
 .list-item > span,
 .list-item > form {
-    margin: 0.5rem 0;
+    margin: 8px 0;
 }
 
 .list-item > .link {
@@ -112,7 +112,7 @@
 }
 
 .option-select > select {
-    padding-right: 1rem;
+    padding-right: 16px;
     appearance: none;
     border: none;
     background-color: transparent;
@@ -215,8 +215,8 @@ input[type="number"] {
     top: 100%;
     right: 0;
     z-index: 100;
-    margin: 0.5rem;
-    padding: 0.5rem;
+    margin: 8px;
+    padding: 8px;
     border: 1px solid var(--theme-color);
     border-radius: var(--border-radius);
     box-shadow: 0 0px 1rem var(--theme-color);
@@ -227,8 +227,8 @@ input[type="number"] {
     content: "";
     position: absolute;
     right: 74px;
-    margin-left: -0.5rem;
-    border-width: 0.5rem;
+    margin-left: -8px;
+    border-width: 8px;
     border-style: solid;
 
     bottom: 100%;

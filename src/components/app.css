@@ -38,7 +38,7 @@ button,
 [type="submit"] {
     border: 0;
     background: 0;
-    padding: 0 0.5rem;
+    padding: 0 8px;
     appearance: none;
     cursor: default;
 }
@@ -77,7 +77,7 @@ time {
 .button {
     color: var(--black);
     background: white;
-    padding: 0.5rem;
+    padding: 8px;
     border-radius: var(--border-radius);
     opacity: 0.8;
 }
