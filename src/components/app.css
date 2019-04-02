@@ -6,6 +6,11 @@ html {
     background: var(--background-color);
 }
 
+html,
+body {
+    overscroll-behavior-y: contain;
+}
+
 select,
 input,
 textarea {
