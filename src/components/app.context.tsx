@@ -21,6 +21,7 @@ const enum Bits {
     prefState,
 }
 
+// tslint:disable: no-bitwise
 export const enum ChangBits {
     lang = 1 << Bits.lang,
     // lrcFormat = 1 << Bits.lrcFormat,

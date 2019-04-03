@@ -176,6 +176,7 @@ const luminanace = (...rgb: [number, number, number]) => {
         }, 0);
 };
 
+// tslint:disable: no-bitwise
 const hex2rgb = (hex: string): [number, number, number] => {
     hex = hex.slice(1);
     const value = Number.parseInt(hex, 16);

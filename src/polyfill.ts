@@ -1,3 +1,5 @@
+// tslint:disable: no-bitwise
+
 (() => {
     const StrProto = String.prototype;
 

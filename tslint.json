@@ -2,7 +2,6 @@
     "defaultSeverity": "error",
     "extends": ["tslint:latest", "tslint-react"],
     "rules": {
-        "object-literal-sort-keys": false,
-        "no-bitwise": false
+        "object-literal-sort-keys": false
     }
 }

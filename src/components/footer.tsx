@@ -7,6 +7,7 @@ import { toastPubSub } from "./toast.js";
 const { useCallback, useContext, useEffect, useRef, useState } = React;
 
 export const Footer: React.FC = () => {
+    // tslint:disable-next-line: no-bitwise
     const { prefState, lang } = useContext(appContext, ChangBits.lang | ChangBits.builtInAudio);
 
     const [audioSrc, privateSetAudioSrc] = useState<string | undefined>(

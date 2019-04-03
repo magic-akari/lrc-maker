@@ -1,3 +1,5 @@
+// tslint:disable: no-bitwise
+
 // https://tc39.github.io/ecma262/#sec-array.prototype.includes
 if (!Array.prototype.includes) {
     Array.prototype.includes = function(searchElement, fromIndex) {
