@@ -39,29 +39,29 @@
     },
     "dependencies": {
         "@lrc-maker/lrc-parser": "^0.1.1",
-        "react": "^16.8.4",
-        "react-dom": "^16.8.4",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
         "toggle-switch-css": "^1.0.1"
     },
     "devDependencies": {
-        "@types/node": "^11.11.3",
+        "@types/node": "^11.13.0",
         "@types/prettier": "^1.16.1",
-        "@types/react": "^16.8.8",
-        "@types/react-dom": "^16.8.2",
-        "autoprefixer": "^9.4.10",
+        "@types/react": "^16.8.10",
+        "@types/react-dom": "^16.8.3",
+        "autoprefixer": "^9.5.0",
         "cssnano": "^4.1.10",
         "fast-glob": "^2.2.6",
         "postcss": "^7.0.14",
         "postcss-cli": "^6.1.2",
-        "postcss-custom-properties": "^8.0.9",
+        "postcss-custom-properties": "^8.0.10",
         "postcss-import": "^12.0.1",
         "prettier": "^1.16.4",
         "source-map-loader": "^0.2.4",
         "ts-node": "^8.0.3",
-        "tslint": "^5.14.0",
-        "tslint-react": "^3.6.0",
-        "typescript": "^3.3.3333",
+        "tslint": "^5.15.0",
+        "tslint-react": "^4.0.0",
+        "typescript": "^3.4.1",
         "webpack": "^4.29.6",
-        "webpack-cli": "^3.2.3"
+        "webpack-cli": "^3.3.0"
     }
 }
