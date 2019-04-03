@@ -19,17 +19,9 @@ deploy:
       email: $NPM_EMAIL
       api_key: $NPM_AUTH_TOKEN
       on:
+          repo: magic-akari/lrc-maker
           branch: master
-          tags: false
       tag: next
-
-    - provider: npm
-      skip-cleanup: true
-      email: $NPM_EMAIL
-      api_key: $NPM_AUTH_TOKEN
-      on:
-          branch: master
-          tags: true
 
     - provider: pages
       skip-cleanup: true
@@ -45,5 +37,6 @@ deploy:
       repo: lrc-maker/lrc-maker.github.io
       target-branch: master
       on:
+          repo: magic-akari/lrc-maker
           branch: master
           tags: true
