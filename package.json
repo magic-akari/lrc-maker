@@ -19,9 +19,9 @@
     ],
     "scripts": {
         "clean": "rm -rf ./build",
-        "prestart": "npm run clean",
+        "prestart": "npm run version",
         "start": "npm run html && npm run esm:watch",
-        "prebuild": "npm run clean && npm run version",
+        "prebuild": "npm run version",
         "build": "npm run css && npm run nomodule && npm run esm && npm run html",
         "version": "ts-node -P scripts/tsconfig.json scripts/generate.version.ts > src/@worker/version.d.ts",
         "esm": "tsc -b",

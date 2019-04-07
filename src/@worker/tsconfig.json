@@ -4,7 +4,8 @@
         "composite": true,
         "rootDir": ".",
         "lib": ["webworker", "es2018"],
-        "inlineSources": true
+        "inlineSources": true,
+        "tsBuildInfoFile": "../../build/worker.tsbuildinfo"
     },
     "include": ["."],
     "exclude": [],
