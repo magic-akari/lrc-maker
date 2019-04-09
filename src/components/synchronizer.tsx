@@ -1,6 +1,6 @@
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
-import { convertTimeToTag, formatText, ILyric, State as LrcState, stringify } from "../lrc-parser/lrc-parser.js";
+import { convertTimeToTag, formatText, ILyric, State as LrcState, stringify } from "../lrc-parser.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";

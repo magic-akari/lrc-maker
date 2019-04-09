@@ -1,6 +1,6 @@
 import { useLang } from "../hooks/useLang.js";
 import { Action as PrefAction, State as PrefState, usePref } from "../hooks/usePref.js";
-import { TrimOptios } from "../lrc-parser/lrc-parser.js";
+import { TrimOptios } from "../lrc-parser.js";
 import { toastPubSub } from "./toast.js";
 
 const { createContext, useEffect, useMemo } = React;

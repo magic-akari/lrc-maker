@@ -8,6 +8,5 @@
         "tsBuildInfoFile": "../../build/worker.tsbuildinfo"
     },
     "include": ["."],
-    "exclude": [],
-    "references": []
+    "exclude": []
 }

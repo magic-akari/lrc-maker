@@ -3,7 +3,9 @@
     "compilerOptions": {
         "target": "es6",
         "removeComments": false,
-        "importHelpers": true
+        "importHelpers": true,
+        "outDir": "./build.es6",
+        "tsBuildInfoFile": "./build.es6/lrc-maker.tsbuildinfo"
     },
-    "references": [{ "path": "./src/lrc-parser" }]
+    "references": [{ "path": "./src/lrc-parser.js/tsconfig.webpack.json" }]
 }

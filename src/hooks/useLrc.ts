@@ -1,4 +1,4 @@
-import { ILyric, parser, State, TrimOptios } from "../lrc-parser/lrc-parser.js";
+import { ILyric, parser, State, TrimOptios } from "../lrc-parser.js";
 
 export const enum ActionType {
     set_time,

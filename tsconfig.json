@@ -10,9 +10,11 @@
         "downlevelIteration": true,
         "strict": true,
         "moduleResolution": "node",
-        "sourceMap": true
+        "sourceMap": true,
+        "incremental": true,
+        "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo"
     },
     "include": ["src"],
-    "exclude": ["src/@worker", "src/lrc-parser"],
-    "references": [{ "path": "./src/@worker" }, { "path": "./src/lrc-parser" }]
+    "exclude": ["src/@worker", "src/lrc-parser.js"],
+    "references": [{ "path": "./src/@worker" }, { "path": "./src/lrc-parser.js" }]
 }
