@@ -1,7 +1,6 @@
 import { execSync } from "child_process";
-import { sync as glob } from "fast-glob";
 import { readdirSync, readFileSync } from "fs";
-import { parse, resolve } from "path";
+import { join, parse, resolve } from "path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { dependencies, description, name, version } from "../package.json";
@@ -31,31 +30,35 @@ interface IScriptProps {
     crossOrigin?: "anonymous";
 }
 
-const libUrl = (libName: string, prodPath: string, devPath?: string): IScriptProps => {
+const libScript = (libName: string, prodPath: string, devPath?: string): IScriptProps => {
+    const integrity = isProduction ? sri(resolve(__dirname, `${nodeModules}${libName}${prodPath}`)) : undefined;
+
     if (useCDN) {
         const libVersion = (() => {
             const v = (dependencies as any)[libName];
 
-            return v[0] === "~" || v[0] === "^" ? v.slice(1) : v;
+            return isNaN(v[0]) ? v.slice(1) : v;
         })();
 
         const src = `${jsdelivr}/npm/${libName}@${libVersion}${prodPath}`;
-        const integrity = sri(resolve(__dirname, `${nodeModules}${libName}${prodPath}`));
+
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
         return {
             src: `${nodeModules}${libName}${isProduction ? prodPath : devPath || prodPath}`,
+            integrity,
         };
     }
 };
 
-const appScriptUrl = (path: string): IScriptProps => {
+const appScript = (path: string): IScriptProps => {
+    const integrity = isProduction ? sri(resolve(__dirname, "../build", path)) : undefined;
+
     if (useCDN) {
-        const src = new URL(resolve("/npm", `${name}@${version}`, "build", path), `${jsdelivr}`).href;
-        const integrity = sri(resolve(__dirname, "../build", path));
+        const src = new URL(resolve("/npm", `${name}@${version}`, "build", path), jsdelivr).href;
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
-        return { src: path };
+        return { src: path, integrity };
     }
 };
 
@@ -73,10 +76,14 @@ const getLanguageMap = (): { [filename: string]: string } => {
     }, {});
 };
 
-const swRegister = () => {
-    const content = readFileSync(resolve(__dirname, "sw.register.js"), {
+const readFile = (path: string) => {
+    return readFileSync(resolve(__dirname, path), {
         encoding: "utf8",
-    }).replace(/\s*[\r\n]+\s*|\s*\/\/.*/g, " ");
+    });
+};
+
+const swRegister = () => {
+    const content = minify(readFile("sw.register.js"));
 
     const integrity = sriContent(content);
 
@@ -84,9 +91,7 @@ const swRegister = () => {
 };
 
 const swUnregister = () => {
-    let content = readFileSync(resolve(__dirname, "../src/utils/sw.unregister.ts"), {
-        encoding: "utf8",
-    });
+    let content = readFile("../src/utils/sw.unregister.ts");
 
     content = content.replace("export", "") + "unregister();";
 
@@ -95,62 +100,57 @@ const swUnregister = () => {
     return { content, integrity };
 };
 
-const csp = {
-    "default-src": ["'none'"],
-    "prefetch-src": ["'self'", jsdelivr],
-    "img-src": ["'self'", "data:", jsdelivr],
-    "style-src": ["'self'", jsdelivr],
-    "script-src": ["'self'", "blob:", jsdelivr],
-    "child-src": ["'self'"],
-    "worker-src": ["'self'"],
-    "media-src": ["'self'", "blob:", "*"],
-    "manifest-src": ["'self'"],
-    "connect-src": ["blob:", "https://api.github.com"],
+const minify = (content: string) => {
+    const line = content.split(/\n/);
+    return line
+        .map((l) => l.replace(/\/\/\s.*$/, ""))
+        .join("")
+        .replace(/\s+/g, " ");
 };
 
-const buildPath = resolve(__dirname, "../build");
-
 const Html = () => {
+    const libReact = libScript("react", "/umd/react.production.min.js", "/umd/react.development.js");
+    const libReactDOM = libScript("react-dom", "/umd/react-dom.production.min.js", "/umd/react-dom.development.js");
+    const appCDN = new URL(join("/npm", `${name}@${version}`, "./"), jsdelivr).href;
+
+    const SELF = "'self'";
+    const csp = {
+        "default-src": ["'none'"],
+        "prefetch-src": [appCDN],
+        "img-src": [SELF, "data:", appCDN],
+        "style-src": [appCDN],
+        "script-src": [appCDN],
+        "child-src": [SELF],
+        "worker-src": [SELF],
+        "media-src": [SELF, "blob:", "*"],
+        "manifest-src": [SELF],
+        "connect-src": ["blob:", "https://api.github.com"],
+    };
+
     const updateTime = execSync("git log -1 --format=%cI")
         .toString()
         .trim();
 
-    const exclued = ["languages"];
-
-    const preloadScripts = glob(buildPath + "/*/*.js")
-        .map((path) => {
-            return (path as string).replace(buildPath, ".");
-        })
-        .filter((path) => {
-            return !exclued.some((e) => path.includes(e));
-        })
-        .map((path) => {
-            return appScriptUrl(path);
-        });
-
-    if (preloadScripts.length === 0) {
-        preloadScripts.push({ src: "./components/app.js" });
-    }
-
-    const useLangjs = preloadScripts.find((script) => {
-        return script.src.includes("useLang.js");
-    });
-    if (useLangjs) {
-        useLangjs.integrity = undefined;
-    }
-
     const reg = isProduction ? swRegister() : swUnregister();
+
+    if (useCDN) {
+        csp["script-src"].push(libReact.src, libReactDOM.src);
+    } else {
+        csp["script-src"].unshift(SELF);
+        csp["style-src"].unshift(SELF);
+        csp["prefetch-src"].unshift(SELF);
+    }
 
     if (isProduction) {
         csp["script-src"].push(`'${reg.integrity}'`);
     } else {
-        csp["script-src"].push("'unsafe-inline'");
-        csp["connect-src"].push("*");
+        csp["script-src"].push(`'unsafe-inline'`);
+        csp["connect-src"].push(SELF);
     }
 
-    const akariOdangoLoading = appScriptUrl("./svg/akari-odango-loading.svg");
-    const akariHideWall = appScriptUrl("./svg/akari-hide-wall.svg");
-    const akariNotFound = appScriptUrl("./svg/akari-not-found.svg");
+    const akariOdangoLoading = appScript("./svg/akari-odango-loading.svg");
+    const akariHideWall = appScript("./svg/akari-hide-wall.svg");
+    const akariNotFound = appScript("./svg/akari-not-found.svg");
 
     return (
         <html>
@@ -211,21 +211,18 @@ const Html = () => {
                     rel="stylesheet"
                     {...(() => {
                         if (isProduction) {
-                            const { src: href, integrity, crossOrigin } = appScriptUrl("./index.css");
+                            const { src: href, integrity, crossOrigin } = appScript("./index.css");
                             return { href, integrity, crossOrigin };
                         }
 
                         return { href: "../src/index.css" };
                     })()}
                 />
-                <script {...libUrl("react", "/umd/react.production.min.js", "/umd/react.development.js")} />
-                <script {...libUrl("react-dom", "/umd/react-dom.production.min.js", "/umd/react-dom.development.js")} />
-                <script {...appScriptUrl("./polyfill.js")} type="module" async />
-                <script {...appScriptUrl("./languages/en-US.js")} type="module" />
-                {preloadScripts.map((script, index) => {
-                    return <script key={index} {...script} type="module" />;
-                })}
-                <script {...appScriptUrl("./nomodule.js")} noModule defer />
+
+                <script {...libReact} />
+                <script {...libReactDOM} />
+                <script {...appScript("./index.js")} type="module" />
+                <script {...appScript("./nomodule.js")} noModule defer />
                 <script
                     id="app-info"
                     type="application/json"

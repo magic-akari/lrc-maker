@@ -4,16 +4,6 @@ export {};
 const APP_NAME = "akari-lrc-maker";
 const VERSION = Version.value;
 
-const supportDynamicImport = (() => {
-    try {
-        // tslint:disable-next-line
-        new Function(`import('')`);
-        return true;
-    } catch (error) {
-        return false;
-    }
-})();
-
 self.addEventListener("install", () => {
     self.skipWaiting();
 });
@@ -55,23 +45,9 @@ self.addEventListener("fetch", (event) => {
                         if (response.status !== 200) {
                             return response;
                         }
-                        if (supportDynamicImport || !/useLang\.js$/.test(event.request.url)) {
-                            cache.put(event.request, response.clone());
-                            return response;
-                        }
 
-                        return response.text().then((text) => {
-                            const newText = text.replace("import(", "Import(");
-
-                            const newResponse = new Response(newText, {
-                                status: response.status,
-                                statusText: response.statusText,
-                                headers: response.headers,
-                            });
-                            cache.put(event.request, newResponse.clone());
-
-                            return newResponse;
-                        });
+                        cache.put(event.request, response.clone());
+                        return response;
                     }),
                 ),
         ),
