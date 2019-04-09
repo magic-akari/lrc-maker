@@ -108,6 +108,14 @@ const minify = (content: string) => {
         .replace(/\s+/g, " ");
 };
 
+const fallback = () => {
+    const content = minify(readFile("./fallback.js"));
+
+    const integrity = sriContent(content);
+
+    return { content, integrity };
+};
+
 const Html = () => {
     const libReact = libScript("react", "/umd/react.production.min.js", "/umd/react.development.js");
     const libReactDOM = libScript("react-dom", "/umd/react-dom.production.min.js", "/umd/react-dom.development.js");
@@ -147,6 +155,10 @@ const Html = () => {
         csp["script-src"].push(`'unsafe-inline'`);
         csp["connect-src"].push(SELF);
     }
+
+    const myFallback = fallback();
+
+    csp["script-src"].push(`'${myFallback.integrity}'`);
 
     const akariOdangoLoading = appScript("./svg/akari-odango-loading.svg");
     const akariHideWall = appScript("./svg/akari-hide-wall.svg");
@@ -221,8 +233,19 @@ const Html = () => {
 
                 <script {...libReact} />
                 <script {...libReactDOM} />
+                <script {...appScript("./polyfill.js")} defer />
                 <script {...appScript("./index.js")} type="module" />
                 <script {...appScript("./nomodule.js")} noModule defer />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: myFallback.content,
+                    }}
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: reg.content,
+                    }}
+                />
                 <script
                     id="app-info"
                     type="application/json"
@@ -246,11 +269,6 @@ const Html = () => {
                         crossOrigin={akariOdangoLoading.crossOrigin}
                     />
                 </div>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: reg.content,
-                    }}
-                />
             </body>
         </html>
     );

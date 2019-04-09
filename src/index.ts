@@ -1,6 +1,3 @@
-import { App } from "./components/app.js";
-import "./polyfill.js";
-
 const akariOdango = document.querySelector(".akari-odango-loading")!;
 const pageLoading = akariOdango.parentElement!;
 
@@ -12,7 +9,8 @@ akariOdango.addEventListener(
     { once: true },
 );
 
-akariOdango.classList.remove("start-loading");
-akariOdango.classList.add("stop-loading");
-
-ReactDOM.render(React.createElement(App), document.querySelector(".app-container"));
+import(/* webpackMode: "eager" */ "./components/app.js").then(({ App }) => {
+    akariOdango.classList.remove("start-loading");
+    akariOdango.classList.add("stop-loading");
+    ReactDOM.render(React.createElement(App), document.querySelector(".app-container"));
+});
