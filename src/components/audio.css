@@ -90,6 +90,7 @@ audio + .lrc-audio > .loadaudio-button > svg {
 input[type="range"] {
     --thumb-size: 16px;
 
+    color: var(--theme-color);
     height: var(--slider-height);
     background-color: transparent;
     appearance: none;
@@ -113,12 +114,19 @@ input[type="range"]::-moz-range-track {
     border: 0;
 }
 
+input[type="range"]::-ms-track {
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+    top: -6px;
+}
+
 input[type="range"]::-webkit-slider-thumb {
     height: var(--thumb-size);
     width: var(--thumb-size);
     border: 0;
     border-radius: 50%;
-    background: var(--theme-color);
+    background: currentColor;
     -webkit-appearance: none;
     margin-top: calc((var(--slider-height) - var(--thumb-size)) / 2);
     z-index: 10;
@@ -137,7 +145,7 @@ input[type="range"]::-moz-range-thumb {
     width: var(--thumb-size);
     border: 0;
     border-radius: 50%;
-    background: var(--theme-color);
+    background: currentColor;
     -moz-appearance: none;
     margin-top: calc((var(--slider-height) - var(--thumb-size)) / 2);
     z-index: 10;
@@ -149,6 +157,23 @@ input[type="range"]::-moz-range-thumb {
 
 input[type="range"]:hover::-moz-range-thumb {
     box-shadow: 0 0 4px var(--white);
+}
+
+input[type="range"]::-ms-fill-upper,
+input[type="range"]::-ms-fill-lower {
+    background: transparent;
+}
+
+input[type="range"]::-ms-thumb {
+    margin-top: -1px;
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    border-radius: 50%;
+    background: currentColor;
+}
+
+input[type="range"]::-ms-tooltip {
+    display: none;
 }
 
 .slider > progress {

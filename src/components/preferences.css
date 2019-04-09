@@ -119,6 +119,10 @@
     outline: 0;
 }
 
+::-ms-expand {
+    display: none;
+}
+
 .option-select {
     position: relative;
 }
