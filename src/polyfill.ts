@@ -166,6 +166,14 @@
 
     const scrollIntoView = Element.prototype.scrollIntoView;
 
+    const scroll =
+        Element.prototype.scroll ||
+        Element.prototype.scrollTo ||
+        function(this: Element, x: number, y: number) {
+            this.scrollLeft = x;
+            this.scrollTop = y;
+        };
+
     Element.prototype.scrollIntoView = function(arg) {
         if (arg === undefined || arg === true || arg === false) {
             return scrollIntoView.call(this, arg);
@@ -183,7 +191,7 @@
         atachEventListener();
 
         step({
-            method: (x: number, y: number) => se.scrollTo(x, y),
+            method: (x: number, y: number) => scroll.call(se, x, y),
             startTime: now(),
             startY,
             stopY,

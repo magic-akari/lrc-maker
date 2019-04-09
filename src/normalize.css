@@ -153,14 +153,3 @@ progress {
     -webkit-appearance: button; /* 1 */
     font: inherit; /* 2 */
 }
-
-/* Interactive
-   ========================================================================== */
-
-/*
- * Add the correct display in Chrome and Safari.
- */
-
-summary {
-    display: list-item;
-}

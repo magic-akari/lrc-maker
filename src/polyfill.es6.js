@@ -66,7 +66,7 @@ if (!Array.prototype.includes) {
             return reduce(
                 keys(O),
                 (e, k) => concat(e, typeof k === "string" && isEnumerable(O, k) ? [[k, O[k]]] : []),
-                [],
+                []
             );
         };
     }

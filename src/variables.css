@@ -19,7 +19,7 @@
 
     --transition-duration: 250ms;
     --animation-duration: 250ms;
-    --animation-durationx2: calc(var(--animation-duration) * 2);
+    --animation-durationx2: 500ms;
 
     --animation-out-back: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
@@ -35,5 +35,6 @@
     :root {
         --transition-duration: 10ms;
         --animation-duration: 100ms;
+        --animation-durationx2: 100ms;
     }
 }

@@ -3,7 +3,7 @@ const { resolve } = require("path");
 module.exports = {
     mode: "development",
     devtool: "source-map",
-    entry: ["./src/polyfill.es6", "./build/index.js"],
+    entry: ["./src/polyfill.es6.js", "./src/polyfill.details-summary.js", "./build/index.js"],
     output: {
         path: resolve(__dirname, "build"),
         filename: "nomodule.js",

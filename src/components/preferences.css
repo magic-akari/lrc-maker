@@ -47,6 +47,29 @@
     justify-content: center;
 }
 
+@supports (-ms-ime-align: auto) {
+    .toggle-switch {
+        --switch-offset: 8px;
+        --switch-width: 60px;
+    }
+
+    .toggle-switch-label::after {
+        box-shadow: 0 0 8px #11111180;
+    }
+
+    :hover > .toggle-switch-label::after {
+        box-shadow: 0 0 8px #11111180, 0 0 0 14px rgba(var(--theme-rgb), 0.2);
+    }
+
+    .toggle-switch-label {
+        --knob-x: -16px;
+    }
+
+    :checked + .toggle-switch-label {
+        --knob-x: 16px;
+    }
+}
+
 .color-picker {
     height: 30px;
     min-width: 30px;
@@ -241,13 +264,17 @@ input[type="number"] {
 
 .color-wall {
     width: 200px;
-    display: grid;
+    display: none;
     grid-template-columns: repeat(5, 1fr);
 
     grid-column-gap: 4px;
     grid-row-gap: 4px;
     justify-items: center;
     align-items: center;
+}
+
+[open] > .color-wall {
+    display: grid;
 }
 
 .user-color-input-text {
