@@ -2,14 +2,44 @@ import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { convertTimeToTag, stringify } from "../lrc-parser.js";
 import { AudioActionType, audioRef, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
-import { Eidtor } from "./editor.js";
-import { Gist } from "./gist.js";
-import { Home } from "./home.js";
-import { Preferences } from "./preferences.js";
-import { AkariNotFound } from "./svg.img.js";
-import { Synchronizer } from "./synchronizer.js";
 
-const { useContext, useEffect, useMemo, useRef, useState } = React;
+const { lazy, useContext, useEffect, useMemo, useRef, useState } = React;
+
+const LazyHome = lazy(() =>
+    import(/* webpackMode: "eager" */ "./home.js").then(({ Home }) => {
+        return { default: Home };
+    }),
+);
+
+const LazyEditor = lazy(() =>
+    import(/* webpackMode: "eager" */ "./editor.js").then(({ Eidtor }) => {
+        return { default: Eidtor };
+    }),
+);
+
+const LazySynchronizer = lazy(() =>
+    import(/* webpackMode: "eager" */ "./synchronizer.js").then(({ Synchronizer }) => {
+        return { default: Synchronizer };
+    }),
+);
+
+const LazyGist = lazy(() =>
+    import(/* webpackMode: "eager" */ "./gist.js").then(({ Gist }) => {
+        return { default: Gist };
+    }),
+);
+
+const LazyPreferences = lazy(() =>
+    import(/* webpackMode: "eager" */ "./preferences.js").then(({ Preferences }) => {
+        return { default: Preferences };
+    }),
+);
+
+const LazyAkariNotFound = lazy(() =>
+    import(/* webpackMode: "eager" */ "./svg.img.js").then(({ AkariNotFound }) => {
+        return { default: AkariNotFound };
+    }),
+);
 
 export const Content: React.FC = () => {
     const self = useRef(Symbol(Content.name));
@@ -141,29 +171,33 @@ export const Content: React.FC = () => {
     const content = (() => {
         switch (path) {
             case Path.editor: {
-                return <Eidtor lrcState={lrcState} lrcDispatch={lrcDispatch} />;
+                return <LazyEditor lrcState={lrcState} lrcDispatch={lrcDispatch} />;
             }
 
             case Path.synchronizer: {
                 if (lrcState.lyric.length === 0) {
-                    return <AkariNotFound />;
+                    return <LazyAkariNotFound />;
                 }
-                return <Synchronizer lrcState={lrcState} lrcDispatch={lrcDispatch} />;
+                return <LazySynchronizer lrcState={lrcState} lrcDispatch={lrcDispatch} />;
             }
 
             case Path.gist: {
-                return <Gist lrcDispatch={lrcDispatch} langName={prefState.lang} />;
+                return <LazyGist lrcDispatch={lrcDispatch} langName={prefState.lang} />;
             }
 
             case Path.preferences: {
-                return <Preferences />;
+                return <LazyPreferences />;
             }
         }
 
-        return <Home />;
+        return <LazyHome />;
     })();
 
-    return <main className={`app-main ${textColor}`}>{content}</main>;
+    return (
+        <main className={`app-main ${textColor}`}>
+            <React.Suspense fallback={false}>{content}</React.Suspense>
+        </main>
+    );
 };
 
 // https://www.w3.org/TR/WCAG20/#relativeluminancedef
