@@ -7,5 +7,5 @@
         "outDir": "./build.es6",
         "tsBuildInfoFile": "./build.es6/lrc-maker.tsbuildinfo"
     },
-    "references": [{ "path": "./src/lrc-parser.js/tsconfig.webpack.json" }]
+    "references": [{ "path": "./src/lrc-parser.js/tsconfig.es6.json" }]
 }

@@ -1,5 +1,5 @@
 {
-    "extends": "../../tsconfig.webpack.json",
+    "extends": "../../tsconfig.es6.json",
     "compilerOptions": {
         "composite": true,
         "rootDir": "../../node_modules/@lrc-maker/lrc-parser/src",

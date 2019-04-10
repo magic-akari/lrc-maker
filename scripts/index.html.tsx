@@ -108,8 +108,8 @@ const minify = (content: string) => {
         .replace(/\s+/g, " ");
 };
 
-const fallback = () => {
-    const content = minify(readFile("./fallback.js"));
+const fallback = (path: string) => {
+    const content = minify(readFile(path));
 
     const integrity = sriContent(content);
 
@@ -156,9 +156,9 @@ const Html = () => {
         csp["connect-src"].push(SELF);
     }
 
-    const myFallback = fallback();
+    const fallback2es6 = fallback("./fallback.es6.js");
 
-    csp["script-src"].push(`'${myFallback.integrity}'`);
+    csp["script-src"].push(`'${fallback2es6.integrity}'`);
 
     const akariOdangoLoading = appScript("./svg/akari-odango-loading.svg");
     const akariHideWall = appScript("./svg/akari-hide-wall.svg");
@@ -233,14 +233,18 @@ const Html = () => {
 
                 <script {...libReact} />
                 <script {...libReactDOM} />
-                <script {...appScript("./polyfill.js")} defer />
-                <script {...appScript("./index.js")} type="module" />
-                <script {...appScript("./nomodule.js")} noModule defer />
+                <script {...appScript("./polyfill/string.esnext.js")} defer />
+
                 <script
+                    type="module"
                     dangerouslySetInnerHTML={{
-                        __html: myFallback.content,
+                        __html: fallback2es6.content,
                     }}
                 />
+
+                <script {...appScript("./index.js")} type="module" />
+                <script {...appScript("./index.es6.js")} noModule defer />
+
                 <script
                     dangerouslySetInnerHTML={{
                         __html: reg.content,

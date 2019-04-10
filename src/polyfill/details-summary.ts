@@ -7,7 +7,7 @@ const polyfilldetails = () => {
     Object.defineProperties(prototype, {
         open: {
             get() {
-                if (this.tagName == "DETAILS") {
+                if (this.tagName === "DETAILS") {
                     return this.hasAttribute("open");
                 } else {
                     if (open && open.get) {
@@ -33,14 +33,14 @@ const polyfilldetails = () => {
     });
 
     document.addEventListener("click", (event) => {
-        /**@type {Element} */
         const target = event.target;
-        let element = target;
+        let element = target as Element;
         while (element.tagName !== "SUMMARY" && element !== document.body) {
-            element = element.parentElement;
+            element = element.parentElement as Element;
         }
-        if (element.tagName === "SUMMARY" && element.parentElement.tagName === "DETAILS") {
-            element.parentElement.open = !element.parentElement.open;
+        if (element.tagName === "SUMMARY" && element.parentElement!.tagName === "DETAILS") {
+            const parentElement = element.parentElement as HTMLDetailsElement;
+            parentElement.open = !parentElement.open;
         }
     });
 };
