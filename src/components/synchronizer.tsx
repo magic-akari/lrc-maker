@@ -281,7 +281,16 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
                 )
                 .join(Const.space);
 
-            return <LyricLine line={line} index={index} select={select} className={className} prefState={prefState} />;
+            return (
+                <LyricLine
+                    key={index}
+                    index={index}
+                    className={className}
+                    line={line}
+                    select={select}
+                    prefState={prefState}
+                />
+            );
         },
         [selectIndex, highlightIndex, prefState],
     );
