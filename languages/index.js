@@ -6,14 +6,14 @@
 let languages;
 
 if (__SSR__) {
-  languages = { "en-US": require("./en-US.json") };
+    languages = { "en-US": require("./en-US.json") };
 } else {
-  languages = (ctx =>
-    ctx.keys().reduce((result, key) => {
-      // key == "./en-US.json"
-      result[key.slice(2, -5)] = ctx(key);
-      return result;
-    }, {}))(require.context(".", false, /.json$/));
+    languages = ((ctx) =>
+        ctx.keys().reduce((result, key) => {
+            // key == "./en-US.json"
+            result[key.slice(2, -5)] = ctx(key);
+            return result;
+        }, {}))(require.context(".", false, /.json$/));
 }
 
 export default languages;

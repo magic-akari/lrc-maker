@@ -9,11 +9,11 @@ import { Footer } from "./Footer.jsx";
 import { Loading } from "./Loading.jsx";
 
 const App = ({ loading }) => (
-  <main className="app">
-    <Header />
-    {loading ? Loading() : <Content />}
-    <Footer />
-  </main>
+    <main className="app">
+        <Header />
+        {loading ? Loading() : <Content />}
+        <Footer />
+    </main>
 );
 
 export default App;

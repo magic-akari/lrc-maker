@@ -13,22 +13,22 @@ import { Preferences } from "./Preferences.jsx";
 
 @observer
 class Content extends Component {
-  match() {
-    switch (router.path) {
-      case "":
-      case Router.editor.path:
-        return <Editor />;
-      case Router.synchronizer.path:
-        return <Synchronizer />;
-      case Router.preferences.path:
-        return <Preferences />;
+    match() {
+        switch (router.path) {
+            case "":
+            case Router.editor.path:
+                return <Editor />;
+            case Router.synchronizer.path:
+                return <Synchronizer />;
+            case Router.preferences.path:
+                return <Preferences />;
+        }
+        return NotFound();
     }
-    return NotFound();
-  }
 
-  render() {
-    return <div className="app-content">{this.match()}</div>;
-  }
+    render() {
+        return <div className="app-content">{this.match()}</div>;
+    }
 }
 
 export { Content };

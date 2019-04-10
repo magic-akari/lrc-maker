@@ -10,14 +10,13 @@ import { preferences } from "../store/preferences.js";
 
 @observer
 class SpaceButton extends Component {
-  render() {
-    return preferences.screen_button &&
-      router.path === Router.synchronizer.path ? (
-      <button onClick={sync} className="space_button">
-        space
-      </button>
-    ) : null;
-  }
+    render() {
+        return preferences.screen_button && router.path === Router.synchronizer.path ? (
+            <button onClick={sync} className="space_button">
+                space
+            </button>
+        ) : null;
+    }
 }
 
 export { SpaceButton };

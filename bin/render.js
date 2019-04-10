@@ -13,19 +13,19 @@ global.Component = Component;
 global.__SSR__ = true;
 
 require("babel-register")({
-  plugins: [
-    [
-      "babel-plugin-webpack-alias",
-      { config: "../webpack.config.js" },
-      "transform-react-jsx",
-      {
-        pragma: "h"
-      }
-    ],
-    "transform-es2015-modules-commonjs",
-    "transform-decorators-legacy",
-    "transform-class-properties"
-  ]
+    plugins: [
+        [
+            "babel-plugin-webpack-alias",
+            { config: "../webpack.config.js" },
+            "transform-react-jsx",
+            {
+                pragma: "h"
+            }
+        ],
+        "transform-es2015-modules-commonjs",
+        "transform-decorators-legacy",
+        "transform-class-properties"
+    ]
 });
 
 const Root = require("../src/components/Root.jsx").default;

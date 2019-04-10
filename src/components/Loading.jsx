@@ -3,12 +3,13 @@
  */
 "use strict";
 const Loading = () => (
-  <div className="loading-page">
-    <p>
-      Loading<span className="dot">...</span>
-    </p>
-    <div className="loading" />
-  </div>
+    <div className="loading-page">
+        <p>
+            Loading
+            <span className="dot">...</span>
+        </p>
+        <div className="loading" />
+    </div>
 );
 
 export { Loading };

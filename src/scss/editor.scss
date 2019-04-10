@@ -1,129 +1,129 @@
 @import "var";
 
 .editor {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  width: 100%;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 input[type="file"] {
-  display: none;
+    display: none;
 }
 
 .editor-tool-bar,
 .lrc-info-section {
-  display: flex;
-  margin: 0.5rem;
+    display: flex;
+    margin: 0.5rem;
 }
 
 .editor-button {
-  cursor: default;
-  flex: 1 1 33%;
-  justify-content: center;
-  border: 0;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1.2rem;
-  border-radius: 0.2rem;
-  // font-size: 1.4rem;
+    cursor: default;
+    flex: 1 1 33%;
+    justify-content: center;
+    border: 0;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1.2rem;
+    border-radius: 0.2rem;
+    // font-size: 1.4rem;
 
-  svg {
-    margin-right: 0.5rem;
-    // @media screen and (max-width: 414px) {
-    //   margin: auto;
+    svg {
+        margin-right: 0.5rem;
+        // @media screen and (max-width: 414px) {
+        //   margin: auto;
+        // }
+    }
+
+    // @media screen and (max-width: 768px) {
+    //   font-size: 1rem;
+    //   padding: 0.25rem 0.6rem;
     // }
-  }
-
-  // @media screen and (max-width: 768px) {
-  //   font-size: 1rem;
-  //   padding: 0.25rem 0.6rem;
-  // }
 }
 
 .editor-button:hover,
 .editor-button:focus {
-  color: $second-color;
-  // background-color: $alpha-white;
-  // box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.51);
+    color: $second-color;
+    // background-color: $alpha-white;
+    // box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.51);
 }
 
 .editor-button:active {
-  transform: translateY(5px);
+    transform: translateY(5px);
 }
 
 .lrc-info-input-section {
-  flex: 1 1 33%;
-  display: flex;
-  align-items: center;
+    flex: 1 1 33%;
+    display: flex;
+    align-items: center;
 
-  margin: 0 0.5rem;
+    margin: 0 0.5rem;
 
-  &:first-child {
-    margin-left: -0.5rem;
-  }
-
-  &:last-child {
-    margin-right: -0.5rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    margin: 5px 0 !important;
-    // & > span {
-    //   width: 5rem;
-    // }
-  }
-
-  input {
-    padding: 4px;
-    flex: 1 1 auto;
-    margin-left: 0.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid $theme-color;
-    transition: box-shadow 250ms ease-in-out;
-
-    &:hover,
-    &:focus {
-      box-shadow: 0 0 10px $theme-color;
+    &:first-child {
+        margin-left: -0.5rem;
     }
-  }
+
+    &:last-child {
+        margin-right: -0.5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        margin: 5px 0 !important;
+        // & > span {
+        //   width: 5rem;
+        // }
+    }
+
+    input {
+        padding: 4px;
+        flex: 1 1 auto;
+        margin-left: 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid $theme-color;
+        transition: box-shadow 250ms ease-in-out;
+
+        &:hover,
+        &:focus {
+            box-shadow: 0 0 10px $theme-color;
+        }
+    }
 }
 
 @media screen and (max-width: 768px) {
-  .lrc-info-section {
-    display: none;
-  }
+    .lrc-info-section {
+        display: none;
+    }
 }
 
 .lrc-textarea-section {
-  flex: 1 1 auto;
-  border-radius: 0.25rem;
-  border: 1px solid $theme-color;
-  background-color: white;
-  transition: box-shadow 250ms ease-in-out;
-  display: flex;
+    flex: 1 1 auto;
+    border-radius: 0.25rem;
+    border: 1px solid $theme-color;
+    background-color: white;
+    transition: box-shadow 250ms ease-in-out;
+    display: flex;
 
-  &:hover,
-  &:focus {
-    box-shadow: 0 0 10px $theme-color;
-  }
+    &:hover,
+    &:focus {
+        box-shadow: 0 0 10px $theme-color;
+    }
 }
 
 .app-textarea {
-  font-family: $font-family;
-  margin: 1px;
-  padding: 0.5rem;
-  resize: none;
-  font-size: 1.2rem;
-  width: 100%;
-  border: 0;
+    font-family: $font-family;
+    margin: 1px;
+    padding: 0.5rem;
+    resize: none;
+    font-size: 1.2rem;
+    width: 100%;
+    border: 0;
 }
 
 ::-moz-selection {
-  background: #ed8e9366;
+    background: #ed8e9366;
 }
 
 ::selection {
-  background: #ed8e9366;
+    background: #ed8e9366;
 }

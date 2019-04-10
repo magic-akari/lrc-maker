@@ -17,11 +17,11 @@ window.h = h;
 configure({ enforceActions: true });
 autorun(() => (document.title = preferences.i18n["app"]["fullname"]));
 autorun(() => {
-  if (preferences.dark_mode) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
+    if (preferences.dark_mode) {
+        document.documentElement.classList.add("dark");
+    } else {
+        document.documentElement.classList.remove("dark");
+    }
 });
 
 smoothscroll();
@@ -30,85 +30,82 @@ smoothscroll();
  * polyfill for padStart
  */
 if (!String.prototype.padStart) {
-  String.prototype.padStart = function padStart(targetLength, padString) {
-    targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
-    padString = String(padString || " ");
-    if (this.length > targetLength) {
-      return String(this);
-    } else {
-      targetLength = targetLength - this.length;
-      if (targetLength > padString.length) {
-        padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
-      }
-      return padString.slice(0, targetLength) + String(this);
-    }
-  };
+    String.prototype.padStart = function padStart(targetLength, padString) {
+        targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
+        padString = String(padString || " ");
+        if (this.length > targetLength) {
+            return String(this);
+        } else {
+            targetLength = targetLength - this.length;
+            if (targetLength > padString.length) {
+                padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
+            }
+            return padString.slice(0, targetLength) + String(this);
+        }
+    };
 }
 
 render(App({ loading: false }), document.body, document.body.firstElementChild);
 
 document.body.addEventListener(
-  "dragover",
-  e => {
-    e.stopPropagation();
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "copy";
-    return false;
-  },
-  false
+    "dragover",
+    (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "copy";
+        return false;
+    },
+    false
 );
 
 document.body.addEventListener(
-  "drop",
-  action(e => {
-    e.stopPropagation();
-    e.preventDefault();
-    let file = e.dataTransfer.files[0];
-    if (file) {
-      if (/^audio\//.test(file.type)) {
-        appState.src = file;
-      } else if (
-        /^text\//.test(file.type) ||
-        /(?:\.lrc|\.txt)$/i.test(file.name)
-      ) {
-        let fileReader = new FileReader();
-        fileReader.onload = fileReaderEvent => {
-          lrc.value = fileReaderEvent.target.result;
-          location.hash = Router.editor.path;
-        };
-        fileReader.readAsText(file);
-      }
-    }
-    return false;
-  }),
-  false
+    "drop",
+    action((e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        let file = e.dataTransfer.files[0];
+        if (file) {
+            if (/^audio\//.test(file.type)) {
+                appState.src = file;
+            } else if (/^text\//.test(file.type) || /(?:\.lrc|\.txt)$/i.test(file.name)) {
+                let fileReader = new FileReader();
+                fileReader.onload = (fileReaderEvent) => {
+                    lrc.value = fileReaderEvent.target.result;
+                    location.hash = Router.editor.path;
+                };
+                fileReader.readAsText(file);
+            }
+        }
+        return false;
+    }),
+    false
 );
 
 if (window.opener) {
-  window.addEventListener(
-    "message",
-    event => {
-      const src = event.data.audioSrc;
-      if (src && typeof src === "string") {
-        appState.src = src;
-      }
-    },
-    { once: true }
-  );
-  window.opener.postMessage(true, "*");
+    window.addEventListener(
+        "message",
+        (event) => {
+            const src = event.data.audioSrc;
+            if (src && typeof src === "string") {
+                appState.src = src;
+            }
+        },
+        { once: true }
+    );
+    window.opener.postMessage(true, "*");
 }
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js").then(
-    registration => {
-      // Registration was successful
-      registration.update();
-      window.serviceWorkerRegistration = registration;
-      console.log("ServiceWorker Registed (｡･ω･｡)ﾉ: ", registration.scope);
-    },
-    err => {
-      // registration failed :(
-      console.log("ServiceWorker registration failed ಥ_ಥ: ", err);
-    }
-  );
+    navigator.serviceWorker.register("./sw.js").then(
+        (registration) => {
+            // Registration was successful
+            registration.update();
+            window.serviceWorkerRegistration = registration;
+            console.log("ServiceWorker Registed (｡･ω･｡)ﾉ: ", registration.scope);
+        },
+        (err) => {
+            // registration failed :(
+            console.log("ServiceWorker registration failed ಥ_ಥ: ", err);
+        }
+    );
 }

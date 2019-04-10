@@ -1,75 +1,75 @@
 @import "var";
 
 .synchronizer {
-  width: 100%;
-  font-family: $font-family;
-  margin-bottom: 48px;
+    width: 100%;
+    font-family: $font-family;
+    margin-bottom: 48px;
 }
 
 .lyric-list {
-  margin: 0;
-  padding: 0;
-  transition: transform 500ms ease, padding 500ms ease;
+    margin: 0;
+    padding: 0;
+    transition: transform 500ms ease, padding 500ms ease;
 }
 
 .lyric-line {
-  position: relative;
-  list-style: none;
-  font-size: 1.2rem;
-  border: solid 1px transparent;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
-    padding: 0;
-  }
-
-  .lyric-text::after {
-    content: "";
     position: relative;
-    display: inline-block;
-  }
+    list-style: none;
+    font-size: 1.2rem;
+    border: solid 1px transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
 
-  &:nth-child(2n + 1) {
-    background-color: rgba(232, 232, 232, 0.5);
-  }
+    @media screen and (max-width: 768px) {
+        font-size: 1rem;
+        padding: 0;
+    }
 
-  &.select {
-    border-bottom-color: $second-color;
-  }
-  &.highlight {
-    color: $second-color;
-  }
+    .lyric-text::after {
+        content: "";
+        position: relative;
+        display: inline-block;
+    }
+
+    &:nth-child(2n + 1) {
+        background-color: rgba(232, 232, 232, 0.5);
+    }
+
+    &.select {
+        border-bottom-color: $second-color;
+    }
+    &.highlight {
+        color: $second-color;
+    }
 }
 
 .lyric {
-  pointer-events: none;
-  margin: 0.5rem 0;
-  word-break: break-all;
-  padding: 2px;
-  padding-left: 8rem;
-  @media screen and (max-width: 768px) {
-    padding-left: 6rem;
-  }
+    pointer-events: none;
+    margin: 0.5rem 0;
+    word-break: break-all;
+    padding: 2px;
+    padding-left: 8rem;
+    @media screen and (max-width: 768px) {
+        padding-left: 6rem;
+    }
 }
 
 .error .lyric-time {
-  color: red;
+    color: red;
 }
 
 .current-time-tag {
-  margin: 0.5rem 0;
-  position: absolute;
-  top: 0;
-  padding: 2px;
-  align-self: baseline;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: none;
+    margin: 0.5rem 0;
+    position: absolute;
+    top: 0;
+    padding: 2px;
+    align-self: baseline;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
 }
 
 // .current-time-tag::before {
