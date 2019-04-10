@@ -9,6 +9,7 @@ window.addEventListener("error", (ev) => {
         const script = document.createElement("script");
         script.src = nomodule.src;
         script.integrity = nomodule.integrity;
+        script.crossOrigin = nomodule.crossOrigin;
         document.head.appendChild(script);
     }
 });
