@@ -45,13 +45,13 @@ class Preferences extends Component {
                 </section>
                 <section>
                     <div className="section-group">
-                        <div>{pref.i18n["preferences"]["build-time"]}</div>
+                        <div>{pref.i18n["preferences"]["update-time"]}</div>
                         <div>{BUILD_TIME}</div>
                     </div>
                 </section>
                 <section>
                     <div className="section-group">
-                        <div>{pref.i18n["preferences"]["build-revision"]}</div>
+                        <div>{pref.i18n["preferences"]["hash"]}</div>
                         <div>{BUILD_REVISION}</div>
                     </div>
                 </section>
@@ -140,3 +140,4 @@ class Preferences extends Component {
     }
 }
 export { Preferences };
+
