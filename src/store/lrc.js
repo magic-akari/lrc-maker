@@ -2,18 +2,15 @@
  * Created by 阿卡琳 on 18/06/2017.
  */
 "use strict";
-import { observable, computed, action } from "mobx";
-import { preferences } from "./preferences.js";
+import { action, computed, observable } from "mobx";
 import { appState } from "./appState.js";
+import { preferences } from "./preferences.js";
 
 class LRC {
-    @observable
-    info = new Map();
-    @observable
-    lyric = [];
+    @observable info = new Map();
+    @observable lyric = [];
+    @observable _selectedIndex = 0;
 
-    @observable
-    _selectedIndex = 0;
     @computed
     get selectedIndex() {
         return this._selectedIndex;

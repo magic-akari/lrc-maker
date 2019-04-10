@@ -35,24 +35,20 @@ const myAddEventListener = (node, eventType, func) => {
 
 @observer
 class Audio extends Component {
-    @observable
-    duration = 0;
+    @observable duration = 0;
+
     /**
      * 内部使用的真实值
      * @type {number}
      * @private
      */
-    @observable
-    _currentTime = 0;
-    @observable
-    paused = true;
-    @observable
-    volume = 1;
-    @observable
-    _playbackRate = 1;
-    @observable
-    muted = false;
-    handler;
+    @observable _currentTime = 0;
+    @observable paused = true;
+    @observable volume = 1;
+    @observable _playbackRate = 1;
+    @observable muted = false;
+
+    handler = 0;
 
     componentDidMount() {
         this.audio.volume = parseFloat(sessionStorage.getItem("lrc-maker-volume")) || 1;

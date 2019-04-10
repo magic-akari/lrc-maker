@@ -2,18 +2,18 @@
  * Created by 阿卡琳 on 16/06/2017.
  */
 "use strict";
-import { observable, action } from "mobx";
+import { action, observable } from "mobx";
 import { preferences as pref } from "./store/preferences";
 
 class Router {
+    @observable path = "";
+
     constructor() {
         if (typeof window !== "undefined") {
             this.path = location.hash;
             addEventListener("hashchange", action(() => (this.path = location.hash)));
         }
     }
-    @observable
-    path = "";
 
     static get editor() {
         return {

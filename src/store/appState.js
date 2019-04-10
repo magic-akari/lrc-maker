@@ -2,16 +2,13 @@
  * Created by 阿卡琳 on 18/06/2017.
  */
 "use strict";
-import { observable, computed, action } from "mobx";
+import { action, computed, observable } from "mobx";
 import { preferences } from "./preferences.js";
 
 const appState = new class AppState {
-    @observable
-    audioSrc;
-    @observable
-    _currentTime = 0;
-    @observable
-    lock = false;
+    @observable audioSrc = false;
+    @observable _currentTime = 0;
+    @observable lock = false;
 
     set src(value) {
         if (typeof value === "string") {

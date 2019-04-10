@@ -6,20 +6,13 @@ import { action, computed, observable, toJS } from "mobx";
 import { languages } from "../languages/index.js";
 
 class Preferences {
-    @observable
-    trim = true;
-    @observable
-    fixed = 3;
-    @observable
-    pretty_tag = true;
-    @observable
-    built_in_audio = false;
-    @observable
-    screen_button = false;
-    @observable
-    dark_mode = false;
-    @observable
-    lang = "en-US";
+    @observable trim = true;
+    @observable fixed = 3;
+    @observable pretty_tag = true;
+    @observable built_in_audio = false;
+    @observable screen_button = false;
+    @observable dark_mode = false;
+    @observable lang = "en-US";
 
     @computed
     get i18n() {

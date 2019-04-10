@@ -10,9 +10,9 @@ import { DownloadSvg } from "./SVG.jsx";
 
 @observer
 class DownLoadButton extends Component {
-    @observable
-    href;
-    lrcString;
+    @observable href = false;
+
+    lrcString = "";
 
     @action.bound
     handleClick(e) {
