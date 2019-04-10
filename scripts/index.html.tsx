@@ -233,7 +233,8 @@ const Html = () => {
 
                 <script {...libReact} />
                 <script {...libReactDOM} />
-                <script {...appScript("./polyfill/string.esnext.js")} defer />
+
+                <script {...appScript("./polyfill/string.esnext.js")} defer={true} />
 
                 <script
                     type="module"
@@ -243,13 +244,15 @@ const Html = () => {
                 />
 
                 <script {...appScript("./index.js")} type="module" />
-                <script {...appScript("./index.es6.js")} noModule defer />
+                <script {...appScript("./index.es6.js")} noModule={true} defer={true} />
 
                 <script
+                    defer={true}
                     dangerouslySetInnerHTML={{
                         __html: reg.content,
                     }}
                 />
+
                 <script
                     id="app-info"
                     type="application/json"
