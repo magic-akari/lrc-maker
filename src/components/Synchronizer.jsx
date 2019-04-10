@@ -2,11 +2,11 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
+import { action, autorun, computed } from "mobx";
 import { Component } from "preact";
-import { observable, action, computed, autorun } from "mobx";
 import { observer } from "preact-mobx-observer";
-import { lrc, LRC } from "../store/lrc.js";
 import { appState } from "../store/appState.js";
+import { lrc, LRC } from "../store/lrc.js";
 import { preferences } from "../store/preferences.js";
 import { DownLoadButton } from "./DownLoadButton.jsx";
 import { LockNodeButton } from "./LockNodeButton.jsx";

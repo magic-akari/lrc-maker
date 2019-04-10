@@ -7,7 +7,7 @@ import { observer } from "preact-mobx-observer";
 import { router, Router } from "../router.js";
 import { lrc } from "../store/lrc.js";
 import { preferences } from "../store/preferences.js";
-import { SettingsSvg, EditorSvg, SynchronizerSvg } from "./SVG.jsx";
+import { EditorSvg, SettingsSvg, SynchronizerSvg } from "./SVG.jsx";
 
 @observer
 class Header extends Component {

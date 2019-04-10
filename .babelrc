@@ -1,12 +1,7 @@
 {
-  "plugins": [
-    [
-      "transform-react-jsx",
-      {
-        "pragma": "h"
-      }
-    ],
-    "transform-decorators-legacy",
-    "transform-class-properties"
-  ]
+    "plugins": [
+        ["@babel/plugin-transform-react-jsx", { "pragma": "h" }],
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-proposal-class-properties", { "loose": true }]
+    ]
 }

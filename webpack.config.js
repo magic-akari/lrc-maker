@@ -3,31 +3,29 @@ const path = require("path");
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { GenerateSW } = require("workbox-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const pathToNodeModules = path.resolve(__dirname, "node_modules");
 const pathToNormalizeCss = path.resolve(pathToNodeModules, "normalize.css/normalize.css");
+const execSync = require("child_process").execSync;
 
 const VERSION = JSON.stringify(process.env.npm_package_version);
-const BUILD_TIME = JSON.stringify(new Date().toUTCString().replace(/.*,\s*(.*?)\s*GMT/, "$1"));
+const UPDATE_TIME = JSON.stringify(
+    execSync("git log -1 --format=%cI")
+        .toString()
+        .trim()
+);
 const BUILD_REVISION = JSON.stringify(
-    require("child_process")
-        .execSync("git rev-parse --short HEAD")
+    execSync("git rev-parse --short HEAD")
         .toString()
         .trim()
 );
 
 const base = {
-    resolve: {
-        mainFields: ["jsnext:main", "module", "main"],
-        alias: {
-            languages: path.resolve(__dirname, "languages")
-        }
-    },
     plugins: [
         new webpack.DefinePlugin({
             __SSR__: false,
             VERSION,
-            BUILD_TIME,
+            BUILD_TIME: UPDATE_TIME,
             BUILD_REVISION
         })
     ],
@@ -35,11 +33,14 @@ const base = {
 };
 
 const esnext = Object.assign({}, base, {
+    resolve: {
+        mainFields: ["jsnext:main", "module", "main"]
+    },
     entry: {
         app: ["./src/index.js", pathToNormalizeCss, "./src/scss/app.scss"]
     },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "build"),
         filename: "[name].js"
     },
     module: {
@@ -51,32 +52,32 @@ const esnext = Object.assign({}, base, {
             },
             {
                 test: /\.s?css$/,
-                use: ExtractTextPlugin.extract({
-                    use: [
-                        {
-                            loader: "css-loader",
-                            options: {
-                                minimize: true,
-                                sourceMap: true,
-                                sourceMapContents: true
-                            }
-                        },
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                sourceMap: true,
-                                sourceMapContents: true
-                            }
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true
                         }
-                    ]
-                })
+                    },
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            sourceMap: true,
+                            sourceMapContents: true,
+                            implementation: require("sass")
+                        }
+                    }
+                ]
             }
         ]
     },
     plugins: [
         ...base.plugins,
         new CopyWebpackPlugin(["resources"]),
-        new ExtractTextPlugin("app.css"),
+        new MiniCssExtractPlugin({
+            filename: "app.css"
+        }),
         new GenerateSW({
             swDest: "sw.js",
             importWorkboxFrom: "cdn",
@@ -97,11 +98,17 @@ const esnext = Object.assign({}, base, {
 });
 
 const es5 = Object.assign({}, base, {
+    resolve: {
+        mainFields: ["main"],
+        alias: {
+            "preact-mobx-observer": path.resolve(pathToNodeModules, "preact-mobx-observer/dist/observer.es5.min.js")
+        }
+    },
     entry: {
-        app: ["babel-polyfill", "./src/polyfill.js", "./src/index.js"]
+        app: ["./src/polyfill.js", "./src/index.js"]
     },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "build"),
         filename: "[name].es5.js"
     },
     module: {

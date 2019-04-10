@@ -16,4 +16,4 @@ if (__SSR__) {
         }, {}))(require.context(".", false, /.json$/));
 }
 
-export default languages;
+export { languages };

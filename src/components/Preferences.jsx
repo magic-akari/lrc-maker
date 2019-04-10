@@ -4,8 +4,8 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
+import { languages } from "../languages/index.js";
 import { preferences as pref } from "../store/preferences.js";
-import languages from "languages/index.js";
 
 @observer
 class Preferences extends Component {

@@ -3,17 +3,15 @@
  */
 "use strict";
 
-import { Header } from "./Header.jsx";
 import { Content } from "./Content.jsx";
 import { Footer } from "./Footer.jsx";
+import { Header } from "./Header.jsx";
 import { Loading } from "./Loading.jsx";
 
-const App = ({ loading }) => (
+export const App = ({ loading }) => (
     <main className="app">
         <Header />
         {loading ? Loading() : <Content />}
         <Footer />
     </main>
 );
-
-export default App;

@@ -1,19 +1,12 @@
 language: node_js
 node_js: node
 script: npm run build
-before_deploy: touch ./dist/.nojekyll
+before_deploy: touch ./build/.nojekyll
 deploy:
 - provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
-  local-dir: dist
+  local-dir: build
+  repo: lrc-maker/3.x
   on:
-    branch: master
-- provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  local-dir: dist
-  repo: lrc-maker/lrc-maker.github.io
-  target-branch: master
-  on:
-    branch: master
+    branch: 3.x

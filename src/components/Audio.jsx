@@ -2,10 +2,10 @@
  * Created by 阿卡琳 on 21/06/2017.
  */
 "use strict";
+import { action, computed, observable } from "mobx";
 import { Component } from "preact";
-import { observable, action, computed, autorun } from "mobx";
 import { observer } from "preact-mobx-observer";
-import { PlaySvg, PauseSvg, VolumeSvg, MutedSvg, Replay5sSvg, Forward5sSvg } from "./SVG.jsx";
+import { Forward5sSvg, MutedSvg, PauseSvg, PlaySvg, Replay5sSvg, VolumeSvg } from "./SVG.jsx";
 
 const Slider = ({ min, max, step, value, onInput, className }) => {
     const total = max - min || 1;

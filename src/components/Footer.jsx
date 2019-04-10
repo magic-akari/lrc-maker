@@ -5,10 +5,10 @@
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { appState } from "../store/appState.js";
-import { preferences } from "../store/preferences.js";
-import { SpaceButton } from "./SpaceButton.jsx";
 import { lrc } from "../store/lrc.js";
+import { preferences } from "../store/preferences.js";
 import { Audio } from "./Audio.jsx";
+import { SpaceButton } from "./SpaceButton.jsx";
 
 @observer
 class Footer extends Component {

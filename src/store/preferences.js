@@ -2,8 +2,8 @@
  * Created by 阿卡琳 on 18/06/2017.
  */
 "use strict";
-import { observable, action, toJS, computed } from "mobx";
-import languages from "languages/index.js";
+import { action, computed, observable, toJS } from "mobx";
+import { languages } from "../languages/index.js";
 
 class Preferences {
     @observable

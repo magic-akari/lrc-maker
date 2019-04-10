@@ -2,9 +2,9 @@
  * Created by 阿卡琳 on 14/06/2017.
  */
 "use strict";
-import App from "./App.jsx";
+import { App } from "./App.jsx";
 
-const Root = () => (
+export const Root = () => (
     <html lang="en">
         <head>
             <meta charset="utf-8" />
@@ -43,5 +43,3 @@ const Root = () => (
         </body>
     </html>
 );
-
-export default Root;

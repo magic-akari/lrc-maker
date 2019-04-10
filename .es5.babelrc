@@ -1,22 +1,19 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": ["last 2 versions", "IE 11"]
-        }
-      }
-    ]
-  ],
-  "plugins": [
-    [
-      "transform-react-jsx",
-      {
-        "pragma": "h"
-      }
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "browsers": ["last 2 versions", "IE 11"]
+                },
+                "useBuiltIns": "usage",
+                "corejs": 3
+            }
+        ]
     ],
-    "transform-decorators-legacy",
-    "transform-class-properties"
-  ]
+    "plugins": [
+        ["@babel/plugin-transform-react-jsx", { "pragma": "h" }],
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-proposal-class-properties", { "loose": true }]
+    ]
 }

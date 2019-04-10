@@ -21,8 +21,8 @@
     "preferences": {
         "language": "Language",
         "version": "App Version",
-        "build-time": "App Build Time",
-        "build-revision": "Build Revision",
+        "update-time": "App Update Time",
+        "hash": "Git Hash",
         "github-repo": "View me on Github",
         "help": "Tips & About",
         "time-tag-decimals": "Decimals of Time Tag",

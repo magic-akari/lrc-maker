@@ -4,8 +4,8 @@
 "use strict";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
-import { lrc } from "../store/lrc.js";
 import { appState } from "../store/appState.js";
+import { lrc } from "../store/lrc.js";
 import { preferences as pref } from "../store/preferences.js";
 import { DownLoadButton } from "./DownLoadButton.jsx";
 import { LoadAudioSvg, LoadTextSvg, SelectAllSvg } from "./SVG.jsx";

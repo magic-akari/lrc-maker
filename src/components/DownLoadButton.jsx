@@ -2,10 +2,10 @@
  * Created by 阿卡琳 on 27/06/2017.
  */
 "use strict";
+import { action, observable } from "mobx";
 import { Component } from "preact";
-import { observable, action } from "mobx";
-import { lrc } from "../store/lrc.js";
 import { observer } from "preact-mobx-observer";
+import { lrc } from "../store/lrc.js";
 import { DownloadSvg } from "./SVG.jsx";
 
 @observer

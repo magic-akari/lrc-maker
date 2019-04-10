@@ -3,14 +3,16 @@
  */
 "use strict";
 
-import { render, h } from "preact";
 import { action, autorun, configure } from "mobx";
-import { polyfill as smoothscroll } from "seamless-scroll-polyfill";
-import { appState } from "./store/appState.js";
+import { h, render } from "preact";
+import { seamless } from "seamless-scroll-polyfill";
+import { App } from "./components/App.jsx";
 import { Router } from "./router.js";
+import { appState } from "./store/appState.js";
 import { lrc } from "./store/lrc.js";
 import { preferences } from "./store/preferences.js";
-import App from "./components/App.jsx";
+
+seamless();
 
 window.h = h;
 
@@ -23,8 +25,6 @@ autorun(() => {
         document.documentElement.classList.remove("dark");
     }
 });
-
-smoothscroll();
 
 /**
  * polyfill for padStart
