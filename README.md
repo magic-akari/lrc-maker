@@ -43,12 +43,17 @@ The most modern browsers are supported. The current version uses a lot of modern
 
 | browser | version |
 | :------ | :------ |
+| EDGE    | >= 16   |
 | Firefox | >= 60   |
 | Chrome  | >= 61   |
 | Safari  | >= 11   |
 | ios_saf | >= 11   |
 
+<del>
 The current version of Edge should be supported theoretically, but there are unexplained reasons for the code to not run after loading. This problem is left to be observed after the Edge with the V8 kernel is released.
+</del>
+
+Limited support for EDGE browsers.
 
 The browsers which do not have ES Module support will load the fallback script. Note: The fallback is not tested. The old browsers may encounter CSS layout confusion.
 
@@ -117,12 +122,17 @@ If you like give us a star :star: Share this project to help more people.
 
 | 浏览器  | 版本  |
 | :------ | :---- |
+| EDGE    | >= 16 |
 | Firefox | >= 60 |
 | Chrome  | >= 61 |
 | Safari  | >= 11 |
 | ios_saf | >= 11 |
 
+<del>
 当前版本的 Edge 理论上应该支持，但是目前有不明原因导致代码加载后没有运行，这个问题留到 V8 内核的 Edge 发布后再做观察。
+</del>
+
+对 EDGE 浏览器低限度支持。
 
 对于没有 ES Module 支持的浏览器，仍然做了回退处理以便正常使用。注意：此部分没有进行测试，旧浏览器仍然可能遇到 css 的布局错乱问题。
 
