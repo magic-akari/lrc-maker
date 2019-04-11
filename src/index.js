@@ -80,32 +80,3 @@ document.body.addEventListener(
     }),
     false
 );
-
-if (window.opener) {
-    window.addEventListener(
-        "message",
-        (event) => {
-            const src = event.data.audioSrc;
-            if (src && typeof src === "string") {
-                appState.src = src;
-            }
-        },
-        { once: true }
-    );
-    window.opener.postMessage(true, "*");
-}
-
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").then(
-        (registration) => {
-            // Registration was successful
-            registration.update();
-            window.serviceWorkerRegistration = registration;
-            console.log("ServiceWorker Registed (｡･ω･｡)ﾉ: ", registration.scope);
-        },
-        (err) => {
-            // registration failed :(
-            console.log("ServiceWorker registration failed ಥ_ಥ: ", err);
-        }
-    );
-}

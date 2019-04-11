@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const { GenerateSW } = require("workbox-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const pathToNodeModules = path.resolve(__dirname, "node_modules");
 const pathToNormalizeCss = path.resolve(pathToNodeModules, "normalize.css/normalize.css");
@@ -77,22 +76,6 @@ const esnext = Object.assign({}, base, {
         new CopyWebpackPlugin(["resources"]),
         new MiniCssExtractPlugin({
             filename: "app.css"
-        }),
-        new GenerateSW({
-            swDest: "sw.js",
-            importWorkboxFrom: "cdn",
-            skipWaiting: true,
-            clientsClaim: true,
-            exclude: [/legacy/, /\.map$/, "site.webmanifest"],
-            runtimeCaching: [
-                {
-                    urlPattern: /\/.*/,
-                    handler: "staleWhileRevalidate",
-                    options: {
-                        cacheName: "akari-lrc-maker"
-                    }
-                }
-            ]
         })
     ]
 });

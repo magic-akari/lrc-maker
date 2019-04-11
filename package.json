@@ -48,7 +48,6 @@
         "sass": "^1.18.0",
         "sass-loader": "^7.1.0",
         "webpack": "^4.29.6",
-        "webpack-cli": "^3.3.0",
-        "workbox-webpack-plugin": "^4.2.0"
+        "webpack-cli": "^3.3.0"
     }
 }
