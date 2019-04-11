@@ -127,7 +127,9 @@ const Html = () => {
         "prefetch-src": [appCDN],
         "img-src": [SELF, "data:", appCDN],
         "style-src": [appCDN],
-        "script-src": [appCDN],
+        // 'unsafe-inline' will be ignored if there is a hsah in script-src
+        //  https://www.w3.org/TR/CSP2/#directive-script-src
+        "script-src": ["'unsafe-inline'", appCDN],
         "child-src": [SELF],
         "worker-src": [SELF],
         "media-src": [SELF, "blob:", "*"],
@@ -152,13 +154,13 @@ const Html = () => {
     if (isProduction) {
         csp["script-src"].push(`'${reg.integrity}'`);
     } else {
-        csp["script-src"].push(`'unsafe-inline'`);
         csp["connect-src"].push(SELF);
     }
 
     const fallback2es6 = fallback("./fallback.es6.js");
+    const fallback2es5 = fallback("./fallback.es5.js");
 
-    csp["script-src"].push(`'${fallback2es6.integrity}'`);
+    csp["script-src"].push(`'${fallback2es6.integrity}'`, `'${fallback2es5.integrity}'`);
 
     const akariOdangoLoading = appScript("./svg/akari-odango-loading.svg");
     const akariHideWall = appScript("./svg/akari-hide-wall.svg");
@@ -234,17 +236,25 @@ const Html = () => {
                 <script {...libReact} />
                 <script {...libReactDOM} />
 
-                <script {...appScript("./polyfill/string.esnext.js")} defer={true} />
+                <script
+                    noModule={true}
+                    dangerouslySetInnerHTML={{
+                        __html: fallback2es5.content,
+                    }}
+                />
 
                 <script
                     type="module"
+                    defer={true}
                     dangerouslySetInnerHTML={{
                         __html: fallback2es6.content,
                     }}
                 />
 
+                <script {...appScript("./polyfill/string.esnext.js")} defer={true} />
+
                 <script {...appScript("./index.js")} type="module" />
-                <script {...appScript("./index.es6.js")} noModule={true} defer={true} />
+                <script {...appScript("./index.es6.js")} className="index-es6" noModule={true} defer={true} />
 
                 <script
                     defer={true}

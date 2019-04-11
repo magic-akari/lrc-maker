@@ -5,11 +5,11 @@ window.addEventListener("error", (ev) => {
     ) {
         ev.preventDefault();
         console.log("dynamic module import is not implemented. fallback...");
-        const nomodule = document.querySelector("script[nomodule]");
+        const es6 = document.querySelector(".index-es6");
         const script = document.createElement("script");
-        script.src = nomodule.src;
-        script.integrity = nomodule.integrity;
-        script.crossOrigin = nomodule.crossOrigin;
+        script.src = es6.src;
+        script.integrity = es6.integrity;
+        script.crossOrigin = es6.crossOrigin;
         document.head.appendChild(script);
     }
 });
