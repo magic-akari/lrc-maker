@@ -4,7 +4,7 @@
     </a>
 </p>
 
-# [LRC Maker](https://lrc-maker.github.io) &middot; [![Build Status](https://travis-ci.org/magic-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/magic-akari/lrc-maker)
+# [LRC Maker][lrc maker] &middot; [![Build Status](https://travis-ci.org/magic-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/magic-akari/lrc-maker)
 
 [中文](#这个项目是什么)
 
@@ -18,7 +18,7 @@ It's hard to find a user-friendly and cross-platform tool to create lrc. So I ma
 
 ## How to use
 
-open [lrc-maker](https://lrc-maker.github.io) to start. You can add the link to browser bookmark. It is easy to use.  
+open [lrc-maker][lrc maker] to start. You can add the link to browser bookmark. It is easy to use.  
 Darg and drop the file in the page to load an audio file.  
 Use the arrow key and space key to insert the timestamp.
 
@@ -57,7 +57,7 @@ Limited support for EDGE browsers.
 
 The browsers which do not have ES Module support will load the fallback script. Note: The fallback is not tested. The old browsers may encounter CSS layout confusion.
 
-Ancient browsers such as IE are no longer supported. If you are an ancient browser user, it is better to use the old version of this project.
+Ancient browsers such as IE are no longer supported. If you are an ancient browser user, it is better to use [the old version][version 3.x] of this project.
 
 ## Development
 
@@ -98,7 +98,7 @@ If you like give us a star :star: Share this project to help more people.
 
 ## 如何使用
 
-打开[歌词滚动姬](https://lrc-maker.github.io)，即可开始，你可以把这个链接收藏到浏览器书签。
+打开[歌词滚动姬][lrc maker]，即可开始，你可以把这个链接收藏到浏览器书签。
 
 ## 热键
 
@@ -136,7 +136,7 @@ If you like give us a star :star: Share this project to help more people.
 
 对于没有 ES Module 支持的浏览器，仍然做了回退处理以便正常使用。注意：此部分没有进行测试，旧浏览器仍然可能遇到 css 的布局错乱问题。
 
-IE 等旧浏览器不再支持。对于这类浏览器使用者，可以使用本项目的旧版本。
+IE 等旧浏览器不再支持。对于这类浏览器使用者，可以使用本项目的[旧版本][version 3.x]。
 
 ## 本地开发
 
@@ -164,3 +164,6 @@ yarn start # 或者 `npm start`
 ## 给这个项目点一个星星 :star:
 
 如果你喜欢这个项目，请点一个星星吧:star:，分享这个项目来帮助更多的人。
+
+[lrc maker]: https://lrc-maker.github.io
+[version 3.x]: https://lrc-maker.github.io/3.x
