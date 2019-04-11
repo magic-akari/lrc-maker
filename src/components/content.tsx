@@ -2,14 +2,10 @@ import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { convertTimeToTag, stringify } from "../lrc-parser.js";
 import { AudioActionType, audioRef, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
+import { Home } from "./home.js";
+import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 
 const { lazy, useContext, useEffect, useMemo, useRef, useState } = React;
-
-const LazyHome = lazy(() =>
-    import(/* webpackMode: "eager" */ "./home.js").then(({ Home }) => {
-        return { default: Home };
-    }),
-);
 
 const LazyEditor = lazy(() =>
     import(/* webpackMode: "eager" */ "./editor.js").then(({ Eidtor }) => {
@@ -32,12 +28,6 @@ const LazyGist = lazy(() =>
 const LazyPreferences = lazy(() =>
     import(/* webpackMode: "eager" */ "./preferences.js").then(({ Preferences }) => {
         return { default: Preferences };
-    }),
-);
-
-const LazyAkariNotFound = lazy(() =>
-    import(/* webpackMode: "eager" */ "./svg.img.js").then(({ AkariNotFound }) => {
-        return { default: AkariNotFound };
     }),
 );
 
@@ -176,7 +166,7 @@ export const Content: React.FC = () => {
 
             case Path.synchronizer: {
                 if (lrcState.lyric.length === 0) {
-                    return <LazyAkariNotFound />;
+                    return <AkariNotFound />;
                 }
                 return <LazySynchronizer lrcState={lrcState} lrcDispatch={lrcDispatch} />;
             }
@@ -190,12 +180,12 @@ export const Content: React.FC = () => {
             }
         }
 
-        return <LazyHome />;
+        return <Home />;
     })();
 
     return (
         <main className={`app-main ${textColor}`}>
-            <React.Suspense fallback={false}>{content}</React.Suspense>
+            <React.Suspense fallback={<AkariOangoLoading />}>{content}</React.Suspense>
         </main>
     );
 };

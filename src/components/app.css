@@ -168,27 +168,12 @@ time {
     animation: akariLoading 2s linear infinite;
 }
 
-.stop-loading {
-    animation: akariLoadingComplete 500ms ease-out forwards;
-}
-
 @keyframes akariLoading {
     from {
         transform: rotate(0deg) translateX(-2vmin) rotate(0deg);
     }
     to {
         transform: rotate(360deg) translateX(-2vmin) rotate(-360deg);
-    }
-}
-
-@keyframes akariLoadingComplete {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(10vw);
-        opacity: 0.8;
     }
 }
 
