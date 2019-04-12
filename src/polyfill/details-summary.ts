@@ -33,15 +33,14 @@ const polyfilldetails = () => {
     });
 
     document.addEventListener("click", (event) => {
-        const target = event.target;
-        let element = target as Element;
-        while (element.tagName !== "SUMMARY" && element !== document.body) {
-            element = element.parentElement as Element;
+        const element = event.target as Element;
+        const summary = element.closest("summary");
+        if (summary === null || summary.parentElement === null || summary.parentElement.tagName !== "DETAILS") {
+            return;
         }
-        if (element.tagName === "SUMMARY" && element.parentElement!.tagName === "DETAILS") {
-            const parentElement = element.parentElement as HTMLDetailsElement;
-            parentElement.open = !parentElement.open;
-        }
+
+        const parentElement = summary.parentElement as HTMLDetailsElement;
+        parentElement.open = !parentElement.open;
     });
 };
 
