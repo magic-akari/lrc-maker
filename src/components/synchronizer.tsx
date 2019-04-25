@@ -259,7 +259,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
     }, [prefState.screenButton]);
 
     const LyricLineIter = useCallback(
-        (line: Readonly<ILyric>, index: number, lines: Array<Readonly<ILyric>>) => {
+        (line: Readonly<ILyric>, index: number, lines: readonly ILyric[]) => {
             const select = index === selectIndex;
             const highlight = index === highlightIndex;
             const error = index > 0 && lines[index].time! <= lines[index - 1].time!;
@@ -333,7 +333,7 @@ const LyricLine: React.FC<ILyricLineProps> = ({ line, index, select, className, 
     );
 };
 
-const calcTrackedLine = (lyric: Array<Readonly<ILyric>>) => {
+const calcTrackedLine = (lyric: readonly ILyric[]) => {
     const audioTime = audioRef.currentTime;
 
     return lyric.reduce(
