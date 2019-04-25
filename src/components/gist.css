@@ -70,6 +70,7 @@
     flex: 1 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-template-rows: min-content;
     grid-gap: 1rem;
 }
 
