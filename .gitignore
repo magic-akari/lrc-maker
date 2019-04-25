@@ -60,6 +60,8 @@ typings/
 # next.js build output
 .next
 
+version.d.ts
+
 build/
 build.es6/
 

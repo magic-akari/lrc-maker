@@ -1,22 +1,9 @@
-import { execSync } from "child_process";
 import { readdirSync, readFileSync } from "fs";
 import { join, parse, resolve } from "path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { dependencies, description, name, version } from "../package.json";
 import { sri, sriContent } from "./sri";
-
-const hash = (() => {
-    const root = resolve(__dirname, "../");
-    const rev = readFileSync(resolve(root, ".git/HEAD"))
-        .toString()
-        .trim();
-    if (!rev.includes(":")) {
-        return rev;
-    } else {
-        return readFileSync(resolve(root, ".git/", rev.slice(5))).toString();
-    }
-})().slice(0, 7);
 
 const isProduction = process.env.NODE_ENV === "production";
 const useCDN = process.env.USE_CDN === "USE_CDN";
@@ -136,10 +123,6 @@ const Html = () => {
         "manifest-src": [SELF],
         "connect-src": ["blob:", "https://api.github.com"],
     };
-
-    const updateTime = execSync("git log -1 --format=%cI")
-        .toString()
-        .trim();
 
     const reg = isProduction ? swRegister() : swUnregister();
 
@@ -271,9 +254,6 @@ const Html = () => {
                     type="application/json"
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
-                            version,
-                            hash,
-                            updateTime,
                             languages: getLanguageMap(),
                         }),
                     }}

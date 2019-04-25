@@ -19,13 +19,13 @@
     ],
     "scripts": {
         "clean": "rm -rf ./build",
-        "prestart": "npm run version",
+        "prestart": "npm run ver",
         "start": "npm run html && npm run esm:watch",
-        "prebuild": "npm run version",
+        "prebuild": "npm run ver",
         "build": "npm run css && npm run nomodule && npm run esm && npm run html",
-        "version": "ts-node -P scripts/tsconfig.json scripts/generate.version.ts > src/@worker/version.d.ts",
+        "ver": "ts-node -P scripts/tsconfig.json scripts/generate.version.ts | tee src/version.d.ts > src/@worker/version.d.ts",
         "esm": "tsc -b",
-        "preesm:watch": "npm run version",
+        "preesm:watch": "npm run ver",
         "esm:watch": "tsc -b -w",
         "es6": "tsc -b tsconfig.es6.json",
         "nomodule": "npm run es6 && webpack -p",
@@ -34,8 +34,8 @@
         "html": "ts-node -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html",
         "manifest": "cp -r ./manifest/* ./build",
         "svg": "cp -r ./svg ./build",
-        "prettier": "prettier --write \"{src,scripts}/**/*.{ts,tsx,js,es6,css,json}\" \"*.{js,json,md}\"",
-        "listdiff": "prettier -l \"{src,scripts}/**/*.{ts,tsx,js,es6,css,json}\" \"*.{js,json,md}\"",
+        "prettier": "prettier --write \"{.,src/**,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
+        "listdiff": "prettier -l \"{.,src/**,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
         "lint": "tslint \"{src,scripts}/**/*.{ts,tsx,es6}\""
     },
     "dependencies": {

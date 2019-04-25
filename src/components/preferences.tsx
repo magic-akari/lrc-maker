@@ -6,7 +6,7 @@ import { AkariHideWall } from "./svg.img.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef } = React;
 
-const info: Record<"version" | "hash" | "updateTime", string> & {
+const info: {
     languages: { [name: string]: string };
 } = JSON.parse(document.getElementById("app-info")!.textContent!);
 
@@ -103,7 +103,7 @@ export const Preferences: React.FC = () => {
     }, []);
 
     const updateTime = useMemo(() => {
-        const date = new Date(info.updateTime);
+        const date = new Date(Version.updateTime);
         const options = {
             year: "numeric",
             month: "short",
@@ -206,13 +206,13 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.version}</span>
-                        <span className="select-all">{info.version}</span>
+                        <span className="select-all">{Version.value}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.commitHash}</span>
-                        <span className="select-all">{info.hash}</span>
+                        <span className="select-all">{Version.hash}</span>
                     </section>
                 </li>
                 <li>
