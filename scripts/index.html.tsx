@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import { readdirSync, readFileSync } from "fs";
 import { join, parse, resolve } from "path";
 import * as React from "react";
@@ -149,6 +150,13 @@ const Html = () => {
     const akariHideWall = appScript("./svg/akari-hide-wall.svg");
     const akariNotFound = appScript("./svg/akari-not-found.svg");
 
+    const preloadModule = execSync(`cd ${resolve(__dirname, "../build")}; ls ./*/*.js`)
+        .toString()
+        .trim()
+        .split(/\n/)
+        .filter((path) => !path.includes("polyfill"))
+        .map(appScript);
+
     return (
         <html>
             <head>
@@ -184,6 +192,10 @@ const Html = () => {
                 <meta name="theme-color" content="#484848" />
                 <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
                 <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬" />
+
+                {preloadModule.map((md) => (
+                    <link rel="modulepreload" href={md.src} />
+                ))}
 
                 <link
                     className="preload-akari-odango-loading"
