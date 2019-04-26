@@ -3,7 +3,7 @@ module.exports = (ctx) => ({
     plugins: {
         "postcss-import": {},
         "postcss-custom-properties": {},
-        autoprefixer: {},
-        cssnano: ctx.options.map ? {} : false,
+        "autoprefixer": {},
+        "cssnano": ctx.options.map ? {} : false,
     },
 });

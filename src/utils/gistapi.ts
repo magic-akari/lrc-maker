@@ -78,8 +78,8 @@ export const getFils = async (): Promise<IGistRepo | null> => {
 
     const res = await fetch(`${apiUrl}/${id}`, {
         headers: {
-            Authorization: `token ${token}`,
-            ["If-None-Match"]: etag,
+            "Authorization": `token ${token}`,
+            "If-None-Match": etag,
         },
     });
     if (!res.ok) {
