@@ -112,7 +112,6 @@ const Html = () => {
     const SELF = "'self'";
     const csp = {
         "default-src": ["'none'"],
-        "prefetch-src": [appCDN],
         "img-src": [SELF, "data:", appCDN],
         "style-src": [appCDN],
         // 'unsafe-inline' will be ignored if there is a hsah in script-src
@@ -132,7 +131,6 @@ const Html = () => {
     } else {
         csp["script-src"].unshift(SELF);
         csp["style-src"].unshift(SELF);
-        csp["prefetch-src"].unshift(SELF);
     }
 
     if (isProduction) {
@@ -147,8 +145,6 @@ const Html = () => {
     csp["script-src"].push(`'${fallback2es6.integrity}'`, `'${fallback2es5.integrity}'`);
 
     const akariOdangoLoading = appScript("./svg/akari-odango-loading.svg");
-    const akariHideWall = appScript("./svg/akari-hide-wall.svg");
-    const akariNotFound = appScript("./svg/akari-not-found.svg");
 
     const preloadModule = execSync(`cd ${resolve(__dirname, "../build")}; ls ./*/*.js`)
         .toString()
@@ -203,20 +199,6 @@ const Html = () => {
                     as="image"
                     href={akariOdangoLoading.src}
                     crossOrigin={akariOdangoLoading.crossOrigin}
-                />
-                <link
-                    className="prefetch-akari-hide-wall"
-                    rel="prefetch"
-                    as="image"
-                    href={akariHideWall.src}
-                    crossOrigin={akariHideWall.crossOrigin}
-                />
-                <link
-                    className="prefetch-akari-not-found"
-                    rel="prefetch"
-                    as="image"
-                    href={akariNotFound.src}
-                    crossOrigin={akariNotFound.crossOrigin}
                 />
 
                 <link
