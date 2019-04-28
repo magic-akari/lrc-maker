@@ -346,10 +346,10 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     );
 };
 
-const GistLoading = React.memo(() => {
+const GistLoading: React.FC = () => {
     return (
         <section className="gist-loading">
             <AkariOangoLoading />
         </section>
     );
-});
+};
