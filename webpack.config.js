@@ -82,10 +82,7 @@ const esnext = Object.assign({}, base, {
 
 const es5 = Object.assign({}, base, {
     resolve: {
-        mainFields: ["main"],
-        alias: {
-            "preact-mobx-observer": path.resolve(pathToNodeModules, "preact-mobx-observer/dist/observer.es5.min.js")
-        }
+        mainFields: ["main"]
     },
     entry: {
         app: ["./src/polyfill.js", "./src/index.js"]

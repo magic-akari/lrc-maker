@@ -2,6 +2,8 @@
  * Created by 阿卡琳 on 26/06/2017.
  */
 "use strict";
+import { h } from "preact";
+
 const PlaySvg = () => (
     <svg fill="#5a5a5a" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M8 5v14l11-7z" />

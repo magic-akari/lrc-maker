@@ -3,8 +3,9 @@
  */
 "use strict";
 import { action, autorun, computed } from "mobx";
-import { Component } from "preact";
+import { Component, h } from "preact";
 import { observer } from "preact-mobx-observer";
+import { elementScrollIntoView } from "seamless-scroll-polyfill";
 import { appState } from "../store/appState.js";
 import { lrc, LRC } from "../store/lrc.js";
 import { preferences } from "../store/preferences.js";
@@ -36,10 +37,14 @@ class SynchronizerList extends Component {
     }
 
     componentDidMount() {
+        const scrollIntoView =
+            "scrollBehavior" in document.documentElement.style
+                ? (element, options) => element.scrollIntoView(options)
+                : elementScrollIntoView;
         this.disposers = [
             autorun(() => {
                 if (this.trackNode) {
-                    this.trackNode.scrollIntoView({
+                    scrollIntoView(this.trackNode, {
                         behavior: "smooth",
                         block: "center",
                         inline: "nearest"

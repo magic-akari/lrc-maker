@@ -2,6 +2,7 @@
  * Created by 阿卡琳 on 14/06/2017.
  */
 "use strict";
+import { h } from "preact";
 import { App } from "./App.jsx";
 
 export const Root = () => (
@@ -31,7 +32,7 @@ export const Root = () => (
             <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬" />
         </head>
         <body>
-            {App({ loading: true })}
+            <App loading={true} />
             <script
                 dangerouslySetInnerHTML={{
                     __html: `(function(d,a){a=d.createElement("script");a.charset="utf-8";a.src="./app"+(typeof Proxy=="function"?"":".es5")+".js?v=${

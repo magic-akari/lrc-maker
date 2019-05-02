@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
-import { Component } from "preact";
+import { Component, h } from "preact";
 import { observer } from "preact-mobx-observer";
 import { languages } from "../languages/index.js";
 import { preferences as pref } from "../store/preferences.js";
@@ -140,4 +140,3 @@ class Preferences extends Component {
     }
 }
 export { Preferences };
-

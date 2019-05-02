@@ -5,7 +5,7 @@
 import { action, computed, observable } from "mobx";
 import { preferences } from "./preferences.js";
 
-const appState = new class AppState {
+const appState = new (class AppState {
     @observable audioSrc = false;
     @observable _currentTime = 0;
     @observable lock = false;
@@ -48,6 +48,6 @@ const appState = new class AppState {
     toggle_lock() {
         this.lock = !this.lock;
     }
-}();
+})();
 
 export { appState };

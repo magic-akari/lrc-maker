@@ -3,7 +3,7 @@
  */
 "use strict";
 import { action, computed, observable } from "mobx";
-import { Component } from "preact";
+import { Component, createRef, h } from "preact";
 import { observer } from "preact-mobx-observer";
 import { Forward5sSvg, MutedSvg, PauseSvg, PlaySvg, Replay5sSvg, VolumeSvg } from "./SVG.jsx";
 
@@ -47,6 +47,11 @@ class Audio extends Component {
     @observable volume = 1;
     @observable _playbackRate = 1;
     @observable muted = false;
+
+    audioRef = createRef();
+    get audio() {
+        return this.audioRef.current;
+    }
 
     handler = 0;
 
@@ -205,10 +210,10 @@ class Audio extends Component {
         return (
             <section className={"time-line-section" + (this.paused ? "" : " playing")}>
                 <button tabIndex="-1" className="replay5s" onClick={this.replay5s} disabled={this.currentTime_int <= 0}>
-                    {Replay5sSvg()}
+                    <Replay5sSvg />
                 </button>
                 <button tabIndex="-1" disabled={!this.duration} onClick={this.togglePlayPause}>
-                    {this.paused ? PlaySvg() : PauseSvg()}
+                    {this.paused ? <PlaySvg /> : <PauseSvg />}
                 </button>
                 <button
                     tabIndex="-1"
@@ -216,17 +221,17 @@ class Audio extends Component {
                     onClick={this.forward5s}
                     disabled={this.currentTime_int >= this.duration}
                 >
-                    {Forward5sSvg()}
+                    <Forward5sSvg />
                 </button>
                 {this.timeTag}
-                {Slider({
-                    min: 0,
-                    max: this.duration,
-                    step: "1",
-                    value: this.currentTime_int,
-                    onInput: this.handleTimeSelect,
-                    className: "time-line"
-                })}
+                <Slider
+                    min={0}
+                    max={this.duration}
+                    step="1"
+                    value={this.currentTime_int}
+                    onInput={this.handleTimeSelect}
+                    className="time-line"
+                />
             </section>
         );
     }
@@ -241,32 +246,28 @@ class Audio extends Component {
                     {"X "}
                     {this.playbackRate.toFixed(2)}
                 </button>
-                {Slider({
-                    className: "playbackrate",
-                    min: -1,
-                    max: 1,
-                    step: "any",
-                    value: this.playbackRate_exp,
-                    onInput: this.handlePlaybackRateChange
-                })}
+                <Slider
+                    className="playbackrate"
+                    min={-1}
+                    max={1}
+                    step="any"
+                    value={this.playbackRate_exp}
+                    onInput={this.handlePlaybackRateChang}
+                />
                 <button tabIndex="-1" onClick={this.toggleMuted}>
-                    {this.muted || this.volume === 0 ? MutedSvg() : VolumeSvg()}
+                    {this.muted || this.volume === 0 ? <MutedSvg /> : <VolumeSvg />}
                 </button>
-                {Slider({
-                    min: 0,
-                    max: 1,
-                    step: "any",
-                    value: this.muted ? 0 : this.volume,
-                    onInput: this.handleVolumeChange,
-                    className: "volume-slider"
-                })}
+                <Slider
+                    min={0}
+                    max={1}
+                    step="any"
+                    value={this.muted ? 0 : this.volume}
+                    onInput={this.handleVolumeChange}
+                    className="volume-slider"
+                />
             </section>
         );
     }
-
-    setAudioRef = (audio) => {
-        this.audio = audio;
-    };
 
     render() {
         return (
@@ -275,7 +276,7 @@ class Audio extends Component {
                     hidden={!this.props.controls}
                     controls={this.props.controls}
                     src={this.props.src}
-                    ref={this.setAudioRef}
+                    ref={this.audioRef}
                     onLoadedMetadata={this.onLoadedMetadata}
                     onPlay={this.onPlay}
                     onPause={this.onPause}

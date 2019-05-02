@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
-import { Component } from "preact";
+import { Component, h } from "preact";
 import { observer } from "preact-mobx-observer";
 import { appState } from "../store/appState.js";
 import { lrc } from "../store/lrc.js";
@@ -67,17 +67,17 @@ class Editor extends Component {
             <div className="editor">
                 <section className="editor-tool-bar">
                     <label className="editor-button">
-                        {LoadAudioSvg()}
+                        <LoadAudioSvg />
                         <span className="option">{pref.i18n["lrc"]["load-audio"]}</span>
                         <input type="file" accept="audio/*" onChange={this.uploadAudio} />
                     </label>
                     <label className="editor-button">
-                        {LoadTextSvg()}
+                        <LoadTextSvg />
                         <span className="option">{pref.i18n["lrc"]["load-text"]}</span>
                         <input type="file" accept="text/*, .txt, .lrc" onChange={this.uploadText} />
                     </label>
                     <span onClick={this.selectAll} className="editor-button">
-                        {SelectAllSvg()}
+                        <SelectAllSvg />
                         <span className="option">{pref.i18n["lrc"]["select-all"]}</span>
                     </span>
                 </section>

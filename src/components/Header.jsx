@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 14/06/2017.
  */
 "use strict";
-import { Component } from "preact";
+import { Component, h } from "preact";
 import { observer } from "preact-mobx-observer";
 import { router, Router } from "../router.js";
 import { lrc } from "../store/lrc.js";
@@ -29,7 +29,7 @@ class Header extends Component {
                             })()}
                             title={Router.editor.title}
                         >
-                            {EditorSvg()}
+                            <EditorSvg />
                             <span className="option">{Router.editor.name}</span>
                         </a>
                         <a
@@ -37,7 +37,7 @@ class Header extends Component {
                             className={router.path === Router.synchronizer.path ? "active" : ""}
                             title={Router.synchronizer.title}
                         >
-                            {SynchronizerSvg()}
+                            <SynchronizerSvg />
                             <span className="option">{Router.synchronizer.name}</span>
                         </a>
                         <a
@@ -45,7 +45,7 @@ class Header extends Component {
                             className={router.path === Router.preferences.path ? "active" : ""}
                             title={Router.preferences.title}
                         >
-                            {SettingsSvg()}
+                            <SettingsSvg />
                             <span className="option">{Router.preferences.name}</span>
                         </a>
                     </nav>

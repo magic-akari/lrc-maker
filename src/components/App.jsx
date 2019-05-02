@@ -3,6 +3,7 @@
  */
 "use strict";
 
+import { h } from "preact";
 import { Content } from "./Content.jsx";
 import { Footer } from "./Footer.jsx";
 import { Header } from "./Header.jsx";
@@ -11,7 +12,7 @@ import { Loading } from "./Loading.jsx";
 export const App = ({ loading }) => (
     <main className="app">
         <Header />
-        {loading ? Loading() : <Content />}
+        {loading ? <Loading /> : <Content />}
         <Footer />
     </main>
 );

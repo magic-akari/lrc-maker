@@ -2,19 +2,13 @@
  * Created by 阿卡琳 on 14/06/2017.
  */
 "use strict";
-
 import { action, autorun, configure } from "mobx";
 import { h, render } from "preact";
-import { seamless } from "seamless-scroll-polyfill";
 import { App } from "./components/App.jsx";
 import { Router } from "./router.js";
 import { appState } from "./store/appState.js";
 import { lrc } from "./store/lrc.js";
 import { preferences } from "./store/preferences.js";
-
-seamless();
-
-window.h = h;
 
 configure({ enforceActions: true });
 autorun(() => (document.title = preferences.i18n["app"]["fullname"]));
@@ -45,7 +39,7 @@ if (!String.prototype.padStart) {
     };
 }
 
-render(App({ loading: false }), document.body, document.body.firstElementChild);
+render(h(App, { loading: false }), document.body, document.body.firstElementChild);
 
 document.body.addEventListener(
     "dragover",

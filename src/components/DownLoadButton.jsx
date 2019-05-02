@@ -3,7 +3,7 @@
  */
 "use strict";
 import { action, observable } from "mobx";
-import { Component } from "preact";
+import { Component, h } from "preact";
 import { observer } from "preact-mobx-observer";
 import { lrc } from "../store/lrc.js";
 import { DownloadSvg } from "./SVG.jsx";
@@ -32,7 +32,7 @@ class DownLoadButton extends Component {
                 href={this.href}
                 onClick={this.handleClick}
             >
-                {DownloadSvg()}
+                <DownloadSvg />
             </a>
         );
     }
