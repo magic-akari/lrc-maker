@@ -3,8 +3,10 @@
     "version": "3.3.12",
     "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
     "scripts": {
-        "prebuild": "rm -rf ./build",
-        "build": "webpack -p && npm run render",
+        "clean": "rm -rf ./build/*",
+        "build": "webpack -p && npm run render && npm run style && npm run assets ",
+        "style": "sass --style=compressed --load-path=node_modules/normalize.css ./src/scss/app.scss build/app.css",
+        "assets": "cp -r ./resources/* build",
         "render": "node ./bin/render.js > ./build/index.html",
         "prettier": "prettier --write \"{.,src/**,languages/**,bin/**}/*.{js,jsx,scss,json}\""
     },
@@ -39,14 +41,10 @@
         "@babel/preset-env": "^7.4.4",
         "@babel/register": "^7.4.4",
         "babel-loader": "^8.0.5",
-        "copy-webpack-plugin": "^5.0.3",
         "core-js": "^3.0.1",
-        "css-loader": "^2.1.1",
-        "mini-css-extract-plugin": "^0.6.0",
         "preact-render-to-string": "^4.1.0",
         "prettier": "^1.17.0",
         "sass": "^1.19.0",
-        "sass-loader": "^7.1.0",
         "webpack": "^4.30.0",
         "webpack-cli": "^3.3.1"
     }

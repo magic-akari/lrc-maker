@@ -1,10 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const pathToNodeModules = path.resolve(__dirname, "node_modules");
-const pathToNormalizeCss = path.resolve(pathToNodeModules, "normalize.css/normalize.css");
 const execSync = require("child_process").execSync;
 
 const VERSION = JSON.stringify(process.env.npm_package_version);
@@ -36,7 +32,7 @@ const esnext = Object.assign({}, base, {
         mainFields: ["jsnext:main", "module", "main"]
     },
     entry: {
-        app: ["./src/index.js", pathToNormalizeCss, "./src/scss/app.scss"]
+        app: ["./src/index.js"]
     },
     output: {
         path: path.resolve(__dirname, "build"),
@@ -48,36 +44,9 @@ const esnext = Object.assign({}, base, {
                 test: /\.jsx?$/,
                 use: ["babel-loader"],
                 include: path.resolve(__dirname, "src")
-            },
-            {
-                test: /\.s?css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: "css-loader",
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: "sass-loader",
-                        options: {
-                            sourceMap: true,
-                            sourceMapContents: true,
-                            implementation: require("sass")
-                        }
-                    }
-                ]
             }
         ]
-    },
-    plugins: [
-        ...base.plugins,
-        new CopyWebpackPlugin(["resources"]),
-        new MiniCssExtractPlugin({
-            filename: "app.css"
-        })
-    ]
+    }
 });
 
 const es5 = Object.assign({}, base, {
