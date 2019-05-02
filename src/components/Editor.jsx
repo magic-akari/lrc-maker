@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
-import { Component, h } from "preact";
+import { Component, createRef, h } from "preact";
 import { observer } from "preact-mobx-observer";
 import { appState } from "../store/appState.js";
 import { lrc } from "../store/lrc.js";
@@ -14,6 +14,12 @@ import { LoadAudioSvg, LoadTextSvg, SelectAllSvg } from "./SVG.jsx";
 class Editor extends Component {
     constructor(props) {
         super(props);
+    }
+
+    textareaRef = createRef();
+
+    get textarea() {
+        return textareaRef.current;
     }
 
     componentWillUnmount() {
@@ -58,10 +64,6 @@ class Editor extends Component {
         document.execCommand("copy");
     };
 
-    setTextarea = (textarea) => {
-        this.textarea = textarea;
-    };
-
     render() {
         return (
             <div className="editor">
@@ -101,7 +103,7 @@ class Editor extends Component {
                         placeholder="text"
                         onBlur={this.parseText}
                         value={lrc.value}
-                        ref={this.setTextarea}
+                        ref={this.textareaRef}
                     />
                 </section>
                 <div className="extra_button_group">

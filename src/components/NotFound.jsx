@@ -4,7 +4,7 @@
 "use strict";
 import { h } from "preact";
 
-const NotFound = () => (
+export const NotFound = () => (
     <div className="not_found">
         <header>404</header>
         <p>您要找的页面因为存在感太低而消失。</p>
@@ -12,4 +12,3 @@ const NotFound = () => (
         <p>アッカリ～ン</p>
     </div>
 );
-export { NotFound };

@@ -4,7 +4,7 @@
 "use strict";
 import { h } from "preact";
 
-const Loading = () => (
+export const Loading = () => (
     <div className="loading-page">
         <p>
             Loading
@@ -13,5 +13,3 @@ const Loading = () => (
         <div className="loading" />
     </div>
 );
-
-export { Loading };

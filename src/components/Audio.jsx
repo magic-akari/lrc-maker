@@ -28,11 +28,6 @@ const Slider = ({ min, max, step, value, onInput, className }) => {
     );
 };
 
-const myAddEventListener = (node, eventType, func) => {
-    node.addEventListener(eventType, func);
-    return () => node.removeEventListener(eventType, func);
-};
-
 @observer
 class Audio extends Component {
     @observable duration = 0;
@@ -150,7 +145,7 @@ class Audio extends Component {
         this.muted = e.target.muted;
     };
 
-    onTimeUpdate = (e) => {
+    onTimeUpdate = () => {
         if (this.paused) {
             this.syncTime();
         }
@@ -189,7 +184,7 @@ class Audio extends Component {
         this.audio.playbackRate = Math.exp(e.target.value);
     };
 
-    handlePlaybackRateReset = (e) => {
+    handlePlaybackRateReset = () => {
         this.audio.playbackRate = 1;
     };
 
@@ -199,7 +194,7 @@ class Audio extends Component {
         this.audio.volume = volume;
     };
 
-    toggleMuted = (e) => {
+    toggleMuted = () => {
         this.audio.muted = !this.audio.muted;
     };
 

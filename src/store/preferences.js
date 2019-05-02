@@ -5,7 +5,7 @@
 import { action, computed, observable, toJS } from "mobx";
 import { languages } from "../languages/index.js";
 
-class Preferences {
+export const preferences = new (class Preferences {
     @observable trim = true;
     @observable fixed = 3;
     @observable pretty_tag = true;
@@ -112,8 +112,4 @@ class Preferences {
     get language() {
         return this.lang;
     }
-}
-
-const preferences = new Preferences();
-
-export { preferences };
+})();

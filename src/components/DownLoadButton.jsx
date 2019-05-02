@@ -15,7 +15,7 @@ class DownLoadButton extends Component {
     lrcString = "";
 
     @action.bound
-    handleClick(e) {
+    handleClick() {
         let lrcString = lrc.value;
         if (this.lrcString != lrcString) {
             this.lrcString = lrcString;
