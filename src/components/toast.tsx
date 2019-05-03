@@ -10,9 +10,9 @@ interface IMessage {
 
 export const toastPubSub = createPubSub<IMessage>();
 
-const { useCallback, useEffect, useMemo, useRef, useState } = React;
+const { useCallback, useEffect, useRef, useState } = React;
 
-let id = 0;
+const box = { id: 0 };
 
 export const Toast = () => {
     const self = useRef(Symbol(Toast.name));
@@ -22,20 +22,16 @@ export const Toast = () => {
     }
 
     const [toastQueue, setToastQueue] = useState<IToast[]>([]);
-    const queueRef = useRef(toastQueue);
-    queueRef.current = toastQueue;
 
     useEffect(() => {
         toastPubSub.sub(self.current, (data) => {
-            setToastQueue([{ id: id++, ...data }, ...queueRef.current]);
+            setToastQueue((queue) => [{ id: box.id++, ...data }, ...queue]);
         });
     }, []);
 
     const onAnimationEnd = useCallback((ev: React.AnimationEvent<HTMLElement>) => {
         if (ev.animationName === "slideOutRight") {
-            const newQueue = queueRef.current.slice();
-            newQueue.pop();
-            setToastQueue(newQueue);
+            setToastQueue((queue) => queue.slice(0, -1));
         }
     }, []);
 

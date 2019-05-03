@@ -16,15 +16,17 @@ export const AsidePanel: React.FC<{
     }, [syncMode]);
 
     const onDownloadClick = useCallback(() => {
-        if (href) {
-            URL.revokeObjectURL(href);
-        }
-        const url = URL.createObjectURL(
-            new Blob([createDownloadFile()], {
-                type: "text/plain;charset=UTF-8",
-            }),
-        );
-        setHref(url);
+        setHref((url) => {
+            if (url) {
+                URL.revokeObjectURL(url);
+            }
+
+            return URL.createObjectURL(
+                new Blob([createDownloadFile()], {
+                    type: "text/plain;charset=UTF-8",
+                }),
+            );
+        });
     }, []);
 
     const downloadName = useMemo(() => {

@@ -61,15 +61,17 @@ export const Eidtor: React.SFC<{
     const [href, setHref] = useState<string | undefined>(undefined);
 
     const onDownloadClick = useCallback(() => {
-        if (href) {
-            URL.revokeObjectURL(href);
-        }
-        const url = URL.createObjectURL(
-            new Blob([textarea.current!.value], {
-                type: "text/plain;charset=UTF-8",
-            }),
-        );
-        setHref(url);
+        setHref((url) => {
+            if (url) {
+                URL.revokeObjectURL(url);
+            }
+
+            return URL.createObjectURL(
+                new Blob([textarea.current!.value], {
+                    type: "text/plain;charset=UTF-8",
+                }),
+            );
+        });
     }, []);
 
     const onTextFileUpload = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {

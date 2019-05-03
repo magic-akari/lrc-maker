@@ -4,20 +4,16 @@ import { LrcAudio } from "./audio.js";
 import { LoadAudio } from "./loadaudio.js";
 import { toastPubSub } from "./toast.js";
 
-const { useCallback, useContext, useEffect, useRef, useState } = React;
+const { useCallback, useContext, useEffect, useReducer, useRef } = React;
 
 export const Footer: React.FC = () => {
     // tslint:disable-next-line: no-bitwise
     const { prefState, lang } = useContext(appContext, ChangBits.lang | ChangBits.builtInAudio);
 
-    const [audioSrc, privateSetAudioSrc] = useState<string | undefined>(
-        sessionStorage.getItem(SSK.audioSrc) || undefined,
-    );
-
-    const onAudioSrcSet = useCallback((src: string) => {
-        URL.revokeObjectURL(audioRef.src);
-        return privateSetAudioSrc(src);
-    }, []);
+    const [audioSrc, setAudioSrc] = useReducer((oldSrc: string, newSrc: string) => {
+        URL.revokeObjectURL(oldSrc);
+        return newSrc;
+    }, sessionStorage.getItem(SSK.audioSrc)!);
 
     useEffect(() => {
         document.addEventListener("keydown", (ev) => {
@@ -77,7 +73,7 @@ export const Footer: React.FC = () => {
             ev.stopPropagation();
             ev.preventDefault();
             const file = ev.dataTransfer!.files[0];
-            receiveFile(file, privateSetAudioSrc);
+            receiveFile(file, setAudioSrc);
 
             return false;
         });
@@ -85,7 +81,7 @@ export const Footer: React.FC = () => {
 
     const onAudioInputChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
         const file = ev.target.files![0];
-        receiveFile(file, privateSetAudioSrc);
+        receiveFile(file, setAudioSrc);
     }, []);
 
     const rafId = useRef(0);
@@ -154,7 +150,7 @@ export const Footer: React.FC = () => {
     return (
         <footer className="app-footer">
             <input id="audio-input" type="file" accept="audio/*, .ncm" hidden={true} onChange={onAudioInputChange} />
-            <LoadAudio setAudioSrc={onAudioSrcSet} lang={lang} />
+            <LoadAudio setAudioSrc={setAudioSrc} lang={lang} />
             <audio
                 ref={audioRef}
                 src={audioSrc}
