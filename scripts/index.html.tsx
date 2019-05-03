@@ -190,7 +190,7 @@ const Html = () => {
                 <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬" />
 
                 {preloadModule.map((md) => (
-                    <link rel="modulepreload" href={md.src} />
+                    <link rel="modulepreload" href={md.src} key={md.src} />
                 ))}
 
                 <link
