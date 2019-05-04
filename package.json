@@ -18,7 +18,7 @@
         "build"
     ],
     "scripts": {
-        "clean": "rm -rf ./build",
+        "clean": "rm -rf ./build/* ./build.es6/*",
         "prestart": "npm run ver",
         "start": "npm run html && npm run esm:watch",
         "prebuild": "npm run ver",
@@ -52,6 +52,7 @@
         "autoprefixer": "^9.5.1",
         "core-js": "^3.0.1",
         "cssnano": "^4.1.10",
+        "glob": "^7.1.3",
         "postcss": "^7.0.14",
         "postcss-cli": "^6.1.2",
         "postcss-custom-properties": "^8.0.10",

@@ -1,5 +1,5 @@
-import { execSync } from "child_process";
 import { readdirSync, readFileSync } from "fs";
+import { sync as glob } from "glob";
 import { join, parse, resolve } from "path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -146,12 +146,9 @@ const Html = () => {
 
     const akariOdangoLoading = appScript("./svg/akari-odango-loading.svg");
 
-    const preloadModule = execSync(`cd ${resolve(__dirname, "../build")}; ls ./*/*.js`)
-        .toString()
-        .trim()
-        .split(/\n/)
-        .filter((path) => !path.includes("polyfill"))
-        .map(appScript);
+    const preloadModule = glob("./!(polyfill)/*.js", {
+        cwd: resolve(__dirname, "../build"),
+    }).map(appScript);
 
     return (
         <html>
