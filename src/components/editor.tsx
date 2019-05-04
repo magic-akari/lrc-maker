@@ -40,7 +40,7 @@ export const Eidtor: React.SFC<{
     const setInfo = useCallback((ev: React.FocusEvent<HTMLInputElement>) => {
         const { name, value } = ev.target!;
         lrcDispatch({
-            type: LrcActionType.set_info,
+            type: LrcActionType.info,
             payload: { name, value },
         });
     }, []);

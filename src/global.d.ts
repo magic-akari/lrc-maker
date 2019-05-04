@@ -50,6 +50,7 @@ declare global {
         audioSrc = "audio-src",
         editorDetailsOpen = "editor-details-open",
         syncMode = "sync-mode",
+        selectIndex = "select-index",
         ratelimit = "x-ratelimit",
     }
 

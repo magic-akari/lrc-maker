@@ -1,7 +1,6 @@
-import { useHighlight } from "../hooks/useHighlight.js";
-import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import { Action, ActionType, guard, IState } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
-import { convertTimeToTag, formatText, ILyric, State as LrcState } from "../lrc-parser.js";
+import { convertTimeToTag, formatText, ILyric } from "../lrc-parser.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
@@ -22,24 +21,21 @@ export const enum SyncMode {
     highlight,
 }
 
-const cachedState = {
-    selectIndex: 0,
-    highlightIndex: 0,
-};
-
 interface ISynchronizerProps {
-    lrcState: LrcState;
-    lrcDispatch: React.Dispatch<LrcAction>;
+    state: IState;
+    dispatch: React.Dispatch<Action>;
 }
 
-export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispatch }) => {
+export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) => {
     const self = useRef(Symbol(Synchronizer.name));
+
+    const { selectIndex, currentIndex: highlightIndex } = state;
 
     const { prefState, lang } = useContext(appContext);
 
     useEffect(() => {
-        lrcDispatch({
-            type: LrcActionType.set_info,
+        dispatch({
+            type: ActionType.info,
             payload: {
                 name: "tool",
                 value: `${lang.app.name} https://lrc-maker.github.io`,
@@ -47,31 +43,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
         });
     }, [lang]);
 
-    const lyric = lrcState.lyric;
-
-    const lrcStateRef = useRef(lrcState);
-    lrcStateRef.current = lrcState;
-
-    const guard = useCallback((value: number, min: number = 0, max: number = lrcStateRef.current.lyric.length - 1) => {
-        if (value < min) {
-            return min;
-        }
-        if (value > max) {
-            return max;
-        }
-        return value;
-    }, []);
-
-    const [selectIndex, setSelectIndex] = useState(guard(cachedState.selectIndex));
-
-    const [{ currentIndex: highlightIndex }, setHighlight] = useHighlight({ lyric, time: audioRef.currentTime });
-
-    useEffect(() => {
-        cachedState.selectIndex = selectIndex;
-        cachedState.highlightIndex = highlightIndex;
-    }, [selectIndex, highlightIndex]);
-
-    const [syncMode, setSyncMode] = useState(
+    const [syncMode, setSyncMode] = useState(() =>
         sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString() ? SyncMode.highlight : SyncMode.select,
     );
 
@@ -98,7 +70,9 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
     }, [needScrollLine]);
 
     useEffect(() => {
-        currentTimePubSub.sub(self.current, (time) => setHighlight({ lyric: lrcStateRef.current.lyric, time }));
+        currentTimePubSub.sub(self.current, (time) => {
+            dispatch({ type: ActionType.refresh, payload: time });
+        });
 
         return () => {
             currentTimePubSub.unsub(self.current);
@@ -110,33 +84,13 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
             return;
         }
 
-        let index = 0;
-        const time = audioRef.currentTime;
-
-        setSelectIndex((select) => {
-            index = select;
-            return guard(select + 1);
-        });
-        lrcDispatch({
-            type: LrcActionType.set_time,
-            payload: {
-                index,
-                time,
-            },
+        dispatch({
+            type: ActionType.sync,
+            payload: audioRef.currentTime,
         });
     }, []);
 
     useEffect(() => {
-        const deleteTimeTag = () => {
-            lrcDispatch({
-                type: LrcActionType.set_time,
-                payload: {
-                    index: cachedState.selectIndex,
-                    time: undefined,
-                },
-            });
-        };
-
         const listener = (ev: KeyboardEvent) => {
             const { code, key, target } = ev;
 
@@ -148,7 +102,10 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
 
             if (codeOrKey === "Backspace" || codeOrKey === "Delete" || codeOrKey === "Del") {
                 ev.preventDefault();
-                deleteTimeTag();
+                dispatch({
+                    type: ActionType.deleteTime,
+                    payload: undefined,
+                });
                 return;
             }
 
@@ -163,27 +120,27 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
             } else if (["ArrowUp", "KeyW", "KeyJ", "Up", "W", "w", "J", "j"].includes(codeOrKey)) {
                 ev.preventDefault();
 
-                setSelectIndex((index) => guard(index - 1));
+                dispatch({ type: ActionType.select, payload: (index) => index - 1 });
             } else if (["ArrowDown", "KeyS", "KeyK", "Down", "S", "s", "K", "k"].includes(codeOrKey)) {
                 ev.preventDefault();
 
-                setSelectIndex((index) => guard(index + 1));
+                dispatch({ type: ActionType.select, payload: (index) => index + 1 });
             } else if (codeOrKey === "Home") {
                 ev.preventDefault();
 
-                setSelectIndex(0);
+                dispatch({ type: ActionType.select, payload: () => 0 });
             } else if (codeOrKey === "End") {
                 ev.preventDefault();
 
-                setSelectIndex(lrcStateRef.current.lyric.length - 1);
+                dispatch({ type: ActionType.select, payload: () => Infinity });
             } else if (codeOrKey === "PageUp") {
                 ev.preventDefault();
 
-                setSelectIndex((index) => guard(index - 10));
+                dispatch({ type: ActionType.select, payload: (index) => index - 10 });
             } else if (codeOrKey === "PageDown") {
                 ev.preventDefault();
 
-                setSelectIndex((index) => guard(index + 10));
+                dispatch({ type: ActionType.select, payload: (index) => index + 10 });
             }
         };
 
@@ -200,7 +157,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
         if ((ev.target as any).classList.contains("line")) {
             const lineKey = Number.parseInt((ev.target as HTMLElement).dataset.key!, 10) || 0;
 
-            setSelectIndex(lineKey);
+            dispatch({ type: ActionType.select, payload: () => lineKey });
         }
     }, []);
 
@@ -216,11 +173,15 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
         if (target.classList.contains("line")) {
             const key = Number.parseInt(target.dataset.key!, 10);
 
-            const time = lrcStateRef.current.lyric[key].time;
-
-            if (time !== undefined) {
-                audioRef.currentTime = guard(time, 0, audioRef.duration);
-            }
+            dispatch({
+                type: ActionType.getState,
+                payload: ({ lyric }) => {
+                    const time = lyric[key].time;
+                    if (time !== undefined) {
+                        audioRef.currentTime = guard(time, 0, audioRef.duration);
+                    }
+                },
+            });
         }
     }, []);
 
@@ -266,9 +227,9 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ lrcState, lrcDispat
     return (
         <>
             <ul ref={ul} className={ulClassName} onClickCapture={onLineClick} onDoubleClickCapture={onLineDoubleClick}>
-                {lrcState.lyric.map(LyricLineIter)}
+                {state.lyric.map(LyricLineIter)}
             </ul>
-            <AsidePanel syncMode={syncMode} setSyncMode={setSyncMode} lrcStateRef={lrcStateRef} prefState={prefState} />
+            <AsidePanel syncMode={syncMode} setSyncMode={setSyncMode} lrcDispatch={dispatch} prefState={prefState} />
             {prefState.screenButton && <SpaceButton sync={sync} />}
         </>
     );

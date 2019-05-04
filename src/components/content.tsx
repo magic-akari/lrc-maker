@@ -5,7 +5,7 @@ import { appContext, ChangBits } from "./app.context.js";
 import { Home } from "./home.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 
-const { lazy, useContext, useEffect, useMemo, useRef, useState } = React;
+const { lazy, useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
 const LazyEditor = lazy(() =>
     import(/* webpackMode: "eager" */ "./editor.js").then(({ Eidtor }) => {
@@ -43,21 +43,22 @@ export const Content: React.FC = () => {
         });
     }, []);
 
-    const [lrcState, lrcDispatch] = useLrc(localStorage.getItem(LSK.lyric) || Const.emptyString, trimOptions);
-
-    const stateRef = useRef({ lrcState, prefState });
-
-    stateRef.current.lrcState = lrcState;
-    stateRef.current.prefState = prefState;
+    const [lrcState, lrcDispatch] = useLrc(() => {
+        return {
+            text: localStorage.getItem(LSK.lyric) || Const.emptyString,
+            options: trimOptions,
+            select: Number.parseInt(sessionStorage.getItem(SSK.selectIndex)!, 10) || 0,
+        };
+    });
 
     useEffect(() => {
         audioStatePubSub.sub(self.current, (data) => {
             if (data.type === AudioActionType.getDuration) {
                 lrcDispatch({
-                    type: LrcActionType.set_info,
+                    type: LrcActionType.info,
                     payload: {
                         name: "length",
-                        value: convertTimeToTag(data.payload, stateRef.current.prefState.fixed, false),
+                        value: convertTimeToTag(data.payload, prefState.fixed, false),
                     },
                 });
             }
@@ -66,14 +67,17 @@ export const Content: React.FC = () => {
         return () => {
             audioStatePubSub.unsub(self.current);
         };
-    }, []);
+    }, [prefState.fixed]);
 
     useEffect(() => {
         const saveState = () => {
-            // tslint:disable-next-line:no-shadowed-variable
-            const { lrcState, prefState } = stateRef.current;
-
-            localStorage.setItem(LSK.lyric, stringify(lrcState, prefState));
+            lrcDispatch({
+                type: LrcActionType.getState,
+                payload: (lrc) => {
+                    localStorage.setItem(LSK.lyric, stringify(lrc, prefState));
+                    sessionStorage.setItem(SSK.selectIndex, lrc.selectIndex.toString());
+                },
+            });
 
             localStorage.setItem(LSK.preferences, JSON.stringify(prefState));
         };
@@ -87,17 +91,16 @@ export const Content: React.FC = () => {
         window.addEventListener("beforeunload", () => {
             saveState();
         });
+    }, [prefState]);
+
+    const onDragOver = useCallback((ev: React.DragEvent<HTMLElement>) => {
+        ev.stopPropagation();
+        ev.preventDefault();
+        ev.dataTransfer!.dropEffect = "copy";
     }, []);
 
-    useEffect(() => {
-        document.body.addEventListener("dragover", (ev) => {
-            ev.stopPropagation();
-            ev.preventDefault();
-            ev.dataTransfer!.dropEffect = "copy";
-            return false;
-        });
-
-        document.body.addEventListener("drop", (ev) => {
+    const onDrop = useCallback(
+        (ev: React.DragEvent<HTMLElement>) => {
             ev.stopPropagation();
             ev.preventDefault();
             const file = ev.dataTransfer!.files[0];
@@ -112,10 +115,10 @@ export const Content: React.FC = () => {
                         });
                         if (audioRef.duration) {
                             lrcDispatch({
-                                type: LrcActionType.set_info,
+                                type: LrcActionType.info,
                                 payload: {
                                     name: "length",
-                                    value: convertTimeToTag(audioRef.duration, stateRef.current.prefState.fixed, false),
+                                    value: convertTimeToTag(audioRef.duration, prefState.fixed, false),
                                 },
                             });
                         }
@@ -130,9 +133,9 @@ export const Content: React.FC = () => {
                     fileReader.readAsText(file, "utf-8");
                 }
             }
-            return false;
-        });
-    }, []);
+        },
+        [prefState],
+    );
 
     useEffect(() => {
         const rgb = hex2rgb(prefState.themeColor);
@@ -168,7 +171,7 @@ export const Content: React.FC = () => {
                 if (lrcState.lyric.length === 0) {
                     return <AkariNotFound />;
                 }
-                return <LazySynchronizer lrcState={lrcState} lrcDispatch={lrcDispatch} />;
+                return <LazySynchronizer state={lrcState} dispatch={lrcDispatch} />;
             }
 
             case Path.gist: {
@@ -184,7 +187,7 @@ export const Content: React.FC = () => {
     })();
 
     return (
-        <main className={`app-main ${textColor}`}>
+        <main className={`app-main ${textColor}`} onDragOver={onDragOver} onDrop={onDrop}>
             <React.Suspense fallback={<AkariOangoLoading />}>{content}</React.Suspense>
         </main>
     );
