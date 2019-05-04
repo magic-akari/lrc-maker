@@ -33,10 +33,10 @@ interface IGistProps {
 export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     const { lang, trimOptions } = useContext(appContext);
 
-    const [token, setToken] = useState(localStorage.getItem(LSK.token));
-    const [gistId, setGistId] = useState(localStorage.getItem(LSK.gistId));
+    const [token, setToken] = useState(() => localStorage.getItem(LSK.token));
+    const [gistId, setGistId] = useState(() => localStorage.getItem(LSK.gistId));
     const [gistIdList, setGistIdList] = useState<string[] | undefined>(undefined);
-    const [fileList, setFileList] = useState<IGistFile[] | null>(JSON.parse(localStorage.getItem(LSK.gistFile)!));
+    const [fileList, setFileList] = useState<IGistFile[] | null>(() => JSON.parse(localStorage.getItem(LSK.gistFile)!));
 
     const ratelimit: Ratelimit | null = useMemo(() => {
         return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!);

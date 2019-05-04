@@ -10,10 +10,14 @@ export const Footer: React.FC = () => {
     // tslint:disable-next-line: no-bitwise
     const { prefState, lang } = useContext(appContext, ChangBits.lang | ChangBits.builtInAudio);
 
-    const [audioSrc, setAudioSrc] = useReducer((oldSrc: string, newSrc: string) => {
-        URL.revokeObjectURL(oldSrc);
-        return newSrc;
-    }, sessionStorage.getItem(SSK.audioSrc)!);
+    const [audioSrc, setAudioSrc] = useReducer(
+        (oldSrc: string, newSrc: string) => {
+            URL.revokeObjectURL(oldSrc);
+            return newSrc;
+        },
+        (src: string) => src,
+        () => sessionStorage.getItem(SSK.audioSrc)!,
+    );
 
     useEffect(() => {
         document.addEventListener("keydown", (ev) => {

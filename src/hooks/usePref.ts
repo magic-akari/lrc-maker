@@ -32,11 +32,11 @@ const reducer = (state: State, action: Action): State => {
     };
 };
 
-export const usePref = (storedPerf: string) => {
+const init = (lazyInit: () => string): State => {
     const state: Mutable<State> = initState;
     state.lang = navigator.language;
     try {
-        const storedState: State = JSON.parse(storedPerf);
+        const storedState: State = JSON.parse(lazyInit());
         const validKeys = Object.keys(initState) as Array<keyof State>;
         for (const key of validKeys) {
             if (key in storedState) {
@@ -46,6 +46,7 @@ export const usePref = (storedPerf: string) => {
     } catch (error) {
         //
     }
-
-    return React.useReducer(reducer, state);
+    return state;
 };
+
+export const usePref = (lazyInit: () => string) => React.useReducer(reducer, lazyInit, init);
