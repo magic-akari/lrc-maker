@@ -22,12 +22,17 @@ const reducer = (state: State, action: Action): State => {
         case ActionType.set_time: {
             const { index, time } = action.payload;
 
-            const newLyric: Array<Mutable<ILyric>> = state.lyric.slice();
-            newLyric[index].time = time;
+            const newLyric = state.lyric.slice();
+            // ATTENTION:
+            // we call .slice() on oldLyric to generate newLyric
+            // oldLyric !== newLyric
+            // but every children of oldLyric and newLyric are definitely equal
+
+            newLyric[index] = { ...newLyric[index], time };
 
             return {
                 info: state.info,
-                lyric: newLyric,
+                lyric: newLyric as readonly ILyric[],
             };
         }
 

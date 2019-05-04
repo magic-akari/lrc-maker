@@ -1,3 +1,5 @@
+import { State as PrefState } from "../hooks/usePref.js";
+import { State as LrcState, stringify } from "../lrc-parser.js";
 import { DownloadSVG, LockSVG } from "./svg.js";
 import { SyncMode } from "./synchronizer.js";
 
@@ -6,10 +8,10 @@ const { useState, useCallback, useMemo } = React;
 export const AsidePanel: React.FC<{
     syncMode: SyncMode;
     setSyncMode: React.Dispatch<React.SetStateAction<SyncMode>>;
-    lrcInfo: Map<string, string>;
-    createDownloadFile: () => string;
-}> = ({ syncMode, setSyncMode, lrcInfo, createDownloadFile }) => {
-    const [href, setHref] = useState<string | undefined>(undefined);
+    lrcStateRef: { current: LrcState };
+    prefState: PrefState;
+}> = React.memo(({ syncMode, setSyncMode, lrcStateRef, prefState }) => {
+    const [href, setHref] = useState<string>();
 
     const onSyncModeToggle = useCallback(() => {
         setSyncMode(syncMode === SyncMode.select ? SyncMode.highlight : SyncMode.select);
@@ -22,29 +24,31 @@ export const AsidePanel: React.FC<{
             }
 
             return URL.createObjectURL(
-                new Blob([createDownloadFile()], {
+                new Blob([stringify(lrcStateRef.current, prefState)], {
                     type: "text/plain;charset=UTF-8",
                 }),
             );
         });
     }, []);
 
+    const info = lrcStateRef.current.info;
+
     const downloadName = useMemo(() => {
         const list = [];
-        if (lrcInfo.has("ti")) {
-            list.push(lrcInfo.get("ti"));
+        if (info.has("ti")) {
+            list.push(info.get("ti"));
         }
-        if (lrcInfo.has("ar")) {
-            list.push(lrcInfo.get("ar"));
+        if (info.has("ar")) {
+            list.push(info.get("ar"));
         }
         if (list.length === 0) {
-            if (lrcInfo.has("al")) {
-                list.push(lrcInfo.get("al"));
+            if (info.has("al")) {
+                list.push(info.get("al"));
             }
             list.push(new Date().toLocaleString());
         }
         return list.join(" - ") + ".lrc";
-    }, [lrcInfo]);
+    }, [info]);
 
     const className = [
         "aside-button",
@@ -64,4 +68,4 @@ export const AsidePanel: React.FC<{
             </a>
         </aside>
     );
-};
+});
