@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
             URL.revokeObjectURL(oldSrc);
             return newSrc;
         },
-        (src: string) => src,
+        undefined,
         () => sessionStorage.getItem(SSK.audioSrc)!,
     );
 
@@ -74,7 +74,6 @@ export const Footer: React.FC = () => {
 
     useEffect(() => {
         document.body.addEventListener("drop", (ev) => {
-            ev.stopPropagation();
             ev.preventDefault();
             const file = ev.dataTransfer!.files[0];
             receiveFile(file, setAudioSrc);
