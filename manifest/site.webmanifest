@@ -17,5 +17,15 @@
     "name": "灯里的歌词滚动姬",
     "short_name": "歌词滚动姬",
     "start_url": "./",
-    "theme_color": "#484848"
+    "theme_color": "#484848",
+    "share_target": {
+        "action": "./",
+        "method": "GET",
+        "enctype": "application/x-www-form-urlencoded",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url"
+        }
+    }
 }

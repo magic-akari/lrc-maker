@@ -68,15 +68,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
 
         const urlInput = form.elements.namedItem("url")! as HTMLInputElement;
 
-        let url = urlInput.value;
-
-        if (url.includes("music.163.com")) {
-            const result = url.match(/\d{4,}/);
-            if (result !== null) {
-                const id = result[0];
-                url = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
-            }
-        }
+        const url = nec(urlInput.value);
 
         sessionStorage.setItem(SSK.audioSrc, url);
         setAudioSrc(url);
@@ -125,4 +117,15 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
         </details>,
         document.body,
     );
+};
+
+export const nec = (url: string) => {
+    if (url.includes("music.163.com")) {
+        const result = url.match(/\d{4,}/);
+        if (result !== null) {
+            const id = result[0];
+            return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+        }
+    }
+    return url;
 };

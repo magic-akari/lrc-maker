@@ -1,7 +1,7 @@
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
-import { LoadAudio } from "./loadaudio.js";
+import { LoadAudio, nec } from "./loadaudio.js";
 import { toastPubSub } from "./toast.js";
 
 const { useCallback, useContext, useEffect, useReducer, useRef } = React;
@@ -16,7 +16,20 @@ export const Footer: React.FC = () => {
             return newSrc;
         },
         undefined,
-        () => sessionStorage.getItem(SSK.audioSrc)!,
+        () => {
+            let src = sessionStorage.getItem(SSK.audioSrc);
+            if (src === null && location.search && URLSearchParams) {
+                const searchParams = new URLSearchParams(location.search);
+                const url = searchParams.get("url");
+                if (url !== null) {
+                    return url;
+                }
+                const text = searchParams.get("text") || searchParams.get("title");
+                const result = /https?:\/\/\S+/.exec(text!);
+                src = result && nec(result[0]);
+            }
+            return src!;
+        },
     );
 
     useEffect(() => {
