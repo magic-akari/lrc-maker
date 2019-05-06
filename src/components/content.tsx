@@ -1,6 +1,6 @@
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { convertTimeToTag, stringify } from "../lrc-parser.js";
-import { AudioActionType, audioRef, audioStatePubSub } from "../utils/audiomodule.js";
+import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { Home } from "./home.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
@@ -93,49 +93,29 @@ export const Content: React.FC = () => {
         });
     }, [prefState]);
 
-    const onDragOver = useCallback((ev: React.DragEvent<HTMLElement>) => {
-        ev.stopPropagation();
-        ev.preventDefault();
-        ev.dataTransfer!.dropEffect = "copy";
-    }, []);
-
-    const onDrop = useCallback(
-        (ev: React.DragEvent<HTMLElement>) => {
-            ev.stopPropagation();
-            ev.preventDefault();
+    useEffect(() => {
+        document.documentElement.addEventListener("drop", (ev) => {
             const file = ev.dataTransfer!.files[0];
-            if (file) {
-                if (file.type.startsWith("text/") || /(?:\.lrc|\.txt)$/i.test(file.name)) {
-                    const fileReader = new FileReader();
+            if (file && (file.type.startsWith("text/") || /(?:\.lrc|\.txt)$/i.test(file.name))) {
+                const fileReader = new FileReader();
 
-                    const onload = () => {
-                        lrcDispatch({
-                            type: LrcActionType.parse,
-                            payload: { text: fileReader.result as string, options: trimOptions },
-                        });
-                        if (audioRef.duration) {
-                            lrcDispatch({
-                                type: LrcActionType.info,
-                                payload: {
-                                    name: "length",
-                                    value: convertTimeToTag(audioRef.duration, prefState.fixed, false),
-                                },
-                            });
-                        }
-                    };
-
-                    fileReader.addEventListener("load", onload, {
-                        once: true,
+                const onload = () => {
+                    lrcDispatch({
+                        type: LrcActionType.parse,
+                        payload: { text: fileReader.result as string, options: trimOptions },
                     });
+                };
 
-                    location.hash = Path.editor;
+                fileReader.addEventListener("load", onload, {
+                    once: true,
+                });
 
-                    fileReader.readAsText(file, "utf-8");
-                }
+                location.hash = Path.editor;
+
+                fileReader.readAsText(file, "utf-8");
             }
-        },
-        [prefState],
-    );
+        });
+    }, []);
 
     useEffect(() => {
         const rgb = hex2rgb(prefState.themeColor);
@@ -187,7 +167,7 @@ export const Content: React.FC = () => {
     })();
 
     return (
-        <main className={`app-main ${textColor}`} onDragOver={onDragOver} onDrop={onDrop}>
+        <main className={`app-main ${textColor}`}>
             <React.Suspense fallback={<AkariOangoLoading />}>{content}</React.Suspense>
         </main>
     );

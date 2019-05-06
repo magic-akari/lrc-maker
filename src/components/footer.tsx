@@ -86,12 +86,9 @@ export const Footer: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        document.body.addEventListener("drop", (ev) => {
-            ev.preventDefault();
+        document.documentElement.addEventListener("drop", (ev) => {
             const file = ev.dataTransfer!.files[0];
             receiveFile(file, setAudioSrc);
-
-            return false;
         });
     }, []);
 
