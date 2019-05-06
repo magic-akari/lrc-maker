@@ -58,7 +58,7 @@ time {
     letter-spacing: 0.5px;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     time {
         letter-spacing: 0;
     }

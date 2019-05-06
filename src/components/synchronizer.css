@@ -77,7 +77,7 @@
     left: -2rem;
 }
 
-@media screen and (max-width: 1080px) {
+@media (max-width: 1080px) {
     .error::before {
         left: 6rem;
     }
@@ -87,7 +87,7 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .line {
         font-size: 1rem;
         padding-left: 6rem;

@@ -16,7 +16,7 @@
     animation: slideInDown var(--animation-duration) ease-in-out forwards;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .app-header {
         padding: 0 4px;
     }
@@ -34,7 +34,7 @@
     display: inline-flex;
 }
 
-@media screen and (min-width: 768px) {
+@media (min-width: 768px) {
     .app-title-text {
         display: inline-flex;
     }

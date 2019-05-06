@@ -7,13 +7,13 @@
     margin: auto;
 }
 
-@media screen and (max-width: 1280px) {
+@media (max-width: 1280px) {
     .app-main {
         width: 1024px;
     }
 }
 
-@media screen and (max-width: 1024px) {
+@media (max-width: 1024px) {
     .app-main {
         width: 100%;
     }

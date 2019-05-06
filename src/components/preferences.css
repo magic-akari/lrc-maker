@@ -112,7 +112,7 @@
     display: none;
 }
 
-@media screen and (min-width: 768px) {
+@media (min-width: 768px) {
     .user-color-label,
     .user-color-input-text {
         display: inline-flex;

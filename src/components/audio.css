@@ -42,7 +42,7 @@ audio::-webkit-media-controls-enclosure {
     width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .time-line-slider {
         --slider-height: 4px;
         position: absolute;

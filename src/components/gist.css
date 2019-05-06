@@ -130,7 +130,7 @@
     padding: 1rem;
 }
 
-@media screen and (min-width: 1024px) {
+@media (min-width: 1024px) {
     .gist-details {
         padding: 1rem 0;
     }
@@ -147,7 +147,7 @@
     justify-content: space-between;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .gist-bar {
         flex-direction: column;
     }
