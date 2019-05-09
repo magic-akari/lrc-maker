@@ -10,11 +10,11 @@ interface ISliderProps {
     max: number;
     step?: string | number;
     value: number;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
     className: string;
 }
 
-const Slider: React.FC<ISliderProps> = ({ min, max, step, value, onChange, className }) => {
+const Slider: React.FC<ISliderProps> = ({ min, max, step, value, onInput, className }) => {
     const total = max - min || 1;
     const percent = (value - min) / total;
 
@@ -28,7 +28,7 @@ const Slider: React.FC<ISliderProps> = ({ min, max, step, value, onChange, class
                 max={max}
                 step={step}
                 value={value}
-                onChange={onChange}
+                onInput={onInput}
             />
         </div>
     );
@@ -74,7 +74,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
 
     const rafId = useRef(0);
 
-    const onChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
+    const onInput = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
         if (rafId.current) {
             cancelAnimationFrame(rafId.current);
         }
@@ -99,7 +99,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
                 {durationTimeTag}
             </time>
 
-            <Slider min={0} max={duration} step={1} value={currentTime} className="time-line" onChange={onChange} />
+            <Slider min={0} max={duration} step={1} value={currentTime} className="time-line" onInput={onInput} />
         </>
     );
 };
@@ -153,7 +153,7 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
                 max={1}
                 step="any"
                 value={playbackRateSliderValue}
-                onChange={onPlaybackRateChange}
+                onInput={onPlaybackRateChange}
             />
         </>
     );
