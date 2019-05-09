@@ -10,6 +10,7 @@
 @media (max-width: 1280px) {
     .app-main {
         width: 1024px;
+        max-width: 100%;
     }
 }
 
