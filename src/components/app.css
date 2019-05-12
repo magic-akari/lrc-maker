@@ -120,15 +120,15 @@ time {
     top: 0;
     left: 0;
     pointer-events: none;
-    background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+    background-image: radial-gradient(circle, #000 10%, transparent 10%);
     background-repeat: no-repeat;
     background-position: 50%;
-    transform: scale(10, 10);
+    transform: scale3d(10, 10, 1);
     opacity: 0;
     transition: transform 0.5s, opacity 1s;
 }
 .ripple:active:after {
-    transform: scale(0, 0);
+    transform: scale3d(0, 0, 1);
     opacity: 0.2;
     transition: 0s;
 }
