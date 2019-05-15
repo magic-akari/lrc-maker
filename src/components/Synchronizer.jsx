@@ -3,7 +3,7 @@
  */
 "use strict";
 import { action, autorun, computed } from "mobx";
-import { Component, h } from "preact";
+import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { elementScrollIntoView } from "seamless-scroll-polyfill";
 import { appState } from "../store/appState.js";

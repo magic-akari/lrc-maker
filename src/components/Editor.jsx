@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
-import { Component, createRef, h } from "preact";
+import { Component, createRef } from "preact";
 import { observer } from "preact-mobx-observer";
 import { appState } from "../store/appState.js";
 import { lrc } from "../store/lrc.js";

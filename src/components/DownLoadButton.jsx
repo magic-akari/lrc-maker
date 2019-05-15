@@ -3,7 +3,7 @@
  */
 "use strict";
 import { action, observable } from "mobx";
-import { Component, h } from "preact";
+import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { lrc } from "../store/lrc.js";
 import { DownloadSvg } from "./SVG.jsx";

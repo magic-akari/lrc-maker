@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 14/06/2017.
  */
 "use strict";
-import { Component, h } from "preact";
+import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { router, Router } from "../router.js";
 import { lrc } from "../store/lrc.js";
