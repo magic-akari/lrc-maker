@@ -153,6 +153,15 @@
         }
     }
 
+    input[type="number"] {
+        width: 4rem;
+        height: 30px;
+        text-align: right;
+        background: 0;
+        border: 0;
+        border-bottom: 1px solid $theme-color;
+    }
+
     .lang-select > select {
         // direction: rtl;
         padding-right: 1rem;

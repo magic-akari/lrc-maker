@@ -50,6 +50,8 @@
     word-break: break-all;
     padding: 2px;
     padding-left: 8rem;
+    white-space: pre-wrap;
+
     @media screen and (max-width: 768px) {
         padding-left: 6rem;
     }

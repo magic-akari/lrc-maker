@@ -6,13 +6,15 @@ import { action, computed, observable, toJS } from "mobx";
 import { languages } from "../languages/index.js";
 
 export const preferences = new (class Preferences {
-    @observable trim = true;
     @observable fixed = 3;
-    @observable pretty_tag = true;
-    @observable built_in_audio = false;
-    @observable screen_button = false;
-    @observable dark_mode = false;
+    @observable spaceStart = 1;
+    @observable spaceEnd = -1;
+    @observable builtInAudio = false;
+    @observable screenButton = false;
+    @observable darkMode = false;
     @observable lang = "en-US";
+
+    themeColor = "#f58ea8";
 
     @computed
     get i18n() {
@@ -47,43 +49,35 @@ export const preferences = new (class Preferences {
         } catch (e) {}
     }
 
+    /** @param {number} value */
     @action.bound
-    toggle_trim() {
-        if (this.trim === true) {
-            this.trim = false;
-            this.pretty_tag = false;
-        } else {
-            this.trim = true;
-        }
+    set_spaceStart(value) {
+        this.spaceStart = value;
         this.save();
     }
 
+    /** @param {number} value */
     @action.bound
-    toggle_pretty_tag() {
-        if (this.pretty_tag === false) {
-            this.pretty_tag = true;
-            this.trim = true;
-        } else {
-            this.pretty_tag = false;
-        }
+    set_spaceEnd(value) {
+        this.spaceEnd = value;
         this.save();
     }
 
     @action.bound
     toggle_audio_player() {
-        this.built_in_audio = !this.built_in_audio;
+        this.builtInAudio = !this.builtInAudio;
         this.save();
     }
 
     @action.bound
     toggle_screen_button() {
-        this.screen_button = !this.screen_button;
+        this.screenButton = !this.screenButton;
         this.save();
     }
 
     @action.bound
     toggle_dark_mode() {
-        this.dark_mode = !this.dark_mode;
+        this.darkMode = !this.darkMode;
         this.save();
     }
 

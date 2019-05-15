@@ -13,7 +13,7 @@ import { preferences } from "./store/preferences.js";
 configure({ enforceActions: true });
 autorun(() => (document.title = preferences.i18n["app"]["fullname"]));
 autorun(() => {
-    if (preferences.dark_mode) {
+    if (preferences.darkMode) {
         document.documentElement.classList.add("dark");
     } else {
         document.documentElement.classList.remove("dark");

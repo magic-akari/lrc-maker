@@ -9,14 +9,36 @@ import { preferences as pref } from "../store/preferences.js";
 
 @observer
 class Preferences extends Component {
-    handleLanguageSelect(e) {
-        pref.language = e.target.value;
+    /** @type {(ev: JSX.EventHandler<Event>) => void} */
+    handleLanguageSelect(ev) {
+        /** @type {HTMLSelectElement} */
+        const target = ev.target;
+        pref.language = target.value;
     }
 
     clearCache = () => {
         localStorage.clear();
-        if ("serviceWorkerRegistration" in window) {
-            window.serviceWorkerRegistration.unregister();
+    };
+
+    /** @type {(ev: JSX.EventHandler<Event>) => void} */
+    onSpaceStartChange = (ev) => {
+        /** @type {HTMLInputElement} */
+        const target = ev.target;
+        if (target.validity.valid) {
+            pref.set_spaceStart(Number.parseInt(target.value, 10));
+        } else {
+            target.value = pref.spaceStart;
+        }
+    };
+
+    /** @type {(ev: JSX.EventHandler<Event>) => void} */
+    onSpaceEndChange = (ev) => {
+        /** @type {HTMLInputElement} */
+        const target = ev.target;
+        if (target.validity.valid) {
+            pref.set_spaceEnd(Number.parseInt(target.value, 10));
+        } else {
+            target.value = pref.spaceEnd;
         }
     };
 
@@ -87,27 +109,39 @@ class Preferences extends Component {
                 </section>
                 <section>
                     <label className="section-group">
-                        <div>{pref.i18n["preferences"]["trim-line"]}</div>
-                        <label class="label-switch">
-                            <input type="checkbox" checked={pref.trim} onChange={pref.toggle_trim} />
-                            <div class="checkbox" />
-                        </label>
+                        <label htmlFor="space-start">{pref.i18n["preferences"]["left-space"]}</label>
+                        <input
+                            name="spaceStart"
+                            id="space-start"
+                            required={true}
+                            min="-1"
+                            type="number"
+                            step="1"
+                            value={pref.spaceStart}
+                            onChange={this.onSpaceStartChange}
+                        />
                     </label>
                 </section>
                 <section>
                     <label className="section-group">
-                        <div>{pref.i18n["preferences"]["add-space"]}</div>
-                        <label class="label-switch">
-                            <input type="checkbox" checked={pref.pretty_tag} onChange={pref.toggle_pretty_tag} />
-                            <div class="checkbox" />
-                        </label>
+                        <label htmlFor="space-end">{pref.i18n["preferences"]["right-space"]}</label>
+                        <input
+                            name="spaceEnd"
+                            id="space-end"
+                            required={true}
+                            min="-1"
+                            type="number"
+                            step="1"
+                            value={pref.spaceEnd}
+                            onChange={this.onSpaceEndChange}
+                        />
                     </label>
                 </section>
                 <section>
                     <label className="section-group">
                         <div>{pref.i18n["preferences"]["built-in-audio"]}</div>
                         <label class="label-switch">
-                            <input type="checkbox" checked={pref.built_in_audio} onChange={pref.toggle_audio_player} />
+                            <input type="checkbox" checked={pref.builtInAudio} onChange={pref.toggle_audio_player} />
                             <div class="checkbox" />
                         </label>
                     </label>
@@ -116,7 +150,7 @@ class Preferences extends Component {
                     <label className="section-group">
                         <div>{pref.i18n["preferences"]["space-button-on-screen"]}</div>
                         <label class="label-switch">
-                            <input type="checkbox" checked={pref.screen_button} onChange={pref.toggle_screen_button} />
+                            <input type="checkbox" checked={pref.screenButton} onChange={pref.toggle_screen_button} />
                             <div class="checkbox" />
                         </label>
                     </label>
@@ -125,7 +159,7 @@ class Preferences extends Component {
                     <label className="section-group">
                         <div>{pref.i18n["preferences"]["dark-mode"]}</div>
                         <label class="label-switch">
-                            <input type="checkbox" checked={pref.dark_mode} onChange={pref.toggle_dark_mode} />
+                            <input type="checkbox" checked={pref.darkMode} onChange={pref.toggle_dark_mode} />
                             <div class="checkbox" />
                         </label>
                     </label>

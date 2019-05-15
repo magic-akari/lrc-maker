@@ -15,7 +15,7 @@ const Slider = ({ min, max, step, value, onInput, className }) => {
             <progress min={0} max={1} value={percent} />
             <input
                 type="range"
-                tabIndex="-1"
+                tabIndex={-1}
                 className={className}
                 min={min}
                 max={max}

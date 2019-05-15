@@ -106,7 +106,7 @@ class Footer extends Component {
                 <SpaceButton />
                 <Audio
                     className="app-audio"
-                    controls={preferences.built_in_audio}
+                    controls={preferences.builtInAudio}
                     ref={(audio) => {
                         this.audio = audio;
                     }}

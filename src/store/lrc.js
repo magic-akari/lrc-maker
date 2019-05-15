@@ -2,37 +2,50 @@
  * Created by 阿卡琳 on 18/06/2017.
  */
 "use strict";
-import { action, computed, observable } from "mobx";
+import { parser, stringify } from "@lrc-maker/lrc-parser";
+import { action, autorun, computed, observable } from "mobx";
 import { appState } from "./appState.js";
 import { preferences } from "./preferences.js";
 
 class LRC {
+    /** @type {import("mobx").ObservableMap<string, string>} */
     @observable info = new Map();
+
+    /**
+     * @typedef ILyric
+     * @type {object} ILyric
+     * @property {number?} time
+     * @property {string} text
+     */
+
+    /** @type {import("mobx").IObservableArray<ILyric>} */
     @observable lyric = [];
+
     @observable _selectedIndex = 0;
+    @observable _highlightIndex = -Infinity;
 
     @computed
     get selectedIndex() {
         return this._selectedIndex;
     }
 
-    set selectedIndex(value) {
-        let _value = value;
-        if (isNaN(_value) || _value < 0) {
-            _value = 0;
+    set selectedIndex(index) {
+        if (isNaN(index) || index < 0) {
+            index = 0;
         }
-        if (_value > this.lyric.length - 1) {
-            _value = this.lyric.length - 1;
+        if (index > this.lyric.length - 1) {
+            index = this.lyric.length - 1;
         }
-        this._selectedIndex = _value;
+        this._selectedIndex = index;
     }
+
     @computed
     get highlightIndex() {
-        const currentTime = appState.currentTime;
-        const highlighted = this.lyric
-            .filter((l) => l.time !== undefined && l.time < currentTime)
-            .sort((a, b) => (a.time < b.time ? 1 : -1));
-        return highlighted.length === 0 ? 0 : highlighted[0].key;
+        return this._highlightIndex;
+    }
+
+    set highlightIndex(index) {
+        this._highlightIndex = index;
     }
 
     static get storageName() {
@@ -52,41 +65,13 @@ class LRC {
     };
 
     set value(text) {
-        this.info.clear();
-        this.lyric.clear();
+        const { lyric, info } = parser(text, {
+            trimStart: preferences.spaceStart !== -1,
+            trimEnd: preferences.spaceEnd !== -1
+        });
 
-        const list = text.split(/\r\n|[\r\n]/);
-
-        const time_tag = /\[\s*(\d{1,3}):(\d{1,2}(?:[:.]\d{1,3})?)\s*](.*)/;
-        const info_tag = /\[\s*(\w{1,6})\s*:(.*)]/;
-
-        for (let line of list) {
-            const r_time_tag = time_tag.exec(line);
-            if (r_time_tag !== null) {
-                // babili-webpack-plugin 的解构压缩有bug
-                // let [_, mm, ss, text] = r_time_tag;
-                let mm = r_time_tag[1];
-                let ss = r_time_tag[2];
-                let text = r_time_tag[3];
-                ss = ss.replace(":", ".");
-                [mm, ss] = [parseInt(mm), parseFloat(ss)];
-                if (preferences.trim) {
-                    text = text.trim();
-                }
-                this.lyric.push({ key: this.lyric.length, time: mm * 60 + ss, text });
-            } else {
-                const r_info_tag = info_tag.exec(line);
-                if (r_info_tag !== null) {
-                    this.info.set(r_info_tag[1], r_info_tag[2]);
-                } else {
-                    let text = line;
-                    if (preferences.trim) {
-                        text = text.trim();
-                    }
-                    this.lyric.push({ key: this.lyric.length, text, time: undefined });
-                }
-            }
-        }
+        this.lyric.replace(lyric);
+        this.info.replace(info);
 
         this.selectedIndex += 0;
     }
@@ -101,35 +86,53 @@ class LRC {
         this.info.delete(name);
     }
 
-    static timeToTag(time) {
-        // if (isNaN(time)) {
-        //   return "[--:--.--]";
-        // }
-        const fixed = preferences.fixed;
-        const m = ("" + ~~(time / 60)).padStart(2, "0");
-        const s_ms = (time % 60).toFixed(fixed).padStart(fixed ? fixed + 3 : 2, "0");
-        return `[${m}:${s_ms}]`;
-    }
-
     @computed
     get value() {
-        const result = [];
-        const info_list = this.info.entries();
-        for (let i of info_list) {
-            result.push(`[${i[0]}:${i[1]}]`);
-        }
-        for (let l of this.lyric) {
-            const { time, text } = l;
-            const space = preferences.pretty_tag ? " " : "";
-            if (time !== undefined && !isNaN(time)) {
-                result.push(LRC.timeToTag(time, preferences) + space + text);
-            } else {
-                result.push(text);
-            }
-        }
-        return result.join("\r\n");
+        return stringify(this, preferences);
     }
 }
 
-const lrc = new LRC();
-export { LRC, lrc };
+const record = {
+    currentTime: Infinity,
+    currentIndex: Infinity,
+    nextTime: -Infinity,
+    nextIndex: -Infinity
+};
+
+export const lrc = new LRC();
+
+autorun(() => {
+    const audioTime = appState.currentTime;
+    const lyric = lrc.lyric;
+
+    if (audioTime >= record.currentTime && audioTime < record.nextTime) {
+        return;
+    }
+
+    Object.assign(
+        record,
+        lyric.reduce(
+            (p, c, i) => {
+                if (c.time) {
+                    if (c.time < p.nextTime && c.time > audioTime) {
+                        p.nextTime = c.time;
+                        p.nextIndex = i;
+                    }
+                    if (c.time > p.currentTime && c.time <= audioTime) {
+                        p.currentTime = c.time;
+                        p.currentIndex = i;
+                    }
+                }
+                return p;
+            },
+            {
+                currentTime: -Infinity,
+                currentIndex: -Infinity,
+                nextTime: Infinity,
+                nextIndex: Infinity
+            }
+        )
+    );
+
+    lrc.highlightIndex = record.currentIndex;
+});

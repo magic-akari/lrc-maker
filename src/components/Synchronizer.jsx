@@ -2,12 +2,13 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
+import { convertTimeToTag, formatText } from "@lrc-maker/lrc-parser";
 import { action, autorun, computed } from "mobx";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { elementScrollIntoView } from "seamless-scroll-polyfill";
 import { appState } from "../store/appState.js";
-import { lrc, LRC } from "../store/lrc.js";
+import { lrc } from "../store/lrc.js";
 import { preferences } from "../store/preferences.js";
 import { DownLoadButton } from "./DownLoadButton.jsx";
 import { LockNodeButton } from "./LockNodeButton.jsx";
@@ -15,7 +16,11 @@ import { LockNodeButton } from "./LockNodeButton.jsx";
 @observer
 class CurrentTimeTag extends Component {
     render() {
-        return <span className="current-time-tag">{LRC.timeToTag(appState.currentTime_fixed) + "\u27A4"}</span>;
+        return (
+            <span className="current-time-tag">
+                {convertTimeToTag(appState.currentTime_fixed, preferences.fixed) + "\u27A4"}
+            </span>
+        );
     }
 }
 
@@ -51,14 +56,6 @@ class SynchronizerList extends Component {
                     });
                 }
             }),
-            autorun(() => {
-                if (appState.lock) {
-                    document.body.classList.add("freeze");
-                } else {
-                    document.body.classList.remove("freeze");
-                }
-            }),
-            () => document.body.classList.remove("freeze"),
             autoDispose(
                 "keydown",
                 (e) => {
@@ -140,15 +137,15 @@ class SynchronizerList extends Component {
                 {lrc.lyric.map((lyricLine, index) => {
                     const className = ["lyric-line"];
                     /**
-                     * lyricLine.key === index == data-key
+                     * index == data-key
                      */
-                    if (lyricLine.key === lrc.highlightIndex) {
+                    if (index === lrc.highlightIndex) {
                         className.push("highlight");
                     }
-                    if (lyricLine.key === lrc.selectedIndex) {
+                    if (index === lrc.selectedIndex) {
                         className.push("select");
                     }
-                    let pre_key = Math.max(lyricLine.key - 1, 0);
+                    let pre_key = Math.max(index - 1, 0);
                     let pre_time = lrc.lyric[pre_key].time;
                     if (pre_time && pre_time > lyricLine.time) {
                         className.push("error");
@@ -157,15 +154,18 @@ class SynchronizerList extends Component {
                     const time = lyricLine.time;
 
                     const lyricTimeTag =
-                        time === undefined ? null : <span className="lyric-time">{LRC.timeToTag(lyricLine.time)}</span>;
+                        time === undefined ? null : (
+                            <span className="lyric-time">{convertTimeToTag(time, preferences.fixed)}</span>
+                        );
 
                     return (
-                        <li className={className.join(" ")} data-key={lyricLine.key} key={lyricLine.key}>
-                            {lyricLine.key == lrc.selectedIndex ? <CurrentTimeTag /> : null}
+                        <li className={className.join(" ")} data-key={index} key={index}>
+                            {index == lrc.selectedIndex ? <CurrentTimeTag /> : null}
                             <p className="lyric">
                                 {lyricTimeTag}
-                                {preferences.pretty_tag ? " " : null}
-                                <span class="lyric-text">{lyricLine.text}</span>
+                                <span class="lyric-text">
+                                    {formatText(lyricLine.text, preferences.spaceStart, preferences.spaceEnd)}
+                                </span>
                             </p>
                         </li>
                     );

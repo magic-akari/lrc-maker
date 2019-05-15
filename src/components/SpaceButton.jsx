@@ -11,7 +11,7 @@ import { sync } from "./Synchronizer.jsx";
 @observer
 class SpaceButton extends Component {
     render() {
-        return preferences.screen_button && router.path === Router.synchronizer.path ? (
+        return preferences.screenButton && router.path === Router.synchronizer.path ? (
             <button onClick={sync} className="space_button">
                 space
             </button>
