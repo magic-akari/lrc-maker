@@ -19,7 +19,7 @@ class Editor extends Component {
     textareaRef = createRef();
 
     get textarea() {
-        return textareaRef.current;
+        return this.textareaRef.current;
     }
 
     componentWillUnmount() {
@@ -114,3 +114,4 @@ class Editor extends Component {
     }
 }
 export { Editor };
+
