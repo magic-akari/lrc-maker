@@ -3,7 +3,7 @@
  */
 "use strict";
 import { action, computed, observable } from "mobx";
-import { Component, createRef } from "preact";
+import preact, { Component, createRef } from "preact";
 import { observer } from "preact-mobx-observer";
 import { Forward5sSvg, MutedSvg, PauseSvg, PlaySvg, Replay5sSvg, VolumeSvg } from "./SVG.jsx";
 

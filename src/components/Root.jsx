@@ -2,6 +2,7 @@
  * Created by 阿卡琳 on 14/06/2017.
  */
 "use strict";
+import preact from "preact";
 import { App } from "./App.jsx";
 
 export const Root = () => (

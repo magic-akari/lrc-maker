@@ -2,6 +2,7 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
+import preact from "preact";
 
 export const Loading = () => (
     <div className="loading-page">

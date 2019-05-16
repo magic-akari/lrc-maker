@@ -2,7 +2,7 @@
  * Created by 阿卡琳 on 27/06/2017.
  */
 "use strict";
-import { Component } from "preact";
+import preact, { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { appState } from "../store/appState.js";
 import { LockSvg, UnlockSvg } from "./SVG.jsx";

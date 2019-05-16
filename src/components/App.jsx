@@ -3,6 +3,7 @@
  */
 "use strict";
 
+import preact from "preact";
 import { Content } from "./Content.jsx";
 import { Footer } from "./Footer.jsx";
 import { Header } from "./Header.jsx";

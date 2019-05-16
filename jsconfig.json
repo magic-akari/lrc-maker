@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "jsx": "preserve",
+        "reactNamespace": "preact",
         "experimentalDecorators": true
     }
 }

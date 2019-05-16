@@ -3,7 +3,7 @@
  */
 "use strict";
 import { computed } from "mobx";
-import { Component } from "preact";
+import preact, { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { languages } from "../languages/index.js";
 import { preferences as pref } from "../store/preferences.js";
@@ -191,4 +191,3 @@ class Preferences extends Component {
     }
 }
 export { Preferences };
-

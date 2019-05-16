@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
-const execSync = require("child_process").execSync;
+const { execSync } = require("child_process");
 
 const VERSION = JSON.stringify(process.env.npm_package_version);
 const UPDATE_TIME = JSON.stringify(
@@ -43,7 +43,7 @@ const esnext = Object.assign({}, base, {
             {
                 test: /\.jsx?$/,
                 use: ["babel-loader"],
-                include: path.resolve(__dirname, "src")
+                exclude: /node_modules/
             }
         ]
     }

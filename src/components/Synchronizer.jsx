@@ -4,7 +4,7 @@
 "use strict";
 import { convertTimeToTag, formatText } from "@lrc-maker/lrc-parser";
 import { action, autorun, computed } from "mobx";
-import { Component } from "preact";
+import preact, { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { elementScrollIntoView } from "seamless-scroll-polyfill";
 import { appState } from "../store/appState.js";

@@ -1,6 +1,6 @@
 {
     "plugins": [
-        ["@babel/plugin-transform-react-jsx", { "pragma": "require('preact').h" }],
+        ["@babel/plugin-transform-react-jsx", { "pragma": "preact.h" }],
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["@babel/plugin-proposal-class-properties", { "loose": true }]
     ]
