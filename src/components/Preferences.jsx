@@ -2,6 +2,7 @@
  * Created by 阿卡琳 on 15/06/2017.
  */
 "use strict";
+import { computed } from "mobx";
 import { Component } from "preact";
 import { observer } from "preact-mobx-observer";
 import { languages } from "../languages/index.js";
@@ -42,6 +43,22 @@ class Preferences extends Component {
         }
     };
 
+    @computed
+    get updateTime() {
+        const date = new Date(UPDATE_TIME);
+        const options = {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            timeZoneName: "short",
+            hour12: false
+        };
+        return new Intl.DateTimeFormat(pref.lang, options).format(date);
+    }
+
     render() {
         return (
             <div className="preferences">
@@ -68,7 +85,7 @@ class Preferences extends Component {
                 <section>
                     <div className="section-group">
                         <div>{pref.i18n["preferences"]["update-time"]}</div>
-                        <div>{BUILD_TIME}</div>
+                        <div>{this.updateTime}</div>
                     </div>
                 </section>
                 <section>
@@ -174,3 +191,4 @@ class Preferences extends Component {
     }
 }
 export { Preferences };
+

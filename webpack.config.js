@@ -20,7 +20,7 @@ const base = {
         new webpack.DefinePlugin({
             __SSR__: false,
             VERSION,
-            BUILD_TIME: UPDATE_TIME,
+            UPDATE_TIME,
             BUILD_REVISION
         })
     ],
