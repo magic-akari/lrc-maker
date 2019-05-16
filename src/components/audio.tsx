@@ -21,15 +21,7 @@ const Slider: React.FC<ISliderProps> = ({ min, max, step, value, onInput, classN
     return (
         <div className={`slider ${className}-slider`}>
             <progress value={percent} />
-            <input
-                type="range"
-                className={className}
-                min={min}
-                max={max}
-                step={step}
-                value={value}
-                onInput={onInput}
-            />
+            <input type="range" className={className} min={min} max={max} step={step} value={value} onInput={onInput} />
         </div>
     );
 };
