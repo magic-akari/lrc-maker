@@ -1,6 +1,6 @@
 {
     "name": "lrc-maker",
-    "version": "3.3.13",
+    "version": "3.4.0",
     "description": "歌词滚动姬｜可能是你所能见到的最好的歌词制作工具",
     "scripts": {
         "clean": "rm -rf ./build/*",
