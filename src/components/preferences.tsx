@@ -364,7 +364,7 @@ export const Preferences: React.FC = () => {
                         />
                     </label>
                 </li>
-                <li className="ripple" onClick={onCacheClear}>
+                <li className="ripple" onTransitionEnd={onCacheClear}>
                     <section className="list-item">{lang.preferences.clearCache}</section>
                 </li>
             </ul>
