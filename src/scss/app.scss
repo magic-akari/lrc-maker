@@ -59,6 +59,10 @@ button {
     cursor: pointer;
     padding: 0;
     color: currentcolor;
+
+    &:active {
+        opacity: 0.6;
+    }
 }
 
 a {
