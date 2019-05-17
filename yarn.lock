@@ -690,10 +690,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@lrc-maker/lrc-parser@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@lrc-maker/lrc-parser/-/lrc-parser-0.1.4.tgz#a51cf13e737084947101a8fce304cff855cb6fbe"
-  integrity sha512-W3NK5Ekc58oY4ZSTJRMSW6Kj+Q4v6dUsD7h8M4ffeE/XoUZ6Kfge/y8LMvzybvxaJDBlQ4/JQpuqhAcB/aPkiQ==
+"@lrc-maker/lrc-parser@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@lrc-maker/lrc-parser/-/lrc-parser-0.1.5.tgz#ae283fb0559111018b1d00e7a74e480a6d4ebbb9"
+  integrity sha512-S7H5O0ui582ja2hzKaSkDop6JyEbMVRck30tKU3JOiEdh76vP6swU4r5D8Nwdd2np50V0kW17qRcfs9E/43dcw==
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"

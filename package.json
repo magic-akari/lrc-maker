@@ -26,7 +26,7 @@
     },
     "homepage": "https://github.com/magic-akari/lrc-maker#readme",
     "dependencies": {
-        "@lrc-maker/lrc-parser": "^0.1.4",
+        "@lrc-maker/lrc-parser": "^0.1.5",
         "mobx": "^4.9.4",
         "normalize.css": "^8.0.1",
         "preact": "^8.4.2",
