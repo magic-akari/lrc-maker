@@ -79,7 +79,7 @@ class Preferences extends Component {
                 <section>
                     <div className="section-group">
                         <div>{pref.i18n["preferences"]["version"]}</div>
-                        <div>{VERSION}</div>
+                        <div className="select-all">{VERSION}</div>
                     </div>
                 </section>
                 <section>
@@ -91,7 +91,7 @@ class Preferences extends Component {
                 <section>
                     <div className="section-group">
                         <div>{pref.i18n["preferences"]["hash"]}</div>
-                        <div>{BUILD_REVISION}</div>
+                        <div className="select-all">{BUILD_REVISION}</div>
                     </div>
                 </section>
                 <section>
@@ -191,3 +191,4 @@ class Preferences extends Component {
     }
 }
 export { Preferences };
+
