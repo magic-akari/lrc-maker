@@ -35,13 +35,12 @@
     }
 
     .label-switch {
-        $switch-width: 70px;
-        $switch-padding: 2px;
-        $switch-height: 32px;
+        $switch-width: 60px;
+        $switch-padding: -4px;
+        $switch-height: 24px;
         $switch-radius: $switch-height;
         $knob-size: $switch-height - ($switch-padding * 2);
         $knob-radius: $switch-height - ($switch-padding * 2);
-        $knob-width: $knob-size;
 
         border-radius: $switch-radius;
         cursor: pointer;
@@ -65,28 +64,26 @@
                 z-index: 0;
                 &::before {
                     position: absolute;
-                    top: 2px;
+                    top: 0;
                     right: 0;
                     bottom: 0;
-                    left: 2px;
+                    left: 0;
                     background: white;
                     border-radius: $switch-radius;
                     content: "";
-                    height: $knob-radius;
                     transform: scale(1);
                     transition: all 0.3s ease;
-                    width: $switch-width - ($switch-padding * 2);
                     z-index: 1;
                 }
 
                 &::after {
                     position: absolute;
-                    top: 2px;
-                    right: 0;
-                    bottom: 0;
-                    left: 2px;
-                    height: 28px;
-                    width: 28px;
+                    top: $switch-padding;
+                    right: $switch-padding;
+                    bottom: $switch-padding;
+                    left: $switch-padding;
+                    height: $knob-size;
+                    width: $knob-size;
                     background: white;
                     border-radius: $knob-radius;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
@@ -103,7 +100,7 @@
                 }
 
                 &::after {
-                    left: $switch-width - $knob-width - ($switch-padding);
+                    left: $switch-width - $knob-size - ($switch-padding);
                 }
             }
         }
