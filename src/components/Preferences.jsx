@@ -191,4 +191,3 @@ class Preferences extends Component {
     }
 }
 export { Preferences };
-
