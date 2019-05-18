@@ -3215,10 +3215,10 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-seamless-scroll-polyfill@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/seamless-scroll-polyfill/-/seamless-scroll-polyfill-1.0.3.tgz#1c4c3c8ceb3a7dc96e5a7dca611adb46b8ce3b13"
-  integrity sha512-Agio44YTBCXno689gkDvQXTpSZd9ekX++P7QjUUWrVTJST5SNKQnonMbTPqXpntImDpQXW75ZHIDWRBHCmfmUg==
+seamless-scroll-polyfill@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/seamless-scroll-polyfill/-/seamless-scroll-polyfill-1.0.6.tgz#dd6eb91f4eb3718e0bd24c71fd8b2a2ea063fadc"
+  integrity sha512-GXUR/BCiydS4O+oxXEgWVkrQq8LpJN4Uubg/Fmo4GT+qCNN5GHDelYtvJ+WtjmUs98MreLvC6NAd4il+od18Dw==
 
 semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
   version "5.7.0"

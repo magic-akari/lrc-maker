@@ -10,7 +10,7 @@ import { appState } from "./store/appState.js";
 import { lrc } from "./store/lrc.js";
 import { preferences } from "./store/preferences.js";
 
-configure({ enforceActions: true });
+configure({ enforceActions: "always" });
 autorun(() => (document.title = preferences.i18n["app"]["fullname"]));
 autorun(() => {
     if (preferences.darkMode) {
@@ -20,24 +20,23 @@ autorun(() => {
     }
 });
 
-/**
- * polyfill for padStart
- */
-if (!String.prototype.padStart) {
-    String.prototype.padStart = function padStart(targetLength, padString) {
-        targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
-        padString = String(padString || " ");
-        if (this.length > targetLength) {
-            return String(this);
-        } else {
-            targetLength = targetLength - this.length;
-            if (targetLength > padString.length) {
-                padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
-            }
-            return padString.slice(0, targetLength) + String(this);
-        }
-    };
-}
+((strProto) => {
+    if (!strProto.trimStart) {
+        strProto.trimStart =
+            strProto.trimLeft ||
+            function() {
+                return this.replace(/^\s+/, "");
+            };
+    }
+
+    if (!strProto.trimEnd) {
+        strProto.trimEnd =
+            strProto.trimRight ||
+            function() {
+                return this.replace(/\s+$/, "");
+            };
+    }
+})(String.prototype);
 
 render(h(App, { loading: false }), document.body, document.body.firstElementChild);
 
