@@ -40,7 +40,7 @@ const init = (lazyInit: () => string): State => {
         const validKeys = Object.keys(initState) as Array<keyof State>;
         for (const key of validKeys) {
             if (key in storedState) {
-                state[key] = storedState[key];
+                (state[key] as unknown) = storedState[key];
             }
         }
     } catch (error) {
