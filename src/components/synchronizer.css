@@ -65,14 +65,7 @@
 
 .line.highlight {
     background-color: var(--theme-color);
-}
-
-.themebg-text-white .line.highlight {
-    color: var(--white);
-}
-
-.themebg-text-black .line.highlight {
-    color: var(--black);
+    color: var(--theme-contrast-color);
 }
 
 .error::before {

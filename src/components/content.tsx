@@ -120,9 +120,7 @@ export const Content: React.FC = () => {
     useEffect(() => {
         const rgb = hex2rgb(prefState.themeColor);
         document.documentElement.style.setProperty("--theme-rgb", rgb.join(", "));
-    }, [prefState.themeColor]);
 
-    const textColor = useMemo(() => {
         // https://www.w3.org/TR/WCAG20/#contrast-ratiodef
         // const contrast = (rgb1, rgb2) => {
         //   const c1 = luminanace(...rgb1) + 0.05;
@@ -136,9 +134,10 @@ export const Content: React.FC = () => {
         // (lum(c) + 0.05) / (l(b) + 0.05) > (l(w) + 0.05) / (lum(c) + 0.05);
         // => (lum(c) + 0.05)^2 > (l(b) +0.05) * (l(w) + 0.05) = 1.05 * 0.05 = 0.0525
 
-        const lum = luminanace(...hex2rgb(prefState.themeColor));
+        const lum = luminanace(...rgb);
         const con = lum + 0.05;
-        return con * con > 0.0525 ? "themebg-text-black" : "themebg-text-white";
+        const contrastColor = con * con > 0.0525 ? "var(--black)" : "var(--white)";
+        document.documentElement.style.setProperty("--theme-contrast-color", contrastColor);
     }, [prefState.themeColor]);
 
     const content = (() => {
@@ -167,7 +166,7 @@ export const Content: React.FC = () => {
     })();
 
     return (
-        <main className={`app-main ${textColor}`}>
+        <main className="app-main">
             <React.Suspense fallback={<AkariOangoLoading />}>{content}</React.Suspense>
         </main>
     );

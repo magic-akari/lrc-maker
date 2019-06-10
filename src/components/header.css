@@ -75,7 +75,7 @@
     content: "";
     height: 100%;
     width: 100%;
-    background-color: var(--black);
+    background-color: var(--theme-contrast-color);
     position: absolute;
     top: 0;
     left: 0;

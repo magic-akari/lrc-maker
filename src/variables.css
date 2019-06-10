@@ -4,6 +4,7 @@
 
     --theme-rgb: 245, 142, 168;
     --theme-color: rgb(var(--theme-rgb));
+    --theme-contrast-color: var(--black);
 
     --font-color: var(--black);
     --background-color: #f1f3f4;

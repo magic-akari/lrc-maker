@@ -44,11 +44,8 @@
 }
 
 .syncmode-button.highlight {
-    color: var(--black);
+    color: var(--theme-contrast-color);
     background: var(--theme-color);
-}
-.themebg-text-white .syncmode-button.highlight {
-    color: var(--white);
 }
 
 .syncmode-button.highlight .lock-open {

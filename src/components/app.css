@@ -22,15 +22,8 @@ svg {
 }
 
 ::selection {
+    color: var(--theme-contrast-color);
     background-color: var(--theme-color);
-}
-
-.themebg-text-white ::selection {
-    color: var(--white);
-}
-
-.themebg-text-black ::selection {
-    color: var(--black);
 }
 
 :focus {

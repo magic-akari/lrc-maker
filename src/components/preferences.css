@@ -82,22 +82,14 @@
     vertical-align: middle;
 }
 
-.themebg-text-white .color-picker.hash {
-    color: var(--white);
-}
-
-.themebg-text-black .color-picker.hash {
-    color: var(--black);
+.color-picker.hash {
+    color: var(--theme-contrast-color);
 }
 
 .color-picker.checked::before {
     content: "\2714\FE0F";
     position: absolute;
-    color: var(--black);
-}
-
-.themebg-text-white .color-picker.checked::before {
-    color: var(--white);
+    color: var(--theme-contrast-color);
 }
 
 .user-color-input-text {
@@ -107,8 +99,8 @@
     margin: 2px;
 }
 
-.themebg-text-white .user-color-label {
-    color: var(--white);
+.user-color-label {
+    color: var(--theme-contrast-color);
 }
 
 .theme-color-span {
@@ -135,15 +127,8 @@
 .format-example-text {
     display: inline;
     background: var(--theme-color);
+    color: var(--theme-contrast-color);
     white-space: pre-wrap;
-}
-
-.themebg-text-white .format-example-text {
-    color: var(--white);
-}
-
-.themebg-text-black .format-example-text {
-    color: var(--black);
 }
 
 .option-select > select {
