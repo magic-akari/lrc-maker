@@ -271,7 +271,7 @@ export const Preferences: React.FC = () => {
                         <span>{lang.preferences.themeColor}</span>
                         <details className="dropdown">
                             <summary>
-                                <span className="color-picker ripple" style={currentThemeColorStyle}>
+                                <span className="color-picker ripple hash" style={currentThemeColorStyle}>
                                     {"#"}
                                 </span>
                                 <span className="current-theme-color">{prefState.themeColor.slice(1)}</span>
@@ -279,7 +279,7 @@ export const Preferences: React.FC = () => {
                             <form className="dropdown-body color-wall" onSubmit={onColorSubmit}>
                                 {ColorPickerWall}
                                 <label
-                                    className="color-picker ripple user-color-label"
+                                    className="color-picker ripple user-color-label hash"
                                     htmlFor="user-color-input-text"
                                     style={currentThemeColorStyle}
                                     ref={userColorLabel}

@@ -82,13 +82,21 @@
     vertical-align: middle;
 }
 
+.themebg-text-white .color-picker.hash {
+    color: var(--white);
+}
+
+.themebg-text-black .color-picker.hash {
+    color: var(--black);
+}
+
 .color-picker.checked::before {
     content: "\2714\FE0F";
     position: absolute;
     color: var(--black);
 }
 
-.text-white .color-picker.checked::before {
+.themebg-text-white .color-picker.checked::before {
     color: var(--white);
 }
 
@@ -99,7 +107,7 @@
     margin: 2px;
 }
 
-.text-white .user-color-label {
+.themebg-text-white .user-color-label {
     color: var(--white);
 }
 
@@ -130,8 +138,12 @@
     white-space: pre-wrap;
 }
 
-.text-white .format-example-text {
+.themebg-text-white .format-example-text {
     color: var(--white);
+}
+
+.themebg-text-black .format-example-text {
+    color: var(--black);
 }
 
 .option-select > select {
@@ -279,6 +291,9 @@ input[type="number"] {
 
 .user-color-input-text {
     grid-column: span 2;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid var(--theme-color);
 }
 
 .pseudo-hidden {

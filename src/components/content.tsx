@@ -138,7 +138,7 @@ export const Content: React.FC = () => {
 
         const lum = luminanace(...hex2rgb(prefState.themeColor));
         const con = lum + 0.05;
-        return con * con > 0.0525 ? "text-black" : "text-white";
+        return con * con > 0.0525 ? "themebg-text-black" : "themebg-text-white";
     }, [prefState.themeColor]);
 
     const content = (() => {
