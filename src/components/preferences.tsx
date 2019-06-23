@@ -1,14 +1,10 @@
-import { themeColor } from "../hooks/usePref.js";
+import { info, themeColor } from "../hooks/usePref.js";
 import { convertTimeToTag, formatText } from "../lrc-parser.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { AkariHideWall } from "./svg.img.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef } = React;
-
-const info: {
-    languages: { [name: string]: string };
-} = JSON.parse(document.getElementById("app-info")!.textContent!);
 
 interface INumberInput {
     min?: number;

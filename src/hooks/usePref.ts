@@ -1,3 +1,7 @@
+export const info: {
+    languages: { [name: string]: string };
+} = JSON.parse(document.getElementById("app-info")!.textContent!);
+
 export const themeColor = {
     orange: "#ff691f",
     yellow: "#fab81e",
@@ -34,7 +38,22 @@ const reducer = (state: State, action: Action): State => {
 
 const init = (lazyInit: () => string): State => {
     const state: Mutable<State> = initState;
-    state.lang = navigator.language;
+
+    const languages = navigator.languages || [navigator.language || "en-US"];
+
+    state.lang =
+        languages
+            .map((langCode) => {
+                if (langCode === "zh") {
+                    return "zh-CN";
+                }
+                if (langCode.startsWith("en")) {
+                    return "en-US";
+                }
+                return langCode;
+            })
+            .find((langCode) => langCode in info.languages) || "en-US";
+
     try {
         const storedState: State = JSON.parse(lazyInit());
         const validKeys = Object.keys(initState) as Array<keyof State>;
