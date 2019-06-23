@@ -5,7 +5,7 @@ import { appContext, ChangBits } from "./app.context.js";
 import { Home } from "./home.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 
-const { lazy, useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
+const { lazy, useContext, useEffect, useRef, useState } = React;
 
 const LazyEditor = lazy(() =>
     import(/* webpackMode: "eager" */ "./editor.js").then(({ Eidtor }) => {
