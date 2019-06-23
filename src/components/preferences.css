@@ -132,6 +132,7 @@
 }
 
 .option-select > select {
+    text-align-last: right;
     padding-right: 16px;
     appearance: none;
     border: none;
