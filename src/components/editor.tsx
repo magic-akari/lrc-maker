@@ -97,15 +97,19 @@ export const Eidtor: React.SFC<{
     const downloadName = useMemo(() => {
         const list: string[] = [];
         const lrcInfo = lrcState.info;
+        const filenamify = (name: string) => {
+            return name.replace(/[\<\>\:\"\/\\\|\?\*]/g, "_").trim();
+        };
+
         if (lrcInfo.has("ti")) {
-            list.push(lrcInfo.get("ti")!);
+            list.push(filenamify(lrcInfo.get("ti")!));
         }
         if (lrcInfo.has("ar")) {
-            list.push(lrcInfo.get("ar")!);
+            list.push(filenamify(lrcInfo.get("ar")!));
         }
         if (list.length === 0) {
             if (lrcInfo.has("al")) {
-                list.push(lrcInfo.get("al")!);
+                list.push(filenamify(lrcInfo.get("al")!));
             }
         }
         list.push(Date.now().toString());
