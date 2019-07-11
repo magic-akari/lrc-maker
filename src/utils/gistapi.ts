@@ -25,6 +25,10 @@ export const getRepos = async (): Promise<IGistRepo[]> => {
         },
         mode: "cors",
     });
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
     return res.json();
 };
 
@@ -50,6 +54,10 @@ export const createRepo = async (): Promise<IGistRepo> => {
             },
         }),
     });
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
     return res.json();
 };
 
@@ -68,6 +76,10 @@ export const assignRepo = async (): Promise<IGistRepo> => {
             },
         }),
     });
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
     return res.json();
 };
 
@@ -112,5 +124,9 @@ export const createFile = async (fileName: string, content: string): Promise<IGi
             },
         }),
     });
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
     return res.json();
 };

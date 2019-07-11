@@ -3,6 +3,7 @@ import { State as LrcState, stringify } from "../lrc-parser.js";
 import { createFile } from "../utils/gistapi.js";
 import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG, UtilitySVG } from "./svg.js";
+import { toastPubSub } from "./toast.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
@@ -125,7 +126,12 @@ export const Eidtor: React.SFC<{
         setTimeout(() => {
             const name = prompt(lang.editor.saveFileName, downloadName);
             if (name) {
-                createFile(name, textarea.current!.value);
+                createFile(name, textarea.current!.value).catch((error) => {
+                    toastPubSub.pub({
+                        type: "warning",
+                        text: error.message,
+                    });
+                });
             }
         }, 500);
     }, [downloadName, lang]);
