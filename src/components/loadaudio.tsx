@@ -74,6 +74,10 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
         setAudioSrc(url);
     }, []);
 
+    const onFocus = useCallback((ev: React.FocusEvent<HTMLInputElement>) => {
+        ev.target.select();
+    }, []);
+
     return ReactDOM.createPortal(
         // tslint:disable-next-line: jsx-wrap-multiline
         <details ref={loadAudioDialogRef} className="dialog fixed loadaudio-dialog" onToggle={onToggle}>
@@ -108,6 +112,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
                                 autoComplete="off"
                                 autoCorrect="off"
                                 spellCheck={false}
+                                onFocus={onFocus}
                             />
                             <input className="button" type="submit" />
                         </form>
