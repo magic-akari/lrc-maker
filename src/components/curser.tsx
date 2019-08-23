@@ -15,7 +15,7 @@ export const Curser: React.FC<ICurserProps> = ({ fixed }) => {
     const [rate, setRate] = useState(audioRef.playbackRate);
 
     useEffect(() => {
-        audioStatePubSub.sub(self.current, (data) => {
+        return audioStatePubSub.sub(self.current, (data) => {
             switch (data.type) {
                 case AudioActionType.pause: {
                     setPaused(data.payload);
@@ -27,10 +27,6 @@ export const Curser: React.FC<ICurserProps> = ({ fixed }) => {
                 }
             }
         });
-
-        return () => {
-            audioStatePubSub.unsub(self.current);
-        };
     }, []);
 
     useEffect(() => {
@@ -45,13 +41,9 @@ export const Curser: React.FC<ICurserProps> = ({ fixed }) => {
         const B = [1, 10, 100, 1000][fixed] * rate;
 
         if (paused || 2 * B > 60 /** 60fps */) {
-            currentTimePubSub.sub(self.current, (date) => {
+            return currentTimePubSub.sub(self.current, (date) => {
                 setTime(date);
             });
-
-            return () => {
-                currentTimePubSub.unsub(self.current);
-            };
         } else {
             const id = setInterval(() => {
                 setTime(audioRef.currentTime);

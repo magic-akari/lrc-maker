@@ -7,10 +7,11 @@ export const createPubSub = <DT, ID = unknown>() => {
     };
     const sub = (id: ID, cb: CB) => {
         bus.set(id, cb);
-    };
-    const unsub = (id: ID) => {
-        bus.delete(id);
+
+        return () => {
+            bus.delete(id);
+        };
     };
 
-    return { pub, sub, unsub };
+    return { pub, sub };
 };

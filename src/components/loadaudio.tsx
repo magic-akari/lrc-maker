@@ -37,14 +37,11 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
     const self = useRef(Symbol(LoadAudio.name));
 
     useEffect(() => {
-        audioStatePubSub.sub(self.current, (data) => {
+        return audioStatePubSub.sub(self.current, (data) => {
             if (data.type === AudioActionType.getDuration) {
                 loadAudioDialogRef.close();
             }
         });
-        return () => {
-            audioStatePubSub.unsub(self.current);
-        };
     }, []);
 
     const onEscapeKeyDown = useCallback((ev: KeyboardEvent) => {

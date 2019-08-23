@@ -52,7 +52,7 @@ export const Content: React.FC = () => {
     });
 
     useEffect(() => {
-        audioStatePubSub.sub(self.current, (data) => {
+        return audioStatePubSub.sub(self.current, (data) => {
             if (data.type === AudioActionType.getDuration) {
                 lrcDispatch({
                     type: LrcActionType.info,
@@ -63,10 +63,6 @@ export const Content: React.FC = () => {
                 });
             }
         });
-
-        return () => {
-            audioStatePubSub.unsub(self.current);
-        };
     }, [prefState.fixed]);
 
     useEffect(() => {

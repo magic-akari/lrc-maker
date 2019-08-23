@@ -32,27 +32,19 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
     const [rate, setRate] = useState(audioRef.playbackRate);
 
     useEffect(() => {
-        audioStatePubSub.sub(self.current, (data) => {
+        return audioStatePubSub.sub(self.current, (data) => {
             if (data.type === AudioActionType.rateChange) {
                 setRate(data.payload);
             }
         });
-
-        return () => {
-            audioStatePubSub.unsub(self.current);
-        };
     }, []);
 
     useEffect(() => {
         if (paused) {
             // paused but user changing the time
-            currentTimePubSub.sub(self.current, (data) => {
+            return currentTimePubSub.sub(self.current, (data) => {
                 setCurrentTime(data);
             });
-
-            return () => {
-                currentTimePubSub.unsub(self.current);
-            };
         } else {
             const id = setInterval(() => {
                 setCurrentTime(audioRef.currentTime);
@@ -102,15 +94,11 @@ const RateSlider: React.FC<{ lang: Language }> = ({ lang }) => {
     const [playbackRate, setPlaybackRate] = useState(audioRef.playbackRate);
 
     useEffect(() => {
-        audioStatePubSub.sub(self.current, (data: AudioState) => {
+        return audioStatePubSub.sub(self.current, (data: AudioState) => {
             if (data.type === AudioActionType.rateChange) {
                 setPlaybackRate(data.payload);
             }
         });
-
-        return () => {
-            audioStatePubSub.unsub(self.current);
-        };
     }, []);
 
     // playbackRate: [1/e, e]
@@ -159,7 +147,7 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
     const [duration, setDuration] = useState(audioRef.duration);
 
     useEffect(() => {
-        audioStatePubSub.sub(self.current, (data: AudioState) => {
+        return audioStatePubSub.sub(self.current, (data: AudioState) => {
             switch (data.type) {
                 case AudioActionType.getDuration: {
                     setDuration(data.payload);
@@ -172,10 +160,6 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
                 }
             }
         });
-
-        return () => {
-            audioStatePubSub.unsub(self.current);
-        };
     }, []);
 
     const onReplay5s = useCallback(() => {

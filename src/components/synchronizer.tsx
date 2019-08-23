@@ -70,13 +70,9 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     }, [needScrollLine]);
 
     useEffect(() => {
-        currentTimePubSub.sub(self.current, (time) => {
+        return currentTimePubSub.sub(self.current, (time) => {
             dispatch({ type: ActionType.refresh, payload: time });
         });
-
-        return () => {
-            currentTimePubSub.unsub(self.current);
-        };
     }, []);
 
     const sync = useCallback(() => {
