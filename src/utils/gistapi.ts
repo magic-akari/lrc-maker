@@ -63,8 +63,9 @@ export const createRepo = async (): Promise<IGistRepo> => {
 
 export const assignRepo = async (): Promise<IGistRepo> => {
     const token = localStorage.getItem(LSK.token);
+    const id = localStorage.getItem(LSK.gistId);
 
-    const res = await fetch(apiUrl, {
+    const res = await fetch(`${apiUrl}/${id}`, {
         method: "PATCH",
         headers: {
             Authorization: `token ${token}`,
