@@ -193,15 +193,12 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                 highlight,
                 error,
             })
-                .reduce(
-                    (p, [name, value]) => {
-                        if (value) {
-                            p.push(name);
-                        }
-                        return p;
-                    },
-                    [] as string[],
-                )
+                .reduce((p, [name, value]) => {
+                    if (value) {
+                        p.push(name);
+                    }
+                    return p;
+                }, [] as string[])
                 .join(Const.space);
 
             return (

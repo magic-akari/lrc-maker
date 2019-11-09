@@ -10,9 +10,7 @@ const polyfilldetails = () => {
                 if (this.tagName === "DETAILS") {
                     return this.hasAttribute("open");
                 } else {
-                    if (open && open.get) {
-                        return open.get.call(this);
-                    }
+                    return open?.get?.call(this);
                 }
             },
             set(value) {
@@ -24,9 +22,7 @@ const polyfilldetails = () => {
                     }
                     return value ? this.setAttribute("open", "") : this.removeAttribute("open");
                 } else {
-                    if (open && open.set) {
-                        return open.set.call(this, value);
-                    }
+                    return open?.set?.call(this, value);
                 }
             },
         },

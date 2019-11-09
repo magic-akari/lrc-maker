@@ -142,14 +142,16 @@ self.addEventListener("message", async (ev) => {
 
     let offset = 10;
 
-    const keyDate = (await (() => {
-        const keyLen = dataview.getUint32(offset, true);
-        offset += 4;
-        const data = new Uint8Array(filebuffer, offset, keyLen).map((uint8) => uint8 ^ 0x64);
-        offset += keyLen;
+    const keyDate = (
+        await (() => {
+            const keyLen = dataview.getUint32(offset, true);
+            offset += 4;
+            const data = new Uint8Array(filebuffer, offset, keyLen).map((uint8) => uint8 ^ 0x64);
+            offset += keyLen;
 
-        return AES_ECB_DECRYPT(CORE_KEY, data);
-    })()).slice(17);
+            return AES_ECB_DECRYPT(CORE_KEY, data);
+        })()
+    ).slice(17);
 
     const keyBox = (() => {
         const box = new Uint8Array(Array(256).keys());
