@@ -80,7 +80,16 @@ yarn start # or `npm start`
 
 ```
 
-This project does not configure a local server, and a plugin for vscode is used in actual development.
+This project does not configure a local server, and a plugin for vscode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)) is used in actual development.
+
+The configs of Live Server is as following.
+
+```json
+{
+    "liveServer.settings.root": "/build",
+    "liveServer.settings.mount": [["/node_modules", "./node_modules"]]
+}
+```
 
 ## Star this project :star:
 
@@ -159,7 +168,14 @@ yarn start # 或者 `npm start`
 
 ```
 
-本项目没有配置本地服务器，实际开发中使用了 vs code 的插件。
+本项目没有配置本地服务器，实际开发中使用了 vs code 的插件 [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) 并使用了以下配置。
+
+```json
+{
+    "liveServer.settings.root": "/build",
+    "liveServer.settings.mount": [["/node_modules", "./node_modules"]]
+}
+```
 
 ## 给这个项目点一个星星 :star:
 
