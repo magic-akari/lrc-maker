@@ -6,6 +6,8 @@ import { toastPubSub } from "./toast.js";
 
 const { useCallback, useContext, useEffect, useReducer, useRef } = React;
 
+const accept = ["audio/*", ".ncm", ".qmcflac", ".qmc0", ".qmc1", ".qmc2", ".qmc3"].join(", ");
+
 export const Footer: React.FC = () => {
     // tslint:disable-next-line: no-bitwise
     const { prefState, lang } = useContext(appContext, ChangBits.lang | ChangBits.builtInAudio);
@@ -162,7 +164,7 @@ export const Footer: React.FC = () => {
 
     return (
         <footer className="app-footer">
-            <input id="audio-input" type="file" accept="audio/*, .ncm" hidden={true} onChange={onAudioInputChange} />
+            <input id="audio-input" type="file" accept={accept} hidden={true} onChange={onAudioInputChange} />
             <LoadAudio setAudioSrc={setAudioSrc} lang={lang} />
             <audio
                 ref={audioRef}
@@ -223,6 +225,27 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
                         text: ev.message,
                     });
                     worker.terminate();
+                },
+                { once: true },
+            );
+
+            worker.postMessage(file);
+
+            return;
+        }
+        if (/\.qmc(?:flac|0|1|2|3)$/.test(file.name)) {
+            const worker = new Worker("./qmc-worker.js");
+            worker.addEventListener(
+                "message",
+                (ev) => {
+                    if (ev.data.type === "url") {
+                        const { dataArray, mime } = ev.data;
+                        const musicFile = new Blob([dataArray], {
+                            type: mime,
+                        });
+
+                        setAudioSrc(URL.createObjectURL(musicFile));
+                    }
                 },
                 { once: true },
             );
