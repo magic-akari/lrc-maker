@@ -87,7 +87,10 @@ The configs of Live Server is as following.
 ```json
 {
     "liveServer.settings.root": "/build",
-    "liveServer.settings.mount": [["/node_modules", "./node_modules"]]
+    "liveServer.settings.mount": [
+        ["/node_modules", "./node_modules"],
+        ["/src", "./src"]
+    ]
 }
 ```
 
@@ -173,7 +176,10 @@ yarn start # 或者 `npm start`
 ```json
 {
     "liveServer.settings.root": "/build",
-    "liveServer.settings.mount": [["/node_modules", "./node_modules"]]
+    "liveServer.settings.mount": [
+        ["/node_modules", "./node_modules"],
+        ["/src", "./src"]
+    ]
 }
 ```
 
