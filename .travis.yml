@@ -21,7 +21,7 @@ deploy:
       on:
           repo: magic-akari/lrc-maker
           branch: master
-      tag: next
+          tags: true
 
     - provider: pages
       skip-cleanup: true
