@@ -21,7 +21,16 @@ const Slider: React.FC<ISliderProps> = ({ min, max, step, value, onInput, classN
     return (
         <div className={`slider ${className}-slider`}>
             <progress value={percent} />
-            <input type="range" className={className} min={min} max={max} step={step} value={value} onInput={onInput} />
+            <input
+                type="range"
+                className={className}
+                aria-label={className}
+                min={min}
+                max={max}
+                step={step}
+                value={value}
+                onInput={onInput}
+            />
         </div>
     );
 };
@@ -83,7 +92,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
                 {durationTimeTag}
             </time>
 
-            <Slider min={0} max={duration} step={1} value={currentTime} className="time-line" onInput={onInput} />
+            <Slider min={0} max={duration} step={1} value={currentTime} className="timeline" onInput={onInput} />
         </>
     );
 };
