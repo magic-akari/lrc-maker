@@ -1,12 +1,11 @@
 {
-    "extends": "../../tsconfig.json",
+    "extends": "../tsconfig.json",
     "compilerOptions": {
         "composite": true,
         "rootDir": ".",
         "lib": ["webworker", "es2018"],
         "inlineSources": true,
-        "tsBuildInfoFile": "../../build/worker.tsbuildinfo"
+        "tsBuildInfoFile": "../build/worker.tsbuildinfo"
     },
-    "include": ["."],
-    "exclude": []
+    "include": ["."]
 }

@@ -15,6 +15,6 @@
         "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo"
     },
     "include": ["src"],
-    "exclude": ["src/@worker", "src/lrc-parser.js"],
-    "references": [{ "path": "./src/@worker" }, { "path": "./src/lrc-parser.js" }]
+    "exclude": ["src/lrc-parser.js"],
+    "references": [{ "path": "./worker" }, { "path": "./src/lrc-parser.js" }]
 }
