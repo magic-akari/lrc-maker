@@ -99,7 +99,7 @@ export const Preferences: React.FC = () => {
     }, []);
 
     const updateTime = useMemo(() => {
-        const date = new Date(Version.updateTime);
+        const date = new Date(MetaData.updateTime);
         const options = {
             year: "numeric",
             month: "short",
@@ -202,13 +202,13 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.version}</span>
-                        <span className="select-all">{Version.value}</span>
+                        <span className="select-all">{MetaData.version}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.commitHash}</span>
-                        <span className="select-all">{Version.hash}</span>
+                        <span className="select-all">{MetaData.hash}</span>
                     </section>
                 </li>
                 <li>

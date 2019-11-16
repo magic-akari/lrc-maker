@@ -60,7 +60,7 @@ typings/
 # next.js build output
 .next
 
-version.d.ts
+metadata.d.ts
 
 build/
 build.es6/

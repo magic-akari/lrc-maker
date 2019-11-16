@@ -2,7 +2,7 @@ declare const self: ServiceWorkerGlobalScope;
 export {};
 
 const APP_NAME = "akari-lrc-maker";
-const VERSION = Version.value;
+const VERSION = MetaData.version;
 
 self.addEventListener("install", () => {
     self.skipWaiting();

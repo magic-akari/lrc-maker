@@ -33,8 +33,8 @@ const updateTime = execSync("git log -1 --format=%cI")
     .trim();
 
 const versionTs = `declare global {
-    const enum Version {
-        value = ${JSON.stringify(version)},
+    const enum MetaData {
+        version = ${JSON.stringify(version)},
         hash = ${JSON.stringify(hash)},
         updateTime = ${JSON.stringify(updateTime)},
         akariOdangoLoading = ${JSON.stringify(appScript("./svg/akari-odango-loading.svg"))},
