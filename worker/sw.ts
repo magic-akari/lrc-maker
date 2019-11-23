@@ -3,6 +3,8 @@ export {};
 
 const APP_NAME = "akari-lrc-maker";
 const VERSION = MetaData.version;
+const HASH = MetaData.hash;
+const CACHENAME = `${APP_NAME}-${VERSION}-${HASH}`;
 
 self.addEventListener("install", () => {
     self.skipWaiting();
@@ -15,7 +17,7 @@ self.addEventListener("activate", (event) => {
                 self.clients.claim(),
                 ...cacheNames
                     .filter((cacheName) => {
-                        return cacheName.startsWith(APP_NAME) && cacheName !== `${APP_NAME}-${VERSION}`;
+                        return cacheName.startsWith(APP_NAME) && cacheName !== CACHENAME;
                     })
                     .map((cacheName) => {
                         return caches.delete(cacheName);
@@ -40,7 +42,7 @@ self.addEventListener("fetch", (event) => {
         caches.match(event.request).then(
             (match) =>
                 match ||
-                caches.open(`${APP_NAME}-${VERSION}`).then((cache) =>
+                caches.open(CACHENAME).then((cache) =>
                     fetch(event.request).then((response) => {
                         if (response.status !== 200) {
                             return response;
