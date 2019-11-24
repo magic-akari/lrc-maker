@@ -21,6 +21,13 @@ export const language = {
         replay5s: "replay 5s",
         forward5s: "forward 5s",
         resetRate: "reset playback rate",
+        error: [
+            "audio error",
+            "audio aborted by user",
+            "audio network error",
+            "audio decoding error",
+            "audio not supported",
+        ],
     },
 
     loadAudio: {

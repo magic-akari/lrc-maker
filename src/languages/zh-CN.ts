@@ -21,6 +21,7 @@ export const language = {
         replay5s: "后退 5 秒",
         forward5s: "前进 5 秒",
         resetRate: "重置播放速度",
+        error: ["音频错误", "音频请求被用户终止", "音频网络请求错误", "音频解码错误", "浏览器无法支持此音频格式"],
     },
 
     loadAudio: {

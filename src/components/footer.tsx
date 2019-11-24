@@ -155,12 +155,18 @@ export const Footer: React.FC = () => {
         });
     }, []);
 
-    const onAudioError = useCallback((ev) => {
-        toastPubSub.pub({
-            type: "warning",
-            text: (ev.target as HTMLAudioElement).error!.message,
-        });
-    }, []);
+    const onAudioError = useCallback(
+        (ev) => {
+            const audio = ev.target as HTMLAudioElement;
+            const error = audio.error as MediaError;
+            const message = lang.audio.error[error.code] || error.message || lang.audio.error[0];
+            toastPubSub.pub({
+                type: "warning",
+                text: message,
+            });
+        },
+        [lang],
+    );
 
     return (
         <footer className="app-footer">
@@ -200,9 +206,9 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
                 "message",
                 (ev) => {
                     if (ev.data.type === "url") {
-                        const { dataArray, mime } = ev.data;
+                        const dataArray = ev.data.dataArray;
                         const musicFile = new Blob([dataArray], {
-                            type: mime,
+                            type: detectMimeType(dataArray),
                         });
 
                         setAudioSrc(URL.createObjectURL(musicFile));
@@ -239,9 +245,9 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
                 "message",
                 (ev) => {
                     if (ev.data.type === "url") {
-                        const { dataArray, mime } = ev.data;
+                        const dataArray = ev.data.dataArray;
                         const musicFile = new Blob([dataArray], {
-                            type: mime,
+                            type: detectMimeType(dataArray),
                         });
 
                         setAudioSrc(URL.createObjectURL(musicFile));
@@ -254,6 +260,31 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
 
             return;
         }
+    }
+};
+
+const enum MimeType {
+    fLaC = 0x664c6143,
+    OggS = 0x4f676753,
+    RIFF = 0x52494646,
+    WAVE = 0x57415645,
+}
+
+const detectMimeType = (dataArray: Uint8Array) => {
+    const magicNumber = new DataView(dataArray.buffer).getUint32(0, false);
+    switch (magicNumber) {
+        case MimeType.fLaC:
+            return "audio/flac";
+
+        case MimeType.OggS:
+            return "audio/ogg";
+
+        case MimeType.RIFF:
+        case MimeType.WAVE:
+            return "audio/wav";
+
+        default:
+            return "audio/mpeg";
     }
 };
 

@@ -27,8 +27,6 @@ self.addEventListener("message", async (ev) => {
         return v ^ keys[index];
     });
 
-    const mimeType =
-        0x664c6143 /** fLaC */ === new DataView(decryptedData.buffer).getUint32(0, true) ? "audio/flac" : "audio/mpeg";
-    self.postMessage({ type: "url", dataArray: decryptedData, mime: mimeType }, [decryptedData.buffer]);
+    self.postMessage({ type: "url", dataArray: decryptedData }, [decryptedData.buffer]);
     self.close();
 });
