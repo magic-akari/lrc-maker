@@ -23,7 +23,7 @@ target_dev = $(target_assets) $(target_lib) $(metadata) $(target_esm)
 target_prod = $(target_dev) $(target_es6) $(target_css)
 
 clean:
-	rm -rf ./build/*
+	rm -rf ./build/* ./build.es6/*
 
 $(target_assets): $(assets)
 	mkdir -p build
@@ -33,7 +33,7 @@ copy_assets: $(target_assets)
 
 $(target_lib): $(lib)
 	mkdir -p build/lib
-	cp -r node_modules/react node_modules/react-dom build/lib
+	rsync -am --no-links --exclude 'node_modules' node_modules/react node_modules/react-dom build/lib
 
 copy_lib: $(target_lib)
 
