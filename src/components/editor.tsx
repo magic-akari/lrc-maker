@@ -203,7 +203,13 @@ export const Eidtor: React.SFC<{
                 </a>
             </section>
 
-            <textarea className="app-textarea" onBlur={parse} {...disableCheck} {...useDefaultValue(text, textarea)} />
+            <textarea
+                className="app-textarea"
+                aria-label="lrc input here"
+                onBlur={parse}
+                {...disableCheck}
+                {...useDefaultValue(text, textarea)}
+            />
         </div>
     );
 };

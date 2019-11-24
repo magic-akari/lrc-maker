@@ -237,7 +237,11 @@ export const Preferences: React.FC = () => {
                     <section className="list-item">
                         <span>{lang.preferences.language}</span>
                         <div className="option-select">
-                            <select value={prefState.lang} onChange={onLangChanged}>
+                            <select
+                                value={prefState.lang}
+                                onChange={onLangChanged}
+                                aria-label={lang.preferences.language}
+                            >
                                 {LangOptionList}
                             </select>
                         </div>
@@ -247,7 +251,12 @@ export const Preferences: React.FC = () => {
                     <label className="list-item">
                         <span>{lang.preferences.builtInAudio}</span>
                         <label className="toggle-switch">
-                            <input type="checkbox" checked={prefState.builtInAudio} onChange={onBuiltInAudioToggle} />
+                            <input
+                                type="checkbox"
+                                checked={prefState.builtInAudio}
+                                onChange={onBuiltInAudioToggle}
+                                aria-label={lang.preferences.builtInAudio}
+                            />
                             <span className="toggle-switch-label" />
                         </label>
                     </label>
@@ -256,7 +265,12 @@ export const Preferences: React.FC = () => {
                     <label className="list-item">
                         <span>{lang.preferences.spaceButton}</span>
                         <label className="toggle-switch">
-                            <input type="checkbox" checked={prefState.screenButton} onChange={onScreenButtonToggle} />
+                            <input
+                                type="checkbox"
+                                checked={prefState.screenButton}
+                                onChange={onScreenButtonToggle}
+                                aria-label={lang.preferences.spaceButton}
+                            />
                             <span className="toggle-switch-label" />
                         </label>
                     </label>
@@ -321,7 +335,12 @@ export const Preferences: React.FC = () => {
                     <section className="list-item">
                         <span>{lang.preferences.fixed}</span>
                         <div className="option-select">
-                            <select name="fixed" value={prefState.fixed} onChange={onFixedChanged}>
+                            <select
+                                name="fixed"
+                                value={prefState.fixed}
+                                onChange={onFixedChanged}
+                                aria-label={lang.preferences.lrcFormat}
+                            >
                                 <option value={0}>0</option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>

@@ -55,17 +55,13 @@ export const AsidePanel: React.FC<{
         });
     }, [prefState]);
 
-    const className = [
-        "aside-button",
-        "syncmode-button",
-        "ripple",
-        "glow ",
-        syncMode === SyncMode.select ? "select" : "highlight",
-    ].join(Const.space);
+    const mode = syncMode === SyncMode.select ? "select" : "highlight";
+
+    const className = ["aside-button", "syncmode-button", "ripple", "glow ", mode].join(Const.space);
 
     return (
         <aside className="aside-panel">
-            <button className={className} onClick={onSyncModeToggle}>
+            <button className={className} onClick={onSyncModeToggle} aria-label={`${mode} mode`}>
                 <LockSVG />
             </button>
             <a href={href} download={name} className="aside-button ripple glow" onClick={onDownloadClick}>
