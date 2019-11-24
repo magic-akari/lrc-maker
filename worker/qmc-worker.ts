@@ -20,7 +20,7 @@ self.addEventListener("message", async (ev) => {
     const filebuffer = new FileReaderSync().readAsArrayBuffer(file);
 
     const decryptedData = new Uint8Array(filebuffer).map((v, i) => {
-        let index = i % 0x7fff & 0x7f;
+        let index = (i > 0x7fff ? i % 0x7fff : i) & 0x7f;
         if (index > 0x3f) {
             index = (0x80 - index) & 0x3f;
         }
