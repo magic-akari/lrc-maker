@@ -10,7 +10,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const useCDN = process.env.USE_CDN === "USE_CDN";
 
 const jsdelivr = "https://cdn.jsdelivr.net";
-const nodeModules = "../node_modules/";
+const localPath = "./lib/";
 
 interface IScriptProps {
     src: string;
@@ -18,14 +18,18 @@ interface IScriptProps {
     crossOrigin?: "anonymous";
 }
 
-const libScript = (libName: string, prodPath: string, devPath?: string): IScriptProps => {
-    const integrity = isProduction ? sri(resolve(__dirname, `${nodeModules}${libName}${prodPath}`)) : undefined;
+type ILibName = keyof typeof dependencies;
+
+const libScript = (libName: ILibName, prodPath: string, devPath?: string): IScriptProps => {
+    const integrity = isProduction
+        ? sri(resolve(__dirname, "../build", localPath, `${libName}${prodPath}`))
+        : undefined;
 
     if (useCDN) {
         const libVersion = (() => {
-            const v = (dependencies as any)[libName];
+            const v = dependencies[libName];
 
-            return isNaN(v[0]) ? v.slice(1) : v;
+            return /\d/.test(v[0]) ? v : v.slice(1);
         })();
 
         const src = `${jsdelivr}/npm/${libName}@${libVersion}${prodPath}`;
@@ -33,7 +37,7 @@ const libScript = (libName: string, prodPath: string, devPath?: string): IScript
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
         return {
-            src: `${nodeModules}${libName}${isProduction ? prodPath : devPath || prodPath}`,
+            src: `${localPath}${libName}${isProduction ? prodPath : devPath || prodPath}`,
             integrity,
         };
     }
@@ -155,27 +159,26 @@ const Html = () => {
             <head>
                 <meta charSet="utf-8" />
                 <title>LRC Maker</title>
-                <meta
-                    httpEquiv="Content-Security-Policy"
-                    content={Object.entries(csp)
-                        .map(([key, value]) => {
-                            return [key, ...value].join(" ");
-                        })
-                        .join("; ")}
-                />
+                {isProduction && (
+                    <meta
+                        httpEquiv="Content-Security-Policy"
+                        content={Object.entries(csp)
+                            .map(([key, value]) => {
+                                return [key, ...value].join(" ");
+                            })
+                            .join("; ")}
+                    />
+                )}
                 <meta name="description" content={description} />
                 <meta name="keywords" content="lrc maker, lrc generate, 歌词制作, 歌词滚动" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="renderer" content="webkit" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-                />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="google" content="notranslate" />
 
-                <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png" />
-                <link rel="icon" type="image/png" href="./favicons/favicon-32x32.png" sizes="32x32" />
-                <link rel="icon" type="image/png" href="./favicons/favicon-16x16.png" sizes="16x16" />
+                <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="./favicons/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png" />
                 <link rel="manifest" href="./site.webmanifest" />
                 <link rel="mask-icon" href="./favicons/safari-pinned-tab.svg" color="#ff4081" />
                 <link rel="shortcut icon" href="./favicons/favicon.ico" />
@@ -185,6 +188,9 @@ const Html = () => {
                 <meta name="theme-color" content="#484848" />
                 <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
                 <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬" />
+
+                <link rel="preload" href={libReact.src} as="script" integrity={libReact.integrity} />
+                <link rel="preload" href={libReactDOM.src} as="script" integrity={libReactDOM.integrity} />
 
                 {preloadModule.map((md) => (
                     <link rel="modulepreload" href={md.src} key={md.src} />
@@ -209,9 +215,29 @@ const Html = () => {
                         return { href: "../src/index.css" };
                     })()}
                 />
+            </head>
+            <body>
+                <div className="app-container" />
+                <div className="page-loading">
+                    <img
+                        className="akari-odango-loading start-loading"
+                        src={akariOdangoLoading.src}
+                        alt="loading"
+                        crossOrigin={akariOdangoLoading.crossOrigin}
+                    />
+                </div>
+                <script
+                    id="app-info"
+                    type="application/json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            languages: getLanguageMap(),
+                        }),
+                    }}
+                />
 
-                <script {...libReact} />
-                <script {...libReactDOM} />
+                <script {...libReact} defer={true} />
+                <script {...libReactDOM} defer={true} />
 
                 <script
                     noModule={true}
@@ -230,7 +256,7 @@ const Html = () => {
 
                 <script {...appScript("./polyfill/string.esnext.js")} defer={true} />
 
-                <script {...appScript("./index.js")} type="module" />
+                <script {...appScript("./index.js")} type="module" defer={true} />
                 <script {...appScript("./index.es6.js")} className="index-es6" noModule={true} defer={true} />
 
                 <script
@@ -239,27 +265,6 @@ const Html = () => {
                         __html: reg.content,
                     }}
                 />
-
-                <script
-                    id="app-info"
-                    type="application/json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
-                            languages: getLanguageMap(),
-                        }),
-                    }}
-                />
-            </head>
-            <body>
-                <div className="app-container" />
-                <div className="page-loading">
-                    <img
-                        className="akari-odango-loading start-loading"
-                        src={akariOdangoLoading.src}
-                        alt="loading"
-                        crossOrigin={akariOdangoLoading.crossOrigin}
-                    />
-                </div>
             </body>
         </html>
     );
