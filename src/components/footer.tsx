@@ -6,7 +6,7 @@ import { toastPubSub } from "./toast.js";
 
 const { useCallback, useContext, useEffect, useReducer, useRef } = React;
 
-const accept = ["audio/*", ".ncm", ".qmcflac", ".qmc0", ".qmc1", ".qmc2", ".qmc3"].join(", ");
+const accept = ["audio/*", ".ncm", ".qmcflac", ".qmc0", ".qmc1", ".qmc2", ".qmc3", "qmcogg"].join(", ");
 
 export const Footer: React.FC = () => {
     // tslint:disable-next-line: no-bitwise
