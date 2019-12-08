@@ -15,7 +15,7 @@ const keys = [
     0xd8, 0xf0, 0xf7, 0xa0, 0x90, 0xa1, 0xd6, 0xf3,
 ];
 
-self.addEventListener("message", async (ev) => {
+self.addEventListener("message", (ev) => {
     const file: File = ev.data;
     const filebuffer = new FileReaderSync().readAsArrayBuffer(file);
 
