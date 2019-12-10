@@ -67,7 +67,7 @@ If you want to run this project on your computer locally, follow the tips.
 # clone this repo
 git clone https://github.com/magic-akari/lrc-maker.git
 
-cd lrc-make
+cd lrc-maker
 
 # install dependencies
 yarn # or use `npm i` instead of yarn
@@ -158,7 +158,7 @@ IE 等旧浏览器不再支持。对于这类浏览器使用者，可以使用�
 # 克隆这个仓库
 git clone https://github.com/magic-akari/lrc-maker.git
 
-cd lrc-make
+cd lrc-maker
 
 # 安装依赖
 yarn # 或者使用 `npm i` 来代替 yarn
