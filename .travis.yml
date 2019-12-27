@@ -4,7 +4,7 @@ node_js: node
 script:
     - npm run listdiff
     - npm run lint
-    - if [ -z ${TRAVIS_TAG+x} ]; then make deploy; else make build; fi
+    - if [ "$TRAVIS_TAG" ]; then make deploy; else make build; fi
 
 before_deploy:
     - touch ./build/.nojekyll
