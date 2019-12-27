@@ -189,8 +189,20 @@ const Html = () => {
                 <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
                 <meta name="apple-mobile-web-app-title" content="灯里的歌词滚动姬" />
 
-                <link rel="preload" href={libReact.src} as="script" integrity={libReact.integrity} />
-                <link rel="preload" href={libReactDOM.src} as="script" integrity={libReactDOM.integrity} />
+                <link
+                    rel="preload"
+                    href={libReact.src}
+                    as="script"
+                    integrity={libReact.integrity}
+                    crossOrigin={libReact.crossOrigin}
+                />
+                <link
+                    rel="preload"
+                    href={libReactDOM.src}
+                    as="script"
+                    integrity={libReactDOM.integrity}
+                    crossOrigin={libReactDOM.crossOrigin}
+                />
 
                 {preloadModule.map((md) => (
                     <link rel="modulepreload" href={md.src} key={md.src} />
