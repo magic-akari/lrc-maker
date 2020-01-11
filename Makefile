@@ -17,7 +17,7 @@ target_es6 = $(patsubst build/%,build.es6/%,$(target_esm)) build/index.es6.js
 target_css := build/index.css build/index.css.map
 target_lib = $(patsubst node_modules/%,build/lib/%,$(lib))
 
-.PHONY: clean copy_assets build_css build_esm watch_esm nomodule build_html dev build
+.PHONY: clean copy_assets copy_lib build_css build_esm watch_esm nomodule build_html dev build
 
 target_dev = $(target_assets) $(target_lib) $(metadata) $(target_esm)
 target_prod = $(target_dev) $(target_es6) $(target_css)
