@@ -1,18 +1,15 @@
 .app-editor {
-    flex: 1 0 auto;
+    position: relative;
     display: flex;
+    flex: 1 0 auto;
     flex-direction: column;
-
-    border-radius: var(--border-radius);
-    border: 1px solid var(--theme-color);
-    background-color: white;
-    transition: box-shadow var(--transition-duration) ease-in-out;
-
     margin: 16px;
     padding: 8px;
     font-size: 1.2rem;
-
-    position: relative;
+    background-color: white;
+    border: 1px solid var(--theme-color);
+    border-radius: var(--border-radius);
+    transition: box-shadow var(--transition-duration) ease-in-out;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,9 +21,11 @@
 .app-editor:hover {
     box-shadow: 0 0 10px var(--theme-color);
 }
+
 .app-editor:focus-within {
     box-shadow: 0 0 10px var(--theme-color);
 }
+
 @media (max-width: 768px) {
     .app-editor {
         margin: 0;
@@ -36,8 +35,8 @@
 
 .app-editor-infobox {
     display: grid;
-    grid-template-columns: auto 1fr auto;
     grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: auto 1fr auto;
 }
 
 .app-textarea {
@@ -47,15 +46,14 @@
 
 .app-editor input,
 .app-editor textarea {
-    border: none;
     padding: 0;
+    background-color: transparent;
+    border: none;
     resize: none;
-    background: transparent;
 }
 
 .app-editor > details {
     padding-bottom: 4px;
-
     opacity: 0.6;
 }
 
@@ -65,20 +63,20 @@
 
 .editor-tools {
     position: absolute;
-    right: 0;
     top: 0;
-    padding: 8px;
+    right: 0;
     display: flex;
+    padding: 8px;
 }
 
 .editor-tools-item {
-    padding: 8px;
     display: inline-flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    border-radius: 50%;
+    justify-content: center;
+    padding: 8px;
     color: var(--font-color);
+    border-radius: 50%;
 }
 
 .editor-tools-item:active {
@@ -86,8 +84,8 @@
 }
 
 .editor-tools-item > svg {
-    height: 24px;
     width: 24px;
+    height: 24px;
     color: currentColor;
 }
 

@@ -1,12 +1,12 @@
 .dialog {
-    display: none;
     position: fixed;
-    left: 0;
-    right: 0;
     top: 0;
+    right: 0;
     bottom: 0;
-    margin: auto;
+    left: 0;
     z-index: 1000;
+    display: none;
+    margin: auto;
     border-radius: var(--border-radius);
 }
 
@@ -17,11 +17,11 @@
 
 .dialog-close {
     position: absolute;
-    padding: 0;
-    left: -24px;
     top: -24px;
-    height: 48px;
+    left: -24px;
     width: 48px;
+    height: 48px;
+    padding: 0;
     color: var(--theme-color);
 }
 
@@ -34,36 +34,35 @@
 }
 
 .dialog-close::before {
-    content: "";
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: -1;
+    content: "";
 }
 
 .dialog-close > svg {
-    height: 36px;
-    width: 36px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
     position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    margin: auto;
 }
 
 .loadaudio-dialog {
-    color: var(--black);
-    background: var(--semi-white-color);
-
     width: 500px;
-    height: 10rem;
     max-width: calc(100% - 36px);
+    height: 10rem;
     max-height: 100%;
+    color: var(--black);
+    background-color: var(--semi-white-color);
     border: 1px solid var(--theme-color);
-    box-shadow: 0 0 1rem var(--theme-color), 0 0 0 100vmax #00000080;
+    box-shadow: 0 0 1rem var(--theme-color), 0 0 0 100vmax #0008;
 }
 
 .loadaudio-body {
@@ -89,26 +88,26 @@
 .loadaudio-content {
     position: absolute;
     left: 0;
-    height: 100px;
     width: 100%;
+    height: 100px;
     visibility: hidden;
 }
 
 .loadaudio-tab > label {
+    display: inline-block;
     width: 100%;
     padding: 8px 0;
-    display: inline-block;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
     border: 1px solid transparent;
     border-bottom: 1px solid var(--theme-color);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
     user-select: none;
 }
 
 .loadaudio-tab :checked ~ label {
+    background-color: #fffd;
     border: 1px solid var(--theme-color);
     border-bottom-color: transparent;
-    background: #ffffffdd;
 }
 
 .loadaudio-tab :checked ~ label ~ .loadaudio-content {
@@ -118,13 +117,12 @@
 .audio-input-tip,
 .audio-input-form {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100%;
+    justify-content: center;
     width: 100%;
-    transition: transform var(--transition-duration) ease-in-out;
-
+    height: 100%;
     padding: 16px;
+    transition: transform var(--transition-duration) ease-in-out;
 }
 
 .audio-input-tip:hover {
@@ -133,24 +131,23 @@
 
 .audio-input-form > input[type="url"] {
     flex: 1 0 auto;
+    width: 60%;
+    margin: 8px;
+    font-size: 1.5rem;
     background: 0;
     border: 0;
     border-bottom: 1px solid var(--theme-color);
-    width: 60%;
-    margin: 8px;
-
-    font-size: 1.5rem;
 }
 
 .audio-input-form > input[type="submit"] {
-    appearance: none;
     border: 0;
+    appearance: none;
 }
 
 @keyframes dialogSlideIn {
     from {
-        opacity: 0;
         transform: translate(0, 100%);
+        opacity: 0;
     }
 
     50% {

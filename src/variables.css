@@ -2,33 +2,39 @@
     --white: #eee;
     --black: #111;
 
+    /* theme color */
     --theme-rgb: 245, 142, 168;
     --theme-color: rgb(var(--theme-rgb));
     --theme-contrast-color: var(--black);
 
+    /* text color */
     --font-color: var(--black);
     --background-color: #f1f3f4;
 
+    /* semi color */
     --semi-black-color: #202020cc;
     --semi-white-color: #e0e0e0cc;
 
+    /* border */
     --border-radius: 8px;
 
+    /* shadow */
     --text-shadow: 0 0 2px var(--black);
-
     --drop-shadow: drop-shadow(0 0 4px currentcolor);
 
+    /* duration */
     --transition-duration: 250ms;
     --animation-duration: 250ms;
     --animation-durationx2: 500ms;
 
+    /* animation */
     --animation-out-back: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background-color: var(--black);
         --font-color: var(--white);
+        --background-color: var(--black);
     }
 }
 

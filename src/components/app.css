@@ -3,7 +3,7 @@ html {
     font-kerning: normal;
     color: var(--font-color);
     caret-color: var(--theme-color);
-    background: var(--background-color);
+    background-color: var(--background-color);
 }
 
 html,
@@ -31,24 +31,24 @@ svg {
 }
 
 a {
-    text-decoration: none;
     color: currentColor;
+    text-decoration: none;
 }
 
 a,
 button,
 [type="submit"] {
-    border: 0;
-    background: 0;
     padding: 0 8px;
-    appearance: none;
+    background: 0;
+    border: 0;
     cursor: default;
+    appearance: none;
 }
 
 ul {
-    list-style: none;
     margin: 0;
     padding: 0;
+    list-style: none;
 }
 
 time {
@@ -71,15 +71,15 @@ time {
 }
 
 .link:hover::after {
-    content: "\1F517";
     position: absolute;
     margin-left: 4px;
+    content: "\1F517";
 }
 
 .button {
-    color: var(--black);
-    background: white;
     padding: 8px;
+    color: var(--black);
+    background-color: white;
     border-radius: var(--border-radius);
     opacity: 0.8;
 }
@@ -99,6 +99,7 @@ time {
 .glow > svg {
     transition: filter var(--transition-duration) ease;
 }
+
 .glow:hover > svg {
     filter: var(--drop-shadow);
 }
@@ -108,23 +109,25 @@ time {
     overflow: hidden;
     transform: translate3d(0, 0, 0);
 }
-.ripple:after {
-    content: "";
-    display: block;
+
+.ripple::after {
     position: absolute;
-    width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
-    pointer-events: none;
+    display: block;
+    width: 100%;
+    height: 100%;
     background-image: radial-gradient(circle, #000 10%, transparent 10%);
     background-repeat: no-repeat;
     background-position: 50%;
     transform: scale3d(10, 10, 1);
     opacity: 0;
     transition: transform 0.5s, opacity 1s;
+    content: "";
+    pointer-events: none;
 }
-.ripple:active:after {
+
+.ripple:active::after {
     transform: scale3d(0, 0, 1);
     opacity: 0.2;
     transition: 0s;
@@ -139,25 +142,25 @@ time {
 }
 
 .page-loading::before {
-    content: "";
     position: fixed;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
     background-color: var(--background-color);
     opacity: 0.5;
+    content: "";
 }
 
 .akari-odango-loading {
-    height: 50vmin;
-    width: 50vmin;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
     position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 50vmin;
+    height: 50vmin;
+    margin: auto;
     text-align: center;
 }
 
@@ -169,6 +172,7 @@ time {
     from {
         transform: rotate(0deg) translateX(-2vmin) rotate(0deg);
     }
+
     to {
         transform: rotate(360deg) translateX(-2vmin) rotate(-360deg);
     }
@@ -177,8 +181,8 @@ time {
 .akari-not-found {
     flex: 1 1 auto;
     align-self: flex-end;
-    max-height: 80vh;
     max-width: 100vw;
+    max-height: 80vh;
     opacity: 0.2;
     filter: var(--drop-shadow);
 }

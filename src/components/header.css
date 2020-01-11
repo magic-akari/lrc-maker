@@ -1,19 +1,18 @@
 .app-header {
     position: fixed;
     top: 0;
+    z-index: 233;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 0 8px;
-    background: var(--semi-black-color);
     color: var(--theme-color);
-    z-index: 233;
-    user-select: none;
+    background-color: var(--semi-black-color);
     box-shadow: 0 1px 1px var(--theme-color);
-
     animation: slideInDown var(--animation-duration) ease-in-out forwards;
+    user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -23,13 +22,14 @@
 }
 
 .app-title {
-    font-size: 1.5rem;
     font-weight: 500;
+    font-size: 1.5rem;
 }
 
 .app-title-text {
     display: none;
 }
+
 .app-title-svg {
     display: inline-flex;
 }
@@ -38,71 +38,26 @@
     .app-title-text {
         display: inline-flex;
     }
+
     .app-title-svg {
         display: none;
     }
 }
 
 .app-header a {
-    color: white;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
-    min-height: 60px;
     min-width: 60px;
-    transition: color var(--transition-duration) ease-in-out;
+    min-height: 60px;
     padding: 0;
-}
-
-.app-nav > a:target {
-    color: currentColor;
-}
-
-.app-nav:hover .app-tab {
     color: white;
-}
-
-.app-nav .app-tab:hover {
-    color: currentColor;
+    transition: color var(--transition-duration) ease-in-out;
+    user-select: none;
 }
 
 .app-tab {
     position: relative;
-}
-
-.app-tab::before {
-    content: "";
-    height: 100%;
-    width: 100%;
-    background-color: var(--theme-contrast-color);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transform-origin: center 0;
-    transition: transform var(--transition-duration) ease-in-out;
-}
-
-.app-tab::before,
-:hover > .app-tab:target::before {
-    transform: scaleY(0);
-}
-
-.app-tab:target::before,
-.app-tab:hover::before,
-.app-tab:hover:target::before {
-    transform: scaleY(1);
-}
-
-.app-title-svg > svg,
-.app-tab > svg {
-    margin: 0;
-    height: 30px;
-    width: 30px;
-}
-
-.app-tab {
     transform: translateY(-100%);
     animation-name: slideInDown;
     animation-duration: var(--animation-durationx2);
@@ -124,4 +79,47 @@
 
 .app-tab:nth-child(4) {
     animation-delay: 400ms;
+}
+
+.app-nav:hover .app-tab {
+    color: white;
+}
+
+.app-nav .app-tab:hover {
+    color: currentColor;
+}
+
+.app-nav > a:target {
+    color: currentColor;
+}
+
+.app-tab::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: var(--theme-contrast-color);
+    transform-origin: center 0;
+    transition: transform var(--transition-duration) ease-in-out;
+    content: "";
+}
+
+.app-tab::before,
+:hover > .app-tab:target::before {
+    transform: scaleY(0);
+}
+
+.app-tab:target::before,
+.app-tab:hover::before,
+.app-tab:hover:target::before {
+    transform: scaleY(1);
+}
+
+.app-title-svg > svg,
+.app-tab > svg {
+    width: 30px;
+    height: 30px;
+    margin: 0;
 }

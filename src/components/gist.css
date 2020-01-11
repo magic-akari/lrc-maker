@@ -1,85 +1,82 @@
 .gist {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .new-token,
 .get-gist-id {
-    max-width: 768px;
-    width: 100%;
-    margin: 0 auto;
-
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
 }
 
 .new-token-tip,
 .create-new-gist {
     flex: 1 0 auto;
-    padding: 1rem;
-    margin: 1rem;
-    max-width: 500px;
     width: 100%;
+    max-width: 500px;
+    margin: 1rem;
+    padding: 1rem;
     text-align: center;
 }
 
 .new-token-tip-text,
 .gist-id-tip-text {
-    font-size: 1.2rem;
-    margin: 1rem;
-    text-align: center;
     max-width: 500px;
+    margin: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
 }
 
 .github-svg {
-    height: 100px;
     width: 100px;
+    height: 100px;
     margin: 1rem;
 }
 
 .new-token-input,
 .gist-id-input {
     flex: 1 0 auto;
-
+    margin: 0 0.5rem;
     background: 0;
     border: 0;
-    margin: 0 0.5rem;
     border-bottom: 1px solid var(--theme-color);
 }
 
 .new-token-form,
 .gist-id-form {
-    flex: 1 0 auto;
-    padding: 1rem 0;
-    margin: 1rem 0;
-    max-width: 500px;
-    width: 100%;
-
     display: flex;
-    justify-content: center;
+    flex: 1 0 auto;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 1rem 0;
+    padding: 1rem 0;
 }
 
 .file-list {
-    width: 100%;
-    flex: 1 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    grid-template-rows: min-content;
+    flex: 1 0 auto;
     grid-gap: 1rem;
+    grid-template-rows: min-content;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    width: 100%;
 }
 
 .file-item {
     padding: 0.5rem;
     border-radius: var(--border-radius);
-    user-select: none;
-    transition: box-shadow var(--transition-duration) ease-in-out;
     box-shadow: 0 0 2px var(--font-color);
+    transition: box-shadow var(--transition-duration) ease-in-out;
+    user-select: none;
 }
 
 .file-item:hover {
@@ -88,15 +85,15 @@
 
 .file-content {
     height: 15rem;
-    white-space: pre;
     overflow: hidden;
     line-height: 1.6;
+    white-space: pre;
 }
 
 .file-bar {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
+    justify-content: space-between;
 }
 
 .file-title {
@@ -109,11 +106,11 @@
 
 .file-load {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
-    padding: 0;
+    justify-content: center;
     width: 32px;
     height: 32px;
+    padding: 0;
     transition: color 250ms ease-in-out;
 }
 
@@ -128,6 +125,7 @@
 .gist-details {
     width: 100%;
     padding: 1rem;
+    user-select: none;
 }
 
 @media (min-width: 1024px) {
@@ -136,15 +134,10 @@
     }
 }
 
-.gist-details {
-    user-select: none;
-}
-
 .gist-bar {
-    width: 100%;
     display: flex;
-
     justify-content: space-between;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -165,13 +158,13 @@
 }
 
 .gist-loading {
-    flex: 1 0 auto;
     display: flex;
-    justify-content: center;
+    flex: 1 0 auto;
     align-items: center;
+    justify-content: center;
 }
 
 .gist-no-data {
-    flex: 1 1 auto;
     display: flex;
+    flex: 1 1 auto;
 }

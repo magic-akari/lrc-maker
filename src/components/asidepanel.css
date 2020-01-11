@@ -2,9 +2,8 @@
     position: fixed;
     right: 0;
     bottom: 64px;
-    background: var(--semi-black-color);
+    background-color: var(--semi-black-color);
     border-radius: 8px 0 0 8px;
-
     transform: translateX(100%);
     animation: slideInRight var(--animation-duration) ease 1s forwards;
 }
@@ -15,21 +14,21 @@
 
 .aside-button {
     display: block;
-    height: 50px;
-    width: 50px;
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-    color: var(--white);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    color: var(--white);
+    line-height: 1;
 }
 
 .aside-button > svg {
-    height: 30px;
     width: 30px;
+    height: 30px;
     margin: auto;
     fill: currentColor;
 }
@@ -39,18 +38,19 @@
 }
 
 .syncmode-button {
-    border-top-left-radius: 8px;
     border-bottom: 1px solid var(--white);
+    border-top-left-radius: 8px;
 }
 
 .syncmode-button.highlight {
     color: var(--theme-contrast-color);
-    background: var(--theme-color);
+    background-color: var(--theme-color);
 }
 
 .syncmode-button.highlight .lock-open {
     visibility: hidden;
 }
+
 .syncmode-button.select .lock-close {
     visibility: hidden;
 }
