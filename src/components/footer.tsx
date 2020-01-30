@@ -1,4 +1,5 @@
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
+import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio, nec } from "./loadaudio.js";
@@ -40,7 +41,7 @@ export const Footer: React.FC = () => {
 
             const codeOrKey = code || key;
 
-            if (["text", "textarea", "url"].includes((target as any).type as string)) {
+            if (isKeyboardElement(target)) {
                 return;
             }
 

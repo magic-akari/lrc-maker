@@ -1,3 +1,4 @@
+import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext } from "./app.context.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { EditorSVG, LoadAudioSVG, SynchronizerSVG } from "./svg.js";
@@ -47,7 +48,7 @@ export const Home: React.FC = () => {
 document.addEventListener("keydown", (ev) => {
     const { code, key, target } = ev;
 
-    if (["text", "textarea", "url"].includes((target as any).type as string)) {
+    if (isKeyboardElement(target)) {
         return;
     }
 

@@ -2,6 +2,7 @@ import { Action, ActionType, guard, IState } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
 import { convertTimeToTag, formatText, ILyric } from "../lrc-parser.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
+import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
 import { Curser } from "./curser.js";
@@ -92,7 +93,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
 
             const codeOrKey = code || key;
 
-            if (["text", "textarea", "url"].includes((target as any).type as string)) {
+            if (isKeyboardElement(target)) {
                 return;
             }
 
