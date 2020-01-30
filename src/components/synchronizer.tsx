@@ -151,7 +151,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     const onLineClick = useCallback((ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
         ev.stopPropagation();
 
-        if ((ev.target as any).classList.contains("line")) {
+        if ((ev.target as HTMLElement).classList.contains("line")) {
             const lineKey = Number.parseInt((ev.target as HTMLElement).dataset.key!, 10) || 0;
 
             dispatch({ type: ActionType.select, payload: () => lineKey });

@@ -27,6 +27,6 @@ self.addEventListener("message", (ev) => {
         return v ^ keys[index];
     });
 
-    self.postMessage({ type: "url", dataArray: decryptedData }, [decryptedData.buffer]);
+    self.postMessage<IMessage>({ type: "success", payload: decryptedData }, [decryptedData.buffer]);
     self.close();
 });

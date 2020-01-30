@@ -4,7 +4,9 @@ export const useLang = (): [Language, (lang: string) => Promise<void>] => {
     const [value, setValue] = React.useState<Language>(en_US);
 
     const setLang = async (langCode: string) => {
-        const { language } = await import(/* webpackMode: "eager" */ `../languages/${langCode}.js`);
+        const { language } = (await import(
+            /* webpackMode: "eager" */ `../languages/${langCode}.js`
+        )) as typeof import("../languages/en-US.js");
         setValue(language);
     };
 

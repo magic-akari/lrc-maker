@@ -74,7 +74,7 @@ export const AppProvider: React.FC = ({ children }) => {
     const [lang, setLang] = useLang();
 
     useEffect(() => {
-        setLang(prefState.lang).catch((error) => {
+        setLang(prefState.lang).catch((error: Error) => {
             toastPubSub.pub({
                 type: "warning",
                 text: error.message,

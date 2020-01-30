@@ -136,7 +136,7 @@ self.addEventListener("message", async (ev) => {
     const dataview = new DataView(filebuffer);
 
     if (dataview.getUint32(0, true) !== 0x4e455443 || dataview.getUint32(4, true) !== 0x4d414446) {
-        self.postMessage({ type: "error", data: "not ncm file" });
+        self.postMessage<IMessage>({ type: "error", payload: "not ncm file" });
         self.close();
     }
 
@@ -195,6 +195,6 @@ self.addEventListener("message", async (ev) => {
         return data;
     })();
 
-    self.postMessage({ type: "url", dataArray: decryptedData }, [decryptedData.buffer]);
+    self.postMessage<IMessage>({ type: "success", payload: decryptedData }, [decryptedData.buffer]);
     self.close();
 });

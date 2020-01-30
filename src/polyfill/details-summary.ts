@@ -1,19 +1,19 @@
 const details = document.createElement("details");
 
 const polyfilldetails = () => {
-    const prototype = details.constructor.prototype;
-    const open = Object.getOwnPropertyDescriptor(prototype, "open");
+    const prototype = details.constructor.prototype as HTMLDetailsElement;
+    const openProperty = Object.getOwnPropertyDescriptor(prototype, "open");
 
     Object.defineProperties(prototype, {
         open: {
-            get() {
+            get(this: HTMLDetailsElement): boolean {
                 if (this.tagName === "DETAILS") {
                     return this.hasAttribute("open");
                 } else {
-                    return open?.get?.call(this);
+                    return openProperty?.get?.call(this);
                 }
             },
-            set(value) {
+            set(this: HTMLDetailsElement, value: boolean) {
                 if (this.tagName === "DETAILS") {
                     if (value !== this.hasAttribute("open")) {
                         const event = document.createEvent("Event");
@@ -22,7 +22,7 @@ const polyfilldetails = () => {
                     }
                     return value ? this.setAttribute("open", "") : this.removeAttribute("open");
                 } else {
-                    return open?.set?.call(this, value);
+                    return openProperty?.set?.call(this, value);
                 }
             },
         },

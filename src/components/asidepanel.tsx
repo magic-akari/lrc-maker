@@ -37,16 +37,16 @@ export const AsidePanel: React.FC<{
                 });
 
                 const info = state.info;
-                const list = [];
+                const list: string[] = [];
                 if (info.has("ti")) {
-                    list.push(info.get("ti"));
+                    list.push(info.get("ti")!);
                 }
                 if (info.has("ar")) {
-                    list.push(info.get("ar"));
+                    list.push(info.get("ar")!);
                 }
                 if (list.length === 0) {
                     if (info.has("al")) {
-                        list.push(info.get("al"));
+                        list.push(info.get("al")!);
                     }
                     list.push(new Date().toLocaleString());
                 }

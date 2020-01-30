@@ -14,7 +14,9 @@ const disableCheck = {
     spellCheck: false,
 };
 
-const useDefaultValue = (defaultValue: string, ref = useRef<HTMLInputElement & HTMLTextAreaElement>(null)) => {
+type HTMLInputLikeElement = HTMLInputElement & HTMLTextAreaElement;
+
+const useDefaultValue = (defaultValue: string, ref = useRef<HTMLInputLikeElement>(null)) => {
     // warning: make sure we always use outter ref or create new one.
 
     const currentValue = ref.current ? ref.current.value : defaultValue;
@@ -58,7 +60,7 @@ export const Eidtor: React.SFC<{
         return sessionStorage.getItem(SSK.editorDetailsOpen) !== "false";
     }, []);
 
-    const textarea = useRef<any>(null);
+    const textarea = useRef<HTMLInputLikeElement>(null);
     const [href, setHref] = useState<string | undefined>(undefined);
 
     const onDownloadClick = useCallback(() => {
@@ -91,7 +93,7 @@ export const Eidtor: React.SFC<{
     }, []);
 
     const onCopyClick = useCallback(() => {
-        textarea.current.select();
+        textarea.current!.select();
         document.execCommand("copy");
     }, []);
 
@@ -126,7 +128,7 @@ export const Eidtor: React.SFC<{
         setTimeout(() => {
             const name = prompt(lang.editor.saveFileName, downloadName);
             if (name) {
-                createFile(name, textarea.current!.value).catch((error) => {
+                createFile(name, textarea.current!.value).catch((error: Error) => {
                     toastPubSub.pub({
                         type: "warning",
                         text: error.message,

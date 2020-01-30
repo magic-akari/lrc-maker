@@ -157,7 +157,7 @@ export const Footer: React.FC = () => {
     }, []);
 
     const onAudioError = useCallback(
-        (ev) => {
+        (ev: React.SyntheticEvent<HTMLAudioElement>) => {
             const audio = ev.target as HTMLAudioElement;
             const error = audio.error as MediaError;
             const message = lang.audio.error[error.code] || error.message || lang.audio.error[0];
@@ -205,9 +205,9 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
             const worker = new Worker("./ncmc-worker.js");
             worker.addEventListener(
                 "message",
-                (ev) => {
-                    if (ev.data.type === "url") {
-                        const dataArray = ev.data.dataArray;
+                (ev: IMessageEvent<IMessage>) => {
+                    if (ev.data.type === "success") {
+                        const dataArray = ev.data.payload;
                         const musicFile = new Blob([dataArray], {
                             type: detectMimeType(dataArray),
                         });
@@ -217,7 +217,7 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
                     if (ev.data.type === "error") {
                         toastPubSub.pub({
                             type: "warning",
-                            text: ev.data.data,
+                            text: ev.data.payload,
                         });
                     }
                 },
@@ -244,9 +244,9 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
             const worker = new Worker("./qmc-worker.js");
             worker.addEventListener(
                 "message",
-                (ev) => {
-                    if (ev.data.type === "url") {
-                        const dataArray = ev.data.dataArray;
+                (ev: IMessageEvent<IMessage>) => {
+                    if (ev.data.type === "success") {
+                        const dataArray = ev.data.payload;
                         const musicFile = new Blob([dataArray], {
                             type: detectMimeType(dataArray),
                         });

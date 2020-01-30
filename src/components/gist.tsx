@@ -60,7 +60,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 localStorage.setItem(LSK.gistId, json.id);
                 setGistId(json.id);
             })
-            .catch((error) => {
+            .catch((error: Error) => {
                 toastPubSub.pub({
                     type: "warning",
                     text: error.message,
@@ -78,7 +78,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         localStorage.setItem(LSK.gistId, value);
         setGistId(value);
 
-        assignRepo().catch((error) => {
+        assignRepo().catch((error: Error) => {
             toastPubSub.pub({
                 type: "warning",
                 text: error.message,
@@ -105,7 +105,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                         .map(({ id }) => id),
                 );
             })
-            .catch((error) => {
+            .catch((error: Error) => {
                 toastPubSub.pub({
                     type: "warning",
                     text: error.message,
@@ -131,7 +131,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 );
                 setFileList(files);
             })
-            .catch((error) => {
+            .catch((error: Error) => {
                 toastPubSub.pub({
                     type: "warning",
                     text: error.message,
@@ -157,7 +157,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                         payload: { text, options: trimOptions },
                     });
                 })
-                .catch((error) => {
+                .catch((error: Error) => {
                     toastPubSub.pub({
                         type: "warning",
                         text: error.message,
