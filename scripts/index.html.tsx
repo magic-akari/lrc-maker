@@ -26,7 +26,7 @@ const libScript = (libName: ILibName, prodPath: string, devPath?: string): IScri
         : undefined;
 
     if (useCDN) {
-        const libVersion = (() => {
+        const libVersion = ((): string => {
             const v = dependencies[libName];
 
             return /\d/.test(v[0]) ? v : v.slice(1);
@@ -59,6 +59,7 @@ const getLanguageMap = (): { [filename: string]: string } => {
     const fileList = readdirSync(langDir);
 
     return fileList.reduce((map, filename) => {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { language } = require(resolve(langDir, filename));
 
         return {
@@ -68,13 +69,21 @@ const getLanguageMap = (): { [filename: string]: string } => {
     }, {});
 };
 
-const readFile = (path: string) => {
+const readFile = (path: string): string => {
     return readFileSync(resolve(__dirname, path), {
         encoding: "utf8",
     });
 };
 
-const swRegister = () => {
+const minify = (content: string): string => {
+    const line = content.split(/\n/);
+    return line
+        .map((l) => l.replace(/\/\/\s.*$/, ""))
+        .join("")
+        .replace(/\s+/g, " ");
+};
+
+const swRegister = (): Record<"content" | "integrity", string> => {
     const content = minify(readFile("sw.register.js"));
 
     const integrity = sriContent(content);
@@ -82,7 +91,7 @@ const swRegister = () => {
     return { content, integrity };
 };
 
-const swUnregister = () => {
+const swUnregister = (): Record<"content" | "integrity", string> => {
     let content = readFile("../src/utils/sw.unregister.ts");
 
     content = content.replace("export", "") + "unregister();";
@@ -92,15 +101,7 @@ const swUnregister = () => {
     return { content, integrity };
 };
 
-const minify = (content: string) => {
-    const line = content.split(/\n/);
-    return line
-        .map((l) => l.replace(/\/\/\s.*$/, ""))
-        .join("")
-        .replace(/\s+/g, " ");
-};
-
-const fallback = (path: string) => {
+const fallback = (path: string): Record<"content" | "integrity", string> => {
     const content = minify(readFile(path));
 
     const integrity = sriContent(content);
@@ -108,7 +109,7 @@ const fallback = (path: string) => {
     return { content, integrity };
 };
 
-const Html = () => {
+const Html: React.FC = () => {
     const libReact = libScript("react", "/umd/react.production.min.js", "/umd/react.development.js");
     const libReactDOM = libScript("react-dom", "/umd/react-dom.production.min.js", "/umd/react-dom.development.js");
     const appCDN = new URL(join("/npm", `${name}@${version}`, "./"), jsdelivr).href;
@@ -218,7 +219,7 @@ const Html = () => {
 
                 <link
                     rel="stylesheet"
-                    {...(() => {
+                    {...((): React.LinkHTMLAttributes<HTMLLinkElement> => {
                         if (isProduction) {
                             const { src: href, integrity, crossOrigin } = appScript("./index.css");
                             return { href, integrity, crossOrigin };

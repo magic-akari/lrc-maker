@@ -22,7 +22,7 @@ const CORE_KEY = Uint8Array.of(
     0x57,
 );
 
-const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array) => {
+const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array): Promise<Uint8Array> => {
     /**
      * simulate ECB with CBC
      *
@@ -143,7 +143,7 @@ self.addEventListener("message", async (ev) => {
     let offset = 10;
 
     const keyDate = (
-        await (() => {
+        await ((): Promise<Uint8Array> => {
             const keyLen = dataview.getUint32(offset, true);
             offset += 4;
             const data = new Uint8Array(filebuffer, offset, keyLen).map((uint8) => uint8 ^ 0x64);
@@ -153,7 +153,7 @@ self.addEventListener("message", async (ev) => {
         })()
     ).slice(17);
 
-    const keyBox = (() => {
+    const keyBox = ((): Uint8Array => {
         const box = new Uint8Array(Array(256).keys());
 
         const keyDataLen = keyDate.length;
@@ -180,7 +180,7 @@ self.addEventListener("message", async (ev) => {
 
     // workaround for Firefox which async function causes performance problems
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1521435
-    const decryptedData = (() => {
+    const decryptedData = ((): Uint8Array => {
         const data = new Uint8Array(filebuffer, offset);
         const dataLength = data.length;
 

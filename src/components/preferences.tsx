@@ -6,93 +6,113 @@ import { AkariHideWall } from "./svg.img.js";
 
 const { useCallback, useContext, useEffect, useMemo, useRef } = React;
 
-interface INumberInput {
-    min?: number;
-    max?: number;
-    defaultValue: number;
-    callback: (value: number, ref: React.RefObject<HTMLInputElement>) => void;
+const numberInputProps = { type: "number", step: 1 } as const;
+
+type OnChange<T> = (event: React.ChangeEvent<T>) => void;
+
+interface IUseNumberInput<T = HTMLInputElement> {
+    (defaultValue: number, onChange: OnChange<T>): typeof numberInputProps & {
+        ref: React.RefObject<T>;
+        onChange: OnChange<T>;
+        defaultValue: number;
+    };
 }
 
-const useNumberInput = ({ defaultValue, callback }: INumberInput, ref = useRef<HTMLInputElement>(null)) => {
+const useNumberInput: IUseNumberInput = (defaultValue: number, onChange) => {
+    const ref = useRef<HTMLInputElement>(null);
     useEffect(() => {
-        ref.current!.value = defaultValue.toString();
+        const target = ref.current;
+        if (target) {
+            const onChange = (): void => {
+                target.value = defaultValue.toString();
+            };
+
+            target.addEventListener("change", onChange);
+            return (): void => target.removeEventListener("change", onChange);
+        }
     }, [defaultValue]);
 
-    const onChange = useCallback(
+    const $onChange = useCallback(
         (ev: React.ChangeEvent<HTMLInputElement>) => {
             if (ev.target.validity.valid) {
-                callback(Number.parseInt(ev.target.value, 10), ref);
+                onChange(ev);
             }
         },
-        [callback],
+        [onChange],
     );
 
-    const onBlur = useCallback(
-        (ev: React.FocusEvent<HTMLInputElement>) => {
-            if (!ev.target.validity.valid) {
-                ref.current!.value = defaultValue.toString();
-            }
-        },
-        [callback, defaultValue],
-    );
-    return { type: "number", step: 1, ref, onChange, onBlur };
+    return { ...numberInputProps, ref, onChange: $onChange, defaultValue };
 };
 
 export const Preferences: React.FC = () => {
     const { prefState, prefDispatch, lang } = useContext(appContext, ChangBits.lang || ChangBits.prefState);
 
-    const onColorPick = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
-        prefDispatch({
-            type: "themeColor",
-            payload: ev.target.value,
-        });
-    }, []);
+    const onColorPick = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            prefDispatch({
+                type: "themeColor",
+                payload: ev.target.value,
+            });
+        },
+        [prefDispatch],
+    );
 
     const userColorInputText = useRef<HTMLInputElement>(null);
 
-    const onUserInput = useCallback((input: EventTarget & HTMLInputElement) => {
-        let value = input.value;
+    const onUserInput = useCallback(
+        (input: EventTarget & HTMLInputElement) => {
+            let value = input.value;
 
-        if (!input.validity.valid) {
-            input.value = input.defaultValue;
-            return;
-        }
+            if (!input.validity.valid) {
+                input.value = input.defaultValue;
+                return;
+            }
 
-        if (value.length === 3) {
-            value = [].map.call(value, (v: string) => v + v).join("");
-        }
-        if (value.length < 6) {
-            value = value.padEnd(6, "0");
-        }
+            if (value.length === 3) {
+                value = [].map.call(value, (v: string) => v + v).join("");
+            }
+            if (value.length < 6) {
+                value = value.padEnd(6, "0");
+            }
 
-        prefDispatch({
-            type: "themeColor",
-            payload: "#" + value,
-        });
-    }, []);
+            prefDispatch({
+                type: "themeColor",
+                payload: "#" + value,
+            });
+        },
+        [prefDispatch],
+    );
 
-    const onUserColorInputBlur = useCallback((ev: React.FocusEvent<HTMLInputElement>) => onUserInput(ev.target), []);
+    const onUserColorInputBlur = useCallback((ev: React.FocusEvent<HTMLInputElement>) => onUserInput(ev.target), [
+        onUserInput,
+    ]);
 
-    const onColorSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
-        ev.preventDefault();
+    const onColorSubmit = useCallback(
+        (ev: React.FormEvent<HTMLFormElement>) => {
+            ev.preventDefault();
 
-        const form = ev.target as HTMLFormElement;
+            const form = ev.target as HTMLFormElement;
 
-        const input = form.elements.namedItem("user-color-input-text")! as HTMLInputElement;
+            const input = form.elements.namedItem("user-color-input-text") as HTMLInputElement;
 
-        return onUserInput(input);
-    }, []);
+            return onUserInput(input);
+        },
+        [onUserInput],
+    );
 
     useEffect(() => {
         userColorInputText.current!.value = prefState.themeColor.slice(1);
     }, [prefState.themeColor]);
 
-    const onSpaceChange = useCallback((value: number, ref: React.RefObject<HTMLInputElement>) => {
-        prefDispatch({
-            type: ref.current!.name as "spaceStart" & "spaceEnd",
-            payload: value,
-        });
-    }, []);
+    const onSpaceChange = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            prefDispatch({
+                type: ev.target.name as "spaceStart" & "spaceEnd",
+                payload: ev.target.value,
+            });
+        },
+        [prefDispatch],
+    );
 
     const onCacheClear = useCallback(() => {
         unregister();
@@ -113,37 +133,43 @@ export const Preferences: React.FC = () => {
         return new Intl.DateTimeFormat(prefState.lang, options).format(date);
     }, [prefState.lang]);
 
-    const onLangChanged = useCallback((ev: React.ChangeEvent<HTMLSelectElement>) => {
-        prefDispatch({
-            type: "lang",
-            payload: ev.target.value,
-        });
-    }, []);
+    const onLangChanged = useCallback(
+        (ev: React.ChangeEvent<HTMLSelectElement>) => {
+            prefDispatch({
+                type: "lang",
+                payload: ev.target.value,
+            });
+        },
+        [prefDispatch],
+    );
 
     const onBuiltInAudioToggle = useCallback(
         () =>
             prefDispatch({
                 type: "builtInAudio",
-                payload: !prefState.builtInAudio,
+                payload: (prefState) => !prefState.builtInAudio,
             }),
-        [prefState.builtInAudio],
+        [prefDispatch],
     );
 
     const onScreenButtonToggle = useCallback(
         () =>
             prefDispatch({
                 type: "screenButton",
-                payload: !prefState.screenButton,
+                payload: (prefState) => !prefState.screenButton,
             }),
-        [prefState.screenButton],
+        [prefDispatch],
     );
 
-    const onFixedChanged = useCallback((ev: React.ChangeEvent<HTMLSelectElement>) => {
-        prefDispatch({
-            type: "fixed",
-            payload: Number.parseInt(ev.target.value, 10) as Fixed,
-        });
-    }, []);
+    const onFixedChanged = useCallback(
+        (ev: React.ChangeEvent<HTMLSelectElement>) => {
+            prefDispatch({
+                type: "fixed",
+                payload: Number.parseInt(ev.target.value, 10) as Fixed,
+            });
+        },
+        [prefDispatch],
+    );
 
     const LangOptionList = useMemo(() => {
         return Object.entries(info.languages).map(([langCode, langName]) => {
@@ -175,7 +201,7 @@ export const Preferences: React.FC = () => {
                 </label>
             );
         });
-    }, [prefState.themeColor]);
+    }, [onColorPick, prefState.themeColor]);
 
     const currentThemeColorStyle = useMemo(() => {
         return {
@@ -220,7 +246,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.repo}</span>
-                        <a className="link" href={Repo.url} target="_blank" rel="noopener">
+                        <a className="link" href={Repo.url} target="_blank" rel="noopener noreferrer">
                             Github
                         </a>
                     </section>
@@ -228,7 +254,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.help}</span>
-                        <a className="link" href={Repo.wiki} target="_blank" rel="noopener">
+                        <a className="link" href={Repo.wiki} target="_blank" rel="noopener noreferrer">
                             Github Wiki
                         </a>
                     </section>
@@ -357,10 +383,7 @@ export const Preferences: React.FC = () => {
                             id="space-start"
                             required={true}
                             min={-1}
-                            {...useNumberInput({
-                                defaultValue: prefState.spaceStart,
-                                callback: onSpaceChange,
-                            })}
+                            {...useNumberInput(prefState.spaceStart, onSpaceChange)}
                         />
                     </label>
                 </li>
@@ -372,10 +395,7 @@ export const Preferences: React.FC = () => {
                             id="space-end"
                             required={true}
                             min={-1}
-                            {...useNumberInput({
-                                defaultValue: prefState.spaceEnd,
-                                callback: onSpaceChange,
-                            })}
+                            {...useNumberInput(prefState.spaceEnd, onSpaceChange)}
                         />
                     </label>
                 </li>

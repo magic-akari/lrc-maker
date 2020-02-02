@@ -80,12 +80,12 @@ export const AppProvider: React.FC = ({ children }) => {
                 text: error.message,
             });
         });
-    }, [prefState.lang]);
+    }, [prefState.lang, setLang]);
 
     useEffect(() => {
         document.title = lang.app.fullname;
         document.documentElement.lang = prefState.lang;
-    }, [lang]);
+    }, [lang, prefState.lang]);
 
     const value = useMemo(() => {
         return {
@@ -97,7 +97,7 @@ export const AppProvider: React.FC = ({ children }) => {
                 trimEnd: prefState.spaceEnd >= 0,
             },
         };
-    }, [lang, prefState]);
+    }, [lang, prefDispatch, prefState]);
 
     return <appContext.Provider value={value}>{children}</appContext.Provider>;
 };

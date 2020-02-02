@@ -13,7 +13,7 @@ self.addEventListener("install", () => {
 self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
-            return Promise.all<any>([
+            return Promise.all<unknown>([
                 self.clients.claim(),
                 ...cacheNames
                     .filter((cacheName) => {

@@ -40,13 +40,13 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
 
     const ratelimit: Ratelimit | null = useMemo(() => {
         return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!);
-    }, [fileList]);
+    }, []);
 
     const onSubmitToken = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
 
         const form = ev.target as HTMLFormElement;
-        const tokenInput = form.elements.namedItem("token")! as HTMLInputElement;
+        const tokenInput = form.elements.namedItem("token") as HTMLInputElement;
 
         const value = tokenInput.value;
 
@@ -72,7 +72,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
         ev.preventDefault();
 
         const form = ev.target as HTMLFormElement;
-        const gistIdInput = form.elements.namedItem("gist-id")! as HTMLInputElement;
+        const gistIdInput = form.elements.namedItem("gist-id") as HTMLInputElement;
         const value = gistIdInput.value;
 
         localStorage.setItem(LSK.gistId, value);
@@ -139,37 +139,43 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             });
     }, [gistId]);
 
-    const onFileLoad = useCallback((ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        const target = ev.target as HTMLElement;
+    const onFileLoad = useCallback(
+        (ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
+            const target = ev.target as HTMLElement;
 
-        if (!("key" in target.dataset)) {
-            return;
-        }
+            if (!("key" in target.dataset)) {
+                return;
+            }
 
-        const key = Number.parseInt(target.dataset.key!, 10);
-        const file = fileList![key];
-        if (file.truncated) {
-            fetch(file.raw_url)
-                .then((res) => res.text())
-                .then((text) => {
-                    lrcDispatch({
-                        type: LrcActionType.parse,
-                        payload: { text, options: trimOptions },
+            const key = Number.parseInt(target.dataset.key!, 10);
+            const file = fileList?.[key];
+            if (!file) {
+                return;
+            }
+            if (file.truncated) {
+                fetch(file.raw_url)
+                    .then((res) => res.text())
+                    .then((text) => {
+                        lrcDispatch({
+                            type: LrcActionType.parse,
+                            payload: { text, options: trimOptions },
+                        });
+                    })
+                    .catch((error: Error) => {
+                        toastPubSub.pub({
+                            type: "warning",
+                            text: error.message,
+                        });
                     });
-                })
-                .catch((error: Error) => {
-                    toastPubSub.pub({
-                        type: "warning",
-                        text: error.message,
-                    });
+            } else {
+                lrcDispatch({
+                    type: LrcActionType.parse,
+                    payload: { text: file.content, options: trimOptions },
                 });
-        } else {
-            lrcDispatch({
-                type: LrcActionType.parse,
-                payload: { text: file.content, options: trimOptions },
-            });
-        }
-    }, []);
+            }
+        },
+        [fileList, lrcDispatch, trimOptions],
+    );
 
     const onClear = useCallback(() => {
         setGistId(null);
@@ -218,7 +224,12 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                         <section className="gist-info">
                             <p>
                                 {"Gist id: "}
-                                <a href={`https://gist.github.com/${gistId}`} target="_blank" className="link">
+                                <a
+                                    href={`https://gist.github.com/${gistId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="link"
+                                >
                                     {gistId}
                                 </a>
                             </p>
@@ -232,7 +243,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             );
         }
         return null;
-    }, [gistId, token, RateLimit]);
+    }, [gistId, token, lang.gist.info, lang.gist.clearTokenAndGist, onClear, RateLimit]);
 
     const NewToken = useMemo(() => {
         if (token === null) {
@@ -240,7 +251,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 <section className="new-token">
                     <GithubSVG />
                     <p className="new-token-tip-text">{lang.gist.newTokenTip}</p>
-                    <a className="new-token-tip button" target="_blank" href={newTokenUrl}>
+                    <a className="new-token-tip button" target="_blank" rel="noopener noreferrer" href={newTokenUrl}>
                         {lang.gist.newTokenButton}
                     </a>
                     <form className="new-token-form" onSubmit={onSubmitToken}>
@@ -261,11 +272,11 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 </section>
             );
         }
-    }, [token, lang]);
+    }, [token, lang.gist.newTokenTip, lang.gist.newTokenButton, onSubmitToken]);
 
     const NewGistID = useMemo(() => {
         if (gistId === null) {
-            const option = (id: string) => {
+            const option = (id: string): JSX.Element => {
                 return <option key={id} value={id} />;
             };
             const gistIdDataList = gistIdList && (
@@ -299,11 +310,19 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 </section>
             );
         }
-    }, [gistId, lang, gistIdList]);
+    }, [
+        gistId,
+        gistIdList,
+        lang.gist.newGistTip,
+        lang.gist.newGistRepoButton,
+        lang.gist.gistIdPlaceholder,
+        onCreateNewGist,
+        onSubmitGistId,
+    ]);
 
     const FileCardList = useMemo(() => {
         if (fileList !== null) {
-            const FileCard = (file: IGistFile, index: number) => {
+            const FileCard = (file: IGistFile, index: number): JSX.Element => {
                 return (
                     <article className="file-item" key={file.raw_url}>
                         <section className="file-content">{file.content}</section>
@@ -336,7 +355,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 </section>
             );
         }
-    }, [fileList]);
+    }, [fileList, onFileLoad]);
 
     return (
         <div className="gist">

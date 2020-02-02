@@ -63,10 +63,10 @@ export const Content: React.FC = () => {
                 });
             }
         });
-    }, [prefState.fixed]);
+    }, [lrcDispatch, prefState.fixed]);
 
     useEffect(() => {
-        const saveState = () => {
+        const saveState = (): void => {
             lrcDispatch({
                 type: LrcActionType.getState,
                 payload: (lrc) => {
@@ -87,15 +87,15 @@ export const Content: React.FC = () => {
         window.addEventListener("beforeunload", () => {
             saveState();
         });
-    }, [prefState]);
+    }, [lrcDispatch, prefState]);
 
     useEffect(() => {
         document.documentElement.addEventListener("drop", (ev) => {
-            const file = ev.dataTransfer!.files[0];
+            const file = ev.dataTransfer?.files[0];
             if (file && (file.type.startsWith("text/") || /(?:\.lrc|\.txt)$/i.test(file.name))) {
                 const fileReader = new FileReader();
 
-                const onload = () => {
+                const onload = (): void => {
                     lrcDispatch({
                         type: LrcActionType.parse,
                         payload: { text: fileReader.result as string, options: trimOptions },
@@ -111,7 +111,7 @@ export const Content: React.FC = () => {
                 fileReader.readAsText(file, "utf-8");
             }
         });
-    }, []);
+    }, [lrcDispatch, trimOptions]);
 
     useEffect(() => {
         const rgb = hex2rgb(prefState.themeColor);
@@ -136,7 +136,7 @@ export const Content: React.FC = () => {
         document.documentElement.style.setProperty("--theme-contrast-color", contrastColor);
     }, [prefState.themeColor]);
 
-    const content = (() => {
+    const content = ((): JSX.Element => {
         switch (path) {
             case Path.editor: {
                 return <LazyEditor lrcState={lrcState} lrcDispatch={lrcDispatch} />;
@@ -169,7 +169,7 @@ export const Content: React.FC = () => {
 };
 
 // https://www.w3.org/TR/WCAG20/#relativeluminancedef
-const luminanace = (...rgb: [number, number, number]) => {
+const luminanace = (...rgb: [number, number, number]): number => {
     return rgb
         .map((v) => v / 255)
         .map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)))

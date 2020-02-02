@@ -1,6 +1,7 @@
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import { State as LrcState, stringify } from "../lrc-parser.js";
 import { createFile } from "../utils/gistapi.js";
+import { lrcFileName } from "../utils/lrc-file-name.js";
 import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG, UtilitySVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
@@ -16,15 +17,22 @@ const disableCheck = {
 
 type HTMLInputLikeElement = HTMLInputElement & HTMLTextAreaElement;
 
-const useDefaultValue = (defaultValue: string, ref = useRef<HTMLInputLikeElement>(null)) => {
-    // warning: make sure we always use outter ref or create new one.
+type UseDefaultValue<T = React.RefObject<HTMLInputLikeElement>> = (
+    defaultValue: string,
+    ref?: T,
+) => { defaultValue: string; ref: T };
 
-    const currentValue = ref.current ? ref.current.value : defaultValue;
+const useDefaultValue: UseDefaultValue = (defaultValue, ref) => {
+    const or = <T extends unknown, K extends unknown>(a: T, b: K): NonNullable<T> | K => a ?? b;
+
+    const $ref = or(ref, useRef<HTMLInputLikeElement>(null));
 
     useEffect(() => {
-        ref.current!.value = defaultValue;
-    }, [defaultValue, currentValue]);
-    return { ref, defaultValue };
+        if ($ref.current) {
+            $ref.current.value = defaultValue;
+        }
+    }, [defaultValue, $ref]);
+    return { ref: $ref, defaultValue };
 };
 
 export const Eidtor: React.SFC<{
@@ -33,20 +41,26 @@ export const Eidtor: React.SFC<{
 }> = ({ lrcState, lrcDispatch }) => {
     const { prefState, lang, trimOptions } = useContext(appContext);
 
-    const parse = useCallback((ev: React.FocusEvent<HTMLTextAreaElement>) => {
-        lrcDispatch({
-            type: LrcActionType.parse,
-            payload: { text: ev.target!.value, options: trimOptions },
-        });
-    }, []);
+    const parse = useCallback(
+        (ev: React.FocusEvent<HTMLTextAreaElement>) => {
+            lrcDispatch({
+                type: LrcActionType.parse,
+                payload: { text: ev.target.value, options: trimOptions },
+            });
+        },
+        [lrcDispatch, trimOptions],
+    );
 
-    const setInfo = useCallback((ev: React.FocusEvent<HTMLInputElement>) => {
-        const { name, value } = ev.target!;
-        lrcDispatch({
-            type: LrcActionType.info,
-            payload: { name, value },
-        });
-    }, []);
+    const setInfo = useCallback(
+        (ev: React.FocusEvent<HTMLInputElement>) => {
+            const { name, value } = ev.target;
+            lrcDispatch({
+                type: LrcActionType.info,
+                payload: { name, value },
+            });
+        },
+        [lrcDispatch],
+    );
 
     const text = stringify(lrcState, prefState);
 
@@ -77,48 +91,30 @@ export const Eidtor: React.SFC<{
         });
     }, []);
 
-    const onTextFileUpload = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
-        if (ev.target.files === null || ev.target.files.length === 0) {
-            return;
-        }
+    const onTextFileUpload = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            if (ev.target.files === null || ev.target.files.length === 0) {
+                return;
+            }
 
-        const fileReader = new FileReader();
-        fileReader.addEventListener("load", () => {
-            lrcDispatch({
-                type: LrcActionType.parse,
-                payload: { text: fileReader.result as string, options: trimOptions },
+            const fileReader = new FileReader();
+            fileReader.addEventListener("load", () => {
+                lrcDispatch({
+                    type: LrcActionType.parse,
+                    payload: { text: fileReader.result as string, options: trimOptions },
+                });
             });
-        });
-        fileReader.readAsText(ev.target.files![0], "UTF-8");
-    }, []);
+            fileReader.readAsText(ev.target.files[0], "UTF-8");
+        },
+        [lrcDispatch, trimOptions],
+    );
 
     const onCopyClick = useCallback(() => {
-        textarea.current!.select();
+        textarea.current?.select();
         document.execCommand("copy");
     }, []);
 
-    const downloadName = useMemo(() => {
-        const list: string[] = [];
-        const lrcInfo = lrcState.info;
-        const filenamify = (name: string) => {
-            return name.replace(/[\<\>\:\"\/\\\|\?\*]/g, "_").trim();
-        };
-
-        if (lrcInfo.has("ti")) {
-            list.push(filenamify(lrcInfo.get("ti")!));
-        }
-        if (lrcInfo.has("ar")) {
-            list.push(filenamify(lrcInfo.get("ar")!));
-        }
-        if (list.length === 0) {
-            if (lrcInfo.has("al")) {
-                list.push(filenamify(lrcInfo.get("al")!));
-            }
-        }
-        list.push(Date.now().toString());
-
-        return list.join(" - ") + ".lrc";
-    }, [lrcState.info]);
+    const downloadName = useMemo(() => lrcFileName(lrcState.info), [lrcState.info]);
 
     const canSaveToGist = useMemo(() => {
         return localStorage.getItem(LSK.token) !== null && localStorage.getItem(LSK.gistId) !== null;

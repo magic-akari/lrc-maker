@@ -24,9 +24,9 @@ export interface IState extends LrcState {
     readonly selectIndex: number;
 }
 
-type Map_Type_Payload<T, U> = { [key in keyof T]: U extends key ? { type: key; payload: T[key] } : never }[keyof T];
+type Map$Type$Payload<T, U> = { [key in keyof T]: U extends key ? { type: key; payload: T[key] } : never }[keyof T];
 
-export type Action = Map_Type_Payload<
+export type Action = Map$Type$Payload<
     {
         [ActionType.parse]: { text: string; options: TrimOptios };
         [ActionType.refresh]: number;
@@ -39,7 +39,7 @@ export type Action = Map_Type_Payload<
     ActionType
 >;
 
-export const guard = (value: number, min: number, max: number) => {
+export const guard = (value: number, min: number, max: number): number => {
     if (value < min) {
         return min;
     }
@@ -183,4 +183,5 @@ const init = (lazyInit: () => InitArgs): IState => {
     };
 };
 
-export const useLrc = (lazyInit: () => InitArgs) => React.useReducer(reducer, lazyInit, init);
+export const useLrc = (lazyInit: () => InitArgs): [IState, React.Dispatch<Action>] =>
+    React.useReducer(reducer, lazyInit, init);

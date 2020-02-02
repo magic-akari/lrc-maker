@@ -8,7 +8,7 @@ const { useContext } = React;
 export const Home: React.FC = () => {
     const { lang } = useContext(appContext);
 
-    const onLoadAudioDialogOpen = () => {
+    const onLoadAudioDialogOpen = (): void => {
         loadAudioDialogRef.open();
     };
 

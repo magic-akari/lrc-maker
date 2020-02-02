@@ -2,7 +2,7 @@
 // only for special usage of lrc maker
 
 declare global {
-    // tslint:disable-next-line: interface-name
+    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
     interface Window {
         visualViewport?: {
             height: number;
@@ -11,12 +11,12 @@ declare global {
     }
 }
 
-export default (() => {
+export default ((): void => {
     const duration = 468;
 
     const getNow = performance || Date;
 
-    const ease = (k: number) => {
+    const ease = (k: number): number => {
         return 0.5 * (1 - Math.cos(Math.PI * k));
     };
 
@@ -32,7 +32,7 @@ export default (() => {
         current: 0,
     };
 
-    const cancelScroll = () => {
+    const cancelScroll = (): void => {
         cancelAnimationFrame(rafID.current);
         cleanEventListener();
     };
@@ -42,17 +42,17 @@ export default (() => {
         once: true,
     };
 
-    const atachEventListener = () => {
+    const atachEventListener = (): void => {
         window.addEventListener("wheel", cancelScroll, listenerOptions);
         window.addEventListener("touchmove", cancelScroll, listenerOptions);
     };
 
-    const cleanEventListener = () => {
+    const cleanEventListener = (): void => {
         window.removeEventListener("wheel", cancelScroll);
         window.removeEventListener("touchmove", cancelScroll);
     };
 
-    const step = (context: IContext) => {
+    const step = (context: IContext): void => {
         const time = getNow.now();
         const { startTime, startX, startY, stopY } = context;
         const elapsed = (time - startTime) / duration;
@@ -77,7 +77,7 @@ export default (() => {
 
     const scrollingElement = document.scrollingElement || document.documentElement;
 
-    Element.prototype.scrollIntoView = function() {
+    Element.prototype.scrollIntoView = function(): void {
         const { top, bottom } = this.getBoundingClientRect();
 
         const center = (top + bottom) / 2;

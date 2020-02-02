@@ -42,7 +42,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                 value: `${lang.app.name} https://lrc-maker.github.io`,
             },
         });
-    }, [lang]);
+    }, [dispatch, lang]);
 
     const [syncMode, setSyncMode] = useState(() =>
         sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString() ? SyncMode.highlight : SyncMode.select,
@@ -74,7 +74,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
         return currentTimePubSub.sub(self.current, (time) => {
             dispatch({ type: ActionType.refresh, payload: time });
         });
-    }, []);
+    }, [dispatch]);
 
     const sync = useCallback(() => {
         if (!audioRef.duration) {
@@ -85,10 +85,10 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
             type: ActionType.sync,
             payload: audioRef.currentTime,
         });
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
-        const listener = (ev: KeyboardEvent) => {
+        const listener = (ev: KeyboardEvent): void => {
             const { code, key, target } = ev;
 
             const codeOrKey = code || key;
@@ -143,44 +143,52 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
 
         document.addEventListener("keydown", listener);
 
-        return () => {
+        return (): void => {
             document.removeEventListener("keydown", listener);
         };
-    }, []);
+    }, [dispatch, sync]);
 
-    const onLineClick = useCallback((ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
-        ev.stopPropagation();
+    const onLineClick = useCallback(
+        (ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
+            ev.stopPropagation();
 
-        if ((ev.target as HTMLElement).classList.contains("line")) {
-            const lineKey = Number.parseInt((ev.target as HTMLElement).dataset.key!, 10) || 0;
+            const target = ev.target as HTMLElement;
 
-            dispatch({ type: ActionType.select, payload: () => lineKey });
-        }
-    }, []);
+            if (target.classList.contains("line")) {
+                const lineKey = Number.parseInt(target.dataset.key!, 10) || 0;
 
-    const onLineDoubleClick = useCallback((ev: React.MouseEvent<HTMLUListElement | HTMLLIElement>) => {
-        ev.stopPropagation();
+                dispatch({ type: ActionType.select, payload: () => lineKey });
+            }
+        },
+        [dispatch],
+    );
 
-        if (!audioRef.duration) {
-            return;
-        }
+    const onLineDoubleClick = useCallback(
+        (ev: React.MouseEvent<HTMLUListElement | HTMLLIElement>) => {
+            ev.stopPropagation();
 
-        const target = ev.target as HTMLElement;
+            if (!audioRef.duration) {
+                return;
+            }
 
-        if (target.classList.contains("line")) {
-            const key = Number.parseInt(target.dataset.key!, 10);
+            const target = ev.target as HTMLElement;
 
-            dispatch({
-                type: ActionType.getState,
-                payload: ({ lyric }) => {
-                    const time = lyric[key].time;
-                    if (time !== undefined) {
-                        audioRef.currentTime = guard(time, 0, audioRef.duration);
-                    }
-                },
-            });
-        }
-    }, []);
+            if (target.classList.contains("line")) {
+                const key = Number.parseInt(target.dataset.key!, 10);
+
+                dispatch({
+                    type: ActionType.getState,
+                    payload: ({ lyric }) => {
+                        const time = lyric[key].time;
+                        if (time !== undefined) {
+                            audioRef.currentTime = guard(time, 0, audioRef.duration);
+                        }
+                    },
+                });
+            }
+        },
+        [dispatch],
+    );
 
     const LyricLineIter = useCallback(
         (line: Readonly<ILyric>, index: number, lines: readonly ILyric[]) => {

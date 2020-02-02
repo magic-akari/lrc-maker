@@ -59,7 +59,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
                 setCurrentTime(audioRef.currentTime);
             }, 500 / rate);
 
-            return () => {
+            return (): void => {
                 clearInterval(id);
             };
         }

@@ -27,12 +27,15 @@ const initState = {
 
 export type State = Readonly<typeof initState>;
 
-export type Action = { [key in keyof State]: { type: key; payload: State[key] } }[keyof State];
+export type Action = {
+    [key in keyof State]: { type: key; payload: State[key] | ((state: State) => State[key]) };
+}[keyof State];
 
 const reducer = (state: State, action: Action): State => {
+    const payload = action.payload;
     return {
         ...state,
-        [action.type]: action.payload,
+        [action.type]: typeof payload === "function" ? payload(state) : payload,
     };
 };
 
@@ -68,4 +71,5 @@ const init = (lazyInit: () => string): State => {
     return state;
 };
 
-export const usePref = (lazyInit: () => string) => React.useReducer(reducer, lazyInit, init);
+export const usePref = (lazyInit: () => string): [State, React.Dispatch<Action>] =>
+    React.useReducer(reducer, lazyInit, init);

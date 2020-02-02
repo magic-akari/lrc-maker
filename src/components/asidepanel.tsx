@@ -1,6 +1,7 @@
 import { Action, ActionType } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
 import { stringify } from "../lrc-parser.js";
+import { lrcFileName } from "../utils/lrc-file-name.js";
 import { DownloadSVG, LockSVG } from "./svg.js";
 import { SyncMode } from "./synchronizer.js";
 
@@ -16,8 +17,8 @@ export const AsidePanel: React.FC<{
     const [name, setName] = useState<string>();
 
     const onSyncModeToggle = useCallback(() => {
-        setSyncMode(syncMode === SyncMode.select ? SyncMode.highlight : SyncMode.select);
-    }, [syncMode]);
+        setSyncMode((syncMode) => (syncMode === SyncMode.select ? SyncMode.highlight : SyncMode.select));
+    }, [setSyncMode]);
 
     const onDownloadClick = useCallback(() => {
         lrcDispatch({
@@ -36,24 +37,10 @@ export const AsidePanel: React.FC<{
                     );
                 });
 
-                const info = state.info;
-                const list: string[] = [];
-                if (info.has("ti")) {
-                    list.push(info.get("ti")!);
-                }
-                if (info.has("ar")) {
-                    list.push(info.get("ar")!);
-                }
-                if (list.length === 0) {
-                    if (info.has("al")) {
-                        list.push(info.get("al")!);
-                    }
-                    list.push(new Date().toLocaleString());
-                }
-                setName(list.join(" - ") + ".lrc");
+                setName(lrcFileName(state.info));
             },
         });
-    }, [prefState]);
+    }, [lrcDispatch, prefState]);
 
     const mode = syncMode === SyncMode.select ? "select" : "highlight";
 
@@ -70,3 +57,5 @@ export const AsidePanel: React.FC<{
         </aside>
     );
 });
+
+AsidePanel.displayName = AsidePanel.name;

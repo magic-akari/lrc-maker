@@ -27,8 +27,8 @@ export const Footer: React.FC = () => {
                 if (url !== null) {
                     return url;
                 }
-                const text = searchParams.get("text") || searchParams.get("title");
-                const result = /https?:\/\/\S+/.exec(text!);
+                const text = searchParams.get("text") || searchParams.get("title") || "";
+                const result = /https?:\/\/\S+/.exec(text);
                 src = result && nec(result[0]);
             }
             return src!;
@@ -125,7 +125,7 @@ export const Footer: React.FC = () => {
             type: AudioActionType.pause,
             payload: false,
         });
-    }, []);
+    }, [syncCurrentTime]);
 
     const onAudioPause = useCallback(() => {
         cancelAnimationFrame(rafId.current);
@@ -193,7 +193,7 @@ export const Footer: React.FC = () => {
 
 type TsetAudioSrc = (src: string) => void;
 
-const receiveFile = (file: File, setAudioSrc: TsetAudioSrc) => {
+const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
     sessionStorage.removeItem(SSK.audioSrc);
 
     if (file) {
@@ -271,6 +271,7 @@ const enum MimeType {
     WAVE = 0x57415645,
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const detectMimeType = (dataArray: Uint8Array) => {
     const magicNumber = new DataView(dataArray.buffer).getUint32(0, false);
     switch (magicNumber) {

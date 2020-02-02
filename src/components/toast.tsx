@@ -14,7 +14,7 @@ const { useCallback, useEffect, useRef, useState } = React;
 
 const box = { id: 0 };
 
-export const Toast = () => {
+export const Toast: React.FC = () => {
     const self = useRef(Symbol(Toast.name));
 
     interface IToast extends IMessage {

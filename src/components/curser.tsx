@@ -49,7 +49,7 @@ export const Curser: React.FC<ICurserProps> = ({ fixed }) => {
                 setTime(audioRef.currentTime);
             }, 1000 / (2 * B));
 
-            return () => {
+            return (): void => {
                 clearInterval(id);
             };
         }

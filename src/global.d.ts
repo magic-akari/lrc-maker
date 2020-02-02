@@ -1,6 +1,6 @@
 import { language } from "./languages/en-US";
 
-// tslint:disable:interface-name
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 declare global {
     export namespace React {
         function useContext<T>(context: Context<T>, observedBits?: number | boolean): T;

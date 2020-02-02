@@ -8,7 +8,7 @@ import { name, version } from "../package.json";
 const jsdelivr = "https://cdn.jsdelivr.net";
 const useCDN = process.env.USE_CDN === "USE_CDN";
 
-const appScript = (path: string) => {
+const appScript = (path: string): string => {
     if (useCDN) {
         return new URL(resolve("/npm", `${name}@${version}`, "build", path), jsdelivr).href;
     } else {
@@ -16,7 +16,7 @@ const appScript = (path: string) => {
     }
 };
 
-const hash = (() => {
+const hash = ((): string => {
     const root = resolve(__dirname, "../");
     const rev = readFileSync(resolve(root, ".git/HEAD"))
         .toString()

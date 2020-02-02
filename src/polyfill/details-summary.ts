@@ -1,6 +1,6 @@
 const details = document.createElement("details");
 
-const polyfilldetails = () => {
+const polyfilldetails = (): void => {
     const prototype = details.constructor.prototype as HTMLDetailsElement;
     const openProperty = Object.getOwnPropertyDescriptor(prototype, "open");
 
@@ -13,7 +13,7 @@ const polyfilldetails = () => {
                     return openProperty?.get?.call(this);
                 }
             },
-            set(this: HTMLDetailsElement, value: boolean) {
+            set(this: HTMLDetailsElement, value: boolean): void {
                 if (this.tagName === "DETAILS") {
                     if (value !== this.hasAttribute("open")) {
                         const event = document.createEvent("Event");

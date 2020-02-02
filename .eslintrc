@@ -1,0 +1,33 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "react-hooks"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "prettier/@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/interface-name-prefix": [2, "always"],
+        "@typescript-eslint/no-use-before-define": 0,
+        "@typescript-eslint/triple-slash-reference": 0,
+        "react/prop-types": 0,
+        "react/jsx-no-undef": [2, { "allowGlobals": true }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error"
+    },
+    "env": {
+        "es2020": true
+    },
+    "globals": {
+        "React": "readonly",
+        "ReactDOM": "readonly"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
+}

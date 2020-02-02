@@ -4,6 +4,7 @@ import { CloseSVG } from "./svg.js";
 const { useRef, useEffect, useCallback } = React;
 
 interface ILoadAudioDialogRef extends React.RefObject<HTMLDetailsElement> {
+    readonly isOpen: boolean;
     open: () => void;
     close: () => void;
 }
@@ -12,6 +13,10 @@ interface ILoadAudioDialogRef extends React.RefObject<HTMLDetailsElement> {
 
 export const loadAudioDialogRef: ILoadAudioDialogRef = {
     current: null,
+
+    get isOpen() {
+        return this.current !== null && this.current.open;
+    },
 
     open() {
         if (this.current === null || this.current.open) {
@@ -44,32 +49,35 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
         });
     }, []);
 
-    const onEscapeKeyDown = useCallback((ev: KeyboardEvent) => {
-        if (ev.code === "Escape" || ev.key === "Escape") {
-            loadAudioDialogRef.close();
-        }
-    }, []);
-
     const onToggle = useCallback(() => {
-        if (loadAudioDialogRef.current!.open) {
+        const onEscapeKeyDown = (ev: KeyboardEvent): void => {
+            if (ev.code === "Escape" || ev.key === "Escape") {
+                loadAudioDialogRef.close();
+            }
+        };
+
+        if (loadAudioDialogRef.isOpen) {
             window.addEventListener("keydown", onEscapeKeyDown);
         } else {
             window.removeEventListener("keydown", onEscapeKeyDown);
         }
     }, []);
 
-    const onSubmit = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
-        ev.preventDefault();
+    const onSubmit = useCallback(
+        (ev: React.FormEvent<HTMLFormElement>) => {
+            ev.preventDefault();
 
-        const form = ev.target as HTMLFormElement;
+            const form = ev.target as HTMLFormElement;
 
-        const urlInput = form.elements.namedItem("url")! as HTMLInputElement;
+            const urlInput = form.elements.namedItem("url") as HTMLInputElement;
 
-        const url = nec(urlInput.value);
+            const url = nec(urlInput.value);
 
-        sessionStorage.setItem(SSK.audioSrc, url);
-        setAudioSrc(url);
-    }, []);
+            sessionStorage.setItem(SSK.audioSrc, url);
+            setAudioSrc(url);
+        },
+        [setAudioSrc],
+    );
 
     const onFocus = useCallback((ev: React.FocusEvent<HTMLInputElement>) => {
         ev.target.select();
@@ -121,7 +129,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
     );
 };
 
-export const nec = (url: string) => {
+export const nec = (url: string): string => {
     if (url.includes("music.163.com")) {
         const result = url.match(/\d{4,}/);
         if (result !== null) {
