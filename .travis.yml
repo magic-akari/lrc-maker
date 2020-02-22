@@ -11,7 +11,6 @@ before_deploy:
 
 deploy:
     - provider: npm
-      cleanup: true
       edge: true
       on:
           repo: magic-akari/lrc-maker
@@ -19,14 +18,12 @@ deploy:
           tags: true
 
     - provider: pages
-      cleanup: true
       edge: true
       local_dir: build
       on:
           branch: master
 
     - provider: pages
-      cleanup: true
       edge: true
       local_dir: build
       repo: lrc-maker/lrc-maker.github.io
