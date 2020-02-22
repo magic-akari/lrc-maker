@@ -47,15 +47,6 @@ body {
     margin: 0;
 }
 
-/**
- * Improve consistency of default fonts in all browsers.
- */
-
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Heiti SC", "Source Han Sans SC",
-        "Noto Sans CJK SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-}
-
 /* Grouping content
    ========================================================================== */
 
