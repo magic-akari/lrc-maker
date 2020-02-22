@@ -11,27 +11,26 @@ before_deploy:
 
 deploy:
     - provider: npm
-      skip-cleanup: true
-      email: $NPM_EMAIL
-      api_key: $NPM_AUTH_TOKEN
+      cleanup: true
+      edge: true
       on:
           repo: magic-akari/lrc-maker
           branch: master
           tags: true
 
     - provider: pages
-      skip-cleanup: true
-      github-token: $GITHUB_TOKEN
-      local-dir: build
+      cleanup: true
+      edge: true
+      local_dir: build
       on:
           branch: master
 
     - provider: pages
-      skip-cleanup: true
-      github-token: $GITHUB_TOKEN
-      local-dir: build
+      cleanup: true
+      edge: true
+      local_dir: build
       repo: lrc-maker/lrc-maker.github.io
-      target-branch: master
+      target_branch: master
       on:
           repo: magic-akari/lrc-maker
           branch: master
