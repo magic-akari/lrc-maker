@@ -10,7 +10,6 @@ const { useCallback, useContext, useEffect, useReducer, useRef } = React;
 const accept = ["audio/*", ".ncm", ".qmcflac", ".qmc0", ".qmc1", ".qmc2", ".qmc3", "qmcogg"].join(", ");
 
 export const Footer: React.FC = () => {
-    // tslint:disable-next-line: no-bitwise
     const { prefState, lang } = useContext(appContext, ChangBits.lang | ChangBits.builtInAudio);
 
     const [audioSrc, setAudioSrc] = useReducer(

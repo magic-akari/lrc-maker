@@ -59,7 +59,6 @@ const getLanguageMap = (): { [filename: string]: string } => {
     const fileList = readdirSync(langDir);
 
     return fileList.reduce((map, filename) => {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { language } = require(resolve(langDir, filename));
 
         return {

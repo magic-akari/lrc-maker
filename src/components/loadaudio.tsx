@@ -84,7 +84,6 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
     }, []);
 
     return ReactDOM.createPortal(
-        // tslint:disable-next-line: jsx-wrap-multiline
         <details ref={loadAudioDialogRef} className="dialog fixed loadaudio-dialog" onToggle={onToggle}>
             <summary className="dialog-close">
                 <CloseSVG />

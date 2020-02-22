@@ -1,5 +1,3 @@
-// tslint:disable: no-bitwise
-
 declare const self: DedicatedWorkerGlobalScope;
 export {};
 

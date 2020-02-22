@@ -1,9 +1,0 @@
-{
-    "defaultSeverity": "error",
-    "extends": ["tslint:latest"],
-    "rules": {
-        "object-literal-sort-keys": false,
-        "no-implicit-dependencies": false,
-        "no-submodule-imports": false
-    }
-}
