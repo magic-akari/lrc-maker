@@ -60,7 +60,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     }[syncMode];
 
     useEffect(() => {
-        const line = ul.current!.children[needScrollLine];
+        const line = ul.current?.children[needScrollLine];
         if (line !== undefined) {
             line.scrollIntoView({
                 behavior: "smooth",

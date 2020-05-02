@@ -3,19 +3,19 @@ ts-node := node_modules/.bin/ts-node
 webpack := node_modules/.bin/webpack
 postcss := node_modules/.bin/postcss
 
-package_json := package.json yarn.lock
+package_json := package.json package-lock.json
 metadata := src/metadata.d.ts worker/metadata.d.ts
-assets =  $(shell find assets -type f)
+assets = $(shell find assets)
 
 src_ts = $(shell find src -type f \( -name '*.ts' -o -name '*.tsx' \) -not -name '*.d.ts')
 src_css = $(shell find src -type f -name '*.css')
-lib = $(shell find node_modules/react -type f) $(shell find node_modules/react-dom -type f)
+lib = $(shell find node_modules/react node_modules/react-dom -type f)
 
 target_assets = $(patsubst assets/%,build/%,$(assets))
 target_esm = $(patsubst src/%.ts,build/%.js,$(src_ts:.tsx=.ts))
 target_es6 = $(patsubst build/%,build.es6/%,$(target_esm)) build/index.es6.js
 target_css := build/index.css build/index.css.map
-target_lib = $(patsubst node_modules/%,build/lib/%,$(lib))
+target_lib := build/lib
 
 .PHONY: clean copy_assets copy_lib build_css build_esm watch_esm nomodule build_html dev build
 
@@ -31,9 +31,10 @@ $(target_assets): $(assets)
 
 copy_assets: $(target_assets)
 
-$(target_lib): $(lib)
+$(target_lib): $(lib) $(package_json)
 	mkdir -p build/lib
 	rsync -am --no-links --exclude 'node_modules' node_modules/react node_modules/react-dom build/lib
+	touch build/lib
 
 copy_lib: $(target_lib)
 

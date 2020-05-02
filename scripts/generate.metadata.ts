@@ -18,9 +18,7 @@ const appScript = (path: string): string => {
 
 const hash = ((): string => {
     const root = resolve(__dirname, "../");
-    const rev = readFileSync(resolve(root, ".git/HEAD"))
-        .toString()
-        .trim();
+    const rev = readFileSync(resolve(root, ".git/HEAD")).toString().trim();
     if (!rev.includes(":")) {
         return rev;
     } else {
@@ -28,9 +26,7 @@ const hash = ((): string => {
     }
 })().slice(0, 7);
 
-const updateTime = execSync("git log -1 --format=%cI")
-    .toString()
-    .trim();
+const updateTime = execSync("git log -1 --format=%cI").toString().trim();
 
 const versionTs = `declare global {
     const enum MetaData {

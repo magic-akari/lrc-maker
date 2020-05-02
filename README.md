@@ -70,13 +70,13 @@ git clone https://github.com/magic-akari/lrc-maker.git
 cd lrc-maker
 
 # install dependencies
-yarn # or use `npm i` instead of yarn
+npm i
 
 # build
-yarn build # or `npm run build`
+npm run build
 
 # or build with watch mode
-yarn start # or `npm start`
+npm start
 
 ```
 
@@ -161,13 +161,13 @@ git clone https://github.com/magic-akari/lrc-maker.git
 cd lrc-maker
 
 # 安装依赖
-yarn # 或者使用 `npm i` 来代替 yarn
+npm i
 
 # 构建
-yarn build # 或者 `npm run build`
+npm run build
 
 # 开发模式构建
-yarn start # 或者 `npm start`
+npm start
 
 ```
 
