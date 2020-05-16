@@ -1,4 +1,5 @@
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
+import { ThemeMode } from "../hooks/usePref.js";
 import { convertTimeToTag, stringify } from "../lrc-parser.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
@@ -112,6 +113,16 @@ export const Content: React.FC = () => {
             }
         });
     }, [lrcDispatch, trimOptions]);
+
+    useEffect(() => {
+        const values = {
+            [ThemeMode.auto]: "auto",
+            [ThemeMode.light]: "light",
+            [ThemeMode.dark]: "dark",
+        } as const;
+
+        document.documentElement.dataset.theme = values[prefState.themeMode];
+    }, [prefState.themeMode]);
 
     useEffect(() => {
         const rgb = hex2rgb(prefState.themeColor);

@@ -85,6 +85,12 @@ export const language = {
         leftSpace: "左側のスペース",
         rightSpace: "右側スペース",
         clearCache: "キャッシュをクリア",
+        themeMode: {
+            label: "テーマモード",
+            auto: "自動",
+            light: "ライト",
+            dark: "ダーク",
+        },
     },
 
     notify: {

@@ -6,16 +6,10 @@
     margin: 16px;
     padding: 8px;
     font-size: 1.2rem;
-    background-color: white;
+    background-color: transparent;
     border: 1px solid var(--theme-color);
     border-radius: var(--border-radius);
     transition: box-shadow var(--transition-duration) ease-in-out;
-}
-
-@media (prefers-color-scheme: dark) {
-    .app-editor {
-        background-color: transparent;
-    }
 }
 
 .app-editor:hover {

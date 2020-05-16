@@ -79,6 +79,12 @@ export const language = {
         leftSpace: "左側空格",
         rightSpace: "右側空格",
         clearCache: "清除快取",
+        themeMode: {
+            label: "主題模式",
+            auto: "跟隨系統",
+            light: "亮色模式",
+            dark: "暗色模式",
+        },
     },
 
     notify: {

@@ -15,6 +15,12 @@ export const themeColor = {
     purple: "#c877fe",
 };
 
+export const enum ThemeMode {
+    auto,
+    light,
+    dark,
+}
+
 const initState = {
     lang: "en-US",
     spaceStart: 1,
@@ -23,6 +29,7 @@ const initState = {
     builtInAudio: false,
     screenButton: false,
     themeColor: themeColor.pink,
+    themeMode: ThemeMode.auto,
 };
 
 export type State = Readonly<typeof initState>;

@@ -1,4 +1,4 @@
-import { info, themeColor } from "../hooks/usePref.js";
+import { info, themeColor, ThemeMode } from "../hooks/usePref.js";
 import { convertTimeToTag, formatText } from "../lrc-parser.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
@@ -161,6 +161,16 @@ export const Preferences: React.FC = () => {
         [prefDispatch],
     );
 
+    const onThemeModeChange = useCallback(
+        (ev: React.ChangeEvent<HTMLSelectElement>) => {
+            prefDispatch({
+                type: "themeMode",
+                payload: Number.parseInt(ev.target.value, 10) as ThemeMode,
+            });
+        },
+        [prefDispatch],
+    );
+
     const onFixedChanged = useCallback(
         (ev: React.ChangeEvent<HTMLSelectElement>) => {
             prefDispatch({
@@ -300,6 +310,24 @@ export const Preferences: React.FC = () => {
                             <span className="toggle-switch-label" />
                         </label>
                     </label>
+                </li>
+
+                <li>
+                    <section className="list-item">
+                        <span>{lang.preferences.themeMode.label}</span>
+                        <div className="option-select">
+                            <select
+                                name="fixed"
+                                value={prefState.themeMode}
+                                onChange={onThemeModeChange}
+                                aria-label={lang.preferences.themeMode.label}
+                            >
+                                <option value={ThemeMode.auto}>{lang.preferences.themeMode.auto}</option>
+                                <option value={ThemeMode.light}>{lang.preferences.themeMode.light}</option>
+                                <option value={ThemeMode.dark}>{lang.preferences.themeMode.dark}</option>
+                            </select>
+                        </div>
+                    </section>
                 </li>
 
                 <li>
