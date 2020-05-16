@@ -317,7 +317,7 @@ export const Preferences: React.FC = () => {
                         <span>{lang.preferences.themeMode.label}</span>
                         <div className="option-select">
                             <select
-                                name="fixed"
+                                name="theme-mode"
                                 value={prefState.themeMode}
                                 onChange={onThemeModeChange}
                                 aria-label={lang.preferences.themeMode.label}

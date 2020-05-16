@@ -11,7 +11,7 @@ const { useCallback, useContext, useEffect, useRef, useState } = React;
 
 const SpaceButton: React.FC<{ sync: () => void }> = ({ sync }) => {
     return (
-        <button className="space_button" onClick={sync}>
+        <button className="space-button" onClick={sync}>
             space
         </button>
     );
