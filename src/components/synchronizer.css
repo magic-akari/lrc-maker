@@ -58,6 +58,7 @@
 .curser {
     position: absolute;
     left: 0;
+    contain: content;
 }
 
 .curser::after {

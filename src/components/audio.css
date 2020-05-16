@@ -49,7 +49,7 @@ audio::-webkit-media-controls-enclosure {
         --slider-height: 4px;
 
         position: absolute;
-        top: -4px;
+        bottom: 100%;
         width: 100%;
         margin: 0;
     }
