@@ -14,7 +14,7 @@
 }
 
 .preferences li:nth-child(even) {
-    background-color: #0002;
+    background-color: #00000022;
 }
 
 .list-item {
@@ -55,11 +55,11 @@
     }
 
     .toggle-switch-label::after {
-        box-shadow: 0 0 8px #1118;
+        box-shadow: 0 0 8px #11111188;
     }
 
     :hover > .toggle-switch-label::after {
-        box-shadow: 0 0 8px #1118, 0 0 0 14px rgba(var(--theme-rgb), 0.2);
+        box-shadow: 0 0 8px #11111188, 0 0 0 14px rgba(var(--theme-rgb), 0.2);
     }
 
     .toggle-switch-label {

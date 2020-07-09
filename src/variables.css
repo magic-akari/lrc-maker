@@ -1,6 +1,6 @@
 :root {
-    --white: #eee;
-    --black: #111;
+    --white: #eeeeee;
+    --black: #111111;
 
     /* theme color */
     --theme-rgb: 245, 142, 168;
@@ -20,7 +20,7 @@
 
     /* shadow */
     --text-shadow: 0 0 2px var(--black);
-    --drop-shadow: drop-shadow(0 0 4px currentcolor);
+    --drop-shadow: drop-shadow(0 0 4px currentColor);
 
     /* duration */
     --transition-duration: 250ms;

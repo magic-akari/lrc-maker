@@ -62,7 +62,7 @@
     color: var(--black);
     background-color: var(--semi-white-color);
     border: 1px solid var(--theme-color);
-    box-shadow: 0 0 1rem var(--theme-color), 0 0 0 100vmax #0008;
+    box-shadow: 0 0 1rem var(--theme-color), 0 0 0 100vmax #00000088;
 }
 
 .loadaudio-body {
@@ -105,7 +105,7 @@
 }
 
 .loadaudio-tab :checked ~ label {
-    background-color: #fffd;
+    background-color: #ffffffdd;
     border: 1px solid var(--theme-color);
     border-bottom-color: transparent;
 }
