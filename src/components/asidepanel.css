@@ -6,6 +6,7 @@
     border-radius: 8px 0 0 8px;
     transform: translateX(100%);
     animation: slideInRight var(--animation-duration) ease 1s forwards;
+    margin-bottom: env(safe-area-inset-bottom);
 }
 
 .on-screen-button + .aside-panel {
@@ -13,7 +14,6 @@
 }
 
 .aside-button {
-    display: block;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,8 +22,10 @@
     height: 50px;
     margin: 0;
     padding: 0;
+    padding-right: env(safe-area-inset-right);
     color: var(--white);
     line-height: 1;
+    box-sizing: content-box;
 }
 
 .aside-button > svg {

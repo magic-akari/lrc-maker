@@ -18,6 +18,7 @@ html {
     font-feature-settings: "kern" 1;
     font-kerning: normal;
     caret-color: var(--theme-color);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 [lang]:lang(zh) {

@@ -13,6 +13,8 @@
     box-shadow: 0 1px 1px var(--theme-color);
     animation: slideInDown var(--animation-duration) ease-in-out forwards;
     user-select: none;
+    padding-right: env(safe-area-inset-right);
+    padding-left: env(safe-area-inset-left);
 }
 
 @media (max-width: 768px) {

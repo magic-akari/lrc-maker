@@ -173,7 +173,7 @@ const Html: React.FC = () => {
                 <meta name="keywords" content="lrc maker, lrc generate, 歌词制作, 歌词滚动" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="renderer" content="webkit" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
                 <meta name="google" content="notranslate" />
 
                 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="./favicons/apple-touch-icon.png" />
