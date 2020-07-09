@@ -1,6 +1,5 @@
 import { language } from "./languages/en-US";
 
-/* eslint-disable @typescript-eslint/interface-name-prefix */
 declare global {
     export namespace React {
         function useContext<T>(context: Context<T>, observedBits?: number | boolean): T;

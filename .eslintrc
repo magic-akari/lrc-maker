@@ -10,7 +10,6 @@
         "prettier/@typescript-eslint"
     ],
     "rules": {
-        "@typescript-eslint/interface-name-prefix": [2, "always"],
         "@typescript-eslint/no-use-before-define": 0,
         "@typescript-eslint/triple-slash-reference": 0,
         "react/prop-types": 0,
