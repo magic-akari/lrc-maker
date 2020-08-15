@@ -172,11 +172,11 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
     }, []);
 
     const onReplay5s = useCallback(() => {
-        audioRef.currentTime -= 5;
+        audioRef.currentTime -= 5 * audioRef.playbackRate;
     }, []);
 
     const onForward5s = useCallback(() => {
-        audioRef.currentTime += 5;
+        audioRef.currentTime += 5 * audioRef.playbackRate;
     }, []);
 
     const onPlayPauseToggle = useCallback(() => {
