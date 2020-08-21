@@ -70,7 +70,7 @@ export const language = {
         updateTime: "更新时间",
         repo: "项目地址",
         help: "关于 & 帮助",
-        language: "语言",
+        language: "语言(language)",
         builtInAudio: "使用浏览器内建音频播放器",
         spaceButton: "启用虚拟空格键",
         themeColor: "主题颜色",

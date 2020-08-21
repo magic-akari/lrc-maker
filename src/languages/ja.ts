@@ -76,7 +76,7 @@ export const language = {
         updateTime: "更新時間",
         repo: "プロジェクトURL",
         help: "について＆ヘルプ",
-        language: "言語",
+        language: "言語(language)",
         builtInAudio: "ブラウザ内蔵のオーディオプレーヤーを使用する",
         spaceButton: "画面上のスペースキー",
         themeColor: "テーマカラー",

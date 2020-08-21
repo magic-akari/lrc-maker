@@ -76,7 +76,7 @@ export const language = {
         updateTime: "업데이트 시간",
         repo: "저장고",
         help: "도움말 및 팁",
-        language: "언어",
+        language: "언어(language)",
         builtInAudio: "브라우저 빌트인 오디오 재생기 사용하기",
         spaceButton: "온 스크린 스페이스 키",
         themeColor: "모양색",
