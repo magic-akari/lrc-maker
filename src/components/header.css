@@ -30,6 +30,7 @@
 
 .app-title-text {
     display: none;
+    margin-left: 1rem;
 }
 
 .app-title-svg {
