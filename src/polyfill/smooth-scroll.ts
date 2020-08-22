@@ -1,15 +1,6 @@
 // smooth scroll
 // only for special usage of lrc maker
 
-declare global {
-    interface Window {
-        visualViewport?: {
-            height: number;
-            width: number;
-        };
-    }
-}
-
 export default ((): void => {
     const duration = 468;
 
