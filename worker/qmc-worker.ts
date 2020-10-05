@@ -1,5 +1,4 @@
-declare const self: DedicatedWorkerGlobalScope;
-export {};
+const qmcWorker = self as DedicatedWorkerGlobalScope;
 
 // prettier-ignore
 const keys = [
@@ -13,7 +12,7 @@ const keys = [
     0xd8, 0xf0, 0xf7, 0xa0, 0x90, 0xa1, 0xd6, 0xf3,
 ];
 
-self.addEventListener("message", (ev) => {
+qmcWorker.addEventListener("message", (ev) => {
     const file: File = ev.data;
     const filebuffer = new FileReaderSync().readAsArrayBuffer(file);
 
@@ -25,6 +24,6 @@ self.addEventListener("message", (ev) => {
         return v ^ keys[index];
     });
 
-    self.postMessage<IMessage>({ type: "success", payload: decryptedData }, [decryptedData.buffer]);
-    self.close();
+    qmcWorker.postMessage<IMessage>({ type: "success", payload: decryptedData }, [decryptedData.buffer]);
+    qmcWorker.close();
 });

@@ -1,5 +1,4 @@
-declare const self: DedicatedWorkerGlobalScope;
-export {};
+const ncmcWorker = self as DedicatedWorkerGlobalScope;
 
 const CORE_KEY = Uint8Array.of(
     0x68,
@@ -128,14 +127,14 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array): Promise<U
     return decrypted;
 };
 
-self.addEventListener("message", async (ev) => {
+ncmcWorker.addEventListener("message", async (ev) => {
     const file: File = ev.data;
     const filebuffer = new FileReaderSync().readAsArrayBuffer(file);
     const dataview = new DataView(filebuffer);
 
     if (dataview.getUint32(0, true) !== 0x4e455443 || dataview.getUint32(4, true) !== 0x4d414446) {
-        self.postMessage<IMessage>({ type: "error", payload: "not ncm file" });
-        self.close();
+        ncmcWorker.postMessage<IMessage>({ type: "error", payload: "not ncm file" });
+        ncmcWorker.close();
     }
 
     let offset = 10;
@@ -193,6 +192,6 @@ self.addEventListener("message", async (ev) => {
         return data;
     })();
 
-    self.postMessage<IMessage>({ type: "success", payload: decryptedData }, [decryptedData.buffer]);
-    self.close();
+    ncmcWorker.postMessage<IMessage>({ type: "success", payload: decryptedData }, [decryptedData.buffer]);
+    ncmcWorker.close();
 });

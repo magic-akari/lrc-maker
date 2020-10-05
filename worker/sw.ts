@@ -1,20 +1,19 @@
-declare const self: ServiceWorkerGlobalScope;
-export {};
+const swWorker = (self as unknown) as ServiceWorkerGlobalScope;
 
 const APP_NAME = "akari-lrc-maker";
 const VERSION = MetaData.version;
 const HASH = MetaData.hash;
 const CACHENAME = `${APP_NAME}-${VERSION}-${HASH}`;
 
-self.addEventListener("install", () => {
-    self.skipWaiting();
+swWorker.addEventListener("install", () => {
+    swWorker.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
+swWorker.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all<unknown>([
-                self.clients.claim(),
+                swWorker.clients.claim(),
                 ...cacheNames
                     .filter((cacheName) => {
                         return cacheName.startsWith(APP_NAME) && cacheName !== CACHENAME;
@@ -27,14 +26,14 @@ self.addEventListener("activate", (event) => {
     );
 });
 
-self.addEventListener("fetch", (event) => {
+swWorker.addEventListener("fetch", (event) => {
     if (event.request.method !== "GET") {
         return;
     }
 
     const url = new URL(event.request.url);
 
-    if (!/(?:\.css|\.js|\.svg)$/i.test(url.pathname) && url.origin !== self.location.origin) {
+    if (!/(?:\.css|\.js|\.svg)$/i.test(url.pathname) && url.origin !== swWorker.location.origin) {
         return;
     }
 
