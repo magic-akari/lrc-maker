@@ -22,6 +22,11 @@ open [lrc-maker][lrc maker] to start. You can add the link to browser bookmark. 
 Darg and drop the file in the page to load an audio file.  
 Use the arrow key and space key to insert the timestamp.
 
+development branch links:
+
+-   https://magic-akari.github.io/lrc-maker/
+-   http://lrc-maker.vercel.app/
+
 ## Hotkeys
 
 |                                key                                |         function         |
@@ -111,6 +116,11 @@ If you like give us a star :star: Share this project to help more people.
 ## 如何使用
 
 打开[歌词滚动姬][lrc maker]，即可开始，你可以把这个链接收藏到浏览器书签。
+
+开发分支版本链接:
+
+-   https://magic-akari.github.io/lrc-maker/
+-   https://lrc-maker.vercel.app/
 
 ## 热键
 
