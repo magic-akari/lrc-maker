@@ -5,7 +5,7 @@ postcss := node_modules/.bin/postcss
 
 package_json := package.json package-lock.json
 metadata := src/metadata.d.ts worker/metadata.d.ts
-assets = $(shell find assets)
+assets = $(shell find assets -type f)
 
 src_ts = $(shell find src -type f \( -name '*.ts' -o -name '*.tsx' \) -not -name '*.d.ts')
 src_css = $(shell find src -type f -name '*.css')
