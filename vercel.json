@@ -1,4 +1,7 @@
 {
     "version": 2,
-    "rewrites": [{ "source": "/lrc-utils", "destination": "https://lrc-utils.vercel.app" }]
+    "rewrites": [
+        { "source": "/lrc-utils/", "destination": "https://lrc-utils.vercel.app/index.html" },
+        { "source": "/lrc-utils/:match*", "destination": "https://lrc-utils.vercel.app/:match*" }
+    ]
 }
