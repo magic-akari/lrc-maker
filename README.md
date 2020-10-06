@@ -25,7 +25,7 @@ Use the arrow key and space key to insert the timestamp.
 development branch links:
 
 -   https://magic-akari.github.io/lrc-maker/
--   http://lrc-maker.vercel.app/
+-   https://lrc-maker.vercel.app/
 
 ## Hotkeys
 
