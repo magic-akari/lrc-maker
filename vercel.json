@@ -1,0 +1,3 @@
+{
+    "rewrites": [{ "source": "/lrc-utils", "destination": "https://lrc-utils.vercel.app" }]
+}
