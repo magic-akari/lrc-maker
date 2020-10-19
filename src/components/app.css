@@ -115,6 +115,10 @@ time {
     content: "\1F517";
 }
 
+a > * {
+    pointer-events: none;
+}
+
 .button {
     padding: 8px;
     color: var(--black);

@@ -8,6 +8,18 @@ if ("scrollBehavior" in document.documentElement.style) {
 
 ReactDOM.render(React.createElement(App), document.querySelector(".app-container"), () => {
     document.querySelector(".page-loading")!.remove();
+
+    if ((navigator as any).standalone || window.matchMedia("(display-mode: standalone)").matches) {
+        document.addEventListener("click", (ev) => {
+            const href = (ev.target as HTMLAnchorElement).getAttribute("href");
+
+            if (href?.startsWith("#")) {
+                ev.preventDefault();
+                location.replace(href);
+            }
+        });
+    }
+
     window.addEventListener("dragover", (ev) => {
         ev.preventDefault();
         ev.dataTransfer!.dropEffect = "copy";
