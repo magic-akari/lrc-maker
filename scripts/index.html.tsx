@@ -39,6 +39,7 @@ const libScript = (libName: ILibName, prodPath: string, devPath?: string): IScri
         return {
             src: `${localPath}${libName}${isProduction ? prodPath : devPath || prodPath}`,
             integrity,
+            crossOrigin: "anonymous",
         };
     }
 };
@@ -50,7 +51,7 @@ const appScript = (path: string): IScriptProps => {
         const src = new URL(resolve("/npm", `${name}@${version}`, "build", path), jsdelivr).href;
         return { src, integrity, crossOrigin: "anonymous" };
     } else {
-        return { src: path, integrity };
+        return { src: path, integrity, crossOrigin: "anonymous" };
     }
 };
 
