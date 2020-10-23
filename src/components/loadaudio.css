@@ -23,14 +23,15 @@
     height: 48px;
     padding: 0;
     color: var(--theme-color);
+    list-style-type: none;
 }
 
 .dialog-close::-webkit-details-marker {
     display: none;
 }
 
-.dialog-close > summary:first-of-type {
-    list-style-type: none;
+.dialog-close::marker {
+    display: none;
 }
 
 .dialog-close::before {

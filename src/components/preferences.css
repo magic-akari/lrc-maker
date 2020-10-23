@@ -219,14 +219,15 @@ input[type="number"] {
 
 .dropdown {
     position: relative;
+    list-style-type: none;
 }
 
 .dropdown > summary::-webkit-details-marker {
     display: none;
 }
 
-.dropdown > summary:first-of-type {
-    list-style-type: none;
+.dropdown > summary::marker {
+    display: none;
 }
 
 .dropdown > summary::after {
