@@ -1,5 +1,6 @@
 .gist {
     display: flex;
+    flex: 1 0 auto;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -27,6 +28,12 @@
     text-align: center;
 }
 
+@media (max-width: 500px) {
+    .new-token-tip {
+        border-radius: 0;
+    }
+}
+
 .new-token-tip-text,
 .gist-id-tip-text {
     max-width: 500px;
@@ -48,6 +55,7 @@
     background: 0;
     border: 0;
     border-bottom: 1px solid var(--theme-color);
+    border-radius: 0;
 }
 
 .new-token-form,

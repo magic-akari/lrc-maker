@@ -12,10 +12,7 @@
     transition: box-shadow var(--transition-duration) ease-in-out;
 }
 
-.app-editor:hover {
-    box-shadow: 0 0 10px var(--theme-color);
-}
-
+.app-editor:hover,
 .app-editor:focus-within {
     box-shadow: 0 0 10px var(--theme-color);
 }
@@ -23,7 +20,13 @@
 @media (max-width: 768px) {
     .app-editor {
         margin: 0;
+        border: 0;
         border-radius: 0;
+    }
+
+    .app-editor:hover,
+    .app-editor:focus-within {
+        box-shadow: none;
     }
 }
 
@@ -36,6 +39,7 @@
 .app-textarea {
     flex: 1 0 auto;
     border: none;
+    overscroll-behavior-y: contain;
 }
 
 .app-editor input,

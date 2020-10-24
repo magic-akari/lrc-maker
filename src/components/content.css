@@ -1,7 +1,36 @@
+html {
+    box-sizing: content-box;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+body {
+    box-sizing: border-box;
+}
+
+html,
+body,
+.app-container,
 .app-main {
     display: flex;
+    flex-direction: column;
+}
+
+body,
+.app-container,
+.app-main {
+    flex: 1 0 auto;
+}
+
+body,
+.app-container {
+    display: contents;
+    content: strict;
+}
+
+.app-main {
     width: 80%;
-    min-height: 100vh;
     margin: auto;
     padding-top: 60px;
     padding-bottom: 32px;
