@@ -1,8 +1,6 @@
 import { App } from "./components/app.js";
 
-if ("scrollBehavior" in document.documentElement.style) {
-    // smooth scroll natively supported
-} else {
+if (!("scrollBehavior" in document.documentElement.style)) {
     import(/* webpackMode: "eager" */ "./polyfill/smooth-scroll.js");
 }
 
