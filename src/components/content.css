@@ -26,7 +26,17 @@ body,
 body,
 .app-container {
     display: contents;
-    content: strict;
+    contain: size;
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+    @supports not ((-webkit-appearance: none) and (stroke-color: transparent)) {
+        /* iOS Safari 10 and 11, and Safari 11 renders display:contents as display:inline. @supports will also report as true. */
+        body,
+        .app-container {
+            display: flex;
+        }
+    }
 }
 
 .app-main {

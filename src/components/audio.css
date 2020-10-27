@@ -173,8 +173,9 @@ input[type="range"]::-ms-fill-lower {
 }
 
 input[type="range"]::-ms-thumb {
-    width: var(--thumb-size);
-    height: var(--thumb-size);
+    /* In Edge css variables nor work in pseudo elements */
+    width: 16px;
+    height: 16px;
     margin-top: -1px;
     background-color: currentColor;
     border-radius: 50%;

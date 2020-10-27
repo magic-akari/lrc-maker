@@ -88,12 +88,12 @@
 }
 
 .color-picker.checked::before {
-    position: absolute;
     color: var(--theme-contrast-color);
     content: "\2714\FE0F";
 }
 
 .user-color-input-text {
+    flex: 1 1 74px;
     grid-column: span 2;
     align-self: stretch;
     justify-self: stretch;
@@ -220,6 +220,9 @@ input[type="number"] {
 
 .dropdown {
     position: relative;
+}
+
+.dropdown > summary {
     list-style-type: none;
 }
 
@@ -285,7 +288,9 @@ input[type="number"] {
 }
 
 [open] > .color-wall {
+    display: flex;
     display: grid;
+    flex-wrap: wrap;
 }
 
 .pseudo-hidden {

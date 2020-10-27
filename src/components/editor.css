@@ -31,9 +31,41 @@
 }
 
 .app-editor-infobox {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: auto 1fr auto;
+    display: none;
+}
+
+@supports (display: grid) {
+    .app-editor-infobox {
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: auto 1fr auto;
+    }
+
+    [open] > .app-editor-infobox {
+        display: grid;
+    }
+}
+
+@supports not (display: grid) {
+    .app-editor-infobox {
+        flex-wrap: wrap;
+    }
+
+    [open] > .app-editor-infobox {
+        display: flex;
+    }
+
+    .app-editor-infobox > input {
+        flex: 1 1 calc(100% - 38px);
+    }
+
+    .app-editor-infobox > label:nth-child(3n + 1) {
+        flex: 0 0 30px;
+    }
+
+    .app-editor-infobox > label:nth-child(3n + 3) {
+        flex: 0 0 8px;
+        text-align: right;
+    }
 }
 
 .app-textarea {

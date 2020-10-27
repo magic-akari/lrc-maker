@@ -60,6 +60,14 @@ svg {
     background-color: var(--theme-color);
 }
 
+@supports (-ms-ime-align: auto) and (not (position: sticky)) {
+    /* In Edge 15 is not possible to use css variables in pseudo elements */
+    ::selection {
+        color: unset;
+        background-color: unset;
+    }
+}
+
 :focus {
     outline: none;
 }

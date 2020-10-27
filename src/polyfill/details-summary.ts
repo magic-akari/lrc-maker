@@ -31,12 +31,12 @@ const polyfilldetails = (): void => {
     document.addEventListener("click", (event) => {
         const element = event.target as Element;
         const summary = element.closest("summary");
-        if (summary === null || summary.parentElement === null || summary.parentElement.tagName !== "DETAILS") {
+        const details = summary?.parentElement as HTMLDetailsElement | null | undefined;
+        if (!details || details.tagName !== "DETAILS") {
             return;
         }
 
-        const parentElement = summary.parentElement as HTMLDetailsElement;
-        parentElement.open = !parentElement.open;
+        details.open = !details.open;
     });
 };
 
