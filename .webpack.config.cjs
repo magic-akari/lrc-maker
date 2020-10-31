@@ -5,7 +5,7 @@ module.exports = (env, argv) => {
     const production = argv.mode === "production";
     return {
         mode: production ? "production" : "development",
-        devtool: production ? undefined : "source-map",
+        devtool: "source-map",
         entry: ["./build.es6/polyfill/es6+.js", "./build.es6/polyfill/details-summary.js", "./build.es6/index.js"],
         output: {
             path: resolve(__dirname, "build"),
