@@ -1,59 +1,14 @@
 import { readdirSync, readFileSync } from "fs";
 import { sync as glob } from "glob";
-import { join, parse, resolve } from "path";
+import { parse, resolve } from "path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { dependencies, description, name, version } from "../package.json";
-import { sri, sriContent } from "./sri";
+import { minify } from "terser";
+import { description } from "../package.json";
+import { getCDN } from "./cdn";
+import { sriContent } from "./sri";
 
 const isProduction = process.env.NODE_ENV === "production";
-const useCDN = process.env.USE_CDN === "USE_CDN";
-
-const jsdelivr = "https://cdn.jsdelivr.net";
-const localPath = "./lib/";
-
-interface IScriptProps {
-    src: string;
-    integrity?: string;
-    crossOrigin?: "anonymous";
-}
-
-type ILibName = keyof typeof dependencies;
-
-const libScript = (libName: ILibName, prodPath: string, devPath?: string): IScriptProps => {
-    const integrity = isProduction
-        ? sri(resolve(__dirname, "../build", localPath, `${libName}${prodPath}`))
-        : undefined;
-
-    if (useCDN) {
-        const libVersion = ((): string => {
-            const v = dependencies[libName];
-
-            return /\d/.test(v[0]) ? v : v.slice(1);
-        })();
-
-        const src = `${jsdelivr}/npm/${libName}@${libVersion}${prodPath}`;
-
-        return { src, integrity, crossOrigin: "anonymous" };
-    } else {
-        return {
-            src: `${localPath}${libName}${isProduction ? prodPath : devPath || prodPath}`,
-            integrity,
-            crossOrigin: "anonymous",
-        };
-    }
-};
-
-const appScript = (path: string): IScriptProps => {
-    const integrity = isProduction ? sri(resolve(__dirname, "../build", path)) : undefined;
-
-    if (useCDN) {
-        const src = new URL(resolve("/npm", `${name}@${version}`, "build", path), jsdelivr).href;
-        return { src, integrity, crossOrigin: "anonymous" };
-    } else {
-        return { src: path, integrity, crossOrigin: "anonymous" };
-    }
-};
 
 const getLanguageMap = (): { [filename: string]: string } => {
     const langDir = resolve(__dirname, "../src/languages");
@@ -75,16 +30,9 @@ const readFile = (path: string): string => {
     });
 };
 
-const minify = (content: string): string => {
-    const line = content.split(/\n/);
-    return line
-        .map((l) => l.replace(/\/\/\s.*$/, ""))
-        .join("")
-        .replace(/\s+/g, " ");
-};
-
-const swRegister = (): Record<"content" | "integrity", string> => {
-    const content = minify(readFile("sw.register.js"));
+const swRegister = async (): Promise<Record<"content" | "integrity", string>> => {
+    const { code } = await minify(readFile("sw.register.js"));
+    const content = code as string;
 
     const integrity = sriContent(content);
 
@@ -101,27 +49,43 @@ const swUnregister = (): Record<"content" | "integrity", string> => {
     return { content, integrity };
 };
 
-const fallback = (path: string): Record<"content" | "integrity", string> => {
-    const content = minify(readFile(path));
+const fallback = async (path: string): Promise<Record<"content" | "integrity", string>> => {
+    const { code } = await minify(readFile(path));
+    const content = code as string;
 
     const integrity = sriContent(content);
 
     return { content, integrity };
 };
 
-const Html: React.FC = () => {
-    const libReact = libScript("react", "/umd/react.production.min.js", "/umd/react.development.js");
-    const libReactDOM = libScript("react-dom", "/umd/react-dom.production.min.js", "/umd/react-dom.development.js");
-    const appCDN = new URL(join("/npm", `${name}@${version}`, "./"), jsdelivr).href;
+const Html = async () => {
+    const { CDN, libScript, appScript, preload } = getCDN();
+
+    const libReact = libScript(isProduction ? "umd/react.production.min.js" : "umd/react.development.js", "react");
+    const libReactDOM = libScript(
+        isProduction ? "umd/react-dom.production.min.js" : "umd/react-dom.development.js",
+        "react-dom",
+    );
+    const index = appScript("./index.js");
+    const reg = isProduction ? await swRegister() : swUnregister();
+    const fallback2es6 = await fallback("./fallback.es6.js");
+    const fallback2es5 = await fallback("./fallback.es5.js");
 
     const SELF = "'self'";
     const csp = {
         "default-src": ["'none'"],
-        "img-src": [SELF, "data:", appCDN],
-        "style-src": [appCDN],
+        "img-src": [SELF, CDN, "data:"],
+        "style-src": [SELF, CDN],
         // 'unsafe-inline' will be ignored if there is a hsah in script-src
         //  https://www.w3.org/TR/CSP2/#directive-script-src
-        "script-src": ["'unsafe-inline'", appCDN],
+        "script-src": [
+            SELF,
+            CDN,
+            "'unsafe-inline'",
+            `'${fallback2es6.integrity}'`,
+            `'${fallback2es5.integrity}'`,
+            `'${reg.integrity}'`,
+        ],
         "child-src": [SELF],
         "worker-src": [SELF],
         "media-src": [SELF, "blob:", "*"],
@@ -129,31 +93,13 @@ const Html: React.FC = () => {
         "connect-src": ["blob:", "https://api.github.com"],
     };
 
-    const reg = isProduction ? swRegister() : swUnregister();
-
-    if (useCDN) {
-        csp["script-src"].push(libReact.src, libReactDOM.src);
-    } else {
-        csp["script-src"].unshift(SELF);
-        csp["style-src"].unshift(SELF);
-    }
-
-    if (isProduction) {
-        csp["script-src"].push(`'${reg.integrity}'`);
-    } else {
-        csp["connect-src"].push(SELF);
-    }
-
-    const fallback2es6 = fallback("./fallback.es6.js");
-    const fallback2es5 = fallback("./fallback.es5.js");
-
-    csp["script-src"].push(`'${fallback2es6.integrity}'`, `'${fallback2es5.integrity}'`);
-
     const akariOdangoLoading = appScript("./svg/akari-odango-loading.svg");
 
-    const preloadModule = glob("./!(polyfill)/*.js", {
-        cwd: resolve(__dirname, "../build"),
-    }).map(appScript);
+    const preloadModule = preload
+        ? glob("./!(polyfill)/*.js", {
+              cwd: resolve(__dirname, "../build"),
+          }).map((path) => appScript(path))
+        : [index];
 
     return (
         <html>
@@ -165,7 +111,7 @@ const Html: React.FC = () => {
                         httpEquiv="Content-Security-Policy"
                         content={Object.entries(csp)
                             .map(([key, value]) => {
-                                return [key, ...value].join(" ");
+                                return [key, ...Array.from(new Set(value))].join(" ");
                             })
                             .join("; ")}
                     />
@@ -269,7 +215,7 @@ const Html: React.FC = () => {
 
                 <script {...appScript("./polyfill/string.esnext.js")} defer={true} />
 
-                <script {...appScript("./index.js")} type="module" defer={true} />
+                <script {...index} type="module" defer={true} />
                 <script {...appScript("./index.es6.js")} className="index-es6" noModule={true} defer={true} />
 
                 <script
@@ -283,4 +229,6 @@ const Html: React.FC = () => {
     );
 };
 
-process.stdout.write("<!DOCTYPE html>" + renderToStaticMarkup(<Html />));
+(async () => {
+    process.stdout.write("<!DOCTYPE html>" + renderToStaticMarkup(await Html()));
+})();

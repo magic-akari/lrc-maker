@@ -71,6 +71,18 @@ dev: $(target_dev) build_html watch_esm
 build: export NODE_ENV=production
 build: $(target_prod) build_html
 
+build_jsdelivr: export NODE_ENV=production
+build_jsdelivr: export USE_CDN=jsdelivr
+build_jsdelivr: $(target_prod) build_html
+
+build_jsdelivr_esm: export NODE_ENV=production
+build_jsdelivr_esm: export USE_CDN=jsdelivr+esm
+build_jsdelivr_esm: $(target_prod) build_html
+
+build_unpkg: export NODE_ENV=production
+build_unpkg: export USE_CDN=unpkg
+build_unpkg: $(target_prod) build_html
+
 deploy: export NODE_ENV=production
-deploy: export USE_CDN=USE_CDN
+deploy: export USE_CDN=jsdelivr
 deploy: $(target_prod) build_html
