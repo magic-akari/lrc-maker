@@ -20,7 +20,7 @@
     "scripts": {
         "clean": "make clean",
         "start": "make dev",
-        "build": "make build",
+        "build": "make build_jsdelivr_esm",
         "prettier": "prettier --write \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
         "listdiff": "prettier -l \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
         "lint": "eslint \"{src,worker,scripts}/**/*.{ts,tsx,es6}\" && stylelint \"src/**/*.css\"",
