@@ -87,20 +87,6 @@ npm run dev-server
 
 ```
 
-This project does not configure a local server, and a plugin for vscode ([Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)) is used in actual development.
-
-The configs of Live Server is as following.
-
-```json
-{
-    "liveServer.settings.root": "/build",
-    "liveServer.settings.mount": [
-        ["/node_modules", "./node_modules"],
-        ["/src", "./src"]
-    ]
-}
-```
-
 ## Star this project :star:
 
 If you like give us a star :star: Share this project to help more people.
