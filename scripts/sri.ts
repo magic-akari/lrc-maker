@@ -1,7 +1,7 @@
-import { createHash, Utf8AsciiLatin1Encoding } from "crypto";
+import { createHash } from "crypto";
 import { readFileSync } from "fs";
 
-const enc: Utf8AsciiLatin1Encoding = "utf8";
+const enc = "utf8" as const;
 
 export const sriContent = (content: string): string => {
     const hash = createHash("sha256").update(content, enc);
