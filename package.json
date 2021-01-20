@@ -20,6 +20,7 @@
     "scripts": {
         "clean": "make clean",
         "start": "make dev",
+        "dev-server": "node scripts/dev-server",
         "build": "make build",
         "prettier": "prettier --write \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
         "listdiff": "prettier -l \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
@@ -52,6 +53,7 @@
         "postcss-custom-properties": "^10.0.0",
         "postcss-import": "^13.0.0",
         "prettier": "^2.1.2",
+        "serve": "^11.3.2",
         "source-map-loader": "^1.1.2",
         "stylelint": "^13.7.2",
         "stylelint-config-prettier": "^8.0.2",

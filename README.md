@@ -82,6 +82,8 @@ npm run build
 
 # or build with watch mode
 npm start
+# and run dev server
+npm run dev-server
 
 ```
 
@@ -178,19 +180,8 @@ npm run build
 
 # 开发模式构建
 npm start
-
-```
-
-本项目没有配置本地服务器，实际开发中使用了 vs code 的插件 [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) 并使用了以下配置。
-
-```json
-{
-    "liveServer.settings.root": "/build",
-    "liveServer.settings.mount": [
-        ["/node_modules", "./node_modules"],
-        ["/src", "./src"]
-    ]
-}
+# 运行 dev-server
+npm run dev-server
 ```
 
 ## 给这个项目点一个星星 :star:

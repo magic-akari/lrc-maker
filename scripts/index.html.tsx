@@ -216,7 +216,9 @@ const Html = async () => {
                 <script {...appScript("./polyfill/string.esnext.js")} defer={true} />
 
                 <script {...index} type="module" defer={true} />
-                <script {...appScript("./index.es6.js")} className="index-es6" noModule={true} defer={true} />
+                {isProduction && (
+                    <script {...appScript("./index.es6.js")} className="index-es6" noModule={true} defer={true} />
+                )}
 
                 <script
                     defer={true}

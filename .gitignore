@@ -65,6 +65,4 @@ metadata.d.ts
 build/
 build.es6/
 
-.vscode
-
 .DS_Store
