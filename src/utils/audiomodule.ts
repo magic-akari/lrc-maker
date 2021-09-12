@@ -44,8 +44,6 @@ export const audioRef: IAudioRef = {
     },
 
     step(ev, value) {
-        console.log("ev.altKey", ev.altKey);
-        console.log("ev.shiftKey", ev.shiftKey);
         if (ev.altKey) {
             value *= 0.2;
         }
