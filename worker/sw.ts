@@ -1,4 +1,4 @@
-const swWorker = (self as unknown) as ServiceWorkerGlobalScope;
+const swWorker = self as unknown as ServiceWorkerGlobalScope;
 
 const APP_NAME = "akari-lrc-maker";
 const VERSION = MetaData.version;
