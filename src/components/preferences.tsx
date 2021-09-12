@@ -83,9 +83,10 @@ export const Preferences: React.FC = () => {
         [prefDispatch],
     );
 
-    const onUserColorInputBlur = useCallback((ev: React.FocusEvent<HTMLInputElement>) => onUserInput(ev.target), [
-        onUserInput,
-    ]);
+    const onUserColorInputBlur = useCallback(
+        (ev: React.FocusEvent<HTMLInputElement>) => onUserInput(ev.target),
+        [onUserInput],
+    );
 
     const onColorSubmit = useCallback(
         (ev: React.FormEvent<HTMLFormElement>) => {
@@ -121,14 +122,14 @@ export const Preferences: React.FC = () => {
     const updateTime = useMemo(() => {
         const date = new Date(MetaData.updateTime);
         const options = {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            second: "numeric",
-            timeZoneName: "short",
-            hour12: false,
+            year: "numeric" as const,
+            month: "short" as const,
+            day: "numeric" as const,
+            hour: "numeric" as const,
+            minute: "numeric" as const,
+            second: "numeric" as const,
+            timeZoneName: "short" as const,
+            hour12: false as const,
         };
         return new Intl.DateTimeFormat(prefState.lang, options).format(date);
     }, [prefState.lang]);

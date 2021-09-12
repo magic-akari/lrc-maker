@@ -17,7 +17,7 @@ export const unregister = async () => {
         await navigator.serviceWorker.getRegistration().then((registration) => {
             if (registration) {
                 registration.unregister().then(() => {
-                    location.reload(true);
+                    location.reload();
                 });
             }
         });
