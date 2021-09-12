@@ -1,0 +1,17 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 14
+
+            - run: npm ci --ignore-scripts
+            - run: npm run listdiff
+            - run: npm run lint
+            - run: make build
