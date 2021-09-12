@@ -171,12 +171,12 @@ export const LrcAudio: React.FC<{ lang: Language }> = ({ lang }) => {
         });
     }, []);
 
-    const onReplay5s = useCallback(() => {
-        audioRef.currentTime -= 5;
+    const onReplay5s = useCallback((ev: React.MouseEvent<HTMLButtonElement>) => {
+        audioRef.step(ev, -5);
     }, []);
 
-    const onForward5s = useCallback(() => {
-        audioRef.currentTime += 5;
+    const onForward5s = useCallback((ev: React.MouseEvent<HTMLButtonElement>) => {
+        audioRef.step(ev, 5);
     }, []);
 
     const onPlayPauseToggle = useCallback(() => {

@@ -7,6 +7,7 @@ interface IAudioRef extends React.RefObject<HTMLAudioElement> {
     playbackRate: number;
     currentTime: number;
     toggle: () => void;
+    step: (ev: React.MouseEvent | React.KeyboardEvent | MouseEvent | KeyboardEvent, value: number) => void;
 }
 
 export const audioRef: IAudioRef = {
@@ -40,6 +41,18 @@ export const audioRef: IAudioRef = {
         if (this.current !== null && this.current.duration !== 0) {
             this.current.currentTime = time;
         }
+    },
+
+    step(ev, value) {
+        console.log("ev.altKey", ev.altKey);
+        console.log("ev.shiftKey", ev.shiftKey);
+        if (ev.altKey) {
+            value *= 0.2;
+        }
+        if (ev.shiftKey) {
+            value *= 0.5;
+        }
+        this.currentTime += value;
     },
 
     toggle() {

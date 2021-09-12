@@ -44,9 +44,7 @@ export const Footer: React.FC = () => {
                 return;
             }
 
-            const ac = audioRef.current!;
-
-            if (!ac.src) {
+            if (!audioRef.src) {
                 return;
             }
 
@@ -54,17 +52,17 @@ export const Footer: React.FC = () => {
                 if (["ArrowUp", "KeyJ", "Up", "J", "j"].includes(codeOrKey)) {
                     ev.preventDefault();
 
-                    const rate = ac.playbackRate;
+                    const rate = audioRef.playbackRate;
                     const newRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
 
-                    ac.playbackRate = newRate;
+                    audioRef.playbackRate = newRate;
                 } else if (["ArrowDown", "KeyK", "Down", "K", "k"].includes(codeOrKey)) {
                     ev.preventDefault();
 
-                    const rate = ac.playbackRate;
+                    const rate = audioRef.playbackRate;
                     const newRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
 
-                    ac.playbackRate = newRate;
+                    audioRef.playbackRate = newRate;
                 } else if (codeOrKey === "Enter") {
                     ev.preventDefault();
                     audioRef.toggle();
@@ -73,15 +71,15 @@ export const Footer: React.FC = () => {
                 if (["ArrowLeft", "KeyA", "KeyH", "Left", "A", "a", "H", "h"].includes(codeOrKey)) {
                     ev.preventDefault();
 
-                    ac.currentTime -= 5;
+                    audioRef.step(ev, -5);
                 } else if (["ArrowRight", "KeyD", "KeyL", "Right", "D", "d", "L", "l"].includes(codeOrKey)) {
                     ev.preventDefault();
 
-                    ac.currentTime += 5;
+                    audioRef.step(ev, 5);
                 } else if (code === "KeyR" || key === "R" || key === "r") {
                     ev.preventDefault();
 
-                    ac.playbackRate = 1;
+                    audioRef.playbackRate = 1;
                 }
             }
         });
