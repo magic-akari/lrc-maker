@@ -18,11 +18,11 @@ It's hard to find a user-friendly and cross-platform tool to create lrc. So I ma
 
 ## How to use
 
-open [lrc-maker][lrc maker] to start. You can add the link to browser bookmark. It is easy to use.  
-Darg and drop the file in the page to load an audio file.  
+Open [lrc-maker][lrc maker] to start. You can add the link to browser bookmark. It is easy to use.
+Drag and drop the file in the page to load an audio file.
 Use the arrow key and space key to insert the timestamp.
 
-development branch links:
+Development branch links:
 
 -   https://magic-akari.github.io/lrc-maker/
 -   https://lrc-maker.vercel.app/

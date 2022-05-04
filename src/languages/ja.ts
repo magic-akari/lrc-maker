@@ -10,7 +10,7 @@ export const language = {
         home: "ホームページ",
         editor: "編集",
         synchronizer: "同期",
-        gist: "Githu Gist",
+        gist: "Github Gist",
         preferences: "設定",
     },
 
