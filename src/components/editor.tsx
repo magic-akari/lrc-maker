@@ -23,7 +23,7 @@ type UseDefaultValue<T = React.RefObject<HTMLInputLikeElement>> = (
 ) => { defaultValue: string; ref: T };
 
 const useDefaultValue: UseDefaultValue = (defaultValue, ref) => {
-    const or = <T extends unknown, K extends unknown>(a: T, b: K): NonNullable<T> | K => a ?? b;
+    const or = <T, K>(a: T, b: K): NonNullable<T> | K => a ?? b;
 
     const $ref = or(ref, useRef<HTMLInputLikeElement>(null));
 
@@ -35,7 +35,7 @@ const useDefaultValue: UseDefaultValue = (defaultValue, ref) => {
     return { ref: $ref, defaultValue };
 };
 
-export const Eidtor: React.SFC<{
+export const Eidtor: React.FC<{
     lrcState: LrcState;
     lrcDispatch: React.Dispatch<LrcAction>;
 }> = ({ lrcState, lrcDispatch }) => {

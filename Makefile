@@ -63,7 +63,7 @@ nomodule: $(target_es6)
 
 
 build_html:
-	$(ts-node) -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html
+	$(ts-node) -T -P scripts/tsconfig.json scripts/index.html.tsx > build/index.html
 
 dev: export NODE_ENV=development
 dev: $(target_dev) build_html watch_esm

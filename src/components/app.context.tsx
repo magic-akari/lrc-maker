@@ -68,7 +68,7 @@ export const appContext = createContext<IAppContext>(undefined, (prev, next) => 
     return bits;
 });
 
-export const AppProvider: React.FC = ({ children }) => {
+export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [prefState, prefDispatch] = usePref(() => localStorage.getItem(LSK.preferences) || Const.emptyString);
 
     const [lang, setLang] = useLang();

@@ -6,13 +6,15 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
               with:
-                  node-version: '14'
-                  registry-url: "https://registry.npmjs.org"
-
-            - run: npm ci --ignore-scripts
-            - run: npm run listdiff
-            - run: npm run lint
+                  node-version: 16
+            - uses: pnpm/action-setup@v2.2.2
+              with:
+                  run_install: |
+                      - recursive: true
+                        args: [--ignore-scripts, --frozen-lockfile]
+            - run: pnpm run listdiff
+            - run: pnpm run lint
             - run: make build

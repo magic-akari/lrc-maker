@@ -16,5 +16,5 @@ declare interface IMessageEvent<T = any> extends MessageEvent {
 
 declare interface DedicatedWorkerGlobalScope {
     postMessage<T = any>(message: T, transfer: Transferable[]): void;
-    postMessage<T = any>(message: T, options?: PostMessageOptions): void;
+    postMessage<T = any>(message: T, options?: StructuredSerializeOptions): void;
 }
