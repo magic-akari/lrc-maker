@@ -41,7 +41,7 @@ html {
 
 [lang]:lang(ja) {
     font-family: "Akari Number", -apple-system, BlinkMacSystemFont, "Akari Fallback UI", system-ui,
-        "Hiragino Kaku Gothic Pro", "Yu Gothic UI", "Yu Gothic", "Meiryo UI", "Meiryo", "Source Han Sans JP",
+        "Hiragino Kaku Gothic Pro", "Yu Gothic UI", "Yu Gothic", "Meiryo UI", Meiryo, "Source Han Sans JP",
         "Noto Sans CJK JP", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
@@ -208,10 +208,10 @@ a > * {
 }
 
 .start-loading {
-    animation: akariLoading 2s linear infinite;
+    animation: akari-loading 2s linear infinite;
 }
 
-@keyframes akariLoading {
+@keyframes akari-loading {
     from {
         transform: rotate(0deg) translateX(-2vmin) rotate(0deg);
     }

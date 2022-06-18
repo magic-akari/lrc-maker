@@ -5,6 +5,14 @@
         "stylelint-prettier/recommended"
     ],
     "rules": {
-        "color-hex-length": "long"
+        "color-hex-length": "long",
+        "value-keyword-case": [
+            "lower",
+            {
+                "camelCaseSvgKeywords": true
+            }
+        ],
+        "value-no-vendor-prefix": null,
+        "property-no-vendor-prefix": null
     }
 }

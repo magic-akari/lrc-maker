@@ -13,7 +13,7 @@
     color: var(--theme-color);
     background-color: var(--semi-black-color);
     box-shadow: 0 1px 1px var(--theme-color);
-    animation: slideInDown var(--animation-duration) ease-in-out forwards;
+    animation: slide-in-down var(--animation-duration) ease-in-out forwards;
     user-select: none;
 }
 
@@ -62,7 +62,7 @@
 .app-tab {
     position: relative;
     transform: translateY(-100%);
-    animation-name: slideInDown;
+    animation-name: slide-in-down;
     animation-duration: var(--animation-durationx2);
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;

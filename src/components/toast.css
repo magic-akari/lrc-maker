@@ -16,9 +16,9 @@
     border: 1px solid var(--theme-color);
     border-radius: var(--border-radius);
     box-shadow: 0 0 1rem var(--theme-color);
-    animation: heightChange var(--animation-duration) ease forwards,
-        slideInRight var(--animation-duration) ease-in forwards,
-        slideOutRight var(--animation-duration) ease-out 5s forwards;
+    animation: height-change var(--animation-duration) ease forwards,
+        slide-in-right var(--animation-duration) ease-in forwards,
+        slide-out-right var(--animation-duration) ease-out 5s forwards;
 }
 
 .toast-badge {
@@ -49,7 +49,7 @@
     margin: 1rem 0.5rem;
 }
 
-@keyframes heightChange {
+@keyframes height-change {
     from {
         max-height: 0;
     }

@@ -59,7 +59,7 @@
     }
 
     :hover > .toggle-switch-label::after {
-        box-shadow: 0 0 8px #11111188, 0 0 0 14px rgba(var(--theme-rgb), 0.2);
+        box-shadow: 0 0 8px #11111188, 0 0 0 14px rgb(var(--theme-rgb) / 20%);
     }
 
     .toggle-switch-label {
@@ -185,11 +185,11 @@ input[type="number"] {
     height: 256px;
     transform: translateX(100%);
     opacity: 0.8;
-    animation: akariSlideIn 500ms var(--animation-out-back) 3s forwards, akariFloat 20s ease-in-out 4s infinite;
+    animation: akari-slide-in 500ms var(--animation-out-back) 3s forwards, akari-float 20s ease-in-out 4s infinite;
     stroke-width: 4px;
 }
 
-@keyframes akariSlideIn {
+@keyframes akari-slide-in {
     from {
         transform: translateX(100%);
     }
@@ -199,7 +199,7 @@ input[type="number"] {
     }
 }
 
-@keyframes akariFloat {
+@keyframes akari-float {
     0% {
         transform: translate(34%, 0);
     }
@@ -279,8 +279,7 @@ input[type="number"] {
 
 .color-wall {
     display: none;
-    grid-row-gap: 4px;
-    grid-column-gap: 4px;
+    grid-gap: 4px;
     grid-template-columns: repeat(5, 1fr);
     align-items: center;
     justify-items: center;

@@ -12,7 +12,7 @@
 
 .dialog[open] {
     display: block;
-    animation: dialogSlideIn var(--animation-duration) var(--animation-out-back);
+    animation: dialog-slide-in var(--animation-duration) var(--animation-out-back);
 }
 
 .dialog-close {
@@ -145,7 +145,7 @@
     appearance: none;
 }
 
-@keyframes dialogSlideIn {
+@keyframes dialog-slide-in {
     from {
         transform: translate(0, 100%);
         opacity: 0;

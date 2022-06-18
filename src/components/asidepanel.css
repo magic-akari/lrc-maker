@@ -6,7 +6,7 @@
     background-color: var(--semi-black-color);
     border-radius: 8px 0 0 8px;
     transform: translateX(100%);
-    animation: slideInRight var(--animation-duration) ease 1s forwards;
+    animation: slide-in-right var(--animation-duration) ease 1s forwards;
 }
 
 .on-screen-button + .aside-panel {

@@ -3,7 +3,7 @@ ts-node := node_modules/.bin/ts-node
 webpack := node_modules/.bin/webpack
 postcss := node_modules/.bin/postcss
 
-package_json := package.json package-lock.json
+package_json := package.json pnpm-lock.yaml
 metadata := src/metadata.d.ts worker/metadata.d.ts
 assets = $(shell find assets -type f)
 

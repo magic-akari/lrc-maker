@@ -3,5 +3,5 @@
     bottom: 0;
     z-index: 233;
     width: 100%;
-    animation: slideInUp var(--animation-duration) ease forwards;
+    animation: slide-in-up var(--animation-duration) ease forwards;
 }

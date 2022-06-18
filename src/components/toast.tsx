@@ -30,7 +30,7 @@ export const Toast: React.FC = () => {
     }, []);
 
     const onAnimationEnd = useCallback((ev: React.AnimationEvent<HTMLElement>) => {
-        if (ev.animationName === "slideOutRight") {
+        if (ev.animationName === "slide-out-right") {
             setToastQueue((queue) => queue.slice(0, -1));
         }
     }, []);
