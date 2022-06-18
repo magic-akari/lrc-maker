@@ -18,6 +18,9 @@
         "build"
     ],
     "packageManager": "pnpm@7.2.1",
+    "engines": {
+        "node": "16.15.1"
+    },
     "scripts": {
         "clean": "make clean",
         "start": "make dev",
