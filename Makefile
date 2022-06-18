@@ -33,7 +33,7 @@ copy_assets: $(target_assets)
 
 $(target_lib): $(lib) $(package_json)
 	mkdir -p build/lib
-	rsync -am --no-links --exclude 'node_modules' node_modules/react node_modules/react-dom build/lib
+	rsync -amL --exclude 'node_modules' node_modules/react node_modules/react-dom build/lib
 	touch build/lib
 
 copy_lib: $(target_lib)
