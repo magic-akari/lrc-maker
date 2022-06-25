@@ -38,6 +38,7 @@ Development branch links:
 |                    <kbd>→</kbd> / <kbd>d</kbd>                    |  step forward 5 seconds  |
 |            <kbd>↑</kbd> / <kbd>w</kbd> / <kbd>j</kbd>             |   select previous line   |
 |            <kbd>↓</kbd> / <kbd>s</kbd> / <kbd>k</kbd>             |     select next line     |
+|                    <kbd>-</kbd> / <kbd>+</kbd>                    | adjust selected time tag |
 |     <kbd>ctrl</kbd>+<kbd>↑</kbd> / <kbd>⌘</kbd>+<kbd>↑</kbd>      |  speed up playback rate  |
 |     <kbd>ctrl</kbd>+<kbd>↓</kbd> / <kbd>⌘</kbd>+<kbd>↓</kbd>      | speed down playback rate |
 |                           <kbd>r</kbd>                            |   reset playback rate    |
@@ -112,18 +113,19 @@ If you like give us a star :star: Share this project to help more people.
 
 ## 热键
 
-|                               按键                                |     功能     |
-| :---------------------------------------------------------------: | :----------: |
-|                         <kbd>space</kbd>                          | 插入时间标签 |
-|        <kbd>delete</kbd> / <kbd>⌘</kbd>+<kbd>delete</kbd>         | 移除时间标签 |
-| <kbd>ctrl</kbd>+<kbd>enter</kbd> / <kbd>⌘</kbd>+<kbd>return</kbd> | 播放 / 暂停  |
-|                    <kbd>←</kbd> / <kbd>a</kbd>                    |  回退 5 秒   |
-|                    <kbd>→</kbd> / <kbd>d</kbd>                    |  前进 5 秒   |
-|            <kbd>↑</kbd> / <kbd>w</kbd> / <kbd>j</kbd>             |  选择上一行  |
-|            <kbd>↓</kbd> / <kbd>s</kbd> / <kbd>k</kbd>             |  选择下一行  |
-|     <kbd>ctrl</kbd>+<kbd>↑</kbd> / <kbd>⌘</kbd>+<kbd>↑</kbd>      | 提高播放速度 |
-|     <kbd>ctrl</kbd>+<kbd>↓</kbd> / <kbd>⌘</kbd>+<kbd>↓</kbd>      | 降低播放速度 |
-|                           <kbd>r</kbd>                            | 重置播放速度 |
+|                               按键                                |        功能        |
+| :---------------------------------------------------------------: | :----------------: |
+|                         <kbd>space</kbd>                          |    插入时间标签    |
+|        <kbd>delete</kbd> / <kbd>⌘</kbd>+<kbd>delete</kbd>         |    移除时间标签    |
+| <kbd>ctrl</kbd>+<kbd>enter</kbd> / <kbd>⌘</kbd>+<kbd>return</kbd> |    播放 / 暂停     |
+|                    <kbd>←</kbd> / <kbd>a</kbd>                    |     回退 5 秒      |
+|                    <kbd>→</kbd> / <kbd>d</kbd>                    |     前进 5 秒      |
+|            <kbd>↑</kbd> / <kbd>w</kbd> / <kbd>j</kbd>             |     选择上一行     |
+|            <kbd>↓</kbd> / <kbd>s</kbd> / <kbd>k</kbd>             |     选择下一行     |
+|                    <kbd>-</kbd> / <kbd>+</kbd>                    | 当前行时间标签微调 |
+|     <kbd>ctrl</kbd>+<kbd>↑</kbd> / <kbd>⌘</kbd>+<kbd>↑</kbd>      |    提高播放速度    |
+|     <kbd>ctrl</kbd>+<kbd>↓</kbd> / <kbd>⌘</kbd>+<kbd>↓</kbd>      |    降低播放速度    |
+|                           <kbd>r</kbd>                            |    重置播放速度    |
 
 ## 兼容性
 

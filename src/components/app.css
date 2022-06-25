@@ -223,9 +223,10 @@ a > * {
 
 .akari-not-found {
     flex: 1 1 auto;
-    align-self: flex-end;
+    align-self: center;
     max-width: 100vw;
     max-height: 80vh;
+    margin-top: auto;
     opacity: 0.2;
     filter: var(--drop-shadow);
 }

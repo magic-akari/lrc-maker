@@ -1,4 +1,4 @@
-import { Action, ActionType, guard, IState } from "../hooks/useLrc.js";
+import { Action, ActionType, IState } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
 import { convertTimeToTag, formatText, ILyric } from "../lrc-parser.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
@@ -30,7 +30,7 @@ interface ISynchronizerProps {
 export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) => {
     const self = useRef(Symbol(Synchronizer.name));
 
-    const { selectIndex, currentIndex: highlightIndex } = state;
+    const { selectIndex, currentIndex: highlightIndex, lyric } = state;
 
     const { prefState, lang } = useContext(appContext);
 
@@ -82,10 +82,30 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
         }
 
         dispatch({
-            type: ActionType.sync,
+            type: ActionType.next,
             payload: audioRef.currentTime,
         });
     }, [dispatch]);
+
+    const adjust = useCallback(
+        (ev: KeyboardEvent | React.MouseEvent, offset: number, index: number) => {
+            if (!audioRef.duration) {
+                return;
+            }
+
+            const selectTime = lyric[index]?.time;
+
+            if (selectTime === undefined) {
+                return;
+            }
+
+            dispatch({
+                type: ActionType.time,
+                payload: audioRef.step(ev, offset, selectTime),
+            });
+        },
+        [dispatch, lyric],
+    );
 
     useEffect(() => {
         const listener = (ev: KeyboardEvent): void => {
@@ -103,6 +123,24 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                     type: ActionType.deleteTime,
                     payload: undefined,
                 });
+                return;
+            }
+
+            if (code === "Digit0" || key === "0") {
+                ev.preventDefault();
+                adjust(ev, 0, selectIndex);
+                return;
+            }
+
+            if (code === "Minus" || key === "-" || key === "_") {
+                ev.preventDefault();
+                adjust(ev, -0.5, selectIndex);
+                return;
+            }
+
+            if (code === "Equal" || key === "+" || key === "=") {
+                ev.preventDefault();
+                adjust(ev, 0.5, selectIndex);
                 return;
             }
 
@@ -146,7 +184,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
         return (): void => {
             document.removeEventListener("keydown", listener);
         };
-    }, [dispatch, sync]);
+    }, [adjust, dispatch, selectIndex, sync]);
 
     const onLineClick = useCallback(
         (ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {
@@ -176,18 +214,10 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
             if (target.classList.contains("line")) {
                 const key = Number.parseInt(target.dataset.key!, 10);
 
-                dispatch({
-                    type: ActionType.getState,
-                    payload: ({ lyric }) => {
-                        const time = lyric[key].time;
-                        if (time !== undefined) {
-                            audioRef.currentTime = guard(time, 0, audioRef.duration);
-                        }
-                    },
-                });
+                adjust(ev, 0, key);
             }
         },
-        [dispatch],
+        [adjust],
     );
 
     const LyricLineIter = useCallback(

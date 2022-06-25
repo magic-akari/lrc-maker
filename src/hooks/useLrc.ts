@@ -9,7 +9,8 @@ type InitArgs = Readonly<{
 export const enum ActionType {
     parse,
     refresh,
-    sync,
+    next,
+    time,
     info,
     select,
     deleteTime,
@@ -30,7 +31,8 @@ export type Action = Map$Type$Payload<
     {
         [ActionType.parse]: { text: string; options: TrimOptios };
         [ActionType.refresh]: number;
-        [ActionType.sync]: number;
+        [ActionType.next]: number;
+        [ActionType.time]: number;
         [ActionType.info]: { name: string; value: string };
         [ActionType.select]: (index: number) => number;
         [ActionType.deleteTime]: undefined;
@@ -99,7 +101,23 @@ const reducer = (state: IState, action: Action): IState => {
             return mergeObject(state, record);
         }
 
-        case ActionType.sync: {
+        case ActionType.next: {
+            const index = state.selectIndex;
+
+            const lyric = state.lyric;
+
+            const selectIndex = guard(index + 1, 0, lyric.length - 1);
+
+            return {
+                ...reducer(state, {
+                    type: ActionType.time,
+                    payload: action.payload,
+                }),
+                selectIndex,
+            };
+        }
+
+        case ActionType.time: {
             const time = action.payload;
             const index = state.selectIndex;
 
@@ -110,9 +128,7 @@ const reducer = (state: IState, action: Action): IState => {
                 lyric = newLyric;
             }
 
-            const selectIndex = guard(index + 1, 0, lyric.length - 1);
-
-            return { ...state, lyric, selectIndex, currentTime: time, nextTime: -Infinity };
+            return { ...state, lyric, currentTime: time, nextTime: -Infinity };
         }
 
         case ActionType.info: {
