@@ -67,7 +67,7 @@ export const language = {
     newGistRepoButton: "Criar um novo Repositório Gist",
     gistIdPlaceholder: "Ou atribuir um id Gist existente",
     info: "informação",
-    clearTokenAndGist: "Token claro e Id Gist"
+    clearTokenAndGist: "Limpar Token e Gist"
   },
 
   preferences: {
