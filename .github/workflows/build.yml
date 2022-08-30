@@ -7,14 +7,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
+            - uses: pnpm/action-setup@v2.2.2
             - uses: actions/setup-node@v3
               with:
-                  node-version: 16
-            - uses: pnpm/action-setup@v2.2.2
-              with:
-                  run_install: |
-                      - recursive: true
-                        args: [--ignore-scripts, --frozen-lockfile]
+                  node-version: "16"
+                  cache: "pnpm"
+            - run: pnpm i --ignore-scripts --frozen-lockfile
+
             - run: pnpm run listdiff
             - run: pnpm run lint
             - run: make build
