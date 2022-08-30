@@ -11,15 +11,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
+            - uses: pnpm/action-setup@v2.2.2
             - uses: actions/setup-node@v3
               with:
-                  node-version: 16
-                  registry-url: 'https://registry.npmjs.org'
-            - uses: pnpm/action-setup@v2.2.2
-              with:
-                  run_install: |
-                      - recursive: true
-                        args: [--ignore-scripts, --frozen-lockfile]
+                  node-version: "16"
+                  registry-url: "https://registry.npmjs.org"
+                  cache: "pnpm"
+
+            - run: pnpm i --ignore-scripts --frozen-lockfile
+
             - run: pnpm run listdiff
             - run: pnpm run lint
             - run: make deploy
