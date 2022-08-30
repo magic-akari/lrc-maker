@@ -146,7 +146,7 @@
 }
 
 @keyframes dialog-slide-in {
-    from {
+    0% {
         transform: translate(0, 100%);
         opacity: 0;
     }
