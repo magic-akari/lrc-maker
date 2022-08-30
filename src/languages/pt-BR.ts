@@ -33,7 +33,7 @@ export const language = {
     loadAudio: {
         file: "Arquivo",
         url: "URL",
-        loadFile: "Clique aqui ou solte o arquivo de áudio nesta página",
+        loadFile: "Clique aqui ou solte um arquivo de áudio nesta página",
     },
 
     home: {
@@ -52,7 +52,7 @@ export const language = {
         album: "álbum",
         title: "título",
         artist: "artista",
-        uploadText: "carregar texto",
+        uploadText: "enviar texto",
         copyText: "selecione tudo e copie",
         downloadText: "baixar",
         saveToGist: "salvar no Github Gist",
@@ -61,13 +61,13 @@ export const language = {
     },
 
     gist: {
-        newTokenTip: "LRC Maker usa Github Token para recolher e armazenar dados para Github Gist",
-        newTokenButton: "Gere um novo Token Github",
+        newTokenTip: "o Criador de LRC usa o Token do Github para recolher e armazenar dados para o Github Gist",
+        newTokenButton: "Gerar um novo Token do Github",
         newGistTip: "Criar um novo repositório Gist ou atribuir um id Gist existente",
         newGistRepoButton: "Criar um novo Repositório Gist",
         gistIdPlaceholder: "Ou atribuir um id Gist existente",
         info: "informação",
-        clearTokenAndGist: "Limpar Token e Gist",
+        clearTokenAndGist: "Limpar Token e id Gist",
     },
 
     preferences: {
@@ -81,10 +81,10 @@ export const language = {
         spaceButton: "Tecla de espaço na tela",
         themeColor: "Cor do tema",
         lrcFormat: "Ajuste de formato LRC",
-        fixed: "Carimbo de data e hora corrigido",
+        fixed: "Data-de-tempo fixo",
         leftSpace: "Espaço esquerdo",
         rightSpace: "Espaço direito",
-        clearCache: "Limpar caches",
+        clearCache: "Limpar cache",
         themeMode: {
             label: "Modo de tema",
             auto: "auto",
