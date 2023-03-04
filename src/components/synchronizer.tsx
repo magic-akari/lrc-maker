@@ -1,7 +1,8 @@
+import SSK from "#const:session_key.json" assert { type: "json" };
+import STRINGS from "#const:strings.json" assert { type: "json" };
 import { convertTimeToTag, formatText, type ILyric } from "npm:@lrc-maker/lrc-parser";
 import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useRef, useState } from "npm:react";
-import { Const, SSK } from "../constant.js";
 import { Action, ActionType, IState } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
@@ -239,7 +240,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                     }
                     return p;
                 }, [] as string[])
-                .join(Const.space);
+                .join(STRINGS.space);
 
             return (
                 <LyricLine

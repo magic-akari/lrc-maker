@@ -1,6 +1,6 @@
+import SSK from "#const:session_key.json" assert { type: "json" };
 import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useReducer, useRef } from "npm:react";
-import { SSK } from "../constant.js";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext, ChangBits } from "./app.context.js";

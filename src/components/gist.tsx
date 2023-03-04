@@ -1,6 +1,8 @@
+import LSK from "#const:local_key.json" assert { type: "json" };
+import ROUTER from "#const:router.json" assert { type: "json" };
+import SSK from "#const:session_key.json" assert { type: "json" };
 import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "npm:react";
-import { LSK, Path, SSK } from "../constant.js";
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import {
     assignRepo,
@@ -10,8 +12,9 @@ import {
     GistInfo,
     IGistFile,
     IGistRepo,
-    Ratelimit,
+    Ratelimit
 } from "../utils/gistapi.js";
+import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
@@ -331,10 +334,10 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                         <section className="file-bar">
                             <span className="file-title">{file.filename}</span>
                             <span className="file-action">
-                                <a className="file-load" href={Path.editor} data-key={index}>
+                                <a className="file-load" href={prependHash(ROUTER.editor)} data-key={index}>
                                     <EditorSVG />
                                 </a>
-                                <a className="file-load" href={Path.synchronizer} data-key={index}>
+                                <a className="file-load" href={prependHash(ROUTER.synchronizer)} data-key={index}>
                                     <SynchronizerSVG />
                                 </a>
                             </span>

@@ -1,7 +1,8 @@
+import LINK from "#const:link.json" assert { type: "json" };
+import STRINGS from "#const:strings.json" assert { type: "json" };
 import { convertTimeToTag, formatText } from "npm:@lrc-maker/lrc-parser";
 import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useMemo, useRef } from "npm:react";
-import { Const, Repo } from "../constant.js";
 import { themeColor, ThemeMode } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
@@ -201,7 +202,7 @@ export const Preferences: React.FC = () => {
                 classNames.push("checked");
             }
             return (
-                <label className={classNames.join(Const.space)} key={color} style={{ backgroundColor: color }}>
+                <label className={classNames.join(STRINGS.space)} key={color} style={{ backgroundColor: color }}>
                     <input
                         hidden={true}
                         type="radio"
@@ -258,7 +259,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.repo}</span>
-                        <a className="link" href={Repo.url} target="_blank" rel="noopener noreferrer">
+                        <a className="link" href={LINK.url} target="_blank" rel="noopener noreferrer">
                             Github
                         </a>
                     </section>
@@ -266,7 +267,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.help}</span>
-                        <a className="link" href={Repo.wiki} target="_blank" rel="noopener noreferrer">
+                        <a className="link" href={LINK.wiki} target="_blank" rel="noopener noreferrer">
                             Github Wiki
                         </a>
                     </section>

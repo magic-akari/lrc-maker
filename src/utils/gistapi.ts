@@ -1,4 +1,5 @@
-import { LSK, SSK } from "../constant";
+import LSK from "#const:local_key.json" assert { type: "json" };
+import SSK from "#const:session_key.json" assert { type: "json" };
 
 const apiUrl = "https://api.github.com/gists";
 

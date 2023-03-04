@@ -1,10 +1,13 @@
+import LSK from "#const:local_key.json" assert { type: "json" };
+import ROUTER from "#const:router.json" assert { type: "json" };
+import SSK from "#const:session_key.json" assert { type: "json" };
 import { State as LrcState, stringify } from "npm:@lrc-maker/lrc-parser";
 import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "npm:react";
-import { LSK, Path, SSK } from "../constant.js";
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import { createFile } from "../utils/gistapi.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";
+import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG, UtilitySVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
@@ -190,7 +193,7 @@ export const Eidtor: React.FC<{
 
                 <a
                     title={lang.editor.saveToGist}
-                    href={canSaveToGist ? undefined : Path.gist}
+                    href={canSaveToGist ? undefined : prependHash(ROUTER.gist)}
                     className="editor-tools-item ripple"
                     onClick={canSaveToGist ? onGistSave : undefined}
                 >

@@ -1,0 +1,8 @@
+{
+    "lyric": "lrc-maker-lyric",
+    "preferences": "lrc-maker-preferences",
+    "token": "lrc-maker-oauth-token",
+    "gistId": "lrc-maker-gist-id",
+    "gistEtag": "lrc-maker-gist-etag",
+    "gistFile": "lrc-maker-gist-file"
+}

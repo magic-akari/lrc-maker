@@ -1,7 +1,7 @@
+import SSK from "#const:session_key.json" assert { type: "json" };
 import type * as React from "npm:react";
 import { useCallback, useEffect, useRef } from "npm:react";
 import * as ReactDOM from "npm:react-dom";
-import { SSK } from "../constant.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { CloseSVG } from "./svg.js";
 

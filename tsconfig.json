@@ -22,6 +22,9 @@
             "npm:*": [
                 "./node_modules/*",
                 "./node_modules/@types/*"
+            ],
+            "#const:*": [
+                "./src/const/*"
             ]
         }
     },

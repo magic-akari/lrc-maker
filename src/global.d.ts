@@ -1,15 +1,6 @@
 import type { Language as L } from "./languages";
 
 declare global {
-    export namespace React {
-        function useContext<T>(context: Context<T>, observedBits?: number | boolean): T;
-        function createContext<T>(defaultValue?: T, calculateChangedBits?: (prev: T, next: T) => number): Context<T>;
-    }
-
-    export namespace dialogPolyfill {
-        const registerDialog: (element: Element) => void;
-    }
-
     type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 
     type Language = L;
@@ -26,4 +17,9 @@ declare global {
     namespace i18n {
         const langMap: readonly [code: string, display: string][];
     }
+}
+
+declare module "npm:react" {
+    function useContext<T>(context: Context<T>, observedBits?: number | boolean): T;
+    function createContext<T>(defaultValue?: T, calculateChangedBits?: (prev: T, next: T) => number): Context<T>;
 }

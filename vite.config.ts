@@ -23,7 +23,10 @@ export default defineConfig({
         }),
     ],
     resolve: {
-        alias: [{ find: /^npm:(.*)/, replacement: "$1" }],
+        alias: [
+            { find: /^npm:(.*)/, replacement: "$1" },
+            { find: /^#const:(.*)/, replacement: "./src/const/$1" },
+        ],
     },
     base: "./",
     define: {

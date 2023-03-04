@@ -1,7 +1,7 @@
+import STRINGS from "#const:strings.json" assert { type: "json" };
 import { stringify } from "npm:@lrc-maker/lrc-parser";
 import type * as React from "npm:react";
 import { memo, useCallback, useState } from "npm:react";
-import { Const } from "../constant.js";
 import { Action, ActionType } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";
@@ -45,7 +45,7 @@ export const AsidePanel: React.FC<{
 
     const mode = syncMode === SyncMode.select ? "select" : "highlight";
 
-    const className = ["aside-button", "syncmode-button", "ripple", "glow ", mode].join(Const.space);
+    const className = ["aside-button", "syncmode-button", "ripple", "glow ", mode].join(STRINGS.space);
 
     return (
         <aside className="aside-panel">

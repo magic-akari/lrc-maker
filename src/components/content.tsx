@@ -1,7 +1,10 @@
+import LSK from "#const:local_key.json" assert { type: "json" };
+import ROUTER from "#const:router.json" assert { type: "json" };
+import SSK from "#const:session_key.json" assert { type: "json" };
+import STRINGS from "#const:strings.json" assert { type: "json" };
 import { convertTimeToTag, stringify } from "npm:@lrc-maker/lrc-parser";
 import type * as React from "npm:react";
 import { lazy, Suspense, useContext, useEffect, useRef, useState } from "npm:react";
-import { Const, LSK, Path, SSK } from "../constant.js";
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { ThemeMode } from "../hooks/usePref.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
@@ -47,7 +50,7 @@ export const Content: React.FC = () => {
 
     const [lrcState, lrcDispatch] = useLrc(() => {
         return {
-            text: localStorage.getItem(LSK.lyric) || Const.emptyString,
+            text: localStorage.getItem(LSK.lyric) || STRINGS.emptyString,
             options: trimOptions,
             select: Number.parseInt(sessionStorage.getItem(SSK.selectIndex)!, 10) || 0,
         };
@@ -108,7 +111,7 @@ export const Content: React.FC = () => {
                     once: true,
                 });
 
-                location.hash = Path.editor;
+                location.hash = ROUTER.editor;
 
                 fileReader.readAsText(file, "utf-8");
             }
@@ -149,23 +152,23 @@ export const Content: React.FC = () => {
     }, [prefState.themeColor]);
 
     const content = ((): JSX.Element => {
-        switch (path) {
-            case Path.editor: {
+        switch (path.slice(1)) {
+            case ROUTER.editor: {
                 return <LazyEditor lrcState={lrcState} lrcDispatch={lrcDispatch} />;
             }
 
-            case Path.synchronizer: {
+            case ROUTER.synchronizer: {
                 if (lrcState.lyric.length === 0) {
                     return <AkariNotFound />;
                 }
                 return <LazySynchronizer state={lrcState} dispatch={lrcDispatch} />;
             }
 
-            case Path.gist: {
+            case ROUTER.gist: {
                 return <LazyGist lrcDispatch={lrcDispatch} langName={prefState.lang} />;
             }
 
-            case Path.preferences: {
+            case ROUTER.preferences: {
                 return <LazyPreferences />;
             }
         }
