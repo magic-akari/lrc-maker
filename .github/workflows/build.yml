@@ -16,4 +16,4 @@ jobs:
 
             - run: pnpm run listdiff
             - run: pnpm run lint
-            - run: make build
+            - run: pnpm run build
