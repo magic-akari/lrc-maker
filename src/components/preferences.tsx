@@ -1,6 +1,6 @@
-import { convertTimeToTag, formatText } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
+import { convertTimeToTag, formatText } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { useCallback, useContext, useEffect, useMemo, useRef } from "npm:react";
 import { Const, Repo } from "../constant.js";
 import { info, themeColor, ThemeMode } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";

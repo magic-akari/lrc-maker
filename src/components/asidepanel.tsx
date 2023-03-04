@@ -1,6 +1,6 @@
-import { stringify } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { memo, useCallback, useState } from "react";
+import { stringify } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { memo, useCallback, useState } from "npm:react";
 import { Const } from "../constant.js";
 import { Action, ActionType } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";

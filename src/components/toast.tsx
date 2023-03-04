@@ -1,5 +1,5 @@
-import type * as React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type * as React from "npm:react";
+import { useCallback, useEffect, useRef, useState } from "npm:react";
 import { createPubSub } from "../utils/pubsub.js";
 import { CheckSVG, InfoSVG, ProblemSVG } from "./svg.js";
 

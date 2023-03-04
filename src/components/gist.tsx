@@ -1,5 +1,5 @@
-import type * as React from "react";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import type * as React from "npm:react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "npm:react";
 import { LSK, Path, SSK } from "../constant.js";
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import {

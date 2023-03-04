@@ -2,7 +2,10 @@
     "compilerOptions": {
         "target": "es2018",
         "module": "esnext",
-        "lib": ["dom", "es2017"],
+        "lib": [
+            "dom",
+            "es2017"
+        ],
         "jsx": "react-jsx",
         "outDir": "./build",
         "rootDir": "./src",
@@ -14,11 +17,15 @@
         "incremental": true,
         "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo",
         "resolveJsonModule": true,
-    },
-    "include": ["src", "types", "worker/ncmc-worker.ts"],
-    "references": [
-        {
-            "path": "./worker"
+        "paths": {
+            "npm:*": [
+                "./node_modules/*",
+                "./node_modules/@types/*"
+            ]
         }
-    ]
+    },
+    "include": [
+        "src",
+        "types",
+    ],
 }

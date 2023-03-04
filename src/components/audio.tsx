@@ -1,6 +1,6 @@
-import { convertTimeToTag } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { convertTimeToTag } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "npm:react";
 import { AudioActionType, audioRef, AudioState, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { Forward5sSVG, LoadAudioSVG, PauseSVG, PlaySVG, Replay5sSVG } from "./svg.js";

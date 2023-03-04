@@ -1,6 +1,6 @@
-import type * as React from "react";
-import { useCallback, useEffect, useRef } from "react";
-import * as ReactDOM from "react-dom";
+import type * as React from "npm:react";
+import { useCallback, useEffect, useRef } from "npm:react";
+import * as ReactDOM from "npm:react-dom";
 import { SSK } from "../constant.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { CloseSVG } from "./svg.js";

@@ -1,5 +1,5 @@
-import type * as React from "react";
-import { useCallback, useContext, useEffect, useReducer, useRef } from "react";
+import type * as React from "npm:react";
+import { useCallback, useContext, useEffect, useReducer, useRef } from "npm:react";
 import { SSK } from "../constant.js";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";

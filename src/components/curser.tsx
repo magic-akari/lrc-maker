@@ -1,6 +1,6 @@
-import { convertTimeToTag } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { convertTimeToTag } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { useEffect, useRef, useState } from "npm:react";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 
 interface ICurserProps {

@@ -14,9 +14,17 @@ export default defineConfig({
             injectTo: "body",
             integrity: true,
             crossorigin: "anonymous",
-            entry: [libPreset("react"), libPreset("react-dom")],
+            entry: [
+                libPreset("react"),
+                libPreset("react-dom"),
+                libPreset("react", { name: "npm:react", pkgName: "react" }),
+                libPreset("react-dom", { name: "npm:react-dom", pkgName: "react-dom" }),
+            ],
         }),
     ],
+    resolve: {
+        alias: [{ find: /^npm:(.*)/, replacement: "$1" }],
+    },
     base: "./",
     define: {
         "import.meta.env.app": JSON.stringify({ hash, updateTime, version }),

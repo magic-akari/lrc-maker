@@ -1,6 +1,6 @@
-import { convertTimeToTag, stringify } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
+import { convertTimeToTag, stringify } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "npm:react";
 import { Const, LSK, Path, SSK } from "../constant.js";
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { ThemeMode } from "../hooks/usePref.js";

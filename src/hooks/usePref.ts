@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer } from "npm:react";
 
 export const info: {
     languages: { [name: string]: string };

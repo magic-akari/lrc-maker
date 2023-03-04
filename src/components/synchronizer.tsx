@@ -1,6 +1,6 @@
-import { convertTimeToTag, formatText, type ILyric } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { convertTimeToTag, formatText, type ILyric } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { useCallback, useContext, useEffect, useRef, useState } from "npm:react";
 import { Const, SSK } from "../constant.js";
 import { Action, ActionType, IState } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";

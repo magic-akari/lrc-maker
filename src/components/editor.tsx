@@ -1,6 +1,6 @@
-import { State as LrcState, stringify } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { State as LrcState, stringify } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "npm:react";
 import { LSK, Path, SSK } from "../constant.js";
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import { createFile } from "../utils/gistapi.js";

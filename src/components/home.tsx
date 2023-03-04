@@ -1,5 +1,5 @@
-import type * as React from "react";
-import { useContext } from "react";
+import type * as React from "npm:react";
+import { useContext } from "npm:react";
 import { Path } from "../constant.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext } from "./app.context.js";

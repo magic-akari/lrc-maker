@@ -1,5 +1,5 @@
-import { createElement } from "react";
-import { createRoot } from "react-dom/client";
+import { createElement } from "npm:react";
+import { createRoot } from "npm:react-dom/client";
 import { App } from "./components/app.js";
 
 if (!("scrollBehavior" in document.documentElement.style)) {

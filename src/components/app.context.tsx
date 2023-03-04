@@ -1,6 +1,6 @@
-import { TrimOptios } from "@lrc-maker/lrc-parser";
-import type * as React from "react";
-import { createContext, useEffect, useMemo } from "react";
+import { TrimOptios } from "npm:@lrc-maker/lrc-parser";
+import type * as React from "npm:react";
+import { createContext, useEffect, useMemo } from "npm:react";
 import { Const, LSK } from "../constant.js";
 import { useLang } from "../hooks/useLang.js";
 import { Action as PrefAction, State as PrefState, usePref } from "../hooks/usePref.js";
@@ -32,6 +32,8 @@ export const enum ChangBits {
     prefState = 1 << Bits.prefState,
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export const appContext = createContext<IAppContext>(undefined, (prev, next) => {
     let bits = 0;
 

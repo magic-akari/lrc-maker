@@ -1,5 +1,5 @@
-import type * as React from "react";
-import { useContext } from "react";
+import type * as React from "npm:react";
+import { useContext } from "npm:react";
 import { Path } from "../constant.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { CloudSVG, EditorSVG, HomeSVG, PreferencesSVG, SynchronizerSVG } from "./svg.js";
