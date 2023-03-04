@@ -1,8 +1,8 @@
 const swWorker = self as unknown as ServiceWorkerGlobalScope;
 
 const APP_NAME = "akari-lrc-maker";
-const VERSION = MetaData.version;
-const HASH = MetaData.hash;
+const VERSION = import.meta.env.app.version;
+const HASH = import.meta.env.app.hash;
 const CACHENAME = `${APP_NAME}-${VERSION}-${HASH}`;
 
 swWorker.addEventListener("install", () => {

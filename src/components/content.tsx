@@ -1,33 +1,34 @@
+import { convertTimeToTag, stringify } from "@lrc-maker/lrc-parser";
+import type * as React from "react";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
+import { Const, LSK, Path, SSK } from "../constant.js";
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { ThemeMode } from "../hooks/usePref.js";
-import { convertTimeToTag, stringify } from "../lrc-parser.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { Home } from "./home.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 
-const { lazy, useContext, useEffect, useRef, useState } = React;
-
 const LazyEditor = lazy(() =>
-    import(/* webpackMode: "eager" */ "./editor.js").then(({ Eidtor }) => {
+    import("./editor.js").then(({ Eidtor }) => {
         return { default: Eidtor };
     }),
 );
 
 const LazySynchronizer = lazy(() =>
-    import(/* webpackMode: "eager" */ "./synchronizer.js").then(({ Synchronizer }) => {
+    import("./synchronizer.js").then(({ Synchronizer }) => {
         return { default: Synchronizer };
     }),
 );
 
 const LazyGist = lazy(() =>
-    import(/* webpackMode: "eager" */ "./gist.js").then(({ Gist }) => {
+    import("./gist.js").then(({ Gist }) => {
         return { default: Gist };
     }),
 );
 
 const LazyPreferences = lazy(() =>
-    import(/* webpackMode: "eager" */ "./preferences.js").then(({ Preferences }) => {
+    import("./preferences.js").then(({ Preferences }) => {
         return { default: Preferences };
     }),
 );
@@ -174,7 +175,7 @@ export const Content: React.FC = () => {
 
     return (
         <main className="app-main">
-            <React.Suspense fallback={<AkariOangoLoading />}>{content}</React.Suspense>
+            <Suspense fallback={<AkariOangoLoading />}>{content}</Suspense>
         </main>
     );
 };

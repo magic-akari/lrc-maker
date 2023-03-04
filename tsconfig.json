@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-        "target": "es2017",
+        "target": "es2018",
         "module": "esnext",
-        "lib": ["dom", "es2018"],
-        "jsx": "react",
+        "lib": ["dom", "es2017"],
+        "jsx": "react-jsx",
         "outDir": "./build",
         "rootDir": "./src",
         "removeComments": true,
@@ -12,9 +12,13 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "incremental": true,
-        "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo"
+        "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo",
+        "resolveJsonModule": true,
     },
-    "include": ["src"],
-    "exclude": ["src/lrc-parser.js"],
-    "references": [{ "path": "./worker" }, { "path": "./src/lrc-parser.js" }]
+    "include": ["src", "types", "worker/ncmc-worker.ts"],
+    "references": [
+        {
+            "path": "./worker"
+        }
+    ]
 }

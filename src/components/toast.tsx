@@ -1,3 +1,5 @@
+import type * as React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPubSub } from "../utils/pubsub.js";
 import { CheckSVG, InfoSVG, ProblemSVG } from "./svg.js";
 
@@ -9,8 +11,6 @@ interface IMessage {
 }
 
 export const toastPubSub = createPubSub<IMessage>();
-
-const { useCallback, useEffect, useRef, useState } = React;
 
 const box = { id: 0 };
 

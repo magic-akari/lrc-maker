@@ -1,14 +1,14 @@
+import { useCallback, useState } from "react";
+import { languages } from "../languages";
 import { language as enUS } from "../languages/en-US.js";
 
 export const useLang = (): [Language, (lang: string) => Promise<void>] => {
-    const [value, setValue] = React.useState<Language>(enUS);
+    const [value, setValue] = useState<Language>(enUS);
 
     const setLang = async (langCode: string): Promise<void> => {
-        const { language } = (await import(
-            /* webpackMode: "eager" */ `../languages/${langCode}.js`
-        )) as typeof import("../languages/en-US.js");
-        setValue(language);
+        const l = await languages[`./${langCode}.ts`]();
+        setValue(l as any);
     };
 
-    return [value, React.useCallback((lang: string) => setLang(lang), [])];
+    return [value, useCallback((lang: string) => setLang(lang), [])];
 };

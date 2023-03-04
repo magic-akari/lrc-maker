@@ -1,10 +1,11 @@
+import { convertTimeToTag, formatText } from "@lrc-maker/lrc-parser";
+import type * as React from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
+import { Const, Repo } from "../constant.js";
 import { info, themeColor, ThemeMode } from "../hooks/usePref.js";
-import { convertTimeToTag, formatText } from "../lrc-parser.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { AkariHideWall } from "./svg.img.js";
-
-const { useCallback, useContext, useEffect, useMemo, useRef } = React;
 
 const numberInputProps = { type: "number", step: 1 } as const;
 
@@ -120,16 +121,16 @@ export const Preferences: React.FC = () => {
     }, []);
 
     const updateTime = useMemo(() => {
-        const date = new Date(MetaData.updateTime);
-        const options = {
-            year: "numeric" as const,
-            month: "short" as const,
-            day: "numeric" as const,
-            hour: "numeric" as const,
-            minute: "numeric" as const,
-            second: "numeric" as const,
-            timeZoneName: "short" as const,
-            hour12: false as const,
+        const date = new Date(import.meta.env.app.updateTime);
+        const options: Intl.DateTimeFormatOptions = {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            timeZoneName: "short",
+            hour12: false,
         };
         return new Intl.DateTimeFormat(prefState.lang, options).format(date);
     }, [prefState.lang]);
@@ -239,13 +240,13 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.version}</span>
-                        <span className="select-all">{MetaData.version}</span>
+                        <span className="select-all">{import.meta.env.app.version}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.commitHash}</span>
-                        <span className="select-all">{MetaData.hash}</span>
+                        <span className="select-all">{import.meta.env.app.hash}</span>
                     </section>
                 </li>
                 <li>

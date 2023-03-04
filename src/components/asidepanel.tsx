@@ -1,18 +1,19 @@
+import { stringify } from "@lrc-maker/lrc-parser";
+import type * as React from "react";
+import { memo, useCallback, useState } from "react";
+import { Const } from "../constant.js";
 import { Action, ActionType } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
-import { stringify } from "../lrc-parser.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";
 import { DownloadSVG, LockSVG } from "./svg.js";
 import { SyncMode } from "./synchronizer.js";
-
-const { useState, useCallback } = React;
 
 export const AsidePanel: React.FC<{
     syncMode: SyncMode;
     setSyncMode: React.Dispatch<React.SetStateAction<SyncMode>>;
     lrcDispatch: React.Dispatch<Action>;
     prefState: PrefState;
-}> = React.memo(({ syncMode, setSyncMode, lrcDispatch, prefState }) => {
+}> = memo(({ syncMode, setSyncMode, lrcDispatch, prefState }) => {
     const [href, setHref] = useState<string>();
     const [name, setName] = useState<string>();
 

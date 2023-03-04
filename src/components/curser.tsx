@@ -1,7 +1,7 @@
-import { convertTimeToTag } from "../lrc-parser.js";
+import { convertTimeToTag } from "@lrc-maker/lrc-parser";
+import type * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
-
-const { useState, useEffect, useRef } = React;
 
 interface ICurserProps {
     fixed: Fixed;

@@ -1,3 +1,6 @@
+import type * as React from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { LSK, Path, SSK } from "../constant.js";
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import {
     assignRepo,
@@ -13,8 +16,6 @@ import { appContext } from "./app.context.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
-
-const { useCallback, useContext, useEffect, useMemo, useState } = React;
 
 const newTokenUrl = "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
 

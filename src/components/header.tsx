@@ -1,7 +1,8 @@
+import type * as React from "react";
+import { useContext } from "react";
+import { Path } from "../constant.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { CloudSVG, EditorSVG, HomeSVG, PreferencesSVG, SynchronizerSVG } from "./svg.js";
-
-const { useContext } = React;
 
 export const Header: React.FC = () => {
     const { lang } = useContext(appContext, ChangBits.lang);

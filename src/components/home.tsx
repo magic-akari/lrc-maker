@@ -1,9 +1,10 @@
+import type * as React from "react";
+import { useContext } from "react";
+import { Path } from "../constant.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext } from "./app.context.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { EditorSVG, LoadAudioSVG, SynchronizerSVG } from "./svg.js";
-
-const { useContext } = React;
 
 export const Home: React.FC = () => {
     const { lang } = useContext(appContext);

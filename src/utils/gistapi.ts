@@ -1,3 +1,5 @@
+import { LSK, SSK } from "../constant";
+
 const apiUrl = "https://api.github.com/gists";
 
 export interface IGistFile {

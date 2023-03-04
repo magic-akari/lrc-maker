@@ -1,9 +1,10 @@
+import { TrimOptios } from "@lrc-maker/lrc-parser";
+import type * as React from "react";
+import { createContext, useEffect, useMemo } from "react";
+import { Const, LSK } from "../constant.js";
 import { useLang } from "../hooks/useLang.js";
 import { Action as PrefAction, State as PrefState, usePref } from "../hooks/usePref.js";
-import { TrimOptios } from "../lrc-parser.js";
 import { toastPubSub } from "./toast.js";
-
-const { createContext, useEffect, useMemo } = React;
 
 interface IAppContext {
     lang: Language;

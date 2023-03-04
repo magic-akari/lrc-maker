@@ -1,11 +1,12 @@
+import type * as React from "react";
+import { useCallback, useContext, useEffect, useReducer, useRef } from "react";
+import { SSK } from "../constant.js";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio, nec } from "./loadaudio.js";
 import { toastPubSub } from "./toast.js";
-
-const { useCallback, useContext, useEffect, useReducer, useRef } = React;
 
 const accept = ["audio/*", ".ncm", ".qmcflac", ".qmc0", ".qmc1", ".qmc2", ".qmc3", "qmcogg"].join(", ");
 
@@ -199,7 +200,7 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
             return;
         }
         if (file.name.endsWith(".ncm")) {
-            const worker = new Worker("./ncmc-worker.js");
+            const worker = new Worker(new URL("/worker/ncmc-worker.js", import.meta.url));
             worker.addEventListener(
                 "message",
                 (ev: IMessageEvent<IMessage>) => {
@@ -238,7 +239,7 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
             return;
         }
         if (/\.qmc(?:flac|0|1|2|3)$/.test(file.name)) {
-            const worker = new Worker("./qmc-worker.js");
+            const worker = new Worker(new URL("/worker/qmc-worker.js", import.meta.url));
             worker.addEventListener(
                 "message",
                 (ev: IMessageEvent<IMessage>) => {

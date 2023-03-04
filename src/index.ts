@@ -1,28 +1,31 @@
+import { createElement } from "react";
+import { createRoot } from "react-dom/client";
 import { App } from "./components/app.js";
 
 if (!("scrollBehavior" in document.documentElement.style)) {
-    import(/* webpackMode: "eager" */ "./polyfill/smooth-scroll.js");
+    import("./polyfill/smooth-scroll.js");
 }
 
-ReactDOM.render(React.createElement(App), document.querySelector(".app-container"), () => {
-    document.querySelector(".page-loading")!.remove();
+const container = document.querySelector(".app-container");
+const root = createRoot(container!);
 
-    if ((navigator as any).standalone || window.matchMedia("(display-mode: standalone)").matches) {
-        document.addEventListener("click", (ev) => {
-            const href = (ev.target as HTMLAnchorElement).getAttribute("href");
+root.render(createElement(App));
 
-            if (href?.startsWith("#")) {
-                ev.preventDefault();
-                location.replace(href);
-            }
-        });
-    }
+if ((navigator as any).standalone || window.matchMedia("(display-mode: standalone)").matches) {
+    document.addEventListener("click", (ev) => {
+        const href = (ev.target as HTMLAnchorElement).getAttribute("href");
 
-    window.addEventListener("dragover", (ev) => {
-        ev.preventDefault();
-        ev.dataTransfer!.dropEffect = "copy";
+        if (href?.startsWith("#")) {
+            ev.preventDefault();
+            location.replace(href);
+        }
     });
-    window.addEventListener("drop", (ev) => {
-        ev.preventDefault();
-    });
+}
+
+window.addEventListener("dragover", (ev) => {
+    ev.preventDefault();
+    ev.dataTransfer!.dropEffect = "copy";
+});
+window.addEventListener("drop", (ev) => {
+    ev.preventDefault();
 });

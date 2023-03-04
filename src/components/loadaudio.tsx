@@ -1,7 +1,9 @@
+import type * as React from "react";
+import { useCallback, useEffect, useRef } from "react";
+import * as ReactDOM from "react-dom";
+import { SSK } from "../constant.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { CloseSVG } from "./svg.js";
-
-const { useRef, useEffect, useCallback } = React;
 
 interface ILoadAudioDialogRef extends React.RefObject<HTMLDetailsElement> {
     readonly isOpen: boolean;

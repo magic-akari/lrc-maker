@@ -1,13 +1,14 @@
+import { convertTimeToTag, formatText, type ILyric } from "@lrc-maker/lrc-parser";
+import type * as React from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { Const, SSK } from "../constant.js";
 import { Action, ActionType, IState } from "../hooks/useLrc.js";
 import { State as PrefState } from "../hooks/usePref.js";
-import { convertTimeToTag, formatText, ILyric } from "../lrc-parser.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
 import { Curser } from "./curser.js";
-
-const { useCallback, useContext, useEffect, useRef, useState } = React;
 
 const SpaceButton: React.FC<{ sync: () => void }> = ({ sync }) => {
     return (

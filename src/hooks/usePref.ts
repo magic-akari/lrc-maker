@@ -1,3 +1,5 @@
+import { useReducer } from "react";
+
 export const info: {
     languages: { [name: string]: string };
 } = JSON.parse(document.getElementById("app-info")!.textContent!);
@@ -78,5 +80,4 @@ const init = (lazyInit: () => string): State => {
     return state;
 };
 
-export const usePref = (lazyInit: () => string): [State, React.Dispatch<Action>] =>
-    React.useReducer(reducer, lazyInit, init);
+export const usePref = (lazyInit: () => string): [State, React.Dispatch<Action>] => useReducer(reducer, lazyInit, init);

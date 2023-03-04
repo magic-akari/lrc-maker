@@ -1,12 +1,13 @@
+import { State as LrcState, stringify } from "@lrc-maker/lrc-parser";
+import type * as React from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { LSK, Path, SSK } from "../constant.js";
 import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
-import { State as LrcState, stringify } from "../lrc-parser.js";
 import { createFile } from "../utils/gistapi.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";
 import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG, UtilitySVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
-
-const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
 const disableCheck = {
     autoCapitalize: "none",
