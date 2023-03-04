@@ -1,5 +1,5 @@
-const languages = import.meta.glob("./*.ts", { import: "language" });
+const languages = import.meta.glob<Language>("./*.json", { as: "json", import: "default" });
 
 export { languages };
 
-export type Language = typeof import("./en-US.js")["language"];
+export type Language = typeof import("./en-US.json");

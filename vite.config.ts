@@ -28,6 +28,15 @@ export default defineConfig({
     base: "./",
     define: {
         "import.meta.env.app": JSON.stringify({ hash, updateTime, version }),
+        "i18n.langMap": JSON.stringify([
+            ["en-US", "English"],
+            ["ja", "日本語"],
+            ["ko-KR", "한국어"],
+            ["pt-BR", "Português"],
+            ["zh-CN", "简体中文"],
+            ["zh-HK", "繁體中文(香港)"],
+            ["zh-TW", "繁體中文"],
+        ]),
     },
     build: {
         minify: false,

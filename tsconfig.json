@@ -17,6 +17,7 @@
         "incremental": true,
         "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo",
         "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
         "paths": {
             "npm:*": [
                 "./node_modules/*",

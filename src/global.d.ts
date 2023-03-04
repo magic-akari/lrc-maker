@@ -22,4 +22,8 @@ declare global {
         trimLeft(): string;
         trimRight(): string;
     }
+
+    namespace i18n {
+        const langMap: readonly [code: string, display: string][];
+    }
 }

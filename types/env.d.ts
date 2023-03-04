@@ -1,9 +1,7 @@
-interface ImportMeta {
-    env: {
-        app: {
-            hash: string;
-            version: string;
-            updateTime: string;
-        };
+interface ImportMetaEnv {
+    app: {
+        hash: string;
+        version: string;
+        updateTime: string;
     };
 }

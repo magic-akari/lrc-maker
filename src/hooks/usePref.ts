@@ -1,9 +1,5 @@
 import { useReducer } from "npm:react";
 
-export const info: {
-    languages: { [name: string]: string };
-} = JSON.parse(document.getElementById("app-info")!.textContent!);
-
 export const themeColor = {
     orange: "#ff691f",
     yellow: "#fab81e",
@@ -48,6 +44,8 @@ const reducer = (state: State, action: Action): State => {
     };
 };
 
+const codeList = i18n.langMap.map((l) => l[0]);
+
 const init = (lazyInit: () => string): State => {
     const state: Mutable<State> = initState;
 
@@ -64,7 +62,7 @@ const init = (lazyInit: () => string): State => {
                 }
                 return langCode;
             })
-            .find((langCode) => langCode in info.languages) || "en-US";
+            .find((langCode) => codeList.includes(langCode)) || "en-US";
 
     try {
         const storedState: State = JSON.parse(lazyInit());
