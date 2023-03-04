@@ -10,5 +10,5 @@ export const useLang = (): [Language, (lang: string) => Promise<void>] => {
         setValue(l);
     };
 
-    return [value, useCallback((lang: string) => setLang(lang), [])];
+    return [value, useCallback(async (lang: string) => setLang(lang), [])];
 };

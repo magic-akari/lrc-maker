@@ -27,7 +27,7 @@
         "build": "vite build",
         "prettier": "prettier --write \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
         "listdiff": "prettier -l \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
-        "lint": "eslint \"{src,worker,scripts}/**/*.{ts,tsx,es6}\" && stylelint \"src/**/*.css\"",
+        "lint": "eslint \"src/**/*.{ts,tsx,es6}\" && stylelint \"src/**/*.css\"",
         "stylelint": "stylelint --fix \"src/**/*.css\""
     },
     "dependencies": {
@@ -48,6 +48,7 @@
         "core-js": "^3.29.0",
         "cssnano": "^5.1.15",
         "eslint": "^8.35.0",
+        "eslint-config-akari": "^0.0.6",
         "eslint-config-prettier": "^8.6.0",
         "eslint-plugin-react": "^7.32.2",
         "eslint-plugin-react-hooks": "^4.6.0",

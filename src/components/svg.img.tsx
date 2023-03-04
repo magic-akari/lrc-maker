@@ -1,5 +1,3 @@
-import type * as React from "npm:react";
-
 export const AkariHideWall: React.FC = () => {
     return (
         <img

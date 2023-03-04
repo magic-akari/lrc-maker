@@ -10,7 +10,7 @@ const polyfilldetails = (): void => {
                 if (this.tagName === "DETAILS") {
                     return this.hasAttribute("open");
                 } else {
-                    return openProperty?.get?.call(this);
+                    return openProperty?.get?.call(this) as boolean;
                 }
             },
             set(this: HTMLDetailsElement, value: boolean): void {

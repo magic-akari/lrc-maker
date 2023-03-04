@@ -14,6 +14,7 @@ specifiers:
   core-js: ^3.29.0
   cssnano: ^5.1.15
   eslint: ^8.35.0
+  eslint-config-akari: ^0.0.6
   eslint-config-prettier: ^8.6.0
   eslint-plugin-react: ^7.32.2
   eslint-plugin-react-hooks: ^4.6.0
@@ -63,6 +64,7 @@ devDependencies:
   core-js: 3.29.0
   cssnano: 5.1.15_postcss@8.4.21
   eslint: 8.35.0
+  eslint-config-akari: 0.0.6
   eslint-config-prettier: 8.6.0_eslint@8.35.0
   eslint-plugin-react: 7.32.2_eslint@8.35.0
   eslint-plugin-react-hooks: 4.6.0_eslint@8.35.0
@@ -2347,6 +2349,11 @@ packages:
   /escape-string-regexp/4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+    dev: true
+
+  /eslint-config-akari/0.0.6:
+    resolution: {integrity: sha512-LR++tOwuVK0kK2on5grEzLClkjE4P+CSbjHw3UQscVcAiojRN5iHCSnee4+DjF9pizdjl8ZcNrIm9/ELs2dxsQ==}
+    engines: {node: '>= 8.3.0'}
     dev: true
 
   /eslint-config-prettier/8.6.0_eslint@8.35.0:

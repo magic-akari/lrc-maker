@@ -1,7 +1,6 @@
 import LINK from "#const:link.json" assert { type: "json" };
 import STRINGS from "#const:strings.json" assert { type: "json" };
 import { convertTimeToTag, formatText } from "npm:@lrc-maker/lrc-parser";
-import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useMemo, useRef } from "npm:react";
 import { themeColor, ThemeMode } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
@@ -12,13 +11,14 @@ const numberInputProps = { type: "number", step: 1 } as const;
 
 type OnChange<T> = (event: React.ChangeEvent<T>) => void;
 
-interface IUseNumberInput<T = HTMLInputElement> {
-    (defaultValue: number, onChange: OnChange<T>): typeof numberInputProps & {
-        ref: React.RefObject<T>;
-        onChange: OnChange<T>;
-        defaultValue: number;
-    };
-}
+type IUseNumberInput<T = HTMLInputElement> = (
+    defaultValue: number,
+    onChange: OnChange<T>,
+) => typeof numberInputProps & {
+    ref: React.RefObject<T>;
+    onChange: OnChange<T>;
+    defaultValue: number;
+};
 
 const useNumberInput: IUseNumberInput = (defaultValue: number, onChange) => {
     const ref = useRef<HTMLInputElement>(null);
@@ -118,7 +118,7 @@ export const Preferences: React.FC = () => {
     );
 
     const onCacheClear = useCallback(() => {
-        unregister();
+        void unregister();
     }, []);
 
     const updateTime = useMemo(() => {

@@ -1,5 +1,3 @@
-import type * as React from "npm:react";
-
 export const HomeSVG: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path fill="none" d="M0 0h24v24H0V0z" />

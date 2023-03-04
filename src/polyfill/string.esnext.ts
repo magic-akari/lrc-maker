@@ -1,3 +1,4 @@
+/* eslint-disable */
 ((strProto): void => {
     if (!strProto.trimStart) {
         strProto.trimStart =

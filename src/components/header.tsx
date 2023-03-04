@@ -1,5 +1,4 @@
 import ROUTER from "#const:router.json" assert { type: "json" };
-import type * as React from "npm:react";
 import { useContext } from "npm:react";
 import { prependHash } from "../utils/router.js";
 import { appContext, ChangBits } from "./app.context.js";

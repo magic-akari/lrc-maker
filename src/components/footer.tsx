@@ -1,5 +1,4 @@
 import SSK from "#const:session_key.json" assert { type: "json" };
-import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useReducer, useRef } from "npm:react";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
@@ -49,7 +48,7 @@ export const Footer: React.FC = () => {
                 return;
             }
 
-            if (ev.metaKey === true || ev.ctrlKey === true) {
+            if (ev.metaKey || ev.ctrlKey) {
                 if (["ArrowUp", "KeyJ", "Up", "J", "j"].includes(codeOrKey)) {
                     ev.preventDefault();
 
@@ -157,7 +156,7 @@ export const Footer: React.FC = () => {
     const onAudioError = useCallback(
         (ev: React.SyntheticEvent<HTMLAudioElement>) => {
             const audio = ev.target as HTMLAudioElement;
-            const error = audio.error as MediaError;
+            const error = audio.error!;
             const message = lang.audio.error[error.code] || error.message || lang.audio.error[0];
             toastPubSub.pub({
                 type: "warning",
@@ -256,8 +255,6 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
             );
 
             worker.postMessage(file);
-
-            return;
         }
     }
 };

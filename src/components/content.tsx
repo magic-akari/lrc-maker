@@ -3,7 +3,6 @@ import ROUTER from "#const:router.json" assert { type: "json" };
 import SSK from "#const:session_key.json" assert { type: "json" };
 import STRINGS from "#const:strings.json" assert { type: "json" };
 import { convertTimeToTag, stringify } from "npm:@lrc-maker/lrc-parser";
-import type * as React from "npm:react";
 import { lazy, Suspense, useContext, useEffect, useRef, useState } from "npm:react";
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { ThemeMode } from "../hooks/usePref.js";
@@ -12,25 +11,25 @@ import { appContext, ChangBits } from "./app.context.js";
 import { Home } from "./home.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 
-const LazyEditor = lazy(() =>
+const LazyEditor = lazy(async () =>
     import("./editor.js").then(({ Eidtor }) => {
         return { default: Eidtor };
     }),
 );
 
-const LazySynchronizer = lazy(() =>
+const LazySynchronizer = lazy(async () =>
     import("./synchronizer.js").then(({ Synchronizer }) => {
         return { default: Synchronizer };
     }),
 );
 
-const LazyGist = lazy(() =>
+const LazyGist = lazy(async () =>
     import("./gist.js").then(({ Gist }) => {
         return { default: Gist };
     }),
 );
 
-const LazyPreferences = lazy(() =>
+const LazyPreferences = lazy(async () =>
     import("./preferences.js").then(({ Preferences }) => {
         return { default: Preferences };
     }),

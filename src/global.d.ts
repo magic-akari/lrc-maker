@@ -14,6 +14,10 @@ declare global {
         trimRight(): string;
     }
 
+    interface Navigator {
+        standalone: boolean;
+    }
+
     namespace i18n {
         const langMap: readonly [code: string, display: string][];
     }

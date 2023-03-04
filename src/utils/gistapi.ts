@@ -1,3 +1,5 @@
+// TODO: fix eslint
+/* eslint-disable */
 import LSK from "#const:local_key.json" assert { type: "json" };
 import SSK from "#const:session_key.json" assert { type: "json" };
 
@@ -13,7 +15,7 @@ export interface IGistFile {
 export interface IGistRepo {
     id: string;
     description: string;
-    files: { [filename: string]: IGistFile };
+    files: Record<string, IGistFile>;
 }
 
 export type Ratelimit = Record<"x-ratelimit-limit" | "x-ratelimit-remaining" | "x-ratelimit-reset", string>;

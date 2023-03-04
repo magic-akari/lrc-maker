@@ -1,4 +1,3 @@
-import type * as React from "npm:react";
 import { AppProvider } from "./app.context.js";
 import { Content } from "./content.js";
 import { Footer } from "./footer.js";

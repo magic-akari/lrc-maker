@@ -1,10 +1,9 @@
 import LSK from "#const:local_key.json" assert { type: "json" };
 import STRINGS from "#const:strings.json" assert { type: "json" };
-import { TrimOptios } from "npm:@lrc-maker/lrc-parser";
-import type * as React from "npm:react";
+import type { TrimOptios } from "npm:@lrc-maker/lrc-parser";
 import { createContext, useEffect, useMemo } from "npm:react";
 import { useLang } from "../hooks/useLang.js";
-import { Action as PrefAction, State as PrefState, usePref } from "../hooks/usePref.js";
+import { usePref, type Action as PrefAction, type State as PrefState } from "../hooks/usePref.js";
 import { toastPubSub } from "./toast.js";
 
 interface IAppContext {
@@ -23,7 +22,6 @@ const enum Bits {
     prefState,
 }
 
-// tslint:disable: no-bitwise
 export const enum ChangBits {
     lang = 1 << Bits.lang,
     // lrcFormat = 1 << Bits.lrcFormat,

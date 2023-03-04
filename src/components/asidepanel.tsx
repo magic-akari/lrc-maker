@@ -1,9 +1,8 @@
 import STRINGS from "#const:strings.json" assert { type: "json" };
 import { stringify } from "npm:@lrc-maker/lrc-parser";
-import type * as React from "npm:react";
 import { memo, useCallback, useState } from "npm:react";
-import { Action, ActionType } from "../hooks/useLrc.js";
-import { State as PrefState } from "../hooks/usePref.js";
+import { type Action, ActionType } from "../hooks/useLrc.js";
+import { type State as PrefState } from "../hooks/usePref.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";
 import { DownloadSVG, LockSVG } from "./svg.js";
 import { SyncMode } from "./synchronizer.js";

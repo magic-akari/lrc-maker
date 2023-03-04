@@ -65,8 +65,8 @@ const init = (lazyInit: () => string): State => {
             .find((langCode) => codeList.includes(langCode)) || "en-US";
 
     try {
-        const storedState: State = JSON.parse(lazyInit());
-        const validKeys = Object.keys(initState) as Array<keyof State>;
+        const storedState = JSON.parse(lazyInit()) as State;
+        const validKeys = Object.keys(initState) as (keyof State)[];
         for (const key of validKeys) {
             if (key in storedState) {
                 (state[key] as unknown) = storedState[key];

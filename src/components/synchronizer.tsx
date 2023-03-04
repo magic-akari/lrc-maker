@@ -1,10 +1,10 @@
 import SSK from "#const:session_key.json" assert { type: "json" };
 import STRINGS from "#const:strings.json" assert { type: "json" };
 import { convertTimeToTag, formatText, type ILyric } from "npm:@lrc-maker/lrc-parser";
-import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useRef, useState } from "npm:react";
-import { Action, ActionType, IState } from "../hooks/useLrc.js";
-import { State as PrefState } from "../hooks/usePref.js";
+import type { IState } from "../hooks/useLrc.js";
+import { type Action, ActionType } from "../hooks/useLrc.js";
+import { type State as PrefState } from "../hooks/usePref.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext } from "./app.context.js";
@@ -146,7 +146,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                 return;
             }
 
-            if (ev.metaKey === true || ev.ctrlKey === true) {
+            if (ev.metaKey || ev.ctrlKey) {
                 return;
             }
 
@@ -234,12 +234,12 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                 highlight,
                 error,
             })
-                .reduce((p, [name, value]) => {
+                .reduce<string[]>((p, [name, value]) => {
                     if (value) {
                         p.push(name);
                     }
                     return p;
-                }, [] as string[])
+                }, [])
                 .join(STRINGS.space);
 
             return (

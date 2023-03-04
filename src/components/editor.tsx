@@ -1,10 +1,10 @@
 import LSK from "#const:local_key.json" assert { type: "json" };
 import ROUTER from "#const:router.json" assert { type: "json" };
 import SSK from "#const:session_key.json" assert { type: "json" };
-import { State as LrcState, stringify } from "npm:@lrc-maker/lrc-parser";
-import type * as React from "npm:react";
+import { type State as LrcState, stringify } from "npm:@lrc-maker/lrc-parser";
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "npm:react";
-import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import type { Action as LrcAction } from "../hooks/useLrc.js";
+import { ActionType as LrcActionType } from "../hooks/useLrc.js";
 import { createFile } from "../utils/gistapi.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";
 import { prependHash } from "../utils/router.js";

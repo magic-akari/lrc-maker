@@ -11,7 +11,7 @@ const root = createRoot(container!);
 
 root.render(createElement(App));
 
-if ((navigator as any).standalone || window.matchMedia("(display-mode: standalone)").matches) {
+if (navigator.standalone || window.matchMedia("(display-mode: standalone)").matches) {
     document.addEventListener("click", (ev) => {
         const href = (ev.target as HTMLAnchorElement).getAttribute("href");
 

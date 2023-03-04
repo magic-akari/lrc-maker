@@ -64,7 +64,7 @@ export const audioRef: IAudioRef = {
 
     toggle() {
         if (this.current?.duration) {
-            this.current.paused ? this.current.play() : this.current.pause();
+            void (this.current.paused ? this.current.play() : this.current.pause());
         }
     },
 };

@@ -1,5 +1,4 @@
 import SSK from "#const:session_key.json" assert { type: "json" };
-import type * as React from "npm:react";
 import { useCallback, useEffect, useRef } from "npm:react";
 import * as ReactDOM from "npm:react-dom";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
@@ -132,7 +131,7 @@ export const LoadAudio: React.FC<ILoadAudioOptions> = ({ setAudioSrc, lang }) =>
 
 export const nec = (url: string): string => {
     if (url.includes("music.163.com")) {
-        const result = url.match(/\d{4,}/);
+        const result = /\d{4,}/.exec(url);
         if (result !== null) {
             const id = result[0];
             return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;

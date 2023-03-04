@@ -1,19 +1,10 @@
 import LSK from "#const:local_key.json" assert { type: "json" };
 import ROUTER from "#const:router.json" assert { type: "json" };
 import SSK from "#const:session_key.json" assert { type: "json" };
-import type * as React from "npm:react";
 import { useCallback, useContext, useEffect, useMemo, useState } from "npm:react";
-import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
-import {
-    assignRepo,
-    createRepo,
-    getFils,
-    getRepos,
-    GistInfo,
-    IGistFile,
-    IGistRepo,
-    Ratelimit
-} from "../utils/gistapi.js";
+import { type Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import type { IGistFile, IGistRepo, Ratelimit } from "../utils/gistapi.js";
+import { assignRepo, createRepo, getFils, getRepos, GistInfo } from "../utils/gistapi.js";
 import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
@@ -40,10 +31,12 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     const [token, setToken] = useState(() => localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(() => localStorage.getItem(LSK.gistId));
     const [gistIdList, setGistIdList] = useState<string[] | undefined>(undefined);
-    const [fileList, setFileList] = useState<IGistFile[] | null>(() => JSON.parse(localStorage.getItem(LSK.gistFile)!));
+    const [fileList, setFileList] = useState(
+        () => JSON.parse(localStorage.getItem(LSK.gistFile)!) as IGistFile[] | null,
+    );
 
-    const ratelimit: Ratelimit | null = useMemo(() => {
-        return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!);
+    const ratelimit = useMemo(() => {
+        return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!) as Ratelimit | null;
     }, []);
 
     const onSubmitToken = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
@@ -144,7 +137,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     }, [gistId]);
 
     const onFileLoad = useCallback(
-        (ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        (ev: React.MouseEvent<HTMLElement>) => {
             const target = ev.target as HTMLElement;
 
             if (!("key" in target.dataset)) {
@@ -158,7 +151,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             }
             if (file.truncated) {
                 fetch(file.raw_url)
-                    .then((res) => res.text())
+                    .then(async (res) => res.text())
                     .then((text) => {
                         lrcDispatch({
                             type: LrcActionType.parse,
