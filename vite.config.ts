@@ -3,6 +3,28 @@ import { defineConfig } from "vite";
 import externalGlobals, { libPreset } from "vite-plugin-external-globals";
 import { hash, updateTime, version } from "./scripts/meta";
 
+import { readdirSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
+const json_suffix = ".json";
+const lang_dir = "src/languages";
+
+const langFileList = readdirSync(lang_dir).filter((filename) => filename.endsWith(json_suffix));
+langFileList.sort();
+
+interface LangContent {
+    languageName: string;
+}
+
+const langMap = await Promise.all(
+    langFileList.map((f) =>
+        readFile(join(lang_dir, f), {
+            encoding: "utf-8",
+        }).then((c) => [f.slice(0, -json_suffix.length), (JSON.parse(c) as LangContent).languageName] as const),
+    ),
+);
+
 export default defineConfig({
     clearScreen: false,
     json: {
@@ -31,15 +53,8 @@ export default defineConfig({
     base: "./",
     define: {
         "import.meta.env.app": JSON.stringify({ hash, updateTime, version }),
-        "i18n.langMap": JSON.stringify([
-            ["en-US", "English"],
-            ["ja", "日本語"],
-            ["ko-KR", "한국어"],
-            ["pt-BR", "Português"],
-            ["zh-CN", "简体中文"],
-            ["zh-HK", "繁體中文(香港)"],
-            ["zh-TW", "繁體中文"],
-        ]),
+        "i18n.langCodeList": JSON.stringify(langFileList.map((f) => f.slice(0, -json_suffix.length))),
+        "i18n.langMap": JSON.stringify(langMap),
     },
     build: {
         minify: true,

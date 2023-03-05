@@ -46,6 +46,8 @@ const useNumberInput: IUseNumberInput = (defaultValue: number, onChange) => {
     return { ...numberInputProps, ref, onChange: $onChange, defaultValue };
 };
 
+const langMap = i18n.langMap;
+
 export const Preferences: React.FC = () => {
     const { prefState, prefDispatch, lang } = useContext(appContext, ChangBits.lang || ChangBits.prefState);
 
@@ -185,7 +187,7 @@ export const Preferences: React.FC = () => {
     );
 
     const LangOptionList = useMemo(() => {
-        return i18n.langMap.map(([code, display]) => {
+        return langMap.map(([code, display]) => {
             return (
                 <option key={code} value={code}>
                     {display}

@@ -44,7 +44,7 @@ const reducer = (state: State, action: Action): State => {
     };
 };
 
-const codeList = i18n.langMap.map((l) => l[0]);
+const langCodeList = i18n.langCodeList;
 
 const init = (lazyInit: () => string): State => {
     const state: Mutable<State> = initState;
@@ -62,7 +62,7 @@ const init = (lazyInit: () => string): State => {
                 }
                 return langCode;
             })
-            .find((langCode) => codeList.includes(langCode)) || "en-US";
+            .find((langCode) => langCodeList.includes(langCode)) || "en-US";
 
     try {
         const storedState = JSON.parse(lazyInit()) as State;

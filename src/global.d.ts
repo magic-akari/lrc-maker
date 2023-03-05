@@ -19,6 +19,7 @@ declare global {
     }
 
     namespace i18n {
+        const langCodeList: readonly string[];
         const langMap: readonly [code: string, display: string][];
     }
 }
