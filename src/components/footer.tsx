@@ -259,12 +259,12 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
     }
 };
 
-const enum MimeType {
-    fLaC = 0x664c6143,
-    OggS = 0x4f676753,
-    RIFF = 0x52494646,
-    WAVE = 0x57415645,
-}
+const MimeType = {
+    fLaC: 0x664c6143,
+    OggS: 0x4f676753,
+    RIFF: 0x52494646,
+    WAVE: 0x57415645,
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const detectMimeType = (dataArray: Uint8Array) => {

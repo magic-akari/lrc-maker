@@ -1,10 +1,11 @@
+import GISTINFO from "#const:gist_info.json" assert { type: "json" };
 import LSK from "#const:local_key.json" assert { type: "json" };
 import ROUTER from "#const:router.json" assert { type: "json" };
 import SSK from "#const:session_key.json" assert { type: "json" };
 import { useCallback, useContext, useEffect, useMemo, useState } from "npm:react";
-import { type Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import { ActionType as LrcActionType, type Action as LrcAction } from "../hooks/useLrc.js";
 import type { IGistFile, IGistRepo, Ratelimit } from "../utils/gistapi.js";
-import { assignRepo, createRepo, getFils, getRepos, GistInfo } from "../utils/gistapi.js";
+import { assignRepo, createRepo, getFils, getRepos } from "../utils/gistapi.js";
 import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
@@ -97,7 +98,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 setGistIdList(
                     result
                         .filter((gist) => {
-                            return gist.description === GistInfo.description && GistInfo.fileName in gist.files;
+                            return gist.description === GISTINFO.description && GISTINFO.fileName in gist.files;
                         })
                         .map(({ id }) => id),
                 );
