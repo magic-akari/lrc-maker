@@ -42,7 +42,7 @@ specifiers:
   tslib: ^2.5.0
   typescript: ^4.9.5
   vite: ^4.1.4
-  vite-plugin-external-globals: ^0.2.1
+  vite-plugin-external-globals: ^0.2.2
   webpack: ^5.75.0
   webpack-cli: ^5.0.1
 
@@ -90,7 +90,7 @@ devDependencies:
   tslib: 2.5.0
   typescript: 4.9.5
   vite: 4.1.4_ztj2e2jex7igpdm76i6vnk3nci
-  vite-plugin-external-globals: 0.2.1
+  vite-plugin-external-globals: 0.2.2
   webpack: 5.75.0_hpyjvp47bittnpkjby5wrocq2u
   webpack-cli: 5.0.1_webpack@5.75.0
 
@@ -3753,8 +3753,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lru-cache/7.18.1:
-    resolution: {integrity: sha512-8/HcIENyQnfUTCDizRu9rrDyG6XG/21M4X7/YEGZeD76ZJilFPAUVb/2zysFf7VVO1LEjCDFyHp8pMMvozIrvg==}
+  /lru-cache/7.18.2:
+    resolution: {integrity: sha512-KytVYmZ3reaw/f3d7GCISvWWjTYxszNdvD5rDvm/zECga3eSWzryRY7iauJsjo6aaw03lHYTSNTk7lW83Bv+zQ==}
     engines: {node: '>=12'}
     dev: true
 
@@ -4305,7 +4305,7 @@ packages:
     resolution: {integrity: sha512-OW+5s+7cw6253Q4E+8qQ/u1fVvcJQCJo/VFD8pje+dbJCF1n5ZRMV2AEHbGp+5Q7jxQIYJxkHopnj6nzdGeZLA==}
     engines: {node: '>=14'}
     dependencies:
-      lru-cache: 7.18.1
+      lru-cache: 7.18.2
       minipass: 4.2.4
     dev: true
 
@@ -6333,8 +6333,8 @@ packages:
       vfile-message: 1.1.1
     dev: true
 
-  /vite-plugin-external-globals/0.2.1:
-    resolution: {integrity: sha512-JhCPeGeWNhlEH78wuKYdmSiGfdij+PsWhsHlXGPbvTjA5IYsfFicrZT8Okm6D9grKMIOmBWIBpDXJc0hBlwu+g==}
+  /vite-plugin-external-globals/0.2.2:
+    resolution: {integrity: sha512-3TR0gKpu1aGpVPUgdrLtqO+vhCj2DT4+ah5SmOaTK9Dh5doB7Hc5hIZXMF6a2m5Dlr07pj7sz0IhsWewbtC2SQ==}
     dependencies:
       rollup-plugin-external-globals: 0.7.1
     transitivePeerDependencies:

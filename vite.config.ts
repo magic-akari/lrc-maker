@@ -5,9 +5,6 @@ import { hash, updateTime, version } from "./scripts/meta";
 
 export default defineConfig({
     clearScreen: false,
-    json: {
-        stringify: true,
-    },
     plugins: [
         swc(),
         externalGlobals({
@@ -42,7 +39,22 @@ export default defineConfig({
         ]),
     },
     build: {
-        minify: false,
+        minify: true,
         outDir: "build",
+        modulePreload: {
+            polyfill: false,
+        },
+        rollupOptions: {
+            input: ["index.html", "worker/sw.ts"],
+            output: {
+                entryFileNames(chunkInfo) {
+                    console.log(chunkInfo);
+                    if (chunkInfo.name === "sw") {
+                        return "sw.js";
+                    }
+                    return "assets/[name]-[hash].js";
+                },
+            },
+        },
     },
 });
