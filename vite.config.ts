@@ -5,6 +5,9 @@ import { hash, updateTime, version } from "./scripts/meta";
 
 export default defineConfig({
     clearScreen: false,
+    json: {
+        namedExports: false,
+    },
     plugins: [
         swc(),
         externalGlobals({
@@ -48,7 +51,6 @@ export default defineConfig({
             input: ["index.html", "worker/sw.ts"],
             output: {
                 entryFileNames(chunkInfo) {
-                    console.log(chunkInfo);
                     if (chunkInfo.name === "sw") {
                         return "sw.js";
                     }
