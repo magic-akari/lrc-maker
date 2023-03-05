@@ -18,11 +18,17 @@ interface LangContent {
 }
 
 const langMap = await Promise.all(
-    langFileList.map((f) =>
-        readFile(join(lang_dir, f), {
+    langFileList.map(async (f) => {
+        const filePath = join(lang_dir, f);
+        const fileContent = await readFile(filePath, {
             encoding: "utf-8",
-        }).then((c) => [f.slice(0, -json_suffix.length), (JSON.parse(c) as LangContent).languageName] as const),
-    ),
+        });
+
+        const langCode = f.slice(0, -json_suffix.length);
+        const langJson = JSON.parse(fileContent) as LangContent;
+        const languageName = langJson.languageName;
+        return [langCode, languageName] as const;
+    }),
 );
 
 export default defineConfig({
