@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
     );
 
     useEffect(() => {
-        document.addEventListener("keydown", (ev) => {
+        function onKeydown(ev: KeyboardEvent) {
             const { code, key, target } = ev;
 
             const codeOrKey = code || key;
@@ -82,14 +82,21 @@ export const Footer: React.FC = () => {
                     audioRef.playbackRate = 1;
                 }
             }
-        });
+        }
+        document.addEventListener("keydown", onKeydown);
+
+        return () => document.removeEventListener("keydown", onKeydown);
     }, []);
 
     useEffect(() => {
-        document.documentElement.addEventListener("drop", (ev) => {
+        function onDrop(ev: DragEvent) {
             const file = ev.dataTransfer!.files[0];
             receiveFile(file, setAudioSrc);
-        });
+        }
+
+        document.documentElement.addEventListener("drop", onDrop);
+
+        return () => document.documentElement.removeEventListener("drop", onDrop);
     }, []);
 
     const onAudioInputChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {

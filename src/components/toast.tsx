@@ -23,7 +23,7 @@ export const Toast: React.FC = () => {
     const [toastQueue, setToastQueue] = useState<IToast[]>([]);
 
     useEffect(() => {
-        toastPubSub.sub(self.current, (data) => {
+        return toastPubSub.sub(self.current, (data) => {
             setToastQueue((queue) => [{ id: box.id++, ...data }, ...queue]);
         });
     }, []);

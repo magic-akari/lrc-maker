@@ -42,9 +42,13 @@ export const Content: React.FC = () => {
 
     const [path, setPath] = useState(location.hash);
     useEffect(() => {
-        window.addEventListener("hashchange", () => {
+        function onHashchange() {
             setPath(location.hash);
-        });
+        }
+
+        window.addEventListener("hashchange", onHashchange);
+
+        return () => window.removeEventListener("hashchange", onHashchange);
     }, []);
 
     const [lrcState, lrcDispatch] = useLrc(() => {
@@ -70,7 +74,7 @@ export const Content: React.FC = () => {
     }, [lrcDispatch, prefState.fixed]);
 
     useEffect(() => {
-        const saveState = (): void => {
+        function saveState(): void {
             lrcDispatch({
                 type: LrcActionType.getState,
                 payload: (lrc) => {
@@ -80,21 +84,25 @@ export const Content: React.FC = () => {
             });
 
             localStorage.setItem(LSK.preferences, JSON.stringify(prefState));
-        };
+        }
 
-        document.addEventListener("visibilitychange", () => {
+        function onVisibilitychange() {
             if (document.hidden) {
                 saveState();
             }
-        });
+        }
 
-        window.addEventListener("beforeunload", () => {
-            saveState();
-        });
+        document.addEventListener("visibilitychange", onVisibilitychange);
+        window.addEventListener("beforeunload", saveState);
+
+        return () => {
+            document.removeEventListener("visibilitychange", onVisibilitychange);
+            window.removeEventListener("beforeunload", saveState);
+        };
     }, [lrcDispatch, prefState]);
 
     useEffect(() => {
-        document.documentElement.addEventListener("drop", (ev) => {
+        function onDrop(ev: DragEvent) {
             const file = ev.dataTransfer?.files[0];
             if (file && (file.type.startsWith("text/") || /(?:\.lrc|\.txt)$/i.test(file.name))) {
                 const fileReader = new FileReader();
@@ -114,7 +122,9 @@ export const Content: React.FC = () => {
 
                 fileReader.readAsText(file, "utf-8");
             }
-        });
+        }
+        document.documentElement.addEventListener("drop", onDrop);
+        return () => document.documentElement.removeEventListener("drop", onDrop);
     }, [lrcDispatch, trimOptions]);
 
     useEffect(() => {

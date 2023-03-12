@@ -110,7 +110,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     );
 
     useEffect(() => {
-        const listener = (ev: KeyboardEvent): void => {
+        function onKeydown(ev: KeyboardEvent): void {
             const { code, key, target } = ev;
 
             const codeOrKey = code || key;
@@ -179,12 +179,12 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
 
                 dispatch({ type: ActionType.select, payload: (index) => index + 10 });
             }
-        };
+        }
 
-        document.addEventListener("keydown", listener);
+        document.addEventListener("keydown", onKeydown);
 
         return (): void => {
-            document.removeEventListener("keydown", listener);
+            document.removeEventListener("keydown", onKeydown);
         };
     }, [adjust, dispatch, selectIndex, sync]);
 
