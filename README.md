@@ -87,6 +87,21 @@ npm start
 npm run dev-server
 ```
 
+## Deployment in Production
+
+After building (`npm run build`), the `build` folder is the static website files.
+You can deploy it to any CDN or static file server.
+
+You can also build a docker image using the `Dockerfile` at the root of this repo.
+It runs the build and give you a minimal nginx image.
+
+```bash
+# build image
+docker build -t lrc-maker .
+# create a container and serve at port 8080
+docker run -d -p 8080:80 lrc-maker
+```
+
 ## Star this project :star:
 
 If you like give us a star :star: Share this project to help more people.
@@ -169,6 +184,21 @@ npm run build
 npm start
 # 运行 dev-server
 npm run dev-server
+```
+
+## 生产部署
+
+构建（`npm run build`）后，`build` 文件夹是静态网站文件。
+您可以将其部署到任何 CDN 或静态文件服务器。
+
+您还可以使用此存储库根目录下的 `Dockerfile` 构建一个 docker 镜像。
+它运行构建并创建最小化的 nginx 镜像。
+
+```bash
+# 构建
+docker build -t lrc-maker .
+# 创建一个容器并在 8080 端口提供服务
+docker run -d -p 8080:80 lrc-maker
 ```
 
 ## 给这个项目点一个星星 :star:
