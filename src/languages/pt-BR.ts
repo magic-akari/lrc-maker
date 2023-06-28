@@ -2,8 +2,8 @@ export const language = {
     languageName: "Português",
 
     app: {
-        name: "Criador de LRC",
-        fullname: "Criador de LRC de Akari",
+        name: "LRC Maker",
+        fullname: "LRC Maker by Akari",
     },
 
     header: {
@@ -61,7 +61,7 @@ export const language = {
     },
 
     gist: {
-        newTokenTip: "o Criador de LRC usa o Token do Github para recolher e armazenar dados para o Github Gist",
+        newTokenTip: "o LRC Maker usa o Token do Github para recolher e armazenar dados para o Github Gist",
         newTokenButton: "Gerar um novo Token do Github",
         newGistTip: "Criar um novo repositório Gist ou atribuir um id Gist existente",
         newGistRepoButton: "Criar um novo Repositório Gist",
