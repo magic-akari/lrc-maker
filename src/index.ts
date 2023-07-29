@@ -9,8 +9,6 @@ if (!("scrollBehavior" in document.documentElement.style)) {
 // Do not use createRoot
 // before https://github.com/facebook/react/issues/26374 fixed
 render(createElement(App), document.querySelector(".app-container"), () => {
-    document.querySelector(".page-loading")!.remove();
-
     if (navigator.standalone || window.matchMedia("(display-mode: standalone)").matches) {
         document.addEventListener("click", (ev) => {
             const href = (ev.target as HTMLAnchorElement).getAttribute("href");
