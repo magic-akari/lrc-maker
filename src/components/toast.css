@@ -16,7 +16,8 @@
     border: 1px solid var(--theme-color);
     border-radius: var(--border-radius);
     box-shadow: 0 0 1rem var(--theme-color);
-    animation: height-change var(--animation-duration) ease forwards,
+    animation:
+        height-change var(--animation-duration) ease forwards,
         slide-in-right var(--animation-duration) ease-in forwards,
         slide-out-right var(--animation-duration) ease-out 5s forwards;
 }

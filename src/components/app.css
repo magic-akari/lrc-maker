@@ -159,7 +159,9 @@ a > * {
     background-position: 50%;
     transform: scale3d(10, 10, 1);
     opacity: 0;
-    transition: transform 0.5s, opacity 1s;
+    transition:
+        transform 0.5s,
+        opacity 1s;
     content: "";
     pointer-events: none;
 }
