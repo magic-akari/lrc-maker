@@ -29,7 +29,7 @@ body,
     contain: size;
 }
 
-@media not all and (min-resolution: 0.001dpcm) {
+@media not all and (resolution >= 0.001dpcm) {
     @supports not ((-webkit-appearance: none) and (stroke-color: transparent)) {
         /* iOS Safari 10 and 11, and Safari 11 renders display:contents as display:inline. @supports will also report as true. */
         body,
@@ -46,14 +46,14 @@ body,
     padding-bottom: 32px;
 }
 
-@media (max-width: 1280px) {
+@media (width <= 1280px) {
     .app-main {
         width: 1024px;
         max-width: 100%;
     }
 }
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
     .app-main {
         width: 100%;
         padding-right: env(safe-area-inset-right);

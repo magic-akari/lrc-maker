@@ -28,7 +28,7 @@
     text-align: center;
 }
 
-@media (max-width: 500px) {
+@media (width <= 500px) {
     .new-token-tip {
         border-radius: 0;
     }
@@ -136,7 +136,7 @@
     user-select: none;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
     .gist-details {
         padding: 1rem 0;
     }
@@ -148,7 +148,7 @@
     width: 100%;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .gist-bar {
         flex-direction: column;
     }

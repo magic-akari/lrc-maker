@@ -31,7 +31,6 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array): Promise<U
      *               |                                         |
      *           Ciphertext                                Ciphertext(encryptedPadding)
      *
-     *
      *  ECB decryption:
      *           Ciphertext                                Ciphertext(encryptedPadding)
      *               |                                         |
@@ -39,7 +38,6 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array): Promise<U
      *        |  decryption  |                          |  decryption  |
      *               |                                         |
      *           Plaintext                                 Plaintext(padding)
-     *
      *
      *  CBC encryption:
      *          Plaintext                                  Plaintext(padding)
@@ -52,7 +50,6 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array): Promise<U
      *               | ------------------|                     |
      *           Ciphertext                                Ciphertext(encryptedPadding)
      *
-     *
      *  CBC decryption:
      *           Ciphertext                                Ciphertext(encryptedPadding)
      *               |                                         |
@@ -63,7 +60,6 @@ const AES_ECB_DECRYPT = async (keyData: Uint8Array, data: Uint8Array): Promise<U
      *               |                   |                     |
      *               | ------------------|                     |
      *          Plaintext                                  Plaintext(padding)
-     *
      *
      *  Simulate:
      *   ---------------------------------------|

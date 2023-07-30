@@ -7,7 +7,7 @@ export const createPubSub = <DT, ID = unknown>() => {
             cb(data);
         });
     };
-    const sub = (id: ID, cb: CB): (() => void) => {
+    const sub = (id: ID, cb: CB): () => void => {
         bus.set(id, cb);
 
         return (): void => {

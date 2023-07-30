@@ -40,8 +40,8 @@ swWorker.addEventListener("fetch", (event) => {
     event.respondWith(
         caches.match(event.request).then(
             (match) =>
-                match ||
-                caches.open(CACHENAME).then((cache) =>
+                match
+                || caches.open(CACHENAME).then((cache) =>
                     fetch(event.request).then((response) => {
                         if (response.status !== 200) {
                             return response;
@@ -49,7 +49,7 @@ swWorker.addEventListener("fetch", (event) => {
 
                         cache.put(event.request, response.clone());
                         return response;
-                    }),
+                    })
                 ),
         ),
     );

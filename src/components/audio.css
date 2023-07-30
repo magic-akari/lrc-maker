@@ -50,7 +50,7 @@ audio::-webkit-media-controls-enclosure {
     width: 100%;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .timeline-slider {
         --slider-height: 4px;
 

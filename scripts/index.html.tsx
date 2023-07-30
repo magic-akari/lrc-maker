@@ -97,8 +97,8 @@ const Html = async () => {
 
     const preloadModule = preload
         ? glob("./!(polyfill)/*.js", {
-              cwd: resolve(__dirname, "../build"),
-          }).map((path) => appScript(path))
+            cwd: resolve(__dirname, "../build"),
+        }).map((path) => appScript(path))
         : [index];
 
     return (
@@ -151,9 +151,7 @@ const Html = async () => {
                     crossOrigin={libReactDOM.crossOrigin}
                 />
 
-                {preloadModule.map((md) => (
-                    <link rel="modulepreload" href={md.src} key={md.src} />
-                ))}
+                {preloadModule.map((md) => <link rel="modulepreload" href={md.src} key={md.src} />)}
 
                 <link
                     className="preload-akari-odango-loading"

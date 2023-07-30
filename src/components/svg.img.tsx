@@ -11,7 +11,12 @@ export const AkariHideWall: React.FC = () => {
 
 export const AkariNotFound: React.FC = () => {
     return (
-        <img className="akari-not-found" alt="not found" src={"./svg/akari-not-found.svg"} crossOrigin="anonymous" />
+        <img
+            className="akari-not-found"
+            alt="not found"
+            src={"./svg/akari-not-found.svg"}
+            crossOrigin="anonymous"
+        />
     );
 };
 

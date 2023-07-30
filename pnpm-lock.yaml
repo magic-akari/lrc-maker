@@ -49,6 +49,9 @@ devDependencies:
   cssnano:
     specifier: ^6.0.1
     version: 6.0.1(postcss@8.4.27)
+  dprint:
+    specifier: ^0.39.1
+    version: 0.39.1
   eslint:
     specifier: ^8.46.0
     version: 8.46.0
@@ -404,6 +407,57 @@ packages:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
     dev: true
+
+  /@dprint/darwin-arm64@0.39.1:
+    resolution: {integrity: sha512-zMvy5y1OA8ZIdk1lM5170xERuj3nlhpipEhr1l7YmkA9nPJB+NhP4RXjaPbFf+Zxd1Y9+rJW6rpIcqImCbxRug==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@dprint/darwin-x64@0.39.1:
+    resolution: {integrity: sha512-Uq4X21k/dQ2Hl1CDsPcSrX27NJbTyLovLM0eBrtErgbE95RQiT8y8rwCfjT32/XtOYzK38uBPpgP6tVYWsQb9g==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@dprint/linux-arm64-glibc@0.39.1:
+    resolution: {integrity: sha512-BsCMgWoppKTnvVQCr4IX7X4FjkTUUXgb7Jc9vdeSAOyO6nK87Rt9w3WOYVBZXnaZ+5i1uqqaROn7uKtrF/51mg==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@dprint/linux-x64-glibc@0.39.1:
+    resolution: {integrity: sha512-LXecU6xAvDp+w2Oyw/9+fkHnYtKJs+PFdh8/uf1axU/S/3SIKYxrNsMgpO8nRtRwzXQOoFWOu+UYvhB+p0leYA==}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@dprint/linux-x64-musl@0.39.1:
+    resolution: {integrity: sha512-mBXTLZ7Z0NUcAEYCU1GyaoXv8+u5O9wW1gVCq7DdaLkksOiGGJcc1YMVgT1mE2Zp/o6MPyW1BgSKbmTRikOkRQ==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@dprint/win32-x64@0.39.1:
+    resolution: {integrity: sha512-RRS4VzEnIgIxhVDyLXg5HqnX3iGgkLMueVbH0w7CPeEOTN2Nu7y21JigOe85dg4w2l4tGInipzqQyFs4QIC9iw==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
 
   /@esbuild/android-arm64@0.18.17:
     resolution: {integrity: sha512-9np+YYdNDed5+Jgr1TdWBsozZ85U1Oa3xW0c7TWqH0y2aGghXtZsuT8nYRbzOMcl0bXZXjOGbksoTtVOlWrRZg==}
@@ -2471,6 +2525,19 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       is-obj: 2.0.0
+    dev: true
+
+  /dprint@0.39.1:
+    resolution: {integrity: sha512-+tdldu28NJq1OEBIMWyAAON3Oe8DIgJN8Q3WuNN00KEw1Ni6qlVWzx/b50u4xggUmiL8uh9Xr4YAyO5cSPyaAA==}
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      '@dprint/darwin-arm64': 0.39.1
+      '@dprint/darwin-x64': 0.39.1
+      '@dprint/linux-arm64-glibc': 0.39.1
+      '@dprint/linux-x64-glibc': 0.39.1
+      '@dprint/linux-x64-musl': 0.39.1
+      '@dprint/win32-x64': 0.39.1
     dev: true
 
   /eastasianwidth@0.2.0:

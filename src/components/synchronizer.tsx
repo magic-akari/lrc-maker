@@ -47,7 +47,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     }, [dispatch, lang]);
 
     const [syncMode, setSyncMode] = useState(() =>
-        sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString() ? SyncMode.highlight : SyncMode.select,
+        sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString() ? SyncMode.highlight : SyncMode.select
     );
 
     useEffect(() => {

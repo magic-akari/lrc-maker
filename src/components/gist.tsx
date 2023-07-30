@@ -3,7 +3,7 @@ import LSK from "#const:local_key.json" assert { type: "json" };
 import ROUTER from "#const:router.json" assert { type: "json" };
 import SSK from "#const:session_key.json" assert { type: "json" };
 import { useCallback, useContext, useEffect, useMemo, useState } from "npm:react";
-import { ActionType as LrcActionType, type Action as LrcAction } from "../hooks/useLrc.js";
+import { type Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
 import type { IGistFile, IGistRepo, Ratelimit } from "../utils/gistapi.js";
 import { assignRepo, createRepo, getFils, getRepos } from "../utils/gistapi.js";
 import { prependHash } from "../utils/router.js";

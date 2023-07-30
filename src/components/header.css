@@ -17,7 +17,7 @@
     user-select: none;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .app-header {
         padding: 0 4px;
     }
@@ -37,7 +37,7 @@
     display: inline-flex;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
     .app-title-text {
         display: inline-flex;
     }

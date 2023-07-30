@@ -17,7 +17,7 @@
     box-shadow: 0 0 10px var(--theme-color);
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .app-editor {
         margin: 0;
         border: 0;

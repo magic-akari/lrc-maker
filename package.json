@@ -25,10 +25,11 @@
     "scripts": {
         "start": "vite",
         "build": "vite build",
-        "prettier": "prettier --write \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
-        "listdiff": "prettier -l \"{.,src/**,worker,scripts}/*.{ts,tsx,js,es6,css,json,md}\"",
-        "lint": "eslint \"src/**/*.{ts,tsx,es6}\" && stylelint \"src/**/*.css\"",
-        "stylelint": "stylelint --fix \"src/**/*.css\""
+        "fmt": "dprint fmt",
+        "stylelint": "stylelint --fix \"src/**/*.css\"",
+        "check:fmt": "dprint check",
+        "check:eslint": "eslint \"src/**/*.{ts,tsx,es6}\"",
+        "check:stylelint": "stylelint \"src/**/*.css\""
     },
     "dependencies": {
         "@lrc-maker/lrc-parser": "^0.1.17",
@@ -47,6 +48,7 @@
         "autoprefixer": "^10.4.14",
         "core-js": "^3.32.0",
         "cssnano": "^6.0.1",
+        "dprint": "^0.39.1",
         "eslint": "^8.46.0",
         "eslint-config-akari": "^0.0.6",
         "eslint-config-prettier": "^8.9.0",

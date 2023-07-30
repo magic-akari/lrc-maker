@@ -22,7 +22,8 @@ render(createElement(App), document.querySelector(".app-container"), () => {
 
     window.addEventListener("dragover", (ev) => {
         ev.preventDefault();
-        ev.dataTransfer!.dropEffect = "copy";
+        // @ts-expect-error FIXME
+        ev.dataTransfer.dropEffect = "copy";
     });
     window.addEventListener("drop", (ev) => {
         ev.preventDefault();

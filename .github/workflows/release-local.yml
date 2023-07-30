@@ -18,8 +18,7 @@ jobs:
                   cache: "pnpm"
             - run: pnpm i --ignore-scripts --frozen-lockfile
 
-            - run: pnpm run listdiff
-            - run: pnpm run lint
+            - run: pnpm run "/check\:/"
             - run: pnpm run build
 
             - name: Deploy Github Pages

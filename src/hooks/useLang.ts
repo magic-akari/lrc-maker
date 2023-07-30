@@ -1,6 +1,6 @@
 import { useCallback, useState } from "npm:react";
-import { languages } from "../languages/index.js";
 import enUS from "../languages/en-US.json";
+import { languages } from "../languages/index.js";
 
 export const useLang = (): [Language, (lang: string) => Promise<void>] => {
     const [value, setValue] = useState<Language>(enUS);

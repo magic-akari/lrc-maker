@@ -30,6 +30,6 @@
     },
     "include": [
         "src",
-        "types",
-    ],
+        "types"
+    ]
 }

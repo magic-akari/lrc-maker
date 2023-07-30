@@ -14,25 +14,25 @@ import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 const LazyEditor = lazy(async () =>
     import("./editor.js").then(({ Eidtor }) => {
         return { default: Eidtor };
-    }),
+    })
 );
 
 const LazySynchronizer = lazy(async () =>
     import("./synchronizer.js").then(({ Synchronizer }) => {
         return { default: Synchronizer };
-    }),
+    })
 );
 
 const LazyGist = lazy(async () =>
     import("./gist.js").then(({ Gist }) => {
         return { default: Gist };
-    }),
+    })
 );
 
 const LazyPreferences = lazy(async () =>
     import("./preferences.js").then(({ Preferences }) => {
         return { default: Preferences };
-    }),
+    })
 );
 
 export const Content: React.FC = () => {

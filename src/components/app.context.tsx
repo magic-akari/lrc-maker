@@ -3,7 +3,7 @@ import STRINGS from "#const:strings.json" assert { type: "json" };
 import type { TrimOptios } from "npm:@lrc-maker/lrc-parser";
 import { createContext, useEffect, useMemo } from "npm:react";
 import { useLang } from "../hooks/useLang.js";
-import { usePref, type Action as PrefAction, type State as PrefState } from "../hooks/usePref.js";
+import { type Action as PrefAction, type State as PrefState, usePref } from "../hooks/usePref.js";
 import { toastPubSub } from "./toast.js";
 
 interface IAppContext {
