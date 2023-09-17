@@ -17,7 +17,7 @@ export default function(): Plugin {
                 tags: [{
                     tag: "script",
                     children: is_prod ? register : un_register.replace("export", "") + ";unregister()",
-                    injectTo: "body"
+                    injectTo: "body",
                 }],
             };
         },

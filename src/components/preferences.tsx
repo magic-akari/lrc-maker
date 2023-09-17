@@ -1,7 +1,7 @@
-import LINK from "#const:link.json" assert { type: "json" };
-import STRINGS from "#const:strings.json" assert { type: "json" };
-import { convertTimeToTag, formatText } from "@lrc-maker/lrc-parser";
-import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
+import LINK from "#const/link.json" assert { type: "json" };
+import STRINGS from "#const/strings.json" assert { type: "json" };
+import { convertTimeToTag, formatText } from "#npm/@lrc-maker/lrc-parser";
+import { useCallback, useContext, useEffect, useMemo, useRef } from "#npm/react";
 import { themeColor, ThemeMode } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";

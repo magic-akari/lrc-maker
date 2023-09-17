@@ -1,9 +1,9 @@
-import LSK from "#const:local_key.json" assert { type: "json" };
-import ROUTER from "#const:router.json" assert { type: "json" };
-import SSK from "#const:session_key.json" assert { type: "json" };
-import STRINGS from "#const:strings.json" assert { type: "json" };
-import { convertTimeToTag, stringify } from "@lrc-maker/lrc-parser";
-import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
+import LSK from "#const/local_key.json" assert { type: "json" };
+import ROUTER from "#const/router.json" assert { type: "json" };
+import SSK from "#const/session_key.json" assert { type: "json" };
+import STRINGS from "#const/strings.json" assert { type: "json" };
+import { convertTimeToTag, stringify } from "#npm/@lrc-maker/lrc-parser";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "#npm/react";
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { ThemeMode } from "../hooks/usePref.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";

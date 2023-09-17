@@ -31,6 +31,10 @@
         "check:eslint": "eslint \"src/**/*.{ts,tsx,es6}\"",
         "check:stylelint": "stylelint \"src/**/*.css\""
     },
+    "imports": {
+        "#const/*": "./src/const/*",
+        "#npm/*": "./node_modules/*"
+    },
     "dependencies": {
         "@lrc-maker/lrc-parser": "^0.1.17",
         "react": "^18.2.0",

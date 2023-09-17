@@ -1,6 +1,6 @@
-import STRINGS from "#const:strings.json" assert { type: "json" };
-import { stringify } from "@lrc-maker/lrc-parser";
-import { memo, useCallback, useState } from "react";
+import STRINGS from "#const/strings.json" assert { type: "json" };
+import { stringify } from "#npm/@lrc-maker/lrc-parser";
+import { memo, useCallback, useState } from "#npm/react";
 import { type Action, ActionType } from "../hooks/useLrc.js";
 import { type State as PrefState } from "../hooks/usePref.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";

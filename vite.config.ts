@@ -54,11 +54,6 @@ export default defineConfig({
         }),
         sw_plugin(),
     ],
-    resolve: {
-        alias: [
-            { find: /^#const:(.*)/, replacement: "./src/const/$1" },
-        ],
-    },
     base: "./",
     define: {
         "import.meta.env.app": JSON.stringify({ hash, updateTime, version: pkg.version }),

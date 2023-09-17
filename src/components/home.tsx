@@ -1,5 +1,5 @@
-import ROUTER from "#const:router.json" assert { type: "json" };
-import { useContext } from "react";
+import ROUTER from "#const/router.json" assert { type: "json" };
+import { useContext } from "#npm/react";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";

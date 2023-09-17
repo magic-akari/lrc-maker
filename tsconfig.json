@@ -20,15 +20,16 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "paths": {
-            "#const:*": [
-                "./src/const/*"
+            "#npm/*": [
+                "./node_modules/@types/*",
+                "./node_modules/*"
             ]
         }
     },
     "include": [
         "src",
         "plugins",
-        "types",
+        "types"
     ],
     "references": [
         {
