@@ -43,6 +43,7 @@ export default defineConfig({
     plugins: [
         swc(),
         externalGlobals({
+            apply: "build",
             injectTo: "body",
             integrity: true,
             crossorigin: "anonymous",
