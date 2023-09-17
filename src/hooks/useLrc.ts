@@ -1,4 +1,6 @@
-import { parser, State as LrcState, TrimOptios } from "../lrc-parser.js";
+import type { State as LrcState, TrimOptios } from "@lrc-maker/lrc-parser";
+import { parser } from "@lrc-maker/lrc-parser";
+import { useReducer } from "react";
 
 type InitArgs = Readonly<{
     text: string;
@@ -200,4 +202,4 @@ const init = (lazyInit: () => InitArgs): IState => {
 };
 
 export const useLrc = (lazyInit: () => InitArgs): [IState, React.Dispatch<Action>] =>
-    React.useReducer(reducer, lazyInit, init);
+    useReducer(reducer, lazyInit, init);

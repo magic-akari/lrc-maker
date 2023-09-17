@@ -1,9 +1,10 @@
+import ROUTER from "#const/router.json" assert { type: "json" };
+import { useContext } from "react";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
+import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { EditorSVG, LoadAudioSVG, SynchronizerSVG } from "./svg.js";
-
-const { useContext } = React;
 
 export const Home: React.FC = () => {
     const { lang } = useContext(appContext);
@@ -22,7 +23,7 @@ export const Home: React.FC = () => {
                 <p>{lang.home.tips}</p>
                 <ol>
                     <li>
-                        <a className="home-tip-item" href={Path.editor}>
+                        <a className="home-tip-item" href={prependHash(ROUTER.editor)}>
                             <EditorSVG />
                             <span className="home-tip-text">{lang.home.tipForLyricText}</span>
                         </a>
@@ -34,7 +35,7 @@ export const Home: React.FC = () => {
                         </span>
                     </li>
                     <li>
-                        <a className="home-tip-item" href={Path.synchronizer}>
+                        <a className="home-tip-item" href={prependHash(ROUTER.synchronizer)}>
                             <SynchronizerSVG />
                             <span className="home-tip-text">{lang.home.tipForSynchronizer}</span>
                         </a>
@@ -53,6 +54,6 @@ document.addEventListener("keydown", (ev) => {
     }
 
     if (key === "?" || (code === "Slash" && ev.shiftKey)) {
-        location.hash = Path.home;
+        location.hash = ROUTER.home;
     }
 });

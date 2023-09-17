@@ -1,20 +1,16 @@
-import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
-import {
-    assignRepo,
-    createRepo,
-    getFils,
-    getRepos,
-    GistInfo,
-    IGistFile,
-    IGistRepo,
-    Ratelimit,
-} from "../utils/gistapi.js";
+import GISTINFO from "#const/gist_info.json" assert { type: "json" };
+import LSK from "#const/local_key.json" assert { type: "json" };
+import ROUTER from "#const/router.json" assert { type: "json" };
+import SSK from "#const/session_key.json" assert { type: "json" };
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { type Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
+import type { IGistFile, IGistRepo, Ratelimit } from "../utils/gistapi.js";
+import { assignRepo, createRepo, getFils, getRepos } from "../utils/gistapi.js";
+import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 import { EditorSVG, GithubSVG, SynchronizerSVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
-
-const { useCallback, useContext, useEffect, useMemo, useState } = React;
 
 const newTokenUrl = "https://github.com/settings/tokens/new?scopes=gist&description=https://lrc-maker.github.io";
 
@@ -36,10 +32,12 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     const [token, setToken] = useState(() => localStorage.getItem(LSK.token));
     const [gistId, setGistId] = useState(() => localStorage.getItem(LSK.gistId));
     const [gistIdList, setGistIdList] = useState<string[] | undefined>(undefined);
-    const [fileList, setFileList] = useState<IGistFile[] | null>(() => JSON.parse(localStorage.getItem(LSK.gistFile)!));
+    const [fileList, setFileList] = useState(
+        () => JSON.parse(localStorage.getItem(LSK.gistFile)!) as IGistFile[] | null,
+    );
 
-    const ratelimit: Ratelimit | null = useMemo(() => {
-        return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!);
+    const ratelimit = useMemo(() => {
+        return JSON.parse(sessionStorage.getItem(SSK.ratelimit)!) as Ratelimit | null;
     }, []);
 
     const onSubmitToken = useCallback((ev: React.FormEvent<HTMLFormElement>) => {
@@ -100,7 +98,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                 setGistIdList(
                     result
                         .filter((gist) => {
-                            return gist.description === GistInfo.description && GistInfo.fileName in gist.files;
+                            return gist.description === GISTINFO.description && GISTINFO.fileName in gist.files;
                         })
                         .map(({ id }) => id),
                 );
@@ -140,7 +138,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
     }, [gistId]);
 
     const onFileLoad = useCallback(
-        (ev: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        (ev: React.MouseEvent<HTMLElement>) => {
             const target = ev.target as HTMLElement;
 
             if (!("key" in target.dataset)) {
@@ -154,7 +152,7 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
             }
             if (file.truncated) {
                 fetch(file.raw_url)
-                    .then((res) => res.text())
+                    .then(async (res) => res.text())
                     .then((text) => {
                         lrcDispatch({
                             type: LrcActionType.parse,
@@ -330,10 +328,10 @@ export const Gist: React.FC<IGistProps> = ({ lrcDispatch, langName }) => {
                         <section className="file-bar">
                             <span className="file-title">{file.filename}</span>
                             <span className="file-action">
-                                <a className="file-load" href={Path.editor} data-key={index}>
+                                <a className="file-load" href={prependHash(ROUTER.editor)} data-key={index}>
                                     <EditorSVG />
                                 </a>
-                                <a className="file-load" href={Path.synchronizer} data-key={index}>
+                                <a className="file-load" href={prependHash(ROUTER.synchronizer)} data-key={index}>
                                     <SynchronizerSVG />
                                 </a>
                             </span>

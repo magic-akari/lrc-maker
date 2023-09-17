@@ -24,8 +24,8 @@ Use the arrow key and space key to insert the timestamp.
 
 Development branch links:
 
--   https://magic-akari.github.io/lrc-maker/
--   https://lrc-maker.vercel.app/
+- https://magic-akari.github.io/lrc-maker/
+- https://lrc-maker.vercel.app/
 
 ## Hotkeys
 
@@ -85,7 +85,6 @@ npm run build
 npm start
 # and run dev server
 npm run dev-server
-
 ```
 
 ## Star this project :star:
@@ -108,8 +107,8 @@ If you like give us a star :star: Share this project to help more people.
 
 开发分支版本链接:
 
--   https://magic-akari.github.io/lrc-maker/
--   https://lrc-maker.vercel.app/
+- https://magic-akari.github.io/lrc-maker/
+- https://lrc-maker.vercel.app/
 
 ## 热键
 

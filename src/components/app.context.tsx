@@ -1,9 +1,10 @@
+import LSK from "#const/local_key.json" assert { type: "json" };
+import STRINGS from "#const/strings.json" assert { type: "json" };
+import type { TrimOptios } from "@lrc-maker/lrc-parser";
+import { createContext, useEffect, useMemo } from "react";
 import { useLang } from "../hooks/useLang.js";
-import { Action as PrefAction, State as PrefState, usePref } from "../hooks/usePref.js";
-import { TrimOptios } from "../lrc-parser.js";
+import { type Action as PrefAction, type State as PrefState, usePref } from "../hooks/usePref.js";
 import { toastPubSub } from "./toast.js";
-
-const { createContext, useEffect, useMemo } = React;
 
 interface IAppContext {
     lang: Language;
@@ -21,7 +22,6 @@ const enum Bits {
     prefState,
 }
 
-// tslint:disable: no-bitwise
 export const enum ChangBits {
     lang = 1 << Bits.lang,
     // lrcFormat = 1 << Bits.lrcFormat,
@@ -69,7 +69,7 @@ export const appContext = createContext<IAppContext>(undefined, (prev, next) => 
 });
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [prefState, prefDispatch] = usePref(() => localStorage.getItem(LSK.preferences) || Const.emptyString);
+    const [prefState, prefDispatch] = usePref(() => localStorage.getItem(LSK.preferences) || STRINGS.emptyString);
 
     const [lang, setLang] = useLang();
 

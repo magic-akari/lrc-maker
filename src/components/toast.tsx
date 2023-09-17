@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPubSub } from "../utils/pubsub.js";
 import { CheckSVG, InfoSVG, ProblemSVG } from "./svg.js";
 
@@ -9,8 +10,6 @@ interface IMessage {
 }
 
 export const toastPubSub = createPubSub<IMessage>();
-
-const { useCallback, useEffect, useRef, useState } = React;
 
 const box = { id: 0 };
 
@@ -24,7 +23,7 @@ export const Toast: React.FC = () => {
     const [toastQueue, setToastQueue] = useState<IToast[]>([]);
 
     useEffect(() => {
-        toastPubSub.sub(self.current, (data) => {
+        return toastPubSub.sub(self.current, (data) => {
             setToastQueue((queue) => [{ id: box.id++, ...data }, ...queue]);
         });
     }, []);

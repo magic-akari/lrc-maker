@@ -159,7 +159,9 @@ a > * {
     background-position: 50%;
     transform: scale3d(10, 10, 1);
     opacity: 0;
-    transition: transform 0.5s, opacity 1s;
+    transition:
+        transform 0.5s,
+        opacity 1s;
     content: "";
     pointer-events: none;
 }
@@ -176,10 +178,7 @@ a > * {
 
 .page-loading::before {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     background-color: var(--background-color);
     opacity: 0.5;
     content: "";
@@ -187,10 +186,7 @@ a > * {
 
 .akari-odango-loading {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     width: 50vmin;
     height: 50vmin;
     margin: auto;

@@ -1,12 +1,16 @@
-import { Action as LrcAction, ActionType as LrcActionType } from "../hooks/useLrc.js";
-import { State as LrcState, stringify } from "../lrc-parser.js";
+import LSK from "#const/local_key.json" assert { type: "json" };
+import ROUTER from "#const/router.json" assert { type: "json" };
+import SSK from "#const/session_key.json" assert { type: "json" };
+import { type State as LrcState, stringify } from "@lrc-maker/lrc-parser";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import type { Action as LrcAction } from "../hooks/useLrc.js";
+import { ActionType as LrcActionType } from "../hooks/useLrc.js";
 import { createFile } from "../utils/gistapi.js";
 import { lrcFileName } from "../utils/lrc-file-name.js";
+import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { CloudUploadSVG, CopySVG, DownloadSVG, OpenFileSVG, UtilitySVG } from "./svg.js";
 import { toastPubSub } from "./toast.js";
-
-const { useCallback, useContext, useEffect, useMemo, useRef, useState } = React;
 
 const disableCheck = {
     autoCapitalize: "none",
@@ -189,7 +193,7 @@ export const Eidtor: React.FC<{
 
                 <a
                     title={lang.editor.saveToGist}
-                    href={canSaveToGist ? undefined : Path.gist}
+                    href={canSaveToGist ? undefined : prependHash(ROUTER.gist)}
                     className="editor-tools-item ripple"
                     onClick={canSaveToGist ? onGistSave : undefined}
                 >

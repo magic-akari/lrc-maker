@@ -64,7 +64,7 @@ export const audioRef: IAudioRef = {
 
     toggle() {
         if (this.current?.duration) {
-            this.current.paused ? this.current.play() : this.current.pause();
+            void (this.current.paused ? this.current.play() : this.current.pause());
         }
     },
 };
@@ -77,17 +77,17 @@ export const enum AudioActionType {
 
 export type AudioState =
     | {
-          type: AudioActionType.pause;
-          payload: boolean;
-      }
+        type: AudioActionType.pause;
+        payload: boolean;
+    }
     | {
-          type: AudioActionType.getDuration;
-          payload: number;
-      }
+        type: AudioActionType.getDuration;
+        payload: number;
+    }
     | {
-          type: AudioActionType.rateChange;
-          payload: number;
-      };
+        type: AudioActionType.rateChange;
+        payload: number;
+    };
 
 export const audioStatePubSub = createPubSub<AudioState>();
 export const currentTimePubSub = createPubSub<number>();

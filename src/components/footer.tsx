@@ -1,11 +1,11 @@
+import SSK from "#const/session_key.json" assert { type: "json" };
+import { useCallback, useContext, useEffect, useReducer, useRef } from "react";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio, nec } from "./loadaudio.js";
 import { toastPubSub } from "./toast.js";
-
-const { useCallback, useContext, useEffect, useReducer, useRef } = React;
 
 const accept = ["audio/*", ".ncm", ".qmcflac", ".qmc0", ".qmc1", ".qmc2", ".qmc3", "qmcogg"].join(", ");
 
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
     );
 
     useEffect(() => {
-        document.addEventListener("keydown", (ev) => {
+        function onKeydown(ev: KeyboardEvent) {
             const { code, key, target } = ev;
 
             const codeOrKey = code || key;
@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
                 return;
             }
 
-            if (ev.metaKey === true || ev.ctrlKey === true) {
+            if (ev.metaKey || ev.ctrlKey) {
                 if (["ArrowUp", "KeyJ", "Up", "J", "j"].includes(codeOrKey)) {
                     ev.preventDefault();
 
@@ -82,14 +82,21 @@ export const Footer: React.FC = () => {
                     audioRef.playbackRate = 1;
                 }
             }
-        });
+        }
+        document.addEventListener("keydown", onKeydown);
+
+        return () => document.removeEventListener("keydown", onKeydown);
     }, []);
 
     useEffect(() => {
-        document.documentElement.addEventListener("drop", (ev) => {
+        function onDrop(ev: DragEvent) {
             const file = ev.dataTransfer!.files[0];
             receiveFile(file, setAudioSrc);
-        });
+        }
+
+        document.documentElement.addEventListener("drop", onDrop);
+
+        return () => document.documentElement.removeEventListener("drop", onDrop);
     }, []);
 
     const onAudioInputChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,7 +163,7 @@ export const Footer: React.FC = () => {
     const onAudioError = useCallback(
         (ev: React.SyntheticEvent<HTMLAudioElement>) => {
             const audio = ev.target as HTMLAudioElement;
-            const error = audio.error as MediaError;
+            const error = audio.error!;
             const message = lang.audio.error[error.code] || error.message || lang.audio.error[0];
             toastPubSub.pub({
                 type: "warning",
@@ -199,7 +206,7 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
             return;
         }
         if (file.name.endsWith(".ncm")) {
-            const worker = new Worker("./ncmc-worker.js");
+            const worker = new Worker(new URL("/worker/ncmc-worker.js", import.meta.url));
             worker.addEventListener(
                 "message",
                 (ev: IMessageEvent<IMessage>) => {
@@ -238,7 +245,7 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
             return;
         }
         if (/\.qmc(?:flac|0|1|2|3)$/.test(file.name)) {
-            const worker = new Worker("./qmc-worker.js");
+            const worker = new Worker(new URL("/worker/qmc-worker.js", import.meta.url));
             worker.addEventListener(
                 "message",
                 (ev: IMessageEvent<IMessage>) => {
@@ -255,18 +262,16 @@ const receiveFile = (file: File, setAudioSrc: TsetAudioSrc): void => {
             );
 
             worker.postMessage(file);
-
-            return;
         }
     }
 };
 
-const enum MimeType {
-    fLaC = 0x664c6143,
-    OggS = 0x4f676753,
-    RIFF = 0x52494646,
-    WAVE = 0x57415645,
-}
+const MimeType = {
+    fLaC: 0x664c6143,
+    OggS: 0x4f676753,
+    RIFF: 0x52494646,
+    WAVE: 0x57415645,
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const detectMimeType = (dataArray: Uint8Array) => {

@@ -3,9 +3,11 @@ export const createPubSub = <DT, ID = unknown>() => {
     const bus = new Map<ID, CB>();
 
     const pub = (data: DT): void => {
-        bus.forEach((cb: CB) => cb(data));
+        bus.forEach((cb: CB) => {
+            cb(data);
+        });
     };
-    const sub = (id: ID, cb: CB): (() => void) => {
+    const sub = (id: ID, cb: CB): () => void => {
         bus.set(id, cb);
 
         return (): void => {

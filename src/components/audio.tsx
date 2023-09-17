@@ -1,9 +1,14 @@
-import { convertTimeToTag } from "../lrc-parser.js";
-import { AudioActionType, audioRef, AudioState, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
+import { convertTimeToTag } from "@lrc-maker/lrc-parser";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    AudioActionType,
+    audioRef,
+    type AudioState,
+    audioStatePubSub,
+    currentTimePubSub,
+} from "../utils/audiomodule.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { Forward5sSVG, LoadAudioSVG, PauseSVG, PlaySVG, Replay5sSVG } from "./svg.js";
-
-const { useState, useEffect, useRef, useCallback, useMemo } = React;
 
 interface ISliderProps {
     min: number;

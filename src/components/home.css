@@ -1,9 +1,6 @@
 .home {
     position: fixed;
-    top: 60px;
-    right: 0;
-    bottom: 32px;
-    left: 0;
+    inset: 60px 0 32px;
     display: flex;
     flex-direction: column;
     align-items: center;

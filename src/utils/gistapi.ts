@@ -1,3 +1,9 @@
+// TODO: fix eslint
+/* eslint-disable */
+import GISTINFO from "#const/gist_info.json" assert { type: "json" };
+import LSK from "#const/local_key.json" assert { type: "json" };
+import SSK from "#const/session_key.json" assert { type: "json" };
+
 const apiUrl = "https://api.github.com/gists";
 
 export interface IGistFile {
@@ -10,7 +16,7 @@ export interface IGistFile {
 export interface IGistRepo {
     id: string;
     description: string;
-    files: { [filename: string]: IGistFile };
+    files: Record<string, IGistFile>;
 }
 
 export type Ratelimit = Record<"x-ratelimit-limit" | "x-ratelimit-remaining" | "x-ratelimit-reset", string>;
@@ -32,12 +38,6 @@ export const getRepos = async (): Promise<IGistRepo[]> => {
     return res.json();
 };
 
-export const enum GistInfo {
-    description = "https://lrc-maker.github.io",
-    fileName = ".lrc-maker",
-    fileContent = "This file is used to be tracked and identified by https://lrc-maker.github.io",
-}
-
 export const createRepo = async (): Promise<IGistRepo> => {
     const token = localStorage.getItem(LSK.token);
 
@@ -47,10 +47,10 @@ export const createRepo = async (): Promise<IGistRepo> => {
             Authorization: `token ${token}`,
         },
         body: JSON.stringify({
-            description: GistInfo.description,
+            description: GISTINFO.description,
             public: true,
             files: {
-                [GistInfo.fileName]: { content: GistInfo.fileContent },
+                [GISTINFO.fileName]: { content: GISTINFO.fileContent },
             },
         }),
     });
@@ -71,9 +71,9 @@ export const assignRepo = async (): Promise<IGistRepo> => {
             Authorization: `token ${token}`,
         },
         body: JSON.stringify({
-            description: GistInfo.description,
+            description: GISTINFO.description,
             files: {
-                [GistInfo.fileName]: { content: GistInfo.fileContent },
+                [GISTINFO.fileName]: { content: GISTINFO.fileContent },
             },
         }),
     });

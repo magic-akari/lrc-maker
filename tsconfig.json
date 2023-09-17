@@ -1,20 +1,33 @@
 {
     "compilerOptions": {
-        "target": "es2017",
+        "target": "esnext",
         "module": "esnext",
-        "lib": ["dom", "es2018"],
-        "jsx": "react",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "es2018"
+        ],
+        "moduleResolution": "bundler",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
         "outDir": "./build",
         "rootDir": "./src",
-        "removeComments": true,
-        "downlevelIteration": true,
         "strict": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "incremental": true,
-        "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo"
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
     },
-    "include": ["src"],
-    "exclude": ["src/lrc-parser.js"],
-    "references": [{ "path": "./worker" }, { "path": "./src/lrc-parser.js" }]
+    "include": [
+        "src",
+        "plugins",
+        "types"
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        }
+    ]
 }

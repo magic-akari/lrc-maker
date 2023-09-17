@@ -1,7 +1,6 @@
-import { convertTimeToTag } from "../lrc-parser.js";
+import { convertTimeToTag } from "@lrc-maker/lrc-parser";
+import { useEffect, useRef, useState } from "react";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
-
-const { useState, useEffect, useRef } = React;
 
 interface ICurserProps {
     fixed: Fixed;
@@ -45,9 +44,12 @@ export const Curser: React.FC<ICurserProps> = ({ fixed }) => {
                 setTime(date);
             });
         } else {
-            const id = setInterval(() => {
-                setTime(audioRef.currentTime);
-            }, 1000 / (2 * B));
+            const id = setInterval(
+                () => {
+                    setTime(audioRef.currentTime);
+                },
+                1000 / (2 * B),
+            );
 
             return (): void => {
                 clearInterval(id);

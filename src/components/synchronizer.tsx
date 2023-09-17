@@ -1,13 +1,15 @@
-import { Action, ActionType, IState } from "../hooks/useLrc.js";
-import { State as PrefState } from "../hooks/usePref.js";
-import { convertTimeToTag, formatText, ILyric } from "../lrc-parser.js";
+import SSK from "#const/session_key.json" assert { type: "json" };
+import STRINGS from "#const/strings.json" assert { type: "json" };
+import { convertTimeToTag, formatText, type ILyric } from "@lrc-maker/lrc-parser";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import type { IState } from "../hooks/useLrc.js";
+import { type Action, ActionType } from "../hooks/useLrc.js";
+import { type State as PrefState } from "../hooks/usePref.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
 import { Curser } from "./curser.js";
-
-const { useCallback, useContext, useEffect, useRef, useState } = React;
 
 const SpaceButton: React.FC<{ sync: () => void }> = ({ sync }) => {
     return (
@@ -45,7 +47,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     }, [dispatch, lang]);
 
     const [syncMode, setSyncMode] = useState(() =>
-        sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString() ? SyncMode.highlight : SyncMode.select,
+        sessionStorage.getItem(SSK.syncMode) === SyncMode.highlight.toString() ? SyncMode.highlight : SyncMode.select
     );
 
     useEffect(() => {
@@ -108,7 +110,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     );
 
     useEffect(() => {
-        const listener = (ev: KeyboardEvent): void => {
+        function onKeydown(ev: KeyboardEvent): void {
             const { code, key, target } = ev;
 
             const codeOrKey = code || key;
@@ -144,7 +146,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                 return;
             }
 
-            if (ev.metaKey === true || ev.ctrlKey === true) {
+            if (ev.metaKey || ev.ctrlKey) {
                 return;
             }
 
@@ -177,12 +179,12 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
 
                 dispatch({ type: ActionType.select, payload: (index) => index + 10 });
             }
-        };
+        }
 
-        document.addEventListener("keydown", listener);
+        document.addEventListener("keydown", onKeydown);
 
         return (): void => {
-            document.removeEventListener("keydown", listener);
+            document.removeEventListener("keydown", onKeydown);
         };
     }, [adjust, dispatch, selectIndex, sync]);
 
@@ -232,13 +234,13 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
                 highlight,
                 error,
             })
-                .reduce((p, [name, value]) => {
+                .reduce<string[]>((p, [name, value]) => {
                     if (value) {
                         p.push(name);
                     }
                     return p;
-                }, [] as string[])
-                .join(Const.space);
+                }, [])
+                .join(STRINGS.space);
 
             return (
                 <LyricLine

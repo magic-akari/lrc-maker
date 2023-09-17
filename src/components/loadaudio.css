@@ -1,9 +1,6 @@
 .dialog {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     z-index: 1000;
     display: none;
     margin: auto;
@@ -36,20 +33,14 @@
 
 .dialog-close::before {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     z-index: -1;
     content: "";
 }
 
 .dialog-close > svg {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     width: 36px;
     height: 36px;
     margin: auto;
@@ -63,7 +54,9 @@
     color: var(--black);
     background-color: var(--semi-white-color);
     border: 1px solid var(--theme-color);
-    box-shadow: 0 0 1rem var(--theme-color), 0 0 0 100vmax #00000088;
+    box-shadow:
+        0 0 1rem var(--theme-color),
+        0 0 0 100vmax #00000088;
 }
 
 .loadaudio-body {

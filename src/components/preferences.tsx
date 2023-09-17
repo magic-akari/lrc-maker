@@ -1,22 +1,24 @@
-import { info, themeColor, ThemeMode } from "../hooks/usePref.js";
-import { convertTimeToTag, formatText } from "../lrc-parser.js";
+import LINK from "#const/link.json" assert { type: "json" };
+import STRINGS from "#const/strings.json" assert { type: "json" };
+import { convertTimeToTag, formatText } from "@lrc-maker/lrc-parser";
+import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
+import { themeColor, ThemeMode } from "../hooks/usePref.js";
 import { unregister } from "../utils/sw.unregister.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { AkariHideWall } from "./svg.img.js";
-
-const { useCallback, useContext, useEffect, useMemo, useRef } = React;
 
 const numberInputProps = { type: "number", step: 1 } as const;
 
 type OnChange<T> = (event: React.ChangeEvent<T>) => void;
 
-interface IUseNumberInput<T = HTMLInputElement> {
-    (defaultValue: number, onChange: OnChange<T>): typeof numberInputProps & {
-        ref: React.RefObject<T>;
-        onChange: OnChange<T>;
-        defaultValue: number;
-    };
-}
+type IUseNumberInput<T = HTMLInputElement> = (
+    defaultValue: number,
+    onChange: OnChange<T>,
+) => typeof numberInputProps & {
+    ref: React.RefObject<T>;
+    onChange: OnChange<T>;
+    defaultValue: number;
+};
 
 const useNumberInput: IUseNumberInput = (defaultValue: number, onChange) => {
     const ref = useRef<HTMLInputElement>(null);
@@ -43,6 +45,8 @@ const useNumberInput: IUseNumberInput = (defaultValue: number, onChange) => {
 
     return { ...numberInputProps, ref, onChange: $onChange, defaultValue };
 };
+
+const langMap = i18n.langMap;
 
 export const Preferences: React.FC = () => {
     const { prefState, prefDispatch, lang } = useContext(appContext, ChangBits.lang || ChangBits.prefState);
@@ -116,20 +120,20 @@ export const Preferences: React.FC = () => {
     );
 
     const onCacheClear = useCallback(() => {
-        unregister();
+        void unregister();
     }, []);
 
     const updateTime = useMemo(() => {
-        const date = new Date(MetaData.updateTime);
-        const options = {
-            year: "numeric" as const,
-            month: "short" as const,
-            day: "numeric" as const,
-            hour: "numeric" as const,
-            minute: "numeric" as const,
-            second: "numeric" as const,
-            timeZoneName: "short" as const,
-            hour12: false as const,
+        const date = new Date(import.meta.env.app.updateTime);
+        const options: Intl.DateTimeFormatOptions = {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            timeZoneName: "short",
+            hour12: false,
         };
         return new Intl.DateTimeFormat(prefState.lang, options).format(date);
     }, [prefState.lang]);
@@ -183,10 +187,10 @@ export const Preferences: React.FC = () => {
     );
 
     const LangOptionList = useMemo(() => {
-        return Object.entries(info.languages).map(([langCode, langName]) => {
+        return langMap.map(([code, display]) => {
             return (
-                <option key={langCode} value={langCode}>
-                    {langName}
+                <option key={code} value={code}>
+                    {display}
                 </option>
             );
         });
@@ -200,7 +204,7 @@ export const Preferences: React.FC = () => {
                 classNames.push("checked");
             }
             return (
-                <label className={classNames.join(Const.space)} key={color} style={{ backgroundColor: color }}>
+                <label className={classNames.join(STRINGS.space)} key={color} style={{ backgroundColor: color }}>
                     <input
                         hidden={true}
                         type="radio"
@@ -239,13 +243,13 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.version}</span>
-                        <span className="select-all">{MetaData.version}</span>
+                        <span className="select-all">{import.meta.env.app.version}</span>
                     </section>
                 </li>
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.commitHash}</span>
-                        <span className="select-all">{MetaData.hash}</span>
+                        <span className="select-all">{import.meta.env.app.hash}</span>
                     </section>
                 </li>
                 <li>
@@ -257,7 +261,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.repo}</span>
-                        <a className="link" href={Repo.url} target="_blank" rel="noopener noreferrer">
+                        <a className="link" href={LINK.url} target="_blank" rel="noopener noreferrer">
                             Github
                         </a>
                     </section>
@@ -265,7 +269,7 @@ export const Preferences: React.FC = () => {
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.help}</span>
-                        <a className="link" href={Repo.wiki} target="_blank" rel="noopener noreferrer">
+                        <a className="link" href={LINK.wiki} target="_blank" rel="noopener noreferrer">
                             Github Wiki
                         </a>
                     </section>

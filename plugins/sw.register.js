@@ -8,6 +8,6 @@ if ("serviceWorker" in navigator) {
         (err) => {
             // registration failed :(
             console.log("ServiceWorker registration failed ( ꒪﹃ ꒪) ", err);
-        }
+        },
     );
 }

@@ -1,17 +1,20 @@
+import { createElement } from "react";
+// Do not use createRoot
+// before https://github.com/facebook/react/issues/26374 fixed
+// eslint-disable-next-line react/no-deprecated
+import { render } from "react-dom";
 import { App } from "./components/app.js";
 
 if (!("scrollBehavior" in document.documentElement.style)) {
-    import(/* webpackMode: "eager" */ "./polyfill/smooth-scroll.js");
+    import("./polyfill/smooth-scroll.js");
 }
 
-ReactDOM.render(React.createElement(App), document.querySelector(".app-container"), () => {
-    document.querySelector(".page-loading")!.remove();
-
-    if ((navigator as any).standalone || window.matchMedia("(display-mode: standalone)").matches) {
+render(createElement(App), document.querySelector(".app-container"), () => {
+    if (navigator.standalone || window.matchMedia("(display-mode: standalone)").matches) {
         document.addEventListener("click", (ev) => {
             const href = (ev.target as HTMLAnchorElement).getAttribute("href");
 
-            if (href?.startsWith("#")) {
+            if (href?.startsWith("#") === true) {
                 ev.preventDefault();
                 location.replace(href);
             }
@@ -20,7 +23,8 @@ ReactDOM.render(React.createElement(App), document.querySelector(".app-container
 
     window.addEventListener("dragover", (ev) => {
         ev.preventDefault();
-        ev.dataTransfer!.dropEffect = "copy";
+        // @ts-expect-error FIXME
+        ev.dataTransfer.dropEffect = "copy";
     });
     window.addEventListener("drop", (ev) => {
         ev.preventDefault();

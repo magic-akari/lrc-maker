@@ -1,8 +1,8 @@
 const swWorker = self as unknown as ServiceWorkerGlobalScope;
 
 const APP_NAME = "akari-lrc-maker";
-const VERSION = MetaData.version;
-const HASH = MetaData.hash;
+const VERSION = import.meta.env.app.version;
+const HASH = import.meta.env.app.hash;
 const CACHENAME = `${APP_NAME}-${VERSION}-${HASH}`;
 
 swWorker.addEventListener("install", () => {
@@ -40,8 +40,8 @@ swWorker.addEventListener("fetch", (event) => {
     event.respondWith(
         caches.match(event.request).then(
             (match) =>
-                match ||
-                caches.open(CACHENAME).then((cache) =>
+                match
+                || caches.open(CACHENAME).then((cache) =>
                     fetch(event.request).then((response) => {
                         if (response.status !== 200) {
                             return response;
@@ -49,7 +49,7 @@ swWorker.addEventListener("fetch", (event) => {
 
                         cache.put(event.request, response.clone());
                         return response;
-                    }),
+                    })
                 ),
         ),
     );

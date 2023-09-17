@@ -1,35 +1,38 @@
+import LSK from "#const/local_key.json" assert { type: "json" };
+import ROUTER from "#const/router.json" assert { type: "json" };
+import SSK from "#const/session_key.json" assert { type: "json" };
+import STRINGS from "#const/strings.json" assert { type: "json" };
+import { convertTimeToTag, stringify } from "@lrc-maker/lrc-parser";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
 import { ActionType as LrcActionType, useLrc } from "../hooks/useLrc.js";
 import { ThemeMode } from "../hooks/usePref.js";
-import { convertTimeToTag, stringify } from "../lrc-parser.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { Home } from "./home.js";
 import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
 
-const { lazy, useContext, useEffect, useRef, useState } = React;
-
-const LazyEditor = lazy(() =>
-    import(/* webpackMode: "eager" */ "./editor.js").then(({ Eidtor }) => {
+const LazyEditor = lazy(async () =>
+    import("./editor.js").then(({ Eidtor }) => {
         return { default: Eidtor };
-    }),
+    })
 );
 
-const LazySynchronizer = lazy(() =>
-    import(/* webpackMode: "eager" */ "./synchronizer.js").then(({ Synchronizer }) => {
+const LazySynchronizer = lazy(async () =>
+    import("./synchronizer.js").then(({ Synchronizer }) => {
         return { default: Synchronizer };
-    }),
+    })
 );
 
-const LazyGist = lazy(() =>
-    import(/* webpackMode: "eager" */ "./gist.js").then(({ Gist }) => {
+const LazyGist = lazy(async () =>
+    import("./gist.js").then(({ Gist }) => {
         return { default: Gist };
-    }),
+    })
 );
 
-const LazyPreferences = lazy(() =>
-    import(/* webpackMode: "eager" */ "./preferences.js").then(({ Preferences }) => {
+const LazyPreferences = lazy(async () =>
+    import("./preferences.js").then(({ Preferences }) => {
         return { default: Preferences };
-    }),
+    })
 );
 
 export const Content: React.FC = () => {
@@ -39,14 +42,18 @@ export const Content: React.FC = () => {
 
     const [path, setPath] = useState(location.hash);
     useEffect(() => {
-        window.addEventListener("hashchange", () => {
+        function onHashchange() {
             setPath(location.hash);
-        });
+        }
+
+        window.addEventListener("hashchange", onHashchange);
+
+        return () => window.removeEventListener("hashchange", onHashchange);
     }, []);
 
     const [lrcState, lrcDispatch] = useLrc(() => {
         return {
-            text: localStorage.getItem(LSK.lyric) || Const.emptyString,
+            text: localStorage.getItem(LSK.lyric) || STRINGS.emptyString,
             options: trimOptions,
             select: Number.parseInt(sessionStorage.getItem(SSK.selectIndex)!, 10) || 0,
         };
@@ -67,7 +74,7 @@ export const Content: React.FC = () => {
     }, [lrcDispatch, prefState.fixed]);
 
     useEffect(() => {
-        const saveState = (): void => {
+        function saveState(): void {
             lrcDispatch({
                 type: LrcActionType.getState,
                 payload: (lrc) => {
@@ -77,21 +84,25 @@ export const Content: React.FC = () => {
             });
 
             localStorage.setItem(LSK.preferences, JSON.stringify(prefState));
-        };
+        }
 
-        document.addEventListener("visibilitychange", () => {
+        function onVisibilitychange() {
             if (document.hidden) {
                 saveState();
             }
-        });
+        }
 
-        window.addEventListener("beforeunload", () => {
-            saveState();
-        });
+        document.addEventListener("visibilitychange", onVisibilitychange);
+        window.addEventListener("beforeunload", saveState);
+
+        return () => {
+            document.removeEventListener("visibilitychange", onVisibilitychange);
+            window.removeEventListener("beforeunload", saveState);
+        };
     }, [lrcDispatch, prefState]);
 
     useEffect(() => {
-        document.documentElement.addEventListener("drop", (ev) => {
+        function onDrop(ev: DragEvent) {
             const file = ev.dataTransfer?.files[0];
             if (file && (file.type.startsWith("text/") || /(?:\.lrc|\.txt)$/i.test(file.name))) {
                 const fileReader = new FileReader();
@@ -107,11 +118,13 @@ export const Content: React.FC = () => {
                     once: true,
                 });
 
-                location.hash = Path.editor;
+                location.hash = ROUTER.editor;
 
                 fileReader.readAsText(file, "utf-8");
             }
-        });
+        }
+        document.documentElement.addEventListener("drop", onDrop);
+        return () => document.documentElement.removeEventListener("drop", onDrop);
     }, [lrcDispatch, trimOptions]);
 
     useEffect(() => {
@@ -148,23 +161,23 @@ export const Content: React.FC = () => {
     }, [prefState.themeColor]);
 
     const content = ((): JSX.Element => {
-        switch (path) {
-            case Path.editor: {
+        switch (path.slice(1)) {
+            case ROUTER.editor: {
                 return <LazyEditor lrcState={lrcState} lrcDispatch={lrcDispatch} />;
             }
 
-            case Path.synchronizer: {
+            case ROUTER.synchronizer: {
                 if (lrcState.lyric.length === 0) {
                     return <AkariNotFound />;
                 }
                 return <LazySynchronizer state={lrcState} dispatch={lrcDispatch} />;
             }
 
-            case Path.gist: {
+            case ROUTER.gist: {
                 return <LazyGist lrcDispatch={lrcDispatch} langName={prefState.lang} />;
             }
 
-            case Path.preferences: {
+            case ROUTER.preferences: {
                 return <LazyPreferences />;
             }
         }
@@ -174,7 +187,7 @@ export const Content: React.FC = () => {
 
     return (
         <main className="app-main">
-            <React.Suspense fallback={<AkariOangoLoading />}>{content}</React.Suspense>
+            <Suspense fallback={<AkariOangoLoading />}>{content}</Suspense>
         </main>
     );
 };

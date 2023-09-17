@@ -67,7 +67,7 @@ export default ((): void => {
 
     const scrollingElement = document.scrollingElement || document.documentElement;
 
-    Element.prototype.scrollIntoView = function (): void {
+    Element.prototype.scrollIntoView = function(): void {
         const { top, bottom } = this.getBoundingClientRect();
 
         const center = (top + bottom) / 2;

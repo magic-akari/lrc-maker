@@ -1,8 +1,7 @@
 {
     "extends": [
         "stylelint-config-standard",
-        "stylelint-config-rational-order",
-        "stylelint-prettier/recommended"
+        "stylelint-config-rational-order"
     ],
     "rules": {
         "color-hex-length": "long",

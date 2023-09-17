@@ -8,5 +8,5 @@
         "inlineSources": true,
         "tsBuildInfoFile": "../build/worker.tsbuildinfo"
     },
-    "include": ["."]
+    "include": [".", "../types"]
 }
