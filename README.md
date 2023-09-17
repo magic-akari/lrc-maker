@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://lrc-maker.github.io">
-        <img src="./assets/favicons/apple-touch-icon.png" alt="logo" />
+        <img src="./public/favicons/apple-touch-icon.png" alt="logo" />
     </a>
 </p>
 
