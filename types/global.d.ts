@@ -1,4 +1,4 @@
-import type { Language as L } from "./languages";
+import type { Language as L } from "../src/languages";
 
 declare global {
     type Mutable<T> = { -readonly [P in keyof T]: T[P] };
