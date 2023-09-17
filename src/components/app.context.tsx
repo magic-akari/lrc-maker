@@ -1,7 +1,7 @@
 import LSK from "#const/local_key.json" assert { type: "json" };
 import STRINGS from "#const/strings.json" assert { type: "json" };
-import type { TrimOptios } from "#npm/@lrc-maker/lrc-parser";
-import { createContext, useEffect, useMemo } from "#npm/react";
+import type { TrimOptios } from "@lrc-maker/lrc-parser";
+import { createContext, useEffect, useMemo } from "react";
 import { useLang } from "../hooks/useLang.js";
 import { type Action as PrefAction, type State as PrefState, usePref } from "../hooks/usePref.js";
 import { toastPubSub } from "./toast.js";

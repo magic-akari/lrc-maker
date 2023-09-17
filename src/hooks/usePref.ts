@@ -1,4 +1,4 @@
-import { useReducer } from "#npm/react";
+import { useReducer } from "react";
 
 export const themeColor = {
     orange: "#ff691f",

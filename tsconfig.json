@@ -19,12 +19,6 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
-        "paths": {
-            "#npm/*": [
-                "./node_modules/@types/*",
-                "./node_modules/*"
-            ]
-        }
     },
     "include": [
         "src",

@@ -1,7 +1,7 @@
 import SSK from "#const/session_key.json" assert { type: "json" };
 import STRINGS from "#const/strings.json" assert { type: "json" };
-import { convertTimeToTag, formatText, type ILyric } from "#npm/@lrc-maker/lrc-parser";
-import { useCallback, useContext, useEffect, useRef, useState } from "#npm/react";
+import { convertTimeToTag, formatText, type ILyric } from "@lrc-maker/lrc-parser";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import type { IState } from "../hooks/useLrc.js";
 import { type Action, ActionType } from "../hooks/useLrc.js";
 import { type State as PrefState } from "../hooks/usePref.js";

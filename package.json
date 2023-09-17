@@ -32,8 +32,7 @@
         "check:stylelint": "stylelint \"src/**/*.css\""
     },
     "imports": {
-        "#const/*": "./src/const/*",
-        "#npm/*": "./node_modules/*"
+        "#const/*": "./src/const/*"
     },
     "dependencies": {
         "@lrc-maker/lrc-parser": "^0.1.17",
