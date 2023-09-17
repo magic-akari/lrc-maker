@@ -1,4 +1,4 @@
-import { useCallback, useState } from "npm:react";
+import { useCallback, useState } from "react";
 import enUS from "../languages/en-US.json";
 import { languages } from "../languages/index.js";
 

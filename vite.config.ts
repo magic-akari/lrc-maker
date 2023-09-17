@@ -1,11 +1,15 @@
-import { swc } from "rollup-plugin-swc3";
-import { defineConfig } from "vite";
-import externalGlobals, { libPreset } from "vite-plugin-external-globals";
-import { hash, updateTime, version } from "./scripts/meta";
-
+import { execSync } from "node:child_process";
 import { readdirSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { swc } from "rollup-plugin-swc3";
+import { defineConfig } from "vite";
+import externalGlobals, { libPreset } from "vite-plugin-external-globals";
+import { version } from "./package.json" assert { type: "json" };
+import sw_plugin from "./plugins/sw-plugin";
+
+const hash = execSync("git rev-parse --short HEAD").toString().trim();
+const updateTime = execSync("git log -1 --format=%cI").toString().trim();
 
 const json_suffix = ".json";
 const lang_dir = "src/languages";
@@ -45,14 +49,12 @@ export default defineConfig({
             entry: [
                 libPreset("react"),
                 libPreset("react-dom"),
-                libPreset("react", { name: "npm:react", pkgName: "react" }),
-                libPreset("react-dom", { name: "npm:react-dom", pkgName: "react-dom" }),
             ],
         }),
+        sw_plugin(),
     ],
     resolve: {
         alias: [
-            { find: /^npm:(.*)/, replacement: "$1" },
             { find: /^#const:(.*)/, replacement: "./src/const/$1" },
         ],
     },

@@ -1,28 +1,25 @@
 {
     "compilerOptions": {
-        "target": "es2018",
+        "target": "esnext",
         "module": "esnext",
         "lib": [
             "dom",
-            "es2017"
+            "dom.iterable",
+            "es2018"
         ],
+        "moduleResolution": "bundler",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
         "jsx": "react-jsx",
         "outDir": "./build",
         "rootDir": "./src",
-        "removeComments": true,
-        "downlevelIteration": true,
         "strict": true,
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "incremental": true,
-        "tsBuildInfoFile": "./build/lrc-maker.tsbuildinfo",
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
         "paths": {
-            "npm:*": [
-                "./node_modules/*",
-                "./node_modules/@types/*"
-            ],
             "#const:*": [
                 "./src/const/*"
             ]
@@ -30,6 +27,12 @@
     },
     "include": [
         "src",
-        "types"
+        "plugins",
+        "types",
+    ],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        }
     ]
 }

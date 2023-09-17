@@ -1,5 +1,5 @@
 import ROUTER from "#const:router.json" assert { type: "json" };
-import { useContext } from "npm:react";
+import { useContext } from "react";
 import { prependHash } from "../utils/router.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { CloudSVG, EditorSVG, HomeSVG, PreferencesSVG, SynchronizerSVG } from "./svg.js";
