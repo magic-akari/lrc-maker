@@ -4,7 +4,7 @@
     </a>
 </p>
 
-# [LRC Maker][lrc maker] &middot; [![Build Status](https://travis-ci.org/magic-akari/lrc-maker.svg?branch=master)](https://travis-ci.org/magic-akari/lrc-maker)
+# [LRC Maker][lrc maker] &middot; [![Build](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml/badge.svg)](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml)
 
 [中文](#这个项目是什么)
 
