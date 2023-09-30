@@ -10,13 +10,19 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
-            - uses: pnpm/action-setup@v2.2.2
-            - uses: actions/setup-node@v3
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
               with:
-                  node-version: "16"
-                  cache: "pnpm"
-            - run: pnpm i --ignore-scripts --frozen-lockfile
+                  node-version-file: ".node-version"
+
+            - name: Install dependencies
+              uses: pnpm/action-setup@v2
+              with:
+                  run_install: |
+                      - args: [--frozen-lockfile, --strict-peer-dependencies]
 
             - run: pnpm run "/check\:/"
             - run: pnpm run build
