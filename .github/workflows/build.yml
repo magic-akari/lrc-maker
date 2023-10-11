@@ -1,9 +1,14 @@
 name: Build
 
-on: [push, pull_request]
+on:
+    push:
+        branches:
+            - "*"
+    pull_request:
+        types: ["opened", "reopened", "synchronize"]
 
 jobs:
-    deploy:
+    build:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
