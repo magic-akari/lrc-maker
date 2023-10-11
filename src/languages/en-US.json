@@ -72,7 +72,7 @@
         "builtInAudio": "Use browser built-in audio player",
         "spaceButton": "On-screen space key",
         "themeColor": "Theme color",
-        "lrcFormat": "LRC formtat adjust",
+        "lrcFormat": "LRC format adjust",
         "fixed": "Timestamp fixed",
         "leftSpace": "Left space",
         "rightSpace": "Right space",
@@ -88,3 +88,4 @@
         "audioLoaded": "Audio loaded."
     }
 }
+
