@@ -12,8 +12,7 @@
     transition: box-shadow var(--transition-duration) ease-in-out;
 }
 
-.app-editor:hover,
-.app-editor:focus-within {
+.app-editor:hover, .app-editor:focus-within {
     box-shadow: 0 0 10px var(--theme-color);
 }
 
@@ -24,8 +23,7 @@
         border-radius: 0;
     }
 
-    .app-editor:hover,
-    .app-editor:focus-within {
+    .app-editor:hover, .app-editor:focus-within {
         box-shadow: none;
     }
 }
@@ -58,11 +56,11 @@
         flex: 1 1 calc(100% - 38px);
     }
 
-    .app-editor-infobox > label:nth-child(3n + 1) {
+    .app-editor-infobox > label:nth-child(3n+1) {
         flex: 0 0 30px;
     }
 
-    .app-editor-infobox > label:nth-child(3n + 3) {
+    .app-editor-infobox > label:nth-child(3n+3) {
         flex: 0 0 8px;
         text-align: right;
     }
@@ -74,8 +72,7 @@
     overscroll-behavior-y: contain;
 }
 
-.app-editor input,
-.app-editor textarea {
+.app-editor input, .app-editor textarea {
     padding: 0;
     background-color: transparent;
     border: none;

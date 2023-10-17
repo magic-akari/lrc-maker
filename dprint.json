@@ -1,11 +1,8 @@
 {
     "lineWidth": 120,
     "indentWidth": 4,
-    "typescript": {},
-    "json": {},
-    "markdown": {},
     "includes": [
-        "*.{ts,tsx,js,jsx,cjs,mjs,json,md}"
+        "*.{ts,tsx,js,jsx,cjs,mjs,json,md,css}"
     ],
     "excludes": [
         "**/node_modules",
@@ -13,8 +10,9 @@
         "build"
     ],
     "plugins": [
-        "https://plugins.dprint.dev/typescript-0.87.1.wasm",
+        "https://plugins.dprint.dev/typescript-0.88.1.wasm",
         "https://plugins.dprint.dev/json-0.17.4.wasm",
-        "https://plugins.dprint.dev/markdown-0.16.1.wasm"
+        "https://plugins.dprint.dev/markdown-0.16.2.wasm",
+        "https://plugins.dprint.dev/g-plane/malva-v0.1.0.wasm"
     ]
 }

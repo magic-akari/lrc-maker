@@ -1,12 +1,25 @@
 @font-face {
     font-family: "Akari Fallback UI";
-    src: local("Segoe UI"), local("Roboto"), local("Oxygen"), local("Ubuntu"), local("Cantarell"), local("Open Sans"),
-        local("Helvetica Neue"), local("Helvetica");
+    src:
+        local("Segoe UI"),
+        local("Roboto"),
+        local("Oxygen"),
+        local("Ubuntu"),
+        local("Cantarell"),
+        local("Open Sans"),
+        local("Helvetica Neue"),
+        local("Helvetica");
 }
 
 :root {
     color: var(--font-color);
-    font-family: -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", sans-serif, "Apple Color Emoji",
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        system-ui,
+        "Akari Fallback UI",
+        sans-serif,
+        "Apple Color Emoji",
         "Segoe UI Emoji";
     background-color: var(--background-color);
     font-feature-settings: "kern" 1;
@@ -15,39 +28,78 @@
     overscroll-behavior-y: contain;
 }
 
-:root,
-textarea,
-input {
+:root, textarea, input {
     font-variant-numeric: tabular-nums;
 }
 
 [lang]:lang(zh) {
-    font-family: -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "PingFang SC", "Microsoft YaHei UI",
-        "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji";
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        system-ui,
+        "Akari Fallback UI",
+        "PingFang SC",
+        "Microsoft YaHei UI",
+        "Microsoft YaHei",
+        "Source Han Sans SC",
+        "Noto Sans CJK SC",
+        "WenQuanYi Micro Hei",
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji";
 }
 
 [lang]:lang(zh-HK) {
-    font-family: -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "PingFang HK",
-        "Microsoft JhengHei UI", "Microsoft JhengHei", "Source Han Sans HK", "Noto Sans CJK TC", sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji";
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        system-ui,
+        "Akari Fallback UI",
+        "PingFang HK",
+        "Microsoft JhengHei UI",
+        "Microsoft JhengHei",
+        "Source Han Sans HK",
+        "Noto Sans CJK TC",
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji";
 }
 
 [lang]:lang(zh-TW) {
-    font-family: -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "PingFang TC",
-        "Microsoft JhengHei UI", "Microsoft JhengHei", "Source Han Sans TW", "Noto Sans CJK TC", sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji";
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        system-ui,
+        "Akari Fallback UI",
+        "PingFang TC",
+        "Microsoft JhengHei UI",
+        "Microsoft JhengHei",
+        "Source Han Sans TW",
+        "Noto Sans CJK TC",
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji";
 }
 
 [lang]:lang(ja) {
-    font-family: -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "Hiragino Kaku Gothic Pro",
-        "Yu Gothic UI", "Yu Gothic", "Meiryo UI", Meiryo, "Source Han Sans JP", "Noto Sans CJK JP", sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji";
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        system-ui,
+        "Akari Fallback UI",
+        "Hiragino Kaku Gothic Pro",
+        "Yu Gothic UI",
+        "Yu Gothic",
+        "Meiryo UI",
+        Meiryo,
+        "Source Han Sans JP",
+        "Noto Sans CJK JP",
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji";
 }
 
-select,
-input,
-textarea {
+select, input, textarea {
     color: inherit;
 }
 
@@ -77,9 +129,7 @@ a {
     text-decoration: none;
 }
 
-a,
-button,
-[type="submit"] {
+a, button, [type="submit"] {
     padding: 0 8px;
     background: 0;
     border: 0;
@@ -159,9 +209,7 @@ a > * {
     background-position: 50%;
     transform: scale3d(10, 10, 1);
     opacity: 0;
-    transition:
-        transform 0.5s,
-        opacity 1s;
+    transition: transform 0.5s, opacity 1s;
     content: "";
     pointer-events: none;
 }

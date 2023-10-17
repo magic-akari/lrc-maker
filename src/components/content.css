@@ -9,22 +9,16 @@ body {
     box-sizing: border-box;
 }
 
-html,
-body,
-.app-container,
-.app-main {
+html, body, .app-container, .app-main {
     display: flex;
     flex-direction: column;
 }
 
-body,
-.app-container,
-.app-main {
+body, .app-container, .app-main {
     flex: 1 0 auto;
 }
 
-body,
-.app-container {
+body, .app-container {
     display: contents;
     contain: size;
 }
@@ -32,8 +26,7 @@ body,
 @media not all and (resolution >= 0.001dpcm) {
     @supports not ((-webkit-appearance: none) and (stroke-color: transparent)) {
         /* iOS Safari 10 and 11, and Safari 11 renders display:contents as display:inline. @supports will also report as true. */
-        body,
-        .app-container {
+        body, .app-container {
             display: flex;
         }
     }

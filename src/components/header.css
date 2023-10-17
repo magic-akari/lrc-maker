@@ -110,8 +110,7 @@
     content: "";
 }
 
-.app-tab:target::before,
-.app-tab:hover::before {
+.app-tab:target::before, .app-tab:hover::before {
     transform: scaleY(1);
 }
 
@@ -123,8 +122,7 @@
     transform: scaleY(1);
 }
 
-.app-title-svg > svg,
-.app-tab > svg {
+.app-title-svg > svg, .app-tab > svg {
     width: 30px;
     height: 30px;
     margin: 0;

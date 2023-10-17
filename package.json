@@ -25,11 +25,9 @@
     "scripts": {
         "start": "vite",
         "build": "vite build",
-        "fix:script": "dprint fmt",
-        "fix:style": "stylelint --fix \"src/**/*.css\"",
+        "fix:fmt": "dprint fmt",
         "check:fmt": "dprint check",
-        "check:eslint": "oxlint src",
-        "check:stylelint": "stylelint \"src/**/*.css\""
+        "check:lint": "oxlint src"
     },
     "imports": {
         "#const/*": "./src/const/*"
@@ -55,10 +53,6 @@
         "postcss-custom-properties": "^13.3.0",
         "postcss-import": "^15.1.0",
         "rollup-plugin-swc3": "^0.10.1",
-        "stylelint": "^15.10.3",
-        "stylelint-config-rational-order": "^0.1.2",
-        "stylelint-config-standard": "^34.0.0",
-        "stylelint-order": "^6.0.3",
         "toggle-switch-css": "^1.0.3",
         "typescript": "^5.2.2",
         "vite": "^4.4.9",

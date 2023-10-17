@@ -7,8 +7,7 @@
     width: 100%;
 }
 
-.new-token,
-.get-gist-id {
+.new-token, .get-gist-id {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,8 +17,7 @@
     margin: 0 auto;
 }
 
-.new-token-tip,
-.create-new-gist {
+.new-token-tip, .create-new-gist {
     flex: 1 0 auto;
     width: 100%;
     max-width: 500px;
@@ -34,8 +32,7 @@
     }
 }
 
-.new-token-tip-text,
-.gist-id-tip-text {
+.new-token-tip-text, .gist-id-tip-text {
     max-width: 500px;
     margin: 1rem;
     font-size: 1.2rem;
@@ -48,8 +45,7 @@
     margin: 1rem;
 }
 
-.new-token-input,
-.gist-id-input {
+.new-token-input, .gist-id-input {
     flex: 1 0 auto;
     margin: 0 0.5rem;
     background: 0;
@@ -58,8 +54,7 @@
     border-radius: 0;
 }
 
-.new-token-form,
-.gist-id-form {
+.new-token-form, .gist-id-form {
     display: flex;
     flex: 1 0 auto;
     align-items: center;
@@ -154,8 +149,7 @@
     }
 }
 
-.gist-info,
-.ratelimit {
+.gist-info, .ratelimit {
     flex: 1 1 auto;
     padding: 0.5rem;
 }

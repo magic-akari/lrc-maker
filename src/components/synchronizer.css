@@ -47,8 +47,7 @@
     background-color: #ffffff22;
 }
 
-.line > .line-time,
-.line > .line-text {
+.line > .line-time, .line > .line-text {
     pointer-events: none;
 }
 
