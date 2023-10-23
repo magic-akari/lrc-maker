@@ -72,7 +72,7 @@
         "builtInAudio": "Use browser built-in audio player",
         "spaceButton": "On-screen space key",
         "themeColor": "Theme color",
-        "lrcFormat": "LRC formtat adjust",
+        "lrcFormat": "Change output format",
         "fixed": "Timestamp fixed",
         "leftSpace": "Left space",
         "rightSpace": "Right space",
