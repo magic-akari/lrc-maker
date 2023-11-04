@@ -60,8 +60,12 @@ export default defineConfig({
         "i18n.langCodeList": JSON.stringify(langFileList.map((f) => f.slice(0, -json_suffix.length))),
         "i18n.langMap": JSON.stringify(langMap),
     },
+    css: {
+        transformer: "lightningcss",
+    },
     build: {
         minify: true,
+        cssMinify: "lightningcss",
         outDir: "build",
         modulePreload: {
             polyfill: false,
