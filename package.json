@@ -42,7 +42,7 @@
         "core-js": "^3.32.2",
         "dprint": "^0.41.0",
         "lightningcss": "^1.22.0",
-        "oxlint": "^0.0.14",
+        "oxlint": "^0.0.17",
         "rollup-plugin-swc3": "^0.10.1",
         "toggle-switch-css": "^1.0.3",
         "typescript": "^5.2.2",
