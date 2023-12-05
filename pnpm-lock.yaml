@@ -51,7 +51,7 @@ devDependencies:
     version: 5.2.2
   vite:
     specifier: ^5.0.0
-    version: 5.0.0(@types/node@20.9.1)(lightningcss@1.22.0)
+    version: 5.0.5(@types/node@20.9.1)(lightningcss@1.22.0)
   vite-plugin-external-globals:
     specifier: ^0.4.0
     version: 0.4.0(rollup@4.4.1)
@@ -1007,8 +1007,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /postcss@8.4.31:
-    resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
+  /postcss@8.4.32:
+    resolution: {integrity: sha512-D/kj5JNu6oo2EIy+XL/26JEDTlIbB8hw85G8StOE6L74RQAVVP5rej6wxCNqyMbR4RkPfqvezVbPw81Ngd6Kcw==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.7
@@ -1128,8 +1128,8 @@ packages:
       - rollup
     dev: true
 
-  /vite@5.0.0(@types/node@20.9.1)(lightningcss@1.22.0):
-    resolution: {integrity: sha512-ESJVM59mdyGpsiNAeHQOR/0fqNoOyWPYesFto8FFZugfmhdHx8Fzd8sF3Q/xkVhZsyOxHfdM7ieiVAorI9RjFw==}
+  /vite@5.0.5(@types/node@20.9.1)(lightningcss@1.22.0):
+    resolution: {integrity: sha512-OekeWqR9Ls56f3zd4CaxzbbS11gqYkEiBtnWFFgYR2WV8oPJRRKq0mpskYy/XaoCL3L7VINDhqqOMNDiYdGvGg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -1159,7 +1159,7 @@ packages:
       '@types/node': 20.9.1
       esbuild: 0.19.5
       lightningcss: 1.22.0
-      postcss: 8.4.31
+      postcss: 8.4.32
       rollup: 4.4.1
     optionalDependencies:
       fsevents: 2.3.3
