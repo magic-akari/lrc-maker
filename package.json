@@ -43,7 +43,7 @@
         "dprint": "^0.43.0",
         "lightningcss": "1.22.0",
         "oxlint": "^0.0.18",
-        "rollup-plugin-swc3": "^0.10.4",
+        "rollup-plugin-swc3": "^0.11.0",
         "toggle-switch-css": "^1.0.3",
         "typescript": "^5.2.2",
         "vite": "^5.0.0",
