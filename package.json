@@ -17,7 +17,7 @@
         "src",
         "build"
     ],
-    "packageManager": "pnpm@8.12.1",
+    "packageManager": "pnpm@8.14.0",
     "type": "module",
     "scripts": {
         "start": "vite",
