@@ -24,7 +24,7 @@
         "build": "vite build",
         "fix:fmt": "dprint fmt",
         "check:fmt": "dprint check",
-        "check:lint": "oxlint src"
+        "check:lint": "oxlint src -D correctness -D pedantic"
     },
     "imports": {
         "#const/*": "./src/const/*"
@@ -42,7 +42,7 @@
         "core-js": "^3.33.2",
         "dprint": "^0.43.0",
         "lightningcss": "1.22.0",
-        "oxlint": "^0.1.0",
+        "oxlint": "^0.0.18",
         "rollup-plugin-swc3": "^0.11.0",
         "toggle-switch-css": "^1.0.3",
         "typescript": "^5.2.2",
