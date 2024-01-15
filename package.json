@@ -40,7 +40,7 @@
         "@types/react": "^18.2.37",
         "@types/react-dom": "^18.2.15",
         "core-js": "^3.33.2",
-        "dprint": "^0.43.0",
+        "dprint": "^0.45.0",
         "lightningcss": "1.23.0",
         "oxlint": "^0.1.0",
         "rollup-plugin-swc3": "^0.11.0",
