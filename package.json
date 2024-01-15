@@ -41,7 +41,7 @@
         "@types/react-dom": "^18.2.15",
         "core-js": "^3.33.2",
         "dprint": "^0.43.0",
-        "lightningcss": "1.22.0",
+        "lightningcss": "1.23.0",
         "oxlint": "^0.1.0",
         "rollup-plugin-swc3": "^0.11.0",
         "toggle-switch-css": "^1.0.3",
