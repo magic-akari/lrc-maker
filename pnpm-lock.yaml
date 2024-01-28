@@ -34,12 +34,18 @@ devDependencies:
   dprint:
     specifier: ^0.45.0
     version: 0.45.0
+  gen_dep_tag:
+    specifier: ^0.0.3
+    version: 0.0.3
   lightningcss:
     specifier: 1.23.0
     version: 1.23.0
   oxlint:
     specifier: ^0.1.0
     version: 0.1.2
+  rollup-plugin-externals:
+    specifier: ^0.0.1
+    version: 0.0.1
   rollup-plugin-swc3:
     specifier: ^0.11.0
     version: 0.11.0(@swc/core@1.3.96)(rollup@4.4.1)
@@ -52,9 +58,6 @@ devDependencies:
   vite:
     specifier: ^5.0.0
     version: 5.0.12(@types/node@20.9.1)(lightningcss@1.23.0)
-  vite-plugin-external-globals:
-    specifier: ^0.4.0
-    version: 0.4.0(rollup@4.4.1)
 
 packages:
 
@@ -316,10 +319,6 @@ packages:
     resolution: {integrity: sha512-J8TOSBq3SoZbDhM9+R/u77hP93gz/rajSA+K2kGyijPpORPWUXHUpTaleoj+92As0S9uPRP7Oi8IqMf0u+ro6A==}
     dev: true
 
-  /@jridgewell/sourcemap-codec@1.4.15:
-    resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
-    dev: true
-
   /@lrc-maker/lrc-parser@0.1.17:
     resolution: {integrity: sha512-oDlWDDsiHcOdEsQSnBPdQRIu5KFG96nJmOU3XI6g6F8HsTbq4S6IekRCyDQ6OhbJOrfjpsh15TLJFO7Bx+epJg==}
     dev: false
@@ -507,21 +506,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@rollup/pluginutils@5.0.5(rollup@4.4.1):
-    resolution: {integrity: sha512-6aEYR910NyP73oHiJglti74iRyOwgFU4x3meH/H8OJx6Ry0j6cOVZ5X/wTvub7G7Ao6qaHBEaNsV3GLJkSsF+Q==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      '@types/estree': 1.0.5
-      estree-walker: 2.0.2
-      picomatch: 2.3.1
-      rollup: 4.4.1
-    dev: true
 
   /@rollup/pluginutils@5.1.0(rollup@4.4.1):
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
@@ -852,12 +836,6 @@ packages:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
     dev: true
 
-  /estree-walker@3.0.3:
-    resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
-    dependencies:
-      '@types/estree': 1.0.5
-    dev: true
-
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -866,16 +844,14 @@ packages:
     dev: true
     optional: true
 
+  /gen_dep_tag@0.0.3:
+    resolution: {integrity: sha512-2TCKUqo7dBlyEtrHRg24lRXj54qfgW7bAyC04OeF/IID/JS91yy5AIfTtcQvraVT+TK2A/F95DDXpZmbG2J7pw==}
+    dev: true
+
   /get-tsconfig@4.7.2:
     resolution: {integrity: sha512-wuMsz4leaj5hbGgg4IvDU0bqJagpftG5l5cXIAvo8uZrqn0NJqwtfupTN00VnkQJPcIRrxYrm1Ue24btpCha2A==}
     dependencies:
       resolve-pkg-maps: 1.0.0
-    dev: true
-
-  /is-reference@3.0.2:
-    resolution: {integrity: sha512-v3rht/LgVcsdZa3O2Nqs+NMowLOxeOm7Ay9+/ARQ2F+qEoANRcqrjAZKGN0v8ymUetZGgkp26LTnGT7H0Qo9Pg==}
-    dependencies:
-      '@types/estree': 1.0.5
     dev: true
 
   /js-tokens@4.0.0:
@@ -987,13 +963,6 @@ packages:
       js-tokens: 4.0.0
     dev: false
 
-  /magic-string@0.30.5:
-    resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
-    engines: {node: '>=12'}
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
-    dev: true
-
   /nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -1052,16 +1021,8 @@ packages:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
     dev: true
 
-  /rollup-plugin-external-globals@0.9.0(rollup@4.4.1):
-    resolution: {integrity: sha512-fjlpVUm3w8rb5GVYX7UrFG5FHjmtNNaIqMj/Zi2zby8kdE+0InG3XoJRxPhPaKs9LzZA6GGARE6DjxApmDTc7Q==}
-    peerDependencies:
-      rollup: ^2.25.0 || ^3.3.0 || ^4.1.4
-    dependencies:
-      '@rollup/pluginutils': 5.0.5(rollup@4.4.1)
-      estree-walker: 3.0.3
-      is-reference: 3.0.2
-      magic-string: 0.30.5
-      rollup: 4.4.1
+  /rollup-plugin-externals@0.0.1:
+    resolution: {integrity: sha512-J0NpbtZlSShpCX+BwOp9pzw0CGami8yroBFnt3a7fxPQA65GQaziTU90wAQM2I5PYbyOBCWqFwjp6AgDdvKGZQ==}
     dev: true
 
   /rollup-plugin-swc3@0.11.0(@swc/core@1.3.96)(rollup@4.4.1):
@@ -1131,14 +1092,6 @@ packages:
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-    dev: true
-
-  /vite-plugin-external-globals@0.4.0(rollup@4.4.1):
-    resolution: {integrity: sha512-fJG4LjQsLlIlf0WB5gNfm/djTj30GGJwH8aVcPP+2cMvwIqOk5HoBnBriIT66XATz2uEQfglV4ieuUL6dZnAJQ==}
-    dependencies:
-      rollup-plugin-external-globals: 0.9.0(rollup@4.4.1)
-    transitivePeerDependencies:
-      - rollup
     dev: true
 
   /vite@5.0.12(@types/node@20.9.1)(lightningcss@1.23.0):

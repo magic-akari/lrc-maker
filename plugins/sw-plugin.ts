@@ -8,7 +8,7 @@ export default function(): Plugin {
     let is_prod = false;
     return {
         name: "sw-plugin",
-        config(_, env) {
+        configResolved(env) {
             is_prod = env.command === "build";
         },
         transformIndexHtml(html) {

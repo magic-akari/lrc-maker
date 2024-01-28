@@ -41,12 +41,13 @@
         "@types/react-dom": "^18.2.15",
         "core-js": "^3.33.2",
         "dprint": "^0.45.0",
+        "gen_dep_tag": "^0.0.3",
         "lightningcss": "1.23.0",
         "oxlint": "^0.1.0",
+        "rollup-plugin-externals": "^0.0.1",
         "rollup-plugin-swc3": "^0.11.0",
         "toggle-switch-css": "^1.0.3",
         "typescript": "^5.2.2",
-        "vite": "^5.0.0",
-        "vite-plugin-external-globals": "^0.4.0"
+        "vite": "^5.0.0"
     }
 }

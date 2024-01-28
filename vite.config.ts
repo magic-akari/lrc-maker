@@ -1,10 +1,11 @@
+import { presets, tagBuilder } from "gen_dep_tag";
 import { execSync } from "node:child_process";
 import { readdirSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { externals } from "rollup-plugin-externals";
 import { swc } from "rollup-plugin-swc3";
-import { defineConfig } from "vite";
-import externalGlobals, { libPreset } from "vite-plugin-external-globals";
+import { defineConfig, type HtmlTagDescriptor } from "vite";
 import pkg from "./package.json" assert { type: "json" };
 import sw_plugin from "./plugins/sw-plugin";
 
@@ -35,6 +36,8 @@ const langMap = await Promise.all(
     }),
 );
 
+const tag = tagBuilder({ sri: true });
+
 export default defineConfig({
     clearScreen: false,
     json: {
@@ -42,16 +45,20 @@ export default defineConfig({
     },
     plugins: [
         swc(),
-        externalGlobals({
-            apply: "build",
-            injectTo: "body",
-            integrity: true,
-            crossorigin: "anonymous",
-            entry: [
-                libPreset("react"),
-                libPreset("react-dom"),
-            ],
+        externals({
+            react: "React",
+            "react-dom": "ReactDOM",
         }),
+        {
+            name: "html-cdn-codegen",
+            apply: "build",
+            transformIndexHtml(html) {
+                return {
+                    html,
+                    tags: [presets.react, presets["react-dom"]].map(tag).map(htmlTag),
+                };
+            },
+        },
         sw_plugin(),
     ],
     base: "./",
@@ -83,3 +90,16 @@ export default defineConfig({
         },
     },
 });
+
+function htmlTag(meta: ReturnType<typeof tag>): HtmlTagDescriptor {
+    const { url, integrity } = meta;
+    return {
+        tag: "script",
+        attrs: {
+            src: url,
+            integrity,
+            crossorigin: "anonymous",
+        },
+        injectTo: "head",
+    };
+}
