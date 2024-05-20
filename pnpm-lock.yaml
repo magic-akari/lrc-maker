@@ -54,7 +54,7 @@ devDependencies:
     version: 1.0.3
   typescript:
     specifier: ^5.2.2
-    version: 5.2.2
+    version: 5.4.5
   vite:
     specifier: ^5.0.0
     version: 5.0.13(@types/node@20.9.1)(lightningcss@1.25.0)
@@ -1130,8 +1130,8 @@ packages:
     resolution: {integrity: sha512-EHI56A/NdXgToiFUDqdXO4m4IU0v2PDXkvlL+In5HEm8V7Euhru9NgiZGiRwKkH5tNmkbLcY4S1VO4OfUrL4CA==}
     dev: true
 
-  /typescript@5.2.2:
-    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+  /typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
