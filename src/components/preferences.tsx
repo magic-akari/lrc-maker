@@ -73,7 +73,8 @@ export const Preferences: React.FC = () => {
             }
 
             if (value.length === 3) {
-                value = [].map.call(value, (v: string) => v + v).join("");
+                const [r, g, b] = value;
+                value = r + r + g + g + b + b;
             }
             if (value.length < 6) {
                 value = value.padEnd(6, "0");

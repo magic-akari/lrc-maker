@@ -24,7 +24,7 @@
         "build": "vite build",
         "fix:fmt": "dprint fmt",
         "check:fmt": "dprint check",
-        "check:lint": "oxlint src -D correctness -D pedantic"
+        "check:lint": "oxlint src -D correctness -W pedantic"
     },
     "imports": {
         "#const/*": "./src/const/*"

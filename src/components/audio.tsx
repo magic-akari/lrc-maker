@@ -80,7 +80,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
         const value = ev.target.value;
 
         rafId.current = requestAnimationFrame(() => {
-            const time = Number.parseInt(value, 0);
+            const time = Number.parseInt(value, 10);
             setCurrentTime(time);
             audioRef.currentTime = time;
         });
