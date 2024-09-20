@@ -6,7 +6,7 @@
 
 <div align="center">
   
-[English](README.md) · [中文](/docs/README-zh.md)
+[English](/README.md) · [中文](/docs/README-zh.md)
 
 </div>
 
