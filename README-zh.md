@@ -86,8 +86,6 @@ npm run build
 
 # 开发模式构建
 npm start
-# 运行 dev-server
-npm run dev-server
 ```
 
 ## 生产部署

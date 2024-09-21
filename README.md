@@ -87,8 +87,6 @@ npm run build
 
 # or build with watch mode
 npm start
-# and run dev server
-npm run dev-server
 ```
 
 ## Deployment in Production
