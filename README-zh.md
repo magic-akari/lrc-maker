@@ -1,12 +1,12 @@
 <p align="center">
     <a href="https://lrc-maker.github.io">
-        <img src="/public/favicons/apple-touch-icon.png" alt="logo" />
+        <img src="./public/favicons/apple-touch-icon.png" alt="logo" />
     </a>
 </p>
 
 <div align="center">
   
-[English](/README.md) · [中文](/docs/README-zh.md)
+[English](./README.md) · [中文](./README-zh.md)
 
 </div>
 
@@ -29,21 +29,21 @@
 - https://magic-akari.github.io/lrc-maker/
 - https://lrc-maker.vercel.app/
 
-## 热键（<kbd>⌘</kbd> 在Windows系统中是 <kbd>Win</kbd>)
+## 热键
 
-|                               按键                                |        功能        |
-| :---------------------------------------------------------------: | :----------------: |
-|                         <kbd>space</kbd>                          |    插入时间标签    |
-|        <kbd>delete</kbd> / <kbd>⌘</kbd>+<kbd>delete</kbd>         |    移除时间标签    |
-| <kbd>ctrl</kbd>+<kbd>enter</kbd> / <kbd>⌘</kbd>+<kbd>return</kbd> |    播放 / 暂停     |
-|                    <kbd>←</kbd> / <kbd>a</kbd>                    |     回退 5 秒      |
-|                    <kbd>→</kbd> / <kbd>d</kbd>                    |     前进 5 秒      |
-|            <kbd>↑</kbd> / <kbd>w</kbd> / <kbd>j</kbd>             |     选择上一行     |
-|            <kbd>↓</kbd> / <kbd>s</kbd> / <kbd>k</kbd>             |     选择下一行     |
-|                    <kbd>-</kbd> / <kbd>+</kbd>                    | 当前行时间标签微调 |
-|     <kbd>ctrl</kbd>+<kbd>↑</kbd> / <kbd>⌘</kbd>+<kbd>↑</kbd>      |    提高播放速度    |
-|     <kbd>ctrl</kbd>+<kbd>↓</kbd> / <kbd>⌘</kbd>+<kbd>↓</kbd>      |    降低播放速度    |
-|                           <kbd>r</kbd>                            |    重置播放速度    |
+|                            按键                             |        功能        |
+| :---------------------------------------------------------: | :----------------: |
+|                      <kbd>space</kbd>                       |    插入时间标签    |
+|   <kbd>backspace</kbd> / <kbd>delete</kbd> / <kbd>⌫</kbd>   |    移除时间标签    |
+| <kbd>ctrl</kbd><kbd>enter↵</kbd> / <kbd>⌘</kbd><kbd>↩</kbd> |    播放 / 暂停     |
+|                 <kbd>←</kbd> / <kbd>A</kbd>                 |     回退 5 秒      |
+|                 <kbd>→</kbd> / <kbd>D</kbd>                 |     前进 5 秒      |
+|         <kbd>↑</kbd> / <kbd>W</kbd> / <kbd>J</kbd>          |     选择上一行     |
+|         <kbd>↓</kbd> / <kbd>S</kbd> / <kbd>K</kbd>          |     选择下一行     |
+|                 <kbd>-</kbd> / <kbd>+</kbd>                 | 当前行时间标签微调 |
+|   <kbd>ctrl</kbd><kbd>↑</kbd> / <kbd>⌘</kbd><kbd>↑</kbd>    |    提高播放速度    |
+|   <kbd>ctrl</kbd><kbd>↓</kbd> / <kbd>⌘</kbd><kbd>↓</kbd>    |    降低播放速度    |
+|                        <kbd>R</kbd>                         |    重置播放速度    |
 
 ## 兼容性
 

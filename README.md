@@ -6,7 +6,7 @@
 
 <div align="center">
   
-[English](/README.md) · [中文](/docs/README-zh.md)
+[English](./README.md) · [中文](./README-zh.md)
 
 </div>
 
@@ -31,21 +31,21 @@ Development branch links:
 - https://magic-akari.github.io/lrc-maker/
 - https://lrc-maker.vercel.app/
 
-## Hotkeys (<kbd>⌘</kbd> represents <kbd>Win</kbd> in Windows OS)
+## Hotkeys
 
-|                                key                                |         function         |
-| :---------------------------------------------------------------: | :----------------------: |
-|                         <kbd>space</kbd>                          |  insert time stamp tag   |
-|        <kbd>delete</kbd> / <kbd>⌘</kbd>+<kbd>delete</kbd>         |  remove time stamp tag   |
-| <kbd>ctrl</kbd>+<kbd>enter</kbd> / <kbd>⌘</kbd>+<kbd>return</kbd> |       play / pause       |
-|                    <kbd>←</kbd> / <kbd>a</kbd>                    | step backward 5 seconds  |
-|                    <kbd>→</kbd> / <kbd>d</kbd>                    |  step forward 5 seconds  |
-|            <kbd>↑</kbd> / <kbd>w</kbd> / <kbd>j</kbd>             |   select previous line   |
-|            <kbd>↓</kbd> / <kbd>s</kbd> / <kbd>k</kbd>             |     select next line     |
-|                    <kbd>-</kbd> / <kbd>+</kbd>                    | adjust selected time tag |
-|     <kbd>ctrl</kbd>+<kbd>↑</kbd> / <kbd>⌘</kbd>+<kbd>↑</kbd>      |  speed up playback rate  |
-|     <kbd>ctrl</kbd>+<kbd>↓</kbd> / <kbd>⌘</kbd>+<kbd>↓</kbd>      | speed down playback rate |
-|                           <kbd>r</kbd>                            |   reset playback rate    |
+|                             key                             |         function         |
+| :---------------------------------------------------------: | :----------------------: |
+|                      <kbd>space</kbd>                       |  insert time stamp tag   |
+|   <kbd>backspace</kbd> / <kbd>delete</kbd> / <kbd>⌫</kbd>   |  remove time stamp tag   |
+| <kbd>ctrl</kbd><kbd>enter↵</kbd> / <kbd>⌘</kbd><kbd>↩</kbd> |       play / pause       |
+|                 <kbd>←</kbd> / <kbd>A</kbd>                 | step backward 5 seconds  |
+|                 <kbd>→</kbd> / <kbd>D</kbd>                 |  step forward 5 seconds  |
+|         <kbd>↑</kbd> / <kbd>W</kbd> / <kbd>J</kbd>          |   select previous line   |
+|         <kbd>↓</kbd> / <kbd>S</kbd> / <kbd>K</kbd>          |     select next line     |
+|                 <kbd>-</kbd> / <kbd>+</kbd>                 | adjust selected time tag |
+|   <kbd>ctrl</kbd><kbd>↑</kbd> / <kbd>⌘</kbd><kbd>↑</kbd>    |  speed up playback rate  |
+|   <kbd>ctrl</kbd><kbd>↓</kbd> / <kbd>⌘</kbd><kbd>↓</kbd>    | speed down playback rate |
+|                        <kbd>R</kbd>                         |   reset playback rate    |
 
 ## Compatibility
 
