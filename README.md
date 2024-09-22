@@ -14,11 +14,11 @@
 
 ## What is this
 
-This repository is a tool which helps you create your lrc file.
+This is a tool for creating scrolling lrc files, which refers to text with time tags.
 
 ## Why lrc-maker
 
-It's hard to find a user-friendly and cross-platform tool to create lrc. So I made one myself.
+I'm not satisfied with the existing tools, they can't be used across platforms. So I have created one by myself.
 
 ## How to use
 
