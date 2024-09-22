@@ -10,7 +10,7 @@
 
 </div>
 
-# [LRC Maker][lrc maker] &middot; [![Build](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml/badge.svg)](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml)
+# [歌词滚动姬][lrc maker] &middot; [![Build](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml/badge.svg)](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml)
 
 ## 这个项目是什么
 
