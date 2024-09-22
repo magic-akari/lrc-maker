@@ -22,9 +22,7 @@ It's hard to find a user-friendly and cross-platform tool to create lrc. So I ma
 
 ## How to use
 
-Open [lrc-maker][lrc maker] to start. You can add the link to browser bookmark. It is easy to use.
-Drag and drop the file in the page to load an audio file.
-Use the arrow key and space key to insert the timestamp.
+Click [lrc-maker][lrc maker] to start. You can add the link to browser bookmark. Drag and drop the file in the page to load it and use the arrow key and space key to insert the timestamp.
 
 Development branch links:
 
@@ -106,7 +104,7 @@ docker run -d -p 8080:80 lrc-maker
 
 ## Star this project :star:
 
-If you like give us a star :star: Share this project to help more people.
+If you like give us a star :star: Also share this project to help more people.
 
 ---
 
