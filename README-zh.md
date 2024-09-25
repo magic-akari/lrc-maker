@@ -10,7 +10,7 @@
 
 </div>
 
-# [LRC Maker][lrc maker] &middot; [![Build](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml/badge.svg)](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml)
+# [歌词滚动姬][lrc maker] &middot; [![Build](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml/badge.svg)](https://github.com/magic-akari/lrc-maker/actions/workflows/build.yml)
 
 ## 这个项目是什么
 
@@ -22,7 +22,7 @@
 
 ## 如何使用
 
-打开[歌词滚动姬][lrc maker]，即可开始，你可以把这个链接收藏到浏览器书签。
+打开[歌词滚动姬][lrc maker]即可开始，你可以把这个链接收藏到浏览器书签。将文件拖放到页面中加载，使用箭头键和空格键插入时间戳。
 
 开发分支版本链接:
 
@@ -105,7 +105,7 @@ docker run -d -p 8080:80 lrc-maker
 
 ## 给这个项目点一个星星 :star:
 
-如果你喜欢这个项目，请点一个星星吧 :star:，分享这个项目来帮助更多的人。
+如果你喜欢这个项目，请点一个星星吧 :star:，同时分享这个项目来帮助更多的人。
 
 [lrc maker]: https://lrc-maker.github.io
 [version 3.x]: https://lrc-maker.github.io/3.x
