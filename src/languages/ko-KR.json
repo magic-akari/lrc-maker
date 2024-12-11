@@ -74,8 +74,8 @@
         "themeColor": "테마 색",
         "lrcFormat": "LRC 파일 예시",
         "fixed": "시간 소숫점 자리수",
-        "leftSpace": "왼쪽 여백",
-        "rightSpace": "오른쪽 여백",
+        "leftSpace": "가사 왼쪽 여백",
+        "rightSpace": "가사 오른쪽 여백",
         "clearCache": "캐시 제거",
         "themeMode": {
             "label": "테마 모드",
