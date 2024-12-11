@@ -23,26 +23,26 @@
             "사용자가 오디오를 중단함",
             "오디오 네트워크 오류",
             "오디오 디코딩 오류",
-            "오디오를 지원하지 않습니다"
+            "지원하지 않는 오디오 타입입니다"
         ]
     },
     "loadAudio": {
         "file": "파일",
         "url": "링크",
-        "loadFile": "파일 선택하기 또는 오디오 파일을 이 페이지에 드롭하기"
+        "loadFile": "파일 선택하거나 오디오 파일을 이 페이지에 드롭하세요"
     },
     "home": {
-        "tips": "팁",
-        "tipForLyricText": "편집기 페이지에 가사 텍스트를 붙여넣기.",
-        "tipForUploadAudio": "왼쪽 하단의 버튼 클릭해 오디오 파일 로드하기.",
-        "tipForSynchronizer": "동기화 페이기에서 시간을 지정하세요 :)",
-        "tipTopLeft": "여기를 클릭해 이 페이지로 돌아오세요",
-        "tipTopRight": "여기를 클릭해 다른 페이지 탐색하세요",
-        "tipBottomLeft": "여기에서 음원을 로드하고 제어하세요",
-        "tipBottomRight": "여기에서 재생 속도를 조정하세요"
+        "tips": "사용법",
+        "tipForLyricText": "편집기 페이지에서 가사 텍스트를 붙여넣으세요.",
+        "tipForUploadAudio": "왼쪽 하단의 버튼 클릭해 오디오 파일 로드하세요.",
+        "tipForSynchronizer": "동기화 페이지에서 가사 타이밍을 지정하세요 :)",
+        "tipTopLeft": "여기를 클릭해 이 페이지로 돌아올 수 있어요",
+        "tipTopRight": "여기를 클릭해 다른 페이지로 이동할 수 있어요",
+        "tipBottomLeft": "여기에서 음원을 로드하고 제어할 수 있어요",
+        "tipBottomRight": "여기에서 재생 속도를 조정할 수 있어요"
     },
     "editor": {
-        "metaInfo": "메타 정보",
+        "metaInfo": "메타데이터",
         "album": "앨범",
         "title": "트랙 이름",
         "artist": "아티스트",
