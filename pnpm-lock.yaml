@@ -21,7 +21,7 @@ devDependencies:
     version: 1.5.7
   '@types/node':
     specifier: ^22.0.0
-    version: 22.13.1
+    version: 22.13.4
   '@types/react':
     specifier: ^18.2.37
     version: 18.3.3
@@ -57,7 +57,7 @@ devDependencies:
     version: 5.2.2
   vite:
     specifier: ^5.0.0
-    version: 5.4.12(@types/node@22.13.1)(lightningcss@1.25.1)
+    version: 5.4.12(@types/node@22.13.4)(lightningcss@1.25.1)
 
 packages:
 
@@ -700,8 +700,8 @@ packages:
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
     dev: true
 
-  /@types/node@22.13.1:
-    resolution: {integrity: sha512-jK8uzQlrvXqEU91UxiK5J7pKHyzgnI1Qnl0QDHIgVGuolJhRb9EEl28Cj9b3rGR8B2lhFCtvIm5os8lFnO/1Ew==}
+  /@types/node@22.13.4:
+    resolution: {integrity: sha512-ywP2X0DYtX3y08eFVx5fNIw7/uIv8hYUKgXoK8oayJlLnKcRfEYCxWMVE1XagUdVtCJlZT1AU4LXEABW+L1Peg==}
     dependencies:
       undici-types: 6.20.0
     dev: true
@@ -1062,7 +1062,7 @@ packages:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
     dev: true
 
-  /vite@5.4.12(@types/node@22.13.1)(lightningcss@1.25.1):
+  /vite@5.4.12(@types/node@22.13.4)(lightningcss@1.25.1):
     resolution: {integrity: sha512-KwUaKB27TvWwDJr1GjjWthLMATbGEbeWYZIbGZ5qFIsgPP3vWzLu4cVooqhm5/Z2SPDUMjyPVjTztm5tYKwQxA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -1093,7 +1093,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 22.13.1
+      '@types/node': 22.13.4
       esbuild: 0.21.5
       lightningcss: 1.25.1
       postcss: 8.5.2
