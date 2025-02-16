@@ -20,7 +20,7 @@ export const AkariNotFound: React.FC = () => {
     );
 };
 
-export const AkariOangoLoading: React.FC = () => {
+export const AkariOdangoLoading: React.FC = () => {
     return (
         <img
             className="akari-odango-loading start-loading"
