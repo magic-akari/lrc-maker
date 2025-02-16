@@ -1,0 +1,1 @@
+const i=t=>t.replace(/[<>:"/\\|?*]/g,"_").trim(),l=t=>{const e=[t.get("ti"),t.get("ar")].filter(a=>!!a);return e.length===0&&(t.has("al")&&e.push(t.get("al")),e.push(new Date().toLocaleString())),e.map(a=>i(a)).join(" - ")+".lrc"};export{l};
