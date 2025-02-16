@@ -9,7 +9,7 @@ import { ThemeMode } from "../hooks/usePref.js";
 import { AudioActionType, audioStatePubSub } from "../utils/audiomodule.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { Home } from "./home.js";
-import { AkariNotFound, AkariOangoLoading } from "./svg.img.js";
+import { AkariNotFound, AkariOdangoLoading } from "./svg.img.js";
 
 const LazyEditor = lazy(async () =>
     import("./editor.js").then(({ Eidtor }) => {
@@ -187,7 +187,7 @@ export const Content: React.FC = () => {
 
     return (
         <main className="app-main">
-            <Suspense fallback={<AkariOangoLoading />}>{content}</Suspense>
+            <Suspense fallback={<AkariOdangoLoading />}>{content}</Suspense>
         </main>
     );
 };
