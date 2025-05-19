@@ -65,6 +65,7 @@
         "language": "語言(language)",
         "builtInAudio": "使用瀏覽器內建音訊播放器",
         "spaceButton": "啓用螢幕 Space 鍵",
+        "showWaveform": "顯示音訊波形",
         "themeColor": "主題顏色",
         "lrcFormat": "歌詞輸出格式控制",
         "fixed": "時間標籤小數點",

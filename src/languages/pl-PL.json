@@ -71,6 +71,7 @@
         "language": "Język",
         "builtInAudio": "Użyj wbudowanego odtwarzacza audio przeglądarki",
         "spaceButton": "Klawisz spacji na ekranie",
+        "showWaveform": "Pokaż przebieg audio",
         "themeColor": "Kolor motywu",
         "lrcFormat": "Zmień format wyjściowy",
         "fixed": "Poprawka znacznika czasu",

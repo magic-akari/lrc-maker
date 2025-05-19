@@ -76,6 +76,20 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
 
     const rafId = useRef(0);
 
+    const onInput = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (rafId.current) {
+            cancelAnimationFrame(rafId.current);
+        }
+
+        const value = ev.target.value;
+
+        rafId.current = requestAnimationFrame(() => {
+            const time = Number.parseInt(value, 10);
+            setCurrentTime(time);
+            audioRef.currentTime = time;
+        });
+    }, []);
+
     const onSeek = useCallback((time: number) => {
         if (rafId.current) {
             cancelAnimationFrame(rafId.current);
@@ -99,7 +113,18 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
                 {durationTimeTag}
             </time>
             <div className="slider waveform-container">
-                <Waveform value={currentTime} onSeek={onSeek} />
+                {prefState.showWaveform
+                    ? <Waveform value={currentTime} onSeek={onSeek} />
+                    : (
+                        <Slider
+                            min={0}
+                            max={duration}
+                            step={1}
+                            value={currentTime}
+                            className="timeline"
+                            onInput={onInput}
+                        />
+                    )}
             </div>
         </>
     );

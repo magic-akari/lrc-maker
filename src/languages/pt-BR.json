@@ -71,6 +71,7 @@
         "language": "Linguagem",
         "builtInAudio": "Use o player de áudio integrado do navegador",
         "spaceButton": "Tecla de espaço na tela",
+        "showWaveform": "Mostrar forma de onda de áudio",
         "themeColor": "Cor do tema",
         "lrcFormat": "Ajuste de formato LRC",
         "fixed": "Data-de-tempo fixo",

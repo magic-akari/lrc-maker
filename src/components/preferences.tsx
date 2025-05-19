@@ -158,6 +158,15 @@ export const Preferences: React.FC = () => {
         [prefDispatch],
     );
 
+    const onShowWaveformToggle = useCallback(
+        () =>
+            prefDispatch({
+                type: "showWaveform",
+                payload: (prefState) => !prefState.showWaveform,
+            }),
+        [prefDispatch],
+    );
+
     const onScreenButtonToggle = useCallback(
         () =>
             prefDispatch({
@@ -317,7 +326,20 @@ export const Preferences: React.FC = () => {
                         </label>
                     </label>
                 </li>
-
+                <li>
+                    <label className="list-item">
+                        <span>{lang.preferences.showWaveform}</span>
+                        <label className="toggle-switch">
+                            <input
+                                type="checkbox"
+                                checked={prefState.showWaveform}
+                                onChange={onShowWaveformToggle}
+                                aria-label={lang.preferences.showWaveform}
+                            />
+                            <span className="toggle-switch-label" />
+                        </label>
+                    </label>
+                </li>
                 <li>
                     <section className="list-item">
                         <span>{lang.preferences.themeMode.label}</span>
