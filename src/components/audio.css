@@ -48,6 +48,14 @@ audio::-webkit-media-controls-enclosure {
     width: 100%;
 }
 
+.waveform-container {
+    flex: 1;
+}
+
+.waveform-container > .waveform {
+    height: 100%;
+}
+
 @media (width <= 768px) {
     .timeline-slider {
         --slider-height: 4px;
@@ -56,6 +64,19 @@ audio::-webkit-media-controls-enclosure {
         bottom: 100%;
         width: 100%;
         margin: 0;
+    }
+
+    .waveform-container {
+        position: absolute;
+        bottom: 100%;
+        margin: 0;
+        padding: 0 8px;
+        width: 100%;
+        background-color: var(--semi-black-color);
+    }
+
+    .app-main {
+        padding-bottom: 64px;
     }
 }
 
