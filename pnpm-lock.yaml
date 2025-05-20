@@ -36,7 +36,7 @@ devDependencies:
     version: 18.3.0
   core-js:
     specifier: ^3.33.2
-    version: 3.33.2
+    version: 3.42.0
   dprint:
     specifier: ^0.45.0
     version: 0.45.0
@@ -747,8 +747,8 @@ packages:
       wavesurfer.js: 7.9.5
     dev: false
 
-  /core-js@3.33.2:
-    resolution: {integrity: sha512-XeBzWI6QL3nJQiHmdzbAOiMYqjrb7hwU7A39Qhvd/POSa/t9E1AeZyEZx3fNvp/vtM8zXwhoL0FsiS0hD0pruQ==}
+  /core-js@3.42.0:
+    resolution: {integrity: sha512-Sz4PP4ZA+Rq4II21qkNqOEDTDrCvcANId3xpIgB34NDkWc3UduWj2dqEtN9yZIq8Dk3HyPI33x9sqqU5C8sr0g==}
     requiresBuild: true
     dev: true
 
