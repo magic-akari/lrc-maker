@@ -1,5 +1,5 @@
 import { convertTimeToTag } from "@lrc-maker/lrc-parser";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
     AudioActionType,
     audioRef,
@@ -7,8 +7,10 @@ import {
     audioStatePubSub,
     currentTimePubSub,
 } from "../utils/audiomodule.js";
+import { appContext, ChangBits } from "./app.context";
 import { loadAudioDialogRef } from "./loadaudio.js";
 import { Forward5sSVG, LoadAudioSVG, PauseSVG, PlaySVG, Replay5sSVG } from "./svg.js";
+import { Waveform } from "./waveform";
 
 interface ISliderProps {
     min: number;
@@ -55,6 +57,8 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
 
     useEffect(() => {
         if (paused) {
+            // update the value once when paused to reflect the exact time
+            setCurrentTime(audioRef.currentTime);
             // paused but user changing the time
             return currentTimePubSub.sub(self.current, (data) => {
                 setCurrentTime(data);
@@ -62,7 +66,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
         } else {
             const id = setInterval(() => {
                 setCurrentTime(audioRef.currentTime);
-            }, 500 / rate);
+            }, 100 / rate); // redraw the waveform cursor faster
 
             return (): void => {
                 clearInterval(id);
@@ -86,18 +90,45 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
         });
     }, []);
 
+    const onSeek = useCallback((time: number) => {
+        if (rafId.current) {
+            cancelAnimationFrame(rafId.current);
+        }
+
+        rafId.current = requestAnimationFrame(() => {
+            setCurrentTime(time);
+            audioRef.currentTime = time;
+        });
+    }, []);
+
+    const { prefState } = useContext(appContext, ChangBits.prefState);
+
+    const fixed = prefState.showWaveform ? prefState.fixed : 0;
+
     const durationTimeTag = useMemo(() => {
-        return duration ? " / " + convertTimeToTag(duration, 0, false) : false;
-    }, [duration]);
+        return duration ? " / " + convertTimeToTag(duration, fixed, false) : false;
+    }, [duration, fixed]);
 
     return (
         <>
             <time>
-                {convertTimeToTag(currentTime, 0, false)}
+                {convertTimeToTag(currentTime, fixed, false)}
                 {durationTimeTag}
             </time>
-
-            <Slider min={0} max={duration} step={1} value={currentTime} className="timeline" onInput={onInput} />
+            <div className="slider waveform-container">
+                {prefState.showWaveform
+                    ? <Waveform value={currentTime} onSeek={onSeek} />
+                    : (
+                        <Slider
+                            min={0}
+                            max={duration}
+                            step={1}
+                            value={currentTime}
+                            className="timeline"
+                            onInput={onInput}
+                        />
+                    )}
+            </div>
         </>
     );
 };

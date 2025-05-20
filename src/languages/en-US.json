@@ -71,6 +71,7 @@
         "language": "Language",
         "builtInAudio": "Use browser built-in audio player",
         "spaceButton": "On-screen space key",
+        "showWaveform": "Show audio waveform in seek bar",
         "themeColor": "Theme color",
         "lrcFormat": "Change output format",
         "fixed": "Timestamp fixed",

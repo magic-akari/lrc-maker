@@ -71,6 +71,7 @@
         "language": "言語(language)",
         "builtInAudio": "ブラウザ内蔵のオーディオプレーヤーを使用する",
         "spaceButton": "画面上のスペースキー",
+        "showWaveform": "音声波形を表示する",
         "themeColor": "テーマカラー",
         "lrcFormat": "歌詞出力フォーマット制御",
         "fixed": "タイムスタンプ小数点",

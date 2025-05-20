@@ -65,6 +65,7 @@
         "language": "语言(language)",
         "builtInAudio": "使用浏览器内建音频播放器",
         "spaceButton": "启用虚拟空格键",
+        "showWaveform": "显示音频波形",
         "themeColor": "主题颜色",
         "lrcFormat": "歌词输出格式控制",
         "fixed": "时间标签小数点",

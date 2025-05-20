@@ -1,0 +1,15 @@
+.waveform {
+    position: relative;
+}
+
+.waveform::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    height: 1px;
+    left: 0;
+    right: 0;
+    background-color: #eeeeee;
+    opacity: 0.5;
+}

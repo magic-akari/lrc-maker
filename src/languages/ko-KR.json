@@ -71,6 +71,7 @@
         "language": "언어(language)",
         "builtInAudio": "브라우저 내장 오디오 재생기 사용하기",
         "spaceButton": "온 스크린 스페이스 키",
+        "showWaveform": "오디오 파형 표시",
         "themeColor": "테마 색",
         "lrcFormat": "LRC 파일 예시",
         "fixed": "시간 소숫점 자리수",

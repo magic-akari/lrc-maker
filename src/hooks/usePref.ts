@@ -25,6 +25,7 @@ const initState = {
     spaceEnd: 0,
     fixed: 3 as Fixed,
     builtInAudio: false,
+    showWaveform: true,
     screenButton: false,
     themeColor: themeColor.pink,
     themeMode: ThemeMode.auto,
