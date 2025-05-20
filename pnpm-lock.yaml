@@ -33,7 +33,7 @@ devDependencies:
     version: 18.3.3
   '@types/react-dom':
     specifier: ^18.2.15
-    version: 18.3.0
+    version: 18.3.7(@types/react@18.3.3)
   core-js:
     specifier: ^3.33.2
     version: 3.33.2
@@ -724,8 +724,10 @@ packages:
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
     dev: true
 
-  /@types/react-dom@18.3.0:
-    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
+  /@types/react-dom@18.3.7(@types/react@18.3.3):
+    resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
+    peerDependencies:
+      '@types/react': ^18.0.0
     dependencies:
       '@types/react': 18.3.3
     dev: true
