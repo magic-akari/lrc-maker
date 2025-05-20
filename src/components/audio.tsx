@@ -103,8 +103,9 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
 
     const { prefState } = useContext(appContext, ChangBits.prefState);
     const durationTimeTag = useMemo(() => {
-        return duration ? " / " + convertTimeToTag(duration, prefState.fixed, false) : false;
-    }, [duration, prefState.fixed]);
+        const fixed = prefState.showWaveform ? prefState.fixed : 0;
+        return duration ? " / " + convertTimeToTag(duration, fixed, false) : false;
+    }, [duration, prefState.fixed, prefState.showWaveform]);
 
     return (
         <>
