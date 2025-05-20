@@ -102,15 +102,17 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
     }, []);
 
     const { prefState } = useContext(appContext, ChangBits.prefState);
+
+    const fixed = prefState.showWaveform ? prefState.fixed : 0;
+
     const durationTimeTag = useMemo(() => {
-        const fixed = prefState.showWaveform ? prefState.fixed : 0;
         return duration ? " / " + convertTimeToTag(duration, fixed, false) : false;
-    }, [duration, prefState.fixed, prefState.showWaveform]);
+    }, [duration, fixed]);
 
     return (
         <>
             <time>
-                {convertTimeToTag(currentTime, prefState.fixed, false)}
+                {convertTimeToTag(currentTime, fixed, false)}
                 {durationTimeTag}
             </time>
             <div className="slider waveform-container">
