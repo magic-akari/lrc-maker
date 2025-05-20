@@ -14,7 +14,7 @@ interface IWaveformProps {
 }
 
 export const Waveform: React.FC<IWaveformProps> = ({ value, onSeek, className }) => {
-    const containerRef = useRef<any>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const style = getComputedStyle(document.documentElement);
     const themeColor = style.getPropertyValue("--theme-color");
