@@ -46,11 +46,19 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
     const self = useRef(Symbol(TimeLine.name));
     const [currentTime, setCurrentTime] = useState(audioRef.currentTime);
     const [rate, setRate] = useState(audioRef.playbackRate);
+    const [localAudioMode, setLocalAudioMode] = useState(false);
 
     useEffect(() => {
         return audioStatePubSub.sub(self.current, (data) => {
-            if (data.type === AudioActionType.rateChange) {
-                setRate(data.payload);
+            switch (data.type) {
+                case AudioActionType.rateChange: {
+                    setRate(data.payload);
+                    break;
+                }
+                case AudioActionType.getDuration: {
+                    setLocalAudioMode(audioRef.src.startsWith("blob:"));
+                    break;
+                }
             }
         });
     }, []);
@@ -103,7 +111,9 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
 
     const { prefState } = useContext(appContext, ChangBits.prefState);
 
-    const fixed = prefState.showWaveform ? prefState.fixed : 0;
+    const showWaveform = prefState.showWaveform && localAudioMode;
+
+    const fixed = showWaveform ? prefState.fixed : 0;
 
     const durationTimeTag = useMemo(() => {
         return duration ? " / " + convertTimeToTag(duration, fixed, false) : false;
@@ -116,7 +126,7 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
                 {durationTimeTag}
             </time>
             <div className="slider waveform-container">
-                {prefState.showWaveform
+                {showWaveform
                     ? <Waveform value={currentTime} onSeek={onSeek} />
                     : (
                         <Slider
