@@ -10,10 +10,10 @@
         "build"
     ],
     "plugins": [
-        "https://plugins.dprint.dev/typescript-0.90.5.wasm",
-        "https://plugins.dprint.dev/json-0.19.2.wasm",
-        "https://plugins.dprint.dev/markdown-0.17.0.wasm",
-        "https://plugins.dprint.dev/g-plane/malva-v0.4.0.wasm",
-        "https://plugins.dprint.dev/g-plane/markup_fmt-v0.8.0.wasm"
+        "https://plugins.dprint.dev/typescript-0.95.4.wasm",
+        "https://plugins.dprint.dev/json-0.20.0.wasm",
+        "https://plugins.dprint.dev/markdown-0.18.0.wasm",
+        "https://plugins.dprint.dev/g-plane/malva-v0.12.1.wasm",
+        "https://plugins.dprint.dev/g-plane/markup_fmt-v0.20.0.wasm"
     ]
 }

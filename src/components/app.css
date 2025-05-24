@@ -14,12 +14,7 @@
 :root {
     color: var(--font-color);
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        system-ui,
-        "Akari Fallback UI",
-        sans-serif,
-        "Apple Color Emoji",
+        -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji";
     background-color: var(--background-color);
     font-feature-settings: "kern" 1;
@@ -34,68 +29,29 @@
 
 [lang]:lang(zh) {
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        system-ui,
-        "Akari Fallback UI",
-        "PingFang SC",
-        "Microsoft YaHei UI",
-        "Microsoft YaHei",
-        "Source Han Sans SC",
-        "Noto Sans CJK SC",
-        "WenQuanYi Micro Hei",
-        sans-serif,
-        "Apple Color Emoji",
-        "Segoe UI Emoji";
+        -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "PingFang SC", "Microsoft YaHei UI",
+        "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 [lang]:lang(zh-HK) {
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        system-ui,
-        "Akari Fallback UI",
-        "PingFang HK",
-        "Microsoft JhengHei UI",
-        "Microsoft JhengHei",
-        "Source Han Sans HK",
-        "Noto Sans CJK TC",
-        sans-serif,
-        "Apple Color Emoji",
+        -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "PingFang HK", "Microsoft JhengHei UI",
+        "Microsoft JhengHei", "Source Han Sans HK", "Noto Sans CJK TC", sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji";
 }
 
 [lang]:lang(zh-TW) {
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        system-ui,
-        "Akari Fallback UI",
-        "PingFang TC",
-        "Microsoft JhengHei UI",
-        "Microsoft JhengHei",
-        "Source Han Sans TW",
-        "Noto Sans CJK TC",
-        sans-serif,
-        "Apple Color Emoji",
+        -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "PingFang TC", "Microsoft JhengHei UI",
+        "Microsoft JhengHei", "Source Han Sans TW", "Noto Sans CJK TC", sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji";
 }
 
 [lang]:lang(ja) {
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        system-ui,
-        "Akari Fallback UI",
-        "Hiragino Kaku Gothic Pro",
-        "Yu Gothic UI",
-        "Yu Gothic",
-        "Meiryo UI",
-        Meiryo,
-        "Source Han Sans JP",
-        "Noto Sans CJK JP",
-        sans-serif,
-        "Apple Color Emoji",
+        -apple-system, BlinkMacSystemFont, system-ui, "Akari Fallback UI", "Hiragino Kaku Gothic Pro", "Yu Gothic UI",
+        "Yu Gothic", "Meiryo UI", Meiryo, "Source Han Sans JP", "Noto Sans CJK JP", sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji";
 }
 

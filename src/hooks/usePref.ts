@@ -72,7 +72,7 @@ const init = (lazyInit: () => string): State => {
                 (state[key] as unknown) = storedState[key];
             }
         }
-    } catch (error) {
+    } catch {
         //
     }
     return state;

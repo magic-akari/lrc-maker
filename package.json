@@ -24,7 +24,7 @@
         "build": "vite build",
         "fix:fmt": "dprint fmt",
         "check:fmt": "dprint check",
-        "check:lint": "oxlint src -D correctness -W pedantic"
+        "check:lint": "oxlint src -D correctness"
     },
     "imports": {
         "#const/*": "./src/const/*"
@@ -37,19 +37,19 @@
         "wavesurfer.js": "^7.9.5"
     },
     "devDependencies": {
-        "@swc/core": "^1.3.96",
-        "@types/node": "^22.0.0",
-        "@types/react": "^18.2.37",
-        "@types/react-dom": "^18.2.15",
-        "core-js": "^3.33.2",
-        "dprint": "^0.45.0",
+        "@swc/core": "^1.11.29",
+        "@types/node": "^22.15.21",
+        "@types/react": "^19.1.5",
+        "@types/react-dom": "^19.1.5",
+        "core-js": "^3.42.0",
+        "dprint": "^0.50.0",
         "gen_dep_tag": "^0.0.3",
-        "lightningcss": "1.25.1",
-        "oxlint": "^0.4.0",
+        "lightningcss": "1.30.1",
+        "oxlint": "^0.16.11",
         "rollup-plugin-externals": "^0.0.1",
-        "rollup-plugin-swc3": "^0.11.0",
+        "rollup-plugin-swc3": "^0.12.1",
         "toggle-switch-css": "^1.0.3",
-        "typescript": "^5.2.2",
-        "vite": "^5.0.0"
+        "typescript": "^5.8.3",
+        "vite": "^6.3.5"
     }
 }

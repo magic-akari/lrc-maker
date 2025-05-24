@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { externals } from "rollup-plugin-externals";
 import { swc } from "rollup-plugin-swc3";
 import { defineConfig, type HtmlTagDescriptor } from "vite";
-import pkg from "./package.json" assert { type: "json" };
+import pkg from "./package.json" with { type: "json" };
 import sw_plugin from "./plugins/sw-plugin";
 
 const hash = execSync("git rev-parse --short HEAD").toString().trim();
