@@ -29,13 +29,13 @@ importers:
         version: 1.11.29
       '@types/node':
         specifier: ^22.15.21
-        version: 22.15.21
+        version: 22.15.23
       '@types/react':
         specifier: ^19.1.5
-        version: 19.1.5
+        version: 19.1.6
       '@types/react-dom':
         specifier: ^19.1.5
-        version: 19.1.5(@types/react@19.1.5)
+        version: 19.1.5(@types/react@19.1.6)
       core-js:
         specifier: ^3.42.0
         version: 3.42.0
@@ -50,7 +50,7 @@ importers:
         version: 1.30.1
       oxlint:
         specifier: ^0.16.11
-        version: 0.16.11
+        version: 0.16.12
       rollup-plugin-externals:
         specifier: ^0.0.1
         version: 0.0.1
@@ -65,7 +65,7 @@ importers:
         version: 5.8.3
       vite:
         specifier: ^6.3.5
-        version: 6.3.5(@types/node@22.15.21)(lightningcss@1.30.1)
+        version: 6.3.5(@types/node@22.15.23)(lightningcss@1.30.1)
 
 packages:
 
@@ -276,43 +276,43 @@ packages:
   '@lrc-maker/lrc-parser@0.1.17':
     resolution: {integrity: sha512-oDlWDDsiHcOdEsQSnBPdQRIu5KFG96nJmOU3XI6g6F8HsTbq4S6IekRCyDQ6OhbJOrfjpsh15TLJFO7Bx+epJg==}
 
-  '@oxlint/darwin-arm64@0.16.11':
-    resolution: {integrity: sha512-zjDMBVWbP/0KhzcAdlOkZaYJtoMnJEZDc2BAXqfrXQvr1JFor7vTxZUFvWKF0B1XbSNGpJPvFWmho02bjPiR3g==}
+  '@oxlint/darwin-arm64@0.16.12':
+    resolution: {integrity: sha512-G7phYhlIA4ke2nW7tHLl+E5+rvdzgGA6830D+e+y1RGllT0w2ONGdKcVTj+2pXGCw6yPmCC5fDsDEn2+RPTfxg==}
     cpu: [arm64]
     os: [darwin]
 
-  '@oxlint/darwin-x64@0.16.11':
-    resolution: {integrity: sha512-KS9Y0rs0vwvJLc9AmxI73rUWuIdJLlyAshPuSycQN+i2p8uW8r/ZBAPBB/vFyKdPaSs8j8ymPXmfN4D1yFXG9Q==}
+  '@oxlint/darwin-x64@0.16.12':
+    resolution: {integrity: sha512-P/LSOgJ6SzQ3OKEIf3HsebgokZiZ5nDuTgIL4LpNCHlkOLDu/fT8XL9pSkR5y+60v0SOxUF/+aN0Q8EmxblrCw==}
     cpu: [x64]
     os: [darwin]
 
-  '@oxlint/linux-arm64-gnu@0.16.11':
-    resolution: {integrity: sha512-wULkYyufJz91NAjLtZyb3ycEw9w7sg0iFoGG9rHABqRtRHkFieaFT8BjjJTvUwRf2ZolQk+YZL4edE88h85QFQ==}
+  '@oxlint/linux-arm64-gnu@0.16.12':
+    resolution: {integrity: sha512-0N/ZsW+cL7ZAUvOHbzMp3iApt5b/Q81q2e9RgEzkI6gUDCJK8/blWg0se/i6y9e24WH0ZC4bcxY1+Qz4ZQ+mFw==}
     cpu: [arm64]
     os: [linux]
 
-  '@oxlint/linux-arm64-musl@0.16.11':
-    resolution: {integrity: sha512-c7Evd7fCpocr2LFzHcl9eQF0BxXZauTraIiCxpKK7ddIuCnpbuPllkMpAUE9vob20mqnGy5WLHZby9v7vqSr+Q==}
+  '@oxlint/linux-arm64-musl@0.16.12':
+    resolution: {integrity: sha512-MoG1SIw4RGowsOsPjm5HjRWymisRZWBea7ewMoXA5xIVQ3eqECifG0KJW0OZp96Ad8DFBEavdlNuImB2uXsMwg==}
     cpu: [arm64]
     os: [linux]
 
-  '@oxlint/linux-x64-gnu@0.16.11':
-    resolution: {integrity: sha512-LbjKo4seS7m6rOzw/r9H3VLvnjhuo/fFuRJ8OG6pYCbkZNtChdhk88DFN8Qr0n8Qe9PFwweIvQxXBZK7IEUu6A==}
+  '@oxlint/linux-x64-gnu@0.16.12':
+    resolution: {integrity: sha512-STho8QdMLfn/0lqRU94tGPaYX8lGJccPbqeUcEr3eK5gZ5ZBdXmiHlvkcngXFEXksYC8/5VoJN7Vf3HsmkEskw==}
     cpu: [x64]
     os: [linux]
 
-  '@oxlint/linux-x64-musl@0.16.11':
-    resolution: {integrity: sha512-kKuIf5hD12rtmJFSe/EGv8jXi0QWwCMDpcL2F0cRVvq6RSAxwSBF/RTEq40PJBBGAf6KJeqgV9j4glxhFn5f7w==}
+  '@oxlint/linux-x64-musl@0.16.12':
+    resolution: {integrity: sha512-i7pzSoj9nCg/ZzOe8dCZeFWyRRWDylR9tIX04xRTq3G6PBLm6i9VrOdEkxbgM9+pCkRzUc0a9D7rbtCF34TQUA==}
     cpu: [x64]
     os: [linux]
 
-  '@oxlint/win32-arm64@0.16.11':
-    resolution: {integrity: sha512-lx9x2EEbyHW5t2aooWtXI2AWd3WzDs+4T/p3RBp/HPp9ziwL2hEdzmjMC3DgdnbmwUmUGvfquSElF6ZGC9L5pA==}
+  '@oxlint/win32-arm64@0.16.12':
+    resolution: {integrity: sha512-wcxq3IBJ7ZlONlXJxQM+7EMx+LX1nkz3ZS3R0EtDM76EOZaqe8BMkW5cXVhF8jarZTZC18oKAckW4Ng9d8adBg==}
     cpu: [arm64]
     os: [win32]
 
-  '@oxlint/win32-x64@0.16.11':
-    resolution: {integrity: sha512-k/ZfoIR5V6bPoemFvMb9EJu3YkSoF2AAKhC7AfKM4tg9UfJ1Wj/9J/edTv1aRQCRTzPiWoS+W5v1SPogVE80Qg==}
+  '@oxlint/win32-x64@0.16.12':
+    resolution: {integrity: sha512-Ae1fx7wmAcMVqzS8rLINaFRpAdh29QzHh133bEYMHzfWBYyK/hLu9g4GLwC/lEIVQu9884b8qutGfdOk6Qia3w==}
     cpu: [x64]
     os: [win32]
 
@@ -503,16 +503,16 @@ packages:
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
 
-  '@types/node@22.15.21':
-    resolution: {integrity: sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ==}
+  '@types/node@22.15.23':
+    resolution: {integrity: sha512-7Ec1zaFPF4RJ0eXu1YT/xgiebqwqoJz8rYPDi/O2BcZ++Wpt0Kq9cl0eg6NN6bYbPnR67ZLo7St5Q3UK0SnARw==}
 
   '@types/react-dom@19.1.5':
     resolution: {integrity: sha512-CMCjrWucUBZvohgZxkjd6S9h0nZxXjzus6yDfUb+xLxYM7VvjKNH1tQrE9GWLql1XoOP4/Ds3bwFqShHUYraGg==}
     peerDependencies:
       '@types/react': ^19.0.0
 
-  '@types/react@19.1.5':
-    resolution: {integrity: sha512-piErsCVVbpMMT2r7wbawdZsq4xMvIAhQuac2gedQHysu1TZYEigE6pnFfgZT+/jQnrRuF5r+SHzuehFjfRjr4g==}
+  '@types/react@19.1.6':
+    resolution: {integrity: sha512-JeG0rEWak0N6Itr6QUx+X60uQmN+5t3j9r/OVDtWzFXKaj6kD1BwJzOksD0FF6iWxZlbE1kB0q9vtnU2ekqa1Q==}
 
   '@wavesurfer/react@1.0.11':
     resolution: {integrity: sha512-DRpaA3MRTKy4Jby12xvoHASa+w31FZtxaqanXcJjfqNqfamkKi8VJfRnz+Uub9LkpdgoAc3g5SuZF75lEcGgzQ==}
@@ -640,8 +640,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  oxlint@0.16.11:
-    resolution: {integrity: sha512-JjeOwCeDfA9Y5vLswScJZlMyWBXEVz0LKKksgfkO3cgRV/XXvVzLzBEZ0h5bBiCBK1eS+jCFWh0bycECQkoWUQ==}
+  oxlint@0.16.12:
+    resolution: {integrity: sha512-1oN3P9bzE90zkbjLTc+uICVLwSR+eQaDaYVipS0BtmtmEd3ccQue0y7npCinb35YqKzIv1LZxhoU9nm5fgmQuw==}
     engines: {node: '>=8.*'}
     hasBin: true
 
@@ -865,28 +865,28 @@ snapshots:
 
   '@lrc-maker/lrc-parser@0.1.17': {}
 
-  '@oxlint/darwin-arm64@0.16.11':
+  '@oxlint/darwin-arm64@0.16.12':
     optional: true
 
-  '@oxlint/darwin-x64@0.16.11':
+  '@oxlint/darwin-x64@0.16.12':
     optional: true
 
-  '@oxlint/linux-arm64-gnu@0.16.11':
+  '@oxlint/linux-arm64-gnu@0.16.12':
     optional: true
 
-  '@oxlint/linux-arm64-musl@0.16.11':
+  '@oxlint/linux-arm64-musl@0.16.12':
     optional: true
 
-  '@oxlint/linux-x64-gnu@0.16.11':
+  '@oxlint/linux-x64-gnu@0.16.12':
     optional: true
 
-  '@oxlint/linux-x64-musl@0.16.11':
+  '@oxlint/linux-x64-musl@0.16.12':
     optional: true
 
-  '@oxlint/win32-arm64@0.16.11':
+  '@oxlint/win32-arm64@0.16.12':
     optional: true
 
-  '@oxlint/win32-x64@0.16.11':
+  '@oxlint/win32-x64@0.16.12':
     optional: true
 
   '@rollup/pluginutils@5.1.4(rollup@4.41.1)':
@@ -1011,15 +1011,15 @@ snapshots:
 
   '@types/estree@1.0.7': {}
 
-  '@types/node@22.15.21':
+  '@types/node@22.15.23':
     dependencies:
       undici-types: 6.21.0
 
-  '@types/react-dom@19.1.5(@types/react@19.1.5)':
+  '@types/react-dom@19.1.5(@types/react@19.1.6)':
     dependencies:
-      '@types/react': 19.1.5
+      '@types/react': 19.1.6
 
-  '@types/react@19.1.5':
+  '@types/react@19.1.6':
     dependencies:
       csstype: 3.1.3
 
@@ -1146,16 +1146,16 @@ snapshots:
 
   nanoid@3.3.11: {}
 
-  oxlint@0.16.11:
+  oxlint@0.16.12:
     optionalDependencies:
-      '@oxlint/darwin-arm64': 0.16.11
-      '@oxlint/darwin-x64': 0.16.11
-      '@oxlint/linux-arm64-gnu': 0.16.11
-      '@oxlint/linux-arm64-musl': 0.16.11
-      '@oxlint/linux-x64-gnu': 0.16.11
-      '@oxlint/linux-x64-musl': 0.16.11
-      '@oxlint/win32-arm64': 0.16.11
-      '@oxlint/win32-x64': 0.16.11
+      '@oxlint/darwin-arm64': 0.16.12
+      '@oxlint/darwin-x64': 0.16.12
+      '@oxlint/linux-arm64-gnu': 0.16.12
+      '@oxlint/linux-arm64-musl': 0.16.12
+      '@oxlint/linux-x64-gnu': 0.16.12
+      '@oxlint/linux-x64-musl': 0.16.12
+      '@oxlint/win32-arm64': 0.16.12
+      '@oxlint/win32-x64': 0.16.12
 
   picocolors@1.1.1: {}
 
@@ -1239,7 +1239,7 @@ snapshots:
 
   undici-types@6.21.0: {}
 
-  vite@6.3.5(@types/node@22.15.21)(lightningcss@1.30.1):
+  vite@6.3.5(@types/node@22.15.23)(lightningcss@1.30.1):
     dependencies:
       esbuild: 0.25.4
       fdir: 6.4.4(picomatch@4.0.2)
@@ -1248,7 +1248,7 @@ snapshots:
       rollup: 4.41.1
       tinyglobby: 0.2.13
     optionalDependencies:
-      '@types/node': 22.15.21
+      '@types/node': 22.15.23
       fsevents: 2.3.3
       lightningcss: 1.30.1
 
