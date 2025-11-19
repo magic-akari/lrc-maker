@@ -39,8 +39,8 @@
     "devDependencies": {
         "@swc/core": "^1.11.29",
         "@types/node": "^22.15.21",
-        "@types/react": "^19.1.5",
-        "@types/react-dom": "^19.1.5",
+        "@types/react": "^18.2.0",
+        "@types/react-dom": "^18.2.0",
         "core-js": "^3.42.0",
         "dprint": "^0.50.0",
         "gen_dep_tag": "^0.0.3",

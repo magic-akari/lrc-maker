@@ -73,7 +73,7 @@ const init = (lazyInit: () => string): State => {
             }
         }
     } catch {
-        //
+        // It's OK if parsing failed
     }
     return state;
 };
