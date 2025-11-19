@@ -10,7 +10,7 @@
 }
 
 .on-screen-button + .aside-panel {
-    bottom: 100px;
+    bottom: calc(50vh - 60px);
 }
 
 .aside-button {
