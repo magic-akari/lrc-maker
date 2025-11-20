@@ -10,19 +10,38 @@
 }
 
 .space-button {
+    touch-action: none;
     position: fixed;
-    bottom: 32px;
-    left: 0;
-    width: 100%;
-    height: 40px;
+    bottom: 50px;
+    right: 32px;
+    width: 100px;
+    height: 100px;
     margin-bottom: env(safe-area-inset-bottom);
     color: var(--white);
-    background-color: var(--semi-black-color);
-    border-bottom: 1px dashed var(--theme-color);
+    background-color: var(--theme-color);
+    border: none;
+    border-radius: 50%;
+    font-size: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    user-select: none;
+}
+
+@media (width <= 768px) {
+    .space-button {
+        bottom: 80px;
+    }
+}
+
+.space-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 .space-button:active {
-    border-bottom-style: solid;
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .line {

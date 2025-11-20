@@ -125,20 +125,22 @@ const TimeLine: React.FC<{ duration: number; paused: boolean }> = ({ duration, p
                 {convertTimeToTag(currentTime, fixed, false)}
                 {durationTimeTag}
             </time>
-            <div className="slider waveform-container">
-                {showWaveform
-                    ? <Waveform value={currentTime} onSeek={onSeek} />
-                    : (
-                        <Slider
-                            min={0}
-                            max={duration}
-                            step={1}
-                            value={currentTime}
-                            className="timeline"
-                            onInput={onInput}
-                        />
-                    )}
-            </div>
+            {showWaveform
+                ? (
+                    <div className="slider waveform-container">
+                        <Waveform value={currentTime} onSeek={onSeek} />
+                    </div>
+                )
+                : (
+                    <Slider
+                        min={0}
+                        max={duration}
+                        step={1}
+                        value={currentTime}
+                        className="timeline"
+                        onInput={onInput}
+                    />
+                )}
         </>
     );
 };
