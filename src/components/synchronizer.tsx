@@ -2,11 +2,14 @@ import SSK from "#const/session_key.json" assert { type: "json" };
 import STRINGS from "#const/strings.json" assert { type: "json" };
 import { convertTimeToTag, formatText, type ILyric } from "@lrc-maker/lrc-parser";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useKeyBindings } from "../hooks/useKeyBindings.js";
 import type { IState } from "../hooks/useLrc.js";
 import { type Action, ActionType } from "../hooks/useLrc.js";
 import { type State as PrefState } from "../hooks/usePref.js";
 import { audioRef, currentTimePubSub } from "../utils/audiomodule.js";
+import { InputAction } from "../utils/input-action.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
+import { getMatchedAction } from "../utils/keybindings.js";
 import { appContext } from "./app.context.js";
 import { AsidePanel } from "./asidepanel.js";
 import { Curser } from "./curser.js";
@@ -35,6 +38,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
     const { selectIndex, currentIndex: highlightIndex, lyric } = state;
 
     const { prefState, lang } = useContext(appContext);
+    const keyBindings = useKeyBindings();
 
     useEffect(() => {
         dispatch({
@@ -111,73 +115,57 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
 
     useEffect(() => {
         function onKeydown(ev: KeyboardEvent): void {
-            const { code, key, target } = ev;
-
-            const codeOrKey = code || key;
-
-            if (isKeyboardElement(target)) {
+            if (isKeyboardElement(ev.target)) {
                 return;
             }
 
-            if (codeOrKey === "Backspace" || codeOrKey === "Delete" || codeOrKey === "Del") {
-                ev.preventDefault();
-                dispatch({
-                    type: ActionType.deleteTime,
-                    payload: undefined,
-                });
-                return;
-            }
+            const action = getMatchedAction(ev, keyBindings);
 
-            if (code === "Digit0" || key === "0") {
-                ev.preventDefault();
-                adjust(ev, 0, selectIndex);
-                return;
-            }
-
-            if (code === "Minus" || key === "-" || key === "_") {
-                ev.preventDefault();
-                adjust(ev, -0.5, selectIndex);
-                return;
-            }
-
-            if (code === "Equal" || key === "+" || key === "=") {
-                ev.preventDefault();
-                adjust(ev, 0.5, selectIndex);
-                return;
-            }
-
-            if (ev.metaKey || ev.ctrlKey) {
-                return;
-            }
-
-            if (code === "Space" || key === " " || key === "Spacebar") {
-                ev.preventDefault();
-
-                sync();
-            } else if (["ArrowUp", "KeyW", "KeyJ", "Up", "W", "w", "J", "j"].includes(codeOrKey)) {
-                ev.preventDefault();
-
-                dispatch({ type: ActionType.select, payload: (index) => index - 1 });
-            } else if (["ArrowDown", "KeyS", "KeyK", "Down", "S", "s", "K", "k"].includes(codeOrKey)) {
-                ev.preventDefault();
-
-                dispatch({ type: ActionType.select, payload: (index) => index + 1 });
-            } else if (codeOrKey === "Home") {
-                ev.preventDefault();
-
-                dispatch({ type: ActionType.select, payload: () => 0 });
-            } else if (codeOrKey === "End") {
-                ev.preventDefault();
-
-                dispatch({ type: ActionType.select, payload: () => Infinity });
-            } else if (codeOrKey === "PageUp") {
-                ev.preventDefault();
-
-                dispatch({ type: ActionType.select, payload: (index) => index - 10 });
-            } else if (codeOrKey === "PageDown") {
-                ev.preventDefault();
-
-                dispatch({ type: ActionType.select, payload: (index) => index + 10 });
+            switch (action) {
+                case InputAction.Sync:
+                    ev.preventDefault();
+                    sync();
+                    break;
+                case InputAction.DeleteTime:
+                    ev.preventDefault();
+                    dispatch({ type: ActionType.deleteTime, payload: undefined });
+                    break;
+                case InputAction.ResetOffset:
+                    ev.preventDefault();
+                    adjust(ev, 0, selectIndex);
+                    break;
+                case InputAction.DecreaseOffset:
+                    ev.preventDefault();
+                    adjust(ev, -0.5, selectIndex);
+                    break;
+                case InputAction.IncreaseOffset:
+                    ev.preventDefault();
+                    adjust(ev, 0.5, selectIndex);
+                    break;
+                case InputAction.PrevLine:
+                    ev.preventDefault();
+                    dispatch({ type: ActionType.select, payload: (index) => index - 1 });
+                    break;
+                case InputAction.NextLine:
+                    ev.preventDefault();
+                    dispatch({ type: ActionType.select, payload: (index) => index + 1 });
+                    break;
+                case InputAction.FirstLine:
+                    ev.preventDefault();
+                    dispatch({ type: ActionType.select, payload: () => 0 });
+                    break;
+                case InputAction.LastLine:
+                    ev.preventDefault();
+                    dispatch({ type: ActionType.select, payload: () => Infinity });
+                    break;
+                case InputAction.PageUp:
+                    ev.preventDefault();
+                    dispatch({ type: ActionType.select, payload: (index) => index - 10 });
+                    break;
+                case InputAction.PageDown:
+                    ev.preventDefault();
+                    dispatch({ type: ActionType.select, payload: (index) => index + 10 });
+                    break;
             }
         }
 
@@ -186,7 +174,7 @@ export const Synchronizer: React.FC<ISynchronizerProps> = ({ state, dispatch }) 
         return (): void => {
             document.removeEventListener("keydown", onKeydown);
         };
-    }, [adjust, dispatch, selectIndex, sync]);
+    }, [adjust, dispatch, keyBindings, selectIndex, sync]);
 
     const onLineClick = useCallback(
         (ev: React.MouseEvent<HTMLUListElement & HTMLLIElement>) => {

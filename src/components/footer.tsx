@@ -1,7 +1,10 @@
 import SSK from "#const/session_key.json" assert { type: "json" };
 import { useCallback, useContext, useEffect, useReducer, useRef } from "react";
+import { useKeyBindings } from "../hooks/useKeyBindings.js";
 import { AudioActionType, audioRef, audioStatePubSub, currentTimePubSub } from "../utils/audiomodule.js";
+import { InputAction } from "../utils/input-action.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
+import { getMatchedAction } from "../utils/keybindings.js";
 import { appContext, ChangBits } from "./app.context.js";
 import { LrcAudio } from "./audio.js";
 import { LoadAudio, nec } from "./loadaudio.js";
@@ -11,6 +14,7 @@ const accept = ["audio/*", ".ncm", ".qmcflac", ".qmc0", ".qmc1", ".qmc2", ".qmc3
 
 export const Footer: React.FC = () => {
     const { prefState, lang } = useContext(appContext, ChangBits.lang | ChangBits.builtInAudio);
+    const keyBindings = useKeyBindings();
 
     const [audioSrc, setAudioSrc] = useReducer(
         (oldSrc: string, newSrc: string) => {
@@ -36,11 +40,7 @@ export const Footer: React.FC = () => {
 
     useEffect(() => {
         function onKeydown(ev: KeyboardEvent) {
-            const { code, key, target } = ev;
-
-            const codeOrKey = code || key;
-
-            if (isKeyboardElement(target)) {
+            if (isKeyboardElement(ev.target)) {
                 return;
             }
 
@@ -48,45 +48,43 @@ export const Footer: React.FC = () => {
                 return;
             }
 
-            if (ev.metaKey || ev.ctrlKey) {
-                if (["ArrowUp", "KeyJ", "Up", "J", "j"].includes(codeOrKey)) {
+            const action = getMatchedAction(ev, keyBindings);
+
+            switch (action) {
+                case InputAction.SeekBackward:
                     ev.preventDefault();
-
-                    const rate = audioRef.playbackRate;
-                    const newRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
-
-                    audioRef.playbackRate = newRate;
-                } else if (["ArrowDown", "KeyK", "Down", "K", "k"].includes(codeOrKey)) {
+                    audioRef.step(ev, -5);
+                    break;
+                case InputAction.SeekForward:
                     ev.preventDefault();
-
+                    audioRef.step(ev, 5);
+                    break;
+                case InputAction.ResetRate:
+                    ev.preventDefault();
+                    audioRef.playbackRate = 1;
+                    break;
+                case InputAction.IncreaseRate: {
+                    ev.preventDefault();
                     const rate = audioRef.playbackRate;
-                    const newRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
-
-                    audioRef.playbackRate = newRate;
-                } else if (codeOrKey === "Enter") {
+                    audioRef.playbackRate = Math.exp(Math.min(Math.log(rate) + 0.2, 1));
+                    break;
+                }
+                case InputAction.DecreaseRate: {
+                    ev.preventDefault();
+                    const rate = audioRef.playbackRate;
+                    audioRef.playbackRate = Math.exp(Math.max(Math.log(rate) - 0.2, -1));
+                    break;
+                }
+                case InputAction.TogglePlay:
                     ev.preventDefault();
                     audioRef.toggle();
-                }
-            } else {
-                if (["ArrowLeft", "KeyA", "KeyH", "Left", "A", "a", "H", "h"].includes(codeOrKey)) {
-                    ev.preventDefault();
-
-                    audioRef.step(ev, -5);
-                } else if (["ArrowRight", "KeyD", "KeyL", "Right", "D", "d", "L", "l"].includes(codeOrKey)) {
-                    ev.preventDefault();
-
-                    audioRef.step(ev, 5);
-                } else if (code === "KeyR" || key === "R" || key === "r") {
-                    ev.preventDefault();
-
-                    audioRef.playbackRate = 1;
-                }
+                    break;
             }
         }
         document.addEventListener("keydown", onKeydown);
 
         return () => document.removeEventListener("keydown", onKeydown);
-    }, []);
+    }, [keyBindings]);
 
     useEffect(() => {
         function onDrop(ev: DragEvent) {

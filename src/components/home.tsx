@@ -1,6 +1,9 @@
 import ROUTER from "#const/router.json" assert { type: "json" };
 import { useContext } from "react";
+import { defaultKeyBindings } from "../utils/default-keybindings.js";
+import { InputAction } from "../utils/input-action.js";
 import { isKeyboardElement } from "../utils/is-keyboard-element.js";
+import { getMatchedAction } from "../utils/keybindings.js";
 import { prependHash } from "../utils/router.js";
 import { appContext } from "./app.context.js";
 import { loadAudioDialogRef } from "./loadaudio.js";
@@ -47,13 +50,12 @@ export const Home: React.FC = () => {
 };
 
 document.addEventListener("keydown", (ev) => {
-    const { code, key, target } = ev;
-
-    if (isKeyboardElement(target)) {
+    if (isKeyboardElement(ev.target)) {
         return;
     }
 
-    if (key === "?" || (code === "Slash" && ev.shiftKey)) {
+    const action = getMatchedAction(ev, defaultKeyBindings);
+    if (action === InputAction.ShowHelp) {
         location.hash = ROUTER.home;
     }
 });
