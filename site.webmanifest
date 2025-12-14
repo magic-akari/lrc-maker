@@ -1,0 +1,31 @@
+{
+    "background_color": "#f1f3f4",
+    "description": "歌词滚动姬｜可能是你所能见到的最好用的歌词制作工具",
+    "display": "standalone",
+    "icons": [
+        {
+            "sizes": "192x192",
+            "src": "./favicons/android-chrome-192x192.png",
+            "type": "image/png"
+        },
+        {
+            "sizes": "512x512",
+            "src": "./favicons/android-chrome-512x512.png",
+            "type": "image/png"
+        }
+    ],
+    "name": "灯里的歌词滚动姬",
+    "short_name": "歌词滚动姬",
+    "start_url": "./",
+    "theme_color": "#484848",
+    "share_target": {
+        "action": "./",
+        "method": "GET",
+        "enctype": "application/x-www-form-urlencoded",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url"
+        }
+    }
+}
