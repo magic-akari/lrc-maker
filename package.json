@@ -45,7 +45,7 @@
         "dprint": "^0.50.0",
         "gen_dep_tag": "^0.0.3",
         "lightningcss": "1.30.1",
-        "oxlint": "^0.16.11",
+        "oxlint": "^0.18.0",
         "rollup-plugin-externals": "^0.0.1",
         "rollup-plugin-swc3": "^0.12.1",
         "toggle-switch-css": "^1.0.3",
