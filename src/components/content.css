@@ -18,7 +18,7 @@ body, .app-container, .app-main {
     flex: 1 0 auto;
 }
 
-body, .app-container {
+.app-container {
     display: contents;
     contain: size;
 }
